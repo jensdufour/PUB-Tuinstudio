@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const theme =
+        param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Render zwembadpad en tuinstudio</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-bg-elevated: #fcfbf8;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #dedede;
+      --cp-border-strong: #919191;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #6f6f6f;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-success: #16a34a;
+      --cp-danger: #dc2626;
+      --cp-warning: #f59e0b;
+      --cp-link: #0078d4;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+      --cp-overlay: rgba(255, 255, 255, 0.8);
+      --cp-panel: rgba(255, 255, 255, 0.86);
+      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.55);
+      --cp-highlight: rgba(177, 31, 75, 0.12);
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #3d3b3a;
+      --cp-bg-elevated: #343231;
+      --cp-surface: #292929;
+      --cp-surface-soft: #2e2e2e;
+      --cp-border: #474747;
+      --cp-border-strong: #5f5f5f;
+      --cp-text: #dedede;
+      --cp-text-muted: #919191;
+      --cp-text-soft: #b0b0b0;
+      --cp-accent: #fd8ea1;
+      --cp-accent-hover: #fb7b91;
+      --cp-accent-soft: rgba(253, 142, 161, 0.14);
+      --cp-accent-fg: #1a1a1a;
+      --cp-success: #4ade80;
+      --cp-danger: #f87171;
+      --cp-warning: #fbbf24;
+      --cp-link: #4da6ff;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+      --cp-overlay: rgba(41, 41, 41, 0.88);
+      --cp-panel: rgba(41, 41, 41, 0.72);
+      --cp-panel-strong: rgba(41, 41, 41, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.04);
+      --cp-highlight: rgba(253, 142, 161, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--cp-bg);
+      color: var(--cp-text);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    main,
+    #scene {
+      position: fixed;
+      inset: 0;
+    }
+
+    #scene {
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .title-block {
+      position: absolute;
+      z-index: 2;
+      top: 28px;
+      left: 32px;
+      max-width: min(460px, calc(100vw - 64px));
+      padding: 0 0 2px 16px;
+      border-left: 3px solid var(--cp-accent);
+      color: var(--cp-text);
+      text-shadow: 0 1px 12px var(--cp-sheen);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      margin: 0 0 7px;
+      color: var(--cp-accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(23px, 3vw, 38px);
+      font-weight: 650;
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 9px 0 0;
+      color: var(--cp-text-muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    html[data-theme="dark"] .title-block {
+      color: var(--cp-bg);
+    }
+
+    html[data-theme="dark"] .title-block .subtitle {
+      color: var(--cp-bg-elevated);
+    }
+
+    .metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .metric {
+      padding: 5px 8px;
+      border: 1px solid var(--cp-border);
+      border-radius: 6px;
+      background: var(--cp-panel);
+      color: var(--cp-text);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 11px;
+      box-shadow: 0 0 2px var(--cp-border);
+    }
+
+    .material-note {
+      position: absolute;
+      z-index: 2;
+      left: 32px;
+      bottom: 28px;
+      max-width: min(520px, calc(100vw - 64px));
+      padding: 8px 10px;
+      border-radius: 6px;
+      background: var(--cp-panel);
+      color: var(--cp-text-muted);
+      font-size: 11px;
+      line-height: 1.35;
+      box-shadow: 0 0 2px var(--cp-border);
+      pointer-events: none;
+    }
+
+    .control-dock {
+      position: absolute;
+      z-index: 3;
+      right: 28px;
+      bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px;
+      border: 1px solid var(--cp-border);
+      border-radius: 8px;
+      background: var(--cp-panel-strong);
+      box-shadow: 0 0 2px var(--cp-border);
+      max-width: calc(100vw - 36px);
+    }
+
+    .mode-switch,
+    .tool-switch {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .mode-switch {
+      padding: 2px;
+      border-radius: 6px;
+      background: var(--cp-surface-soft);
+    }
+
+    .tool-switch {
+      padding-left: 6px;
+      border-left: 1px solid var(--cp-border);
+    }
+
+    .control-dock button {
+      min-height: 34px;
+      padding: 7px 10px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--cp-text);
+      font: 600 12px/1 "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      cursor: pointer;
+      box-shadow: none;
+      white-space: nowrap;
+    }
+
+    .control-dock button:hover {
+      border-color: var(--cp-border-strong);
+      background: var(--cp-surface);
+    }
+
+    .control-dock button[aria-pressed="true"] {
+      border-color: var(--cp-accent);
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+    }
+
+    #loading {
+      position: absolute;
+      z-index: 5;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: var(--cp-bg);
+      color: var(--cp-text-muted);
+      font-size: 13px;
+      transition: opacity 220ms ease;
+    }
+
+    #loading.ready {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    main.plan-view .title-block,
+    main.plan-view .material-note {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    main.overview-view .material-note {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    main.plan-view .control-dock {
+      top: 18px;
+      bottom: auto;
+    }
+
+    @media (max-width: 720px) {
+      .title-block {
+        top: 18px;
+        left: 18px;
+        max-width: calc(100vw - 36px);
+      }
+
+      .subtitle {
+        font-size: 12px;
+      }
+
+      .material-note {
+        left: 18px;
+        right: 18px;
+        bottom: 80px;
+        max-width: none;
+      }
+
+      .control-dock {
+        left: 18px;
+        right: 18px;
+        bottom: 18px;
+        align-items: center;
+      }
+
+      .mode-switch {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        flex: 1;
+      }
+
+      .control-dock button {
+        min-height: 32px;
+        padding-inline: 6px;
+        font-size: 11px;
+      }
+
+      .tool-switch {
+        padding-left: 5px;
+        border-left: 1px solid var(--cp-border);
+      }
+    }
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <main aria-label="3D visualisatie van tuinplan Lot 24B">
+    <div id="scene"></div>
+
+    <header class="title-block">
+      <p class="eyebrow">3D visualisatie · planbasis 05-08-2026</p>
+      <h1>Tuinplan Lot 24B</h1>
+      <p class="subtitle">Woning · terras · LPW City+ · tuinstudio · voortuin</p>
+      <div class="metrics" aria-label="Belangrijkste doorgangen">
+        <span class="metric">bovenrand 0,36 m</span>
+        <span class="metric">glaslijn 0,70 m</span>
+        <span class="metric">houtlanding 7,01 m²</span>
+      </div>
+    </header>
+
+    <div class="material-note">
+      Wit crepi · wit interieurplafond · plint blauwe steen 0,30 m · raamkaders RAL 9005 · bestaande erfafsluiting met Toscaanse jasmijn. De houten landing eindigt gelijk met de zwembadgevelbeglazing, sluit aan via een donker voegprofiel en gaat via drie stapstenen over in het terras.
+    </div>
+
+    <div class="control-dock" aria-label="Renderinstellingen">
+      <div class="mode-switch" role="group" aria-label="Camerastand">
+        <button class="mode-button" type="button" data-view="passage" aria-pressed="true">Passage</button>
+        <button class="mode-button" type="button" data-view="overview" aria-pressed="false">Overzicht</button>
+        <button class="mode-button" type="button" data-view="plan" aria-pressed="false">Plan</button>
+      </div>
+      <div class="tool-switch" role="group" aria-label="Weergavehulpmiddelen">
+        <button id="toggle-dimensions" type="button" aria-pressed="false" title="Toon of verberg maatvoering">Maten</button>
+        <button id="toggle-passage" type="button" aria-pressed="true" title="Toon of verberg de houten landing en stapstenen">Houtpad</button>
+        <button id="reset-camera" type="button" title="Herstel de huidige camerastand">Herstel</button>
+      </div>
+    </div>
+
+    <div id="loading">Render wordt opgebouwd...</div>
+  </main>
+
+  <script type="module">
+    import * as THREE from "three";
+    import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+    const sceneHost = document.querySelector("#scene");
+    const mainHost = document.querySelector("main");
+    const loading = document.querySelector("#loading");
+    const dimensionsButton = document.querySelector("#toggle-dimensions");
+    const passageButton = document.querySelector("#toggle-passage");
+    const viewButtons = [...document.querySelectorAll("[data-view]")];
+    const resetButton = document.querySelector("#reset-camera");
+
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      powerPreference: "high-performance",
+      preserveDrawingBuffer: true
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.08;
+    sceneHost.append(renderer.domElement);
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xd9e5e8);
+    const perspectiveFog = new THREE.Fog(0xd9e5e8, 17, 46);
+    scene.fog = perspectiveFog;
+
+    const planScale = 18;
+    const planOriginX = 75.6;
+    const planOriginY = 267.181;
+    const siteX = value => (value - planOriginX) / planScale;
+    const siteZ = value => -(value - planOriginY) / planScale;
+
+    const camera = new THREE.PerspectiveCamera(54, window.innerWidth / window.innerHeight, 0.05, 220);
+    const initialCameraZ = -4.65;
+    const initialCamera = new THREE.Vector3(-0.5, 1.65, initialCameraZ);
+    const initialTarget = new THREE.Vector3(-0.42, 1.05, -0.45);
+    camera.position.copy(initialCamera);
+
+    const controls = new OrbitControls(camera, mainHost);
+    controls.target.copy(initialTarget);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.07;
+    controls.minDistance = 1.2;
+    controls.maxDistance = 120;
+    controls.maxPolarAngle = Math.PI * 0.49;
+    controls.update();
+
+    const palette = {
+      charcoal: 0x0a0a0d,
+      charcoalSoft: 0x354044,
+      wall: 0xf4f2ed,
+      wallWarm: 0xf4f2ed,
+      timber: 0x9b6c3f,
+      timberDark: 0x694527,
+      timberLight: 0xbc8957,
+      stone: 0x78868b,
+      stoneEdge: 0x58666c,
+      lawn: 0x65815a,
+      hedge: 0x3f6545,
+      leaf: 0x547a4c,
+      leafLight: 0x6f945e,
+      soil: 0x6f5841,
+      cushion: 0xd8cbb8,
+      metal: 0x30383b
+    };
+
+    const standard = (color, roughness = 0.72, metalness = 0) =>
+      new THREE.MeshStandardMaterial({ color, roughness, metalness });
+
+    function makeCrepiTexture() {
+      const canvas = document.createElement("canvas");
+      canvas.width = 256;
+      canvas.height = 256;
+      const context = canvas.getContext("2d");
+      const image = context.createImageData(canvas.width, canvas.height);
+      const random = seededRandom(9005);
+
+      for (let index = 0; index < image.data.length; index += 4) {
+        const grain = 235 + Math.floor(random() * 18);
+        image.data[index] = grain;
+        image.data[index + 1] = grain;
+        image.data[index + 2] = grain - 2;
+        image.data[index + 3] = 255;
+      }
+      context.putImageData(image, 0, 0);
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set(4, 4);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      return texture;
+    }
+
+    const crepiTexture = makeCrepiTexture();
+    const crepiMaterial = new THREE.MeshStandardMaterial({
+      map: crepiTexture,
+      bumpMap: crepiTexture,
+      bumpScale: 0.018,
+      color: palette.wall,
+      roughness: 0.96,
+      metalness: 0
+    });
+
+    const materials = {
+      wall: crepiMaterial,
+      wallWarm: crepiMaterial,
+      charcoal: standard(palette.charcoal, 0.34, 0.62),
+      charcoalSoft: standard(palette.charcoalSoft, 0.5, 0.4),
+      stone: standard(palette.stone, 0.54),
+      stoneEdge: standard(palette.stoneEdge, 0.52),
+      lawn: standard(palette.lawn, 1),
+      publicGrass: standard(0x76916a, 1),
+      cyclePath: standard(0xb9b7b1, 0.94),
+      road: standard(0x777b7d, 0.92),
+      paving: standard(0xb9b1a5, 0.9),
+      gravel: standard(0xb7b0a4, 0.98),
+      grassPaver: standard(0x78966d, 0.98),
+      planting: standard(0x4f7148, 1),
+      flowerBed: standard(0x657b4e, 1),
+      hedge: standard(palette.hedge, 0.95),
+      soil: standard(palette.soil, 1),
+      cushion: standard(palette.cushion, 0.96),
+      darkFabric: standard(0x4a504f, 0.98),
+      interiorFloor: standard(0xb9aa97, 0.83),
+      ceiling: standard(0xffffff, 0.94),
+      white: standard(0xf0ece4, 0.86)
+    };
+
+    const glassMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0x9fb9c2,
+      roughness: 0.12,
+      metalness: 0,
+      transmission: 0.58,
+      transparent: true,
+      opacity: 0.57,
+      thickness: 0.035,
+      ior: 1.45,
+      clearcoat: 0.75,
+      clearcoatRoughness: 0.12,
+      side: THREE.DoubleSide
+    });
+
+    function seededRandom(seed) {
+      let value = seed >>> 0;
+      return () => {
+        value += 0x6d2b79f5;
+        let result = value;
+        result = Math.imul(result ^ result >>> 15, result | 1);
+        result ^= result + Math.imul(result ^ result >>> 7, result | 61);
+        return ((result ^ result >>> 14) >>> 0) / 4294967296;
+      };
+    }
+
+    function makeWoodTexture() {
+      const canvas = document.createElement("canvas");
+      canvas.width = 256;
+      canvas.height = 512;
+      const context = canvas.getContext("2d");
+      const random = seededRandom(24);
+
+      context.fillStyle = "#9b6c3f";
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = "#51341f";
+      context.fillRect(0, 0, 5, canvas.height);
+      context.fillStyle = "#bd8a59";
+      context.fillRect(8, 0, 3, canvas.height);
+
+      for (let index = 0; index < 90; index += 1) {
+        const x = 14 + random() * 232;
+        const y = random() * 512;
+        const length = 40 + random() * 130;
+        context.strokeStyle = `rgba(72, 43, 24, ${0.04 + random() * 0.08})`;
+        context.lineWidth = 0.7 + random();
+        context.beginPath();
+        context.moveTo(x, y);
+        context.bezierCurveTo(x + 8, y + length * 0.25, x - 8, y + length * 0.72, x + 2, y + length);
+        context.stroke();
+      }
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      return texture;
+    }
+
+    const woodTexture = makeWoodTexture();
+    const woodMaterial = new THREE.MeshStandardMaterial({
+      map: woodTexture,
+      color: 0xffffff,
+      roughness: 0.68,
+      metalness: 0
+    });
+    const woodEdgeMaterial = standard(palette.timberDark, 0.75);
+
+    function addBox(parent, width, height, depth, material, x, y, z, options = {}) {
+      const mesh = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), material);
+      mesh.position.set(x, y, z);
+      mesh.castShadow = options.castShadow ?? true;
+      mesh.receiveShadow = options.receiveShadow ?? true;
+      parent.add(mesh);
+      return mesh;
+    }
+
+    function makeDeckGeometry(points, uvScale = { x: 0.145, z: 2.4 }) {
+      const geometry = new THREE.BufferGeometry();
+      const positions = [];
+      const uvs = [];
+      const indices = [];
+
+      points.forEach(([x, z]) => {
+        positions.push(x, 0, z);
+        uvs.push(x / uvScale.x, z / uvScale.z);
+      });
+      const signedArea = points.reduce((area, [x, z], index) => {
+        const [nextX, nextZ] = points[(index + 1) % points.length];
+        return area + x * nextZ - nextX * z;
+      }, 0);
+      for (let index = 1; index < points.length - 1; index += 1) {
+        indices.push(...(signedArea >= 0 ? [0, index + 1, index] : [0, index, index + 1]));
+      }
+
+      geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+      geometry.setAttribute("uv", new THREE.Float32BufferAttribute(uvs, 2));
+      geometry.setIndex(indices);
+      geometry.computeVertexNormals();
+      return geometry;
+    }
+
+    function addDeck(parent, points, y = 0.035) {
+      const deck = new THREE.Mesh(makeDeckGeometry(points), woodMaterial);
+      deck.position.y = y;
+      deck.receiveShadow = true;
+      parent.add(deck);
+      return deck;
+    }
+
+    function addGlassWallAlongZ(parent, zStart, zEnd, x = 0, panelCount = 3) {
+      const length = zEnd - zStart;
+      addBox(parent, 0.035, 2.7, length, glassMaterial, x, 1.45, zStart + length / 2, { castShadow: false });
+      addBox(parent, 0.075, 0.075, length, materials.charcoal, x, 0.105, zStart + length / 2);
+      addBox(parent, 0.075, 0.075, length, materials.charcoal, x, 2.795, zStart + length / 2);
+      for (let index = 0; index <= panelCount; index += 1) {
+        addBox(parent, 0.075, 2.78, 0.055, materials.charcoal, x, 1.45, zStart + length * index / panelCount);
+      }
+    }
+
+    function addGlassWallAlongX(parent, xStart, xEnd, z, panelCount = 3) {
+      const width = xEnd - xStart;
+      addBox(parent, width, 2.7, 0.035, glassMaterial, xStart + width / 2, 1.45, z, { castShadow: false });
+      addBox(parent, width, 0.075, 0.075, materials.charcoal, xStart + width / 2, 0.105, z);
+      addBox(parent, width, 0.075, 0.075, materials.charcoal, xStart + width / 2, 2.795, z);
+      for (let index = 0; index <= panelCount; index += 1) {
+        addBox(parent, 0.055, 2.78, 0.075, materials.charcoal, xStart + width * index / panelCount, 1.45, z);
+      }
+    }
+
+    function addVerticalCladding(parent, x, zStart, zEnd, height = 2.82, outward = -1) {
+      const boardWidth = 0.135;
+      const boardCount = Math.ceil((zEnd - zStart) / boardWidth);
+      const colors = [palette.timber, palette.timberLight, 0x8b5d35, 0xa87849];
+      for (let index = 0; index < boardCount; index += 1) {
+        const start = zStart + index * boardWidth;
+        const width = Math.min(boardWidth - 0.012, zEnd - start);
+        if (width <= 0) continue;
+        const material = standard(colors[index % colors.length], 0.78);
+        addBox(parent, 0.045, height, width, material, x + outward * 0.025, height / 2 + 0.08, start + width / 2);
+      }
+    }
+
+    function addPlanSurface(parent, points, material, y = 0) {
+      const shape = new THREE.Shape();
+      points.forEach(([planX, planY], index) => {
+        const x = siteX(planX);
+        const shapeY = -siteZ(planY);
+        if (index === 0) shape.moveTo(x, shapeY);
+        else shape.lineTo(x, shapeY);
+      });
+      shape.closePath();
+      const mesh = new THREE.Mesh(new THREE.ShapeGeometry(shape), material);
+      mesh.rotation.x = -Math.PI / 2;
+      mesh.position.y = y;
+      mesh.receiveShadow = true;
+      parent.add(mesh);
+      return mesh;
+    }
+
+    function addPlanOutline(parent, points, color, y) {
+      const vertices = points.map(([planX, planY]) => new THREE.Vector3(siteX(planX), y, siteZ(planY)));
+      const outline = new THREE.LineLoop(
+        new THREE.BufferGeometry().setFromPoints(vertices),
+        new THREE.LineBasicMaterial({ color, depthTest: false })
+      );
+      outline.renderOrder = 26;
+      parent.add(outline);
+      return outline;
+    }
+
+    function planRect(x1, y1, x2, y2) {
+      return [[x1, y1], [x2, y1], [x2, y2], [x1, y2]];
+    }
+
+    const world = new THREE.Group();
+    // Plan mode is the canonical orientation: house/pool left, driveway/studio right.
+    world.scale.x = -1;
+    scene.add(world);
+    const planOnly = new THREE.Group();
+    planOnly.visible = false;
+    world.add(planOnly);
+
+    const parcelOuterRing = [
+      [-0.262, 14.918], [120.998, 17.261], [140.665, 161.659],
+      [240.137, 892.098], [239.769, 945.156], [239.664, 944.428],
+      [238.798, 1040.061], [159.889, 1040.041], [147.154, 1040.038],
+      [115.604, 1040.03], [114.605, 1040.029], [0, 1040],
+      [-0.03, 904.941], [-0.214, 198.773], [-0.225, 159.546]
+    ];
+    addPlanSurface(world, parcelOuterRing, materials.lawn, -0.08);
+
+    addPlanSurface(world, [[0, 968], [239.45, 968], [238.798, 1040.061], [0, 1040]], materials.paving, -0.015);
+
+    const frontageCenterX = (siteX(-60) + siteX(300)) / 2;
+    const frontageWidth = siteX(300) - siteX(-60);
+    const addFrontageBand = (startY, endY, material, y) => addBox(
+      world,
+      frontageWidth,
+      0.08,
+      Math.abs(siteZ(endY) - siteZ(startY)),
+      material,
+      frontageCenterX,
+      y,
+      (siteZ(startY) + siteZ(endY)) / 2,
+      { castShadow: false }
+    );
+    addFrontageBand(1040, 1076, materials.publicGrass, -0.04);
+    addFrontageBand(1076, 1106, materials.cyclePath, -0.035);
+    addFrontageBand(1106, 1166, materials.road, -0.03);
+
+    const roadMarkingMaterial = new THREE.MeshBasicMaterial({ color: 0xf2f0e9 });
+    for (let planX = -60; planX < 300; planX += 20) {
+      addBox(
+        world,
+        12 / planScale,
+        0.012,
+        0.09,
+        roadMarkingMaterial,
+        siteX(planX + 6),
+        0.018,
+        siteZ(1136),
+        { castShadow: false }
+      );
+    }
+
+    const studioAngle = THREE.MathUtils.degToRad(7.794923);
+    const studioRearPlanX = 81.98330690803415;
+    const studioPathStartX = siteX(studioRearPlanX);
+    const poolShiftMeters = Math.tan(studioAngle) * studioPathStartX;
+    const poolRearZ = -poolShiftMeters;
+
+    const pool = new THREE.Group();
+    pool.position.z = poolRearZ;
+    world.add(pool);
+    const poolOuterWidth = 3.4;
+    const poolOuterLength = 7.7;
+    const coping = 0.2;
+
+    addBox(pool, 3.4, 1.38, 7.7, materials.stoneEdge, -1.7, -0.73, -3.85);
+    addBox(pool, 3.0, 1.27, 7.3, standard(0xb8d8df, 0.48), -1.7, -0.72, -3.85);
+    addBox(pool, coping, 0.09, poolOuterLength, materials.stone, -0.1, 0.015, -3.85);
+    addBox(pool, coping, 0.09, poolOuterLength, materials.stone, -3.3, 0.015, -3.85);
+    addBox(pool, 3.0, 0.09, coping, materials.stone, -1.7, 0.015, -0.1);
+    addBox(pool, 3.0, 0.09, coping, materials.stone, -1.7, 0.015, -7.6);
+
+    const waterUniforms = { time: { value: 0 } };
+    const waterMaterial = new THREE.ShaderMaterial({
+      uniforms: waterUniforms,
+      transparent: true,
+      side: THREE.DoubleSide,
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform float time;
+        varying vec2 vUv;
+        void main() {
+          float waveA = sin(vUv.y * 92.0 + time * 1.15 + sin(vUv.x * 11.0) * 1.8);
+          float waveB = sin(vUv.x * 68.0 - time * 0.72 + vUv.y * 8.0);
+          float caustic = smoothstep(0.70, 0.98, (waveA + waveB) * 0.25 + 0.5);
+          vec3 deep = vec3(0.16, 0.47, 0.60);
+          vec3 shallow = vec3(0.49, 0.78, 0.84);
+          vec3 color = mix(deep, shallow, 0.46 + vUv.x * 0.12) + caustic * 0.18;
+          gl_FragColor = vec4(color, 0.93);
+        }
+      `
+    });
+    const water = new THREE.Mesh(new THREE.PlaneGeometry(3.0, 7.3, 1, 1), waterMaterial);
+    water.rotation.x = -Math.PI / 2;
+    water.position.set(-1.7, -0.035, -3.85);
+    pool.add(water);
+
+    for (let index = 0; index < 4; index += 1) {
+      addBox(pool, 2.4 - index * 0.22, 0.11, 0.38, materials.white, -1.7, -0.17 - index * 0.18, -7.08 + index * 0.32, { castShadow: false });
+    }
+
+    const studioPathXAtZ = z => studioPathStartX - Math.tan(studioAngle) * z;
+    const studio = new THREE.Group();
+    studio.position.set(studioPathStartX, 0, 0);
+    studio.rotation.y = -studioAngle;
+    studio.scale.z = -1;
+    world.add(studio);
+
+    const pergolaLength = 2.507;
+    const shellLength = 10 - pergolaLength;
+    const pergolaGlassLocalZ = pergolaLength + 0.015;
+    const platformStudioEdge = {
+      x: studioPathStartX + Math.sin(studioAngle) * pergolaGlassLocalZ,
+      z: -Math.cos(studioAngle) * pergolaGlassLocalZ
+    };
+    const platformPoolLocalX = -platformStudioEdge.x / Math.cos(studioAngle);
+    const platformPoolEdge = {
+      x: 0,
+      z: Math.sin(studioAngle) * platformPoolLocalX - Math.cos(studioAngle) * pergolaGlassLocalZ
+    };
+    const platformPoolLocalZ = Math.sin(studioAngle) * (platformPoolEdge.x - studioPathStartX)
+      - Math.cos(studioAngle) * platformPoolEdge.z;
+    const platformStudioLocalZ = Math.sin(studioAngle) * (platformStudioEdge.x - studioPathStartX)
+      - Math.cos(studioAngle) * platformStudioEdge.z;
+    const pergolaEdgeLength = Math.hypot(
+      platformStudioEdge.x - platformPoolEdge.x,
+      platformStudioEdge.z - platformPoolEdge.z
+    );
+    const sliderLandingEndLocalZ = 7.837;
+    const landingStudioEdge = {
+      x: studioPathStartX + Math.sin(studioAngle) * sliderLandingEndLocalZ,
+      z: -Math.cos(studioAngle) * sliderLandingEndLocalZ
+    };
+    const landingPoolLocalX = -landingStudioEdge.x / Math.cos(studioAngle);
+    const landingPoolEdge = {
+      x: 0,
+      z: Math.sin(studioAngle) * landingPoolLocalX - Math.cos(studioAngle) * sliderLandingEndLocalZ
+    };
+    const clearancePergolaEndZ = -Math.cos(studioAngle) * pergolaLength;
+    const platformRearPoolLocalZ = Math.sin(studioAngle) * -studioPathStartX
+      - Math.cos(studioAngle) * poolRearZ;
+
+    addDeck(studio, [[0, 0], [4, 0], [4, pergolaLength], [0, pergolaLength]]);
+    addBox(studio, 4, 0.08, pergolaLength, woodEdgeMaterial, 2, -0.005, pergolaLength / 2, { castShadow: false });
+
+    const poolStudioPassage = new THREE.Group();
+    poolStudioPassage.name = "pool-pergola-timber-platform";
+    world.add(poolStudioPassage);
+
+    const hybridLandingPoints = [
+      [0, poolRearZ],
+      [studioPathStartX, 0],
+      [platformStudioEdge.x, platformStudioEdge.z],
+      [landingStudioEdge.x, landingStudioEdge.z],
+      [landingPoolEdge.x, landingPoolEdge.z],
+      [platformPoolEdge.x, platformPoolEdge.z]
+    ];
+    addDeck(poolStudioPassage, hybridLandingPoints);
+    const hybridLandingArea = Math.abs(hybridLandingPoints.reduce((area, [x, z], index) => {
+      const [nextX, nextZ] = hybridLandingPoints[(index + 1) % hybridLandingPoints.length];
+      return area + x * nextZ - nextX * z;
+    }, 0)) / 2;
+
+    const landingEdgeDeltaX = landingStudioEdge.x - landingPoolEdge.x;
+    const landingEdgeDeltaZ = landingStudioEdge.z - landingPoolEdge.z;
+    const landingEdgeLength = Math.hypot(landingEdgeDeltaX, landingEdgeDeltaZ);
+    const platformEdgeTrim = addBox(
+      poolStudioPassage,
+      landingEdgeLength,
+      0.07,
+      0.07,
+      woodEdgeMaterial,
+      (landingPoolEdge.x + landingStudioEdge.x) / 2,
+      0,
+      (landingPoolEdge.z + landingStudioEdge.z) / 2
+    );
+    platformEdgeTrim.rotation.y = -Math.atan2(landingEdgeDeltaZ, landingEdgeDeltaX);
+
+    const platformRearEdgeLength = Math.hypot(studioPathStartX, -poolRearZ);
+    const platformRearEdgeTrim = addBox(
+      poolStudioPassage,
+      platformRearEdgeLength,
+      0.07,
+      0.07,
+      woodEdgeMaterial,
+      studioPathStartX / 2,
+      0,
+      poolRearZ / 2
+    );
+    platformRearEdgeTrim.rotation.y = -Math.atan2(-poolRearZ, studioPathStartX);
+
+    const facadeJunction = new THREE.Group();
+    facadeJunction.position.set(studioPathStartX, 0, 0);
+    facadeJunction.rotation.y = -studioAngle;
+    facadeJunction.scale.z = -1;
+    poolStudioPassage.add(facadeJunction);
+    addBox(
+      facadeJunction,
+      0.06,
+      0.04,
+      sliderLandingEndLocalZ,
+      materials.charcoal,
+      -0.03,
+      0.055,
+      sliderLandingEndLocalZ / 2,
+      { castShadow: false }
+    );
+
+    const steppingStonePlan = [
+      [91.8, 420.5, -18],
+      [99.1, 438.3, -10],
+      [103.0, 456.2, -4]
+    ];
+    const steppingStoneGeometry = new THREE.CylinderGeometry(0.5, 0.48, 0.055, 10);
+    for (const [planX, planY, rotation] of steppingStonePlan) {
+      const stone = new THREE.Mesh(steppingStoneGeometry, materials.stone);
+      stone.position.set(siteX(planX), 0.025, siteZ(planY));
+      stone.scale.set(0.5, 1, 0.7);
+      stone.rotation.y = THREE.MathUtils.degToRad(rotation);
+      stone.receiveShadow = true;
+      poolStudioPassage.add(stone);
+    }
+    document.documentElement.dataset.passage = "hybrid";
+
+    addBox(studio, 4, 0.14, shellLength, materials.interiorFloor, 2, 0.01, pergolaLength + shellLength / 2, { castShadow: false });
+    addBox(studio, 4, 0.24, shellLength, materials.charcoalSoft, 2, 3.02, pergolaLength + shellLength / 2);
+    const studioCeiling = addBox(studio, 3.52, 0.04, shellLength - 0.48, materials.ceiling, 2, 2.88, pergolaLength + shellLength / 2, { castShadow: false });
+    studioCeiling.name = "studio-white-interior-ceiling";
+    addBox(studio, 0.24, 2.96, shellLength, materials.wall, 3.88, 1.52, pergolaLength + shellLength / 2);
+    addBox(studio, 4, 2.96, 0.24, materials.wall, 2, 1.52, 9.88);
+
+    addBox(studio, 0.045, 0.3, shellLength, materials.stone, 4.0225, 0.15, pergolaLength + shellLength / 2);
+    addBox(studio, 4, 0.3, 0.045, materials.stone, 2, 0.15, 10.0225);
+
+    addBox(studio, 0.26, 2.96, 0.33, woodEdgeMaterial, 0.12, 1.52, 2.672);
+    addGlassWallAlongZ(studio, 2.837, 6.337, 0.015, 3);
+    addBox(studio, 0.24, 2.96, 0.2, materials.charcoal, 0.12, 1.52, 6.437);
+    addGlassWallAlongZ(studio, 6.537, 7.837, 0.015, 1);
+    addBox(studio, 0.24, 2.96, 2.163, materials.wall, 0.12, 1.52, 8.9185);
+    addBox(studio, 0.045, 0.3, 2.163, materials.stone, -0.0225, 0.15, 8.9185);
+
+    addBox(studio, 0.18, 0.25, 5.0, materials.wall, 0.1, 2.925, 5.337);
+    addGlassWallAlongX(studio, 0.28, 3.77, pergolaLength + 0.015, 3);
+
+    addBox(studio, 4, 0.2, pergolaLength, materials.charcoalSoft, 2, 3.02, pergolaLength / 2);
+    const soffit = new THREE.Mesh(new THREE.PlaneGeometry(4, pergolaLength), woodMaterial);
+    soffit.rotation.x = Math.PI / 2;
+    soffit.position.set(2, 2.91, pergolaLength / 2);
+    soffit.receiveShadow = true;
+    studio.add(soffit);
+
+    addBox(studio, 0.24, 2.96, pergolaLength, materials.wallWarm, 3.88, 1.52, pergolaLength / 2);
+    addBox(studio, 0.045, 0.3, pergolaLength, materials.stone, 4.0225, 0.15, pergolaLength / 2);
+    addVerticalCladding(studio, 3.755, 0, pergolaLength, 2.82, 1);
+    addBox(studio, 0.2, 2.93, 0.2, materials.charcoal, 0.33, 1.5, 0.43);
+    addBox(studio, 4, 0.16, 0.18, materials.charcoal, 2, 2.94, 0.09);
+    addBox(studio, 0.18, 0.16, pergolaLength, materials.charcoal, 0.09, 2.94, pergolaLength / 2);
+
+    const interior = new THREE.Group();
+    studio.add(interior);
+    addBox(interior, 1.88, 0.34, 0.74, materials.darkFabric, 2.72, 0.31, 3.55);
+    addBox(interior, 1.78, 0.38, 0.22, materials.cushion, 2.72, 0.68, 3.82);
+    addBox(interior, 0.72, 0.08, 0.46, woodEdgeMaterial, 1.55, 0.32, 3.45);
+
+    addBox(studio, 1.45, 0.36, 0.56, materials.darkFabric, 2.78, 0.31, 1.12);
+    addBox(studio, 1.35, 0.32, 0.18, materials.cushion, 2.78, 0.64, 1.33);
+    addBox(studio, 0.72, 0.06, 0.5, woodEdgeMaterial, 1.55, 0.34, 1.42);
+    addBox(studio, 0.06, 0.31, 0.06, materials.charcoal, 1.31, 0.17, 1.25);
+    addBox(studio, 0.06, 0.31, 0.06, materials.charcoal, 1.79, 0.17, 1.25);
+
+    const warmLight = new THREE.PointLight(0xffd7a0, 18, 7, 2);
+    warmLight.position.set(2.2, 2.45, 3.4);
+    studio.add(warmLight);
+    const pergolaLight = new THREE.PointLight(0xffd5a0, 8, 5, 2);
+    pergolaLight.position.set(2.1, 2.7, 1.2);
+    studio.add(pergolaLight);
+
+    const terraceGardenZ = siteZ(464.05);
+    const houseRearZ = siteZ(536.05);
+    const houseFrontZ = siteZ(806.05);
+    const houseLeftX = siteX(0);
+    const houseRearRightX = siteX(118.8);
+    const terraceWidth = houseRearRightX - houseLeftX;
+    const terraceDepth = terraceGardenZ - houseRearZ;
+    const pavingMaterial = standard(0xb9b1a5, 0.9);
+
+    addBox(
+      world,
+      terraceWidth,
+      0.1,
+      terraceDepth,
+      pavingMaterial,
+      (houseLeftX + houseRearRightX) / 2,
+      0.02,
+      (terraceGardenZ + houseRearZ) / 2,
+      { castShadow: false }
+    );
+
+    const terraceJointPoints = [];
+    for (let x = houseLeftX; x <= houseRearRightX + 0.01; x += 0.6) {
+      terraceJointPoints.push(new THREE.Vector3(x, 0.075, terraceGardenZ), new THREE.Vector3(x, 0.075, houseRearZ));
+    }
+    for (let z = houseRearZ; z <= terraceGardenZ + 0.01; z += 0.6) {
+      terraceJointPoints.push(new THREE.Vector3(houseLeftX, 0.075, z), new THREE.Vector3(houseRearRightX, 0.075, z));
+    }
+    world.add(new THREE.LineSegments(
+      new THREE.BufferGeometry().setFromPoints(terraceJointPoints),
+      new THREE.LineBasicMaterial({ color: 0x958d82, transparent: true, opacity: 0.52 })
+    ));
+
+    const houseHeight = 5.8;
+    const houseMaterial = standard(0xe7e3db, 0.94);
+    const houseStepLeftX = siteX(118.8);
+    const houseStepRightX = siteX(126);
+    const houseStepRearZ = siteZ(591.05);
+    const houseStepFrontZ = siteZ(778.05);
+    const houseNotchX = siteX(91);
+    addBox(
+      world,
+      houseRearRightX - houseLeftX,
+      houseHeight,
+      houseRearZ - houseStepRearZ,
+      houseMaterial,
+      (houseLeftX + houseRearRightX) / 2,
+      houseHeight / 2,
+      (houseRearZ + houseStepRearZ) / 2
+    );
+    addBox(
+      world,
+      houseStepRightX - houseStepLeftX,
+      houseHeight,
+      houseStepRearZ - houseStepFrontZ,
+      houseMaterial,
+      (houseStepLeftX + houseStepRightX) / 2,
+      houseHeight / 2,
+      (houseStepRearZ + houseStepFrontZ) / 2
+    );
+    addBox(
+      world,
+      houseStepLeftX - houseLeftX,
+      houseHeight,
+      houseStepRearZ - houseStepFrontZ,
+      houseMaterial,
+      (houseLeftX + houseStepLeftX) / 2,
+      houseHeight / 2,
+      (houseStepRearZ + houseStepFrontZ) / 2
+    );
+    addBox(
+      world,
+      houseNotchX - houseLeftX,
+      houseHeight,
+      houseStepFrontZ - houseFrontZ,
+      houseMaterial,
+      (houseLeftX + houseNotchX) / 2,
+      houseHeight / 2,
+      (houseStepFrontZ + houseFrontZ) / 2
+    );
+    addBox(
+      world,
+      terraceWidth + 0.18,
+      0.18,
+      houseRearZ - houseStepRearZ + 0.18,
+      materials.charcoalSoft,
+      (houseLeftX + houseRearRightX) / 2,
+      houseHeight + 0.09,
+      (houseRearZ + houseStepRearZ) / 2
+    );
+
+    const houseSliderLeftX = siteX(18);
+    const houseSliderRightX = siteX(108);
+    const houseSliderWidth = houseSliderRightX - houseSliderLeftX;
+    addBox(
+      world,
+      houseSliderWidth,
+      2.45,
+      0.05,
+      glassMaterial,
+      (houseSliderLeftX + houseSliderRightX) / 2,
+      1.32,
+      houseRearZ + 0.035,
+      { castShadow: false }
+    );
+    for (const x of [houseSliderLeftX, siteX(48), siteX(78), houseSliderRightX]) {
+      addBox(world, 0.065, 2.52, 0.075, materials.charcoal, x, 1.32, houseRearZ + 0.07);
+    }
+    addBox(world, houseSliderWidth, 0.07, 0.075, materials.charcoal, (houseSliderLeftX + houseSliderRightX) / 2, 0.095, houseRearZ + 0.07);
+    addBox(world, houseSliderWidth, 0.07, 0.075, materials.charcoal, (houseSliderLeftX + houseSliderRightX) / 2, 2.545, houseRearZ + 0.07);
+
+    const houseOutline = [
+      [0, 806.05], [91, 806.05], [91, 778.05], [126, 778.05],
+      [126, 591.05], [118.8, 591.05], [118.8, 536.05], [0, 536.05]
+    ];
+    addPlanSurface(world, houseOutline, materials.charcoalSoft, houseHeight + 0.12);
+
+    const studioPlanOutline = [
+      [81.98330690803415, 267.1810652588368],
+      [153.318017, 257.415865],
+      [177.73101764709196, 435.75264022991456],
+      [106.39630755512613, 445.51784048875135]
+    ];
+    addPlanSurface(planOnly, houseOutline, standard(0xe7e3db, 0.97), houseHeight + 0.26);
+    addPlanOutline(planOnly, houseOutline, 0x2e4057, houseHeight + 0.285);
+    addPlanSurface(planOnly, studioPlanOutline, standard(0xe4e0d8, 0.97), 3.24);
+    addPlanOutline(planOnly, studioPlanOutline, 0xc0392b, 3.265);
+
+    function addHouseSideWindow(startPlanY, endPlanY, height, sill) {
+      const startZ = siteZ(startPlanY);
+      const endZ = siteZ(endPlanY);
+      addBox(
+        world,
+        0.055,
+        height,
+        Math.abs(endZ - startZ),
+        glassMaterial,
+        siteX(126) + 0.035,
+        sill + height / 2,
+        (startZ + endZ) / 2,
+        { castShadow: false }
+      );
+      for (const z of [startZ, endZ]) {
+        addBox(world, 0.075, height + 0.08, 0.055, materials.charcoal, siteX(126) + 0.065, sill + height / 2, z);
+      }
+    }
+    addHouseSideWindow(709.95, 735.15, 1.4, 0.9);
+    addHouseSideWindow(658.35, 690.75, 2.15, 0.15);
+    addHouseSideWindow(606.85, 639.25, 2.15, 0.15);
+
+    function addHouseFrontWindow(startPlanX, endPlanX) {
+      const startX = siteX(startPlanX);
+      const endX = siteX(endPlanX);
+      addBox(world, endX - startX, 2.15, 0.055, glassMaterial, (startX + endX) / 2, 1.225, houseFrontZ - 0.035, { castShadow: false });
+      for (const x of [startX, endX]) {
+        addBox(world, 0.055, 2.23, 0.075, materials.charcoal, x, 1.225, houseFrontZ - 0.065);
+      }
+    }
+    addHouseFrontWindow(16, 32.2);
+    addHouseFrontWindow(71, 80);
+
+    // Visible front-garden design, transferred directly from grondplan.html.
+    addPlanSurface(world, [
+      [126, 765.05], [222.835, 765.05], [240.137, 892.098],
+      [239.769, 945.156], [239.45, 968], [126, 968]
+    ], materials.paving, 0.005);
+    addPlanSurface(world, [[126, 765.05], [222.835, 765.05], [228.2, 806.05], [126, 806.05]], materials.gravel, 0.018);
+    addPlanSurface(world, [[126, 921.25], [239.7, 921.25], [239.45, 968], [126, 968]], materials.gravel, 0.018);
+    addPlanSurface(world, planRect(0, 921.25, 11, 968), materials.gravel, 0.018);
+    addPlanSurface(world, planRect(65, 921.25, 91, 968), materials.gravel, 0.018);
+    addPlanSurface(world, planRect(91, 778.05, 126, 968), materials.gravel, 0.022);
+    addPlanSurface(world, planRect(11, 806.05, 126, 824.05), materials.gravel, 0.024);
+    addPlanSurface(world, planRect(11, 921.25, 65, 968), materials.gravel, 0.02);
+
+    addPlanSurface(world, planRect(0, 806.05, 11, 921.25), materials.planting, 0.03);
+    addPlanSurface(world, planRect(65, 824.05, 91, 921.25), materials.flowerBed, 0.03);
+    addPlanSurface(world, [[126, 806.05], [228.2, 806.05], [230.4, 824.05], [126, 824.05]], materials.flowerBed, 0.03);
+    addPlanSurface(world, planRect(126, 767.25, 201.5, 778.05), materials.flowerBed, 0.032);
+
+    addPlanSurface(world, planRect(11, 824.05, 65, 921.25), materials.grassPaver, 0.035);
+    addPlanSurface(world, planRect(126, 824.05, 178.2, 921.25), materials.grassPaver, 0.035);
+    addPlanSurface(world, [[178.2, 824.05], [230.4, 824.05], [239.7, 921.25], [178.2, 921.25]], materials.grassPaver, 0.035);
+
+    const parkingDividerMaterial = new THREE.LineBasicMaterial({ color: 0x526a4e, transparent: true, opacity: 0.9 });
+    const parkingDivider = new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(siteX(178.2), 0.052, siteZ(824.05)),
+        new THREE.Vector3(siteX(178.2), 0.052, siteZ(921.25))
+      ]),
+      parkingDividerMaterial
+    );
+    world.add(parkingDivider);
+
+    // Existing 7,500 L rainwater tank: projection plus visible inspection hatch.
+    const tankCenterX = siteX(68.4);
+    const tankCenterZ = siteZ(438.13);
+    const tankProjection = new THREE.Mesh(
+      new THREE.RingGeometry(1.30, 1.35, 64),
+      new THREE.MeshBasicMaterial({ color: 0x6f8991, transparent: true, opacity: 0.72, side: THREE.DoubleSide })
+    );
+    tankProjection.rotation.x = -Math.PI / 2;
+    tankProjection.position.set(tankCenterX, 0.04, tankCenterZ);
+    tankProjection.name = "rainwater-tank-7500l-projection";
+    planOnly.add(tankProjection);
+    addBox(world, 0.6, 0.045, 0.6, materials.stone, tankCenterX, 0.04, tankCenterZ, { castShadow: false });
+
+    // Castello screen and 1.00 m pedestrian gate at the side-garden separation.
+    const gateZ = siteZ(765.05);
+    const screenLeftX = siteX(127.8);
+    const screenPostX = siteX(204.5);
+    const gateRightX = siteX(222.5);
+    addBox(world, screenPostX - screenLeftX, 1.8, 0.075, woodMaterial, (screenLeftX + screenPostX) / 2, 0.9, gateZ);
+    addBox(world, gateRightX - screenPostX, 1.8, 0.075, woodMaterial, (screenPostX + gateRightX) / 2, 0.9, gateZ);
+    for (const x of [screenLeftX, screenPostX, gateRightX]) {
+      addBox(world, 0.1, 1.94, 0.1, materials.charcoal, x, 0.97, gateZ);
+    }
+    addBox(world, gateRightX - screenLeftX, 0.07, 0.11, materials.charcoal, (screenLeftX + gateRightX) / 2, 0.08, gateZ);
+    addBox(world, gateRightX - screenLeftX, 0.07, 0.11, materials.charcoal, (screenLeftX + gateRightX) / 2, 1.76, gateZ);
+
+    const charger = addBox(world, 0.28, 0.42, 0.16, materials.charcoalSoft, screenPostX, 1.08, gateZ - 0.1);
+    charger.name = "ev-charger";
+    addBox(world, 0.2, 0.025, 0.17, standard(0xf0b400, 0.65), screenPostX, 1.12, gateZ - 0.185, { castShadow: false });
+
+    const mailbox = addBox(
+      world,
+      6.93 / planScale,
+      0.95,
+      4.554 / planScale,
+      materials.charcoalSoft,
+      siteX(7.535),
+      0.475,
+      siteZ(918.973)
+    );
+    mailbox.name = "winnie-mailbox";
+
+    function addFenceWithJasmine(xStart, zStart, xEnd, zEnd, seed) {
+      const fence = new THREE.Group();
+      const deltaX = xEnd - xStart;
+      const deltaZ = zEnd - zStart;
+      const length = Math.hypot(deltaX, deltaZ);
+      const height = 1.8;
+      const fenceMaterial = standard(0x293630, 0.62, 0.35);
+      const wireMaterial = new THREE.LineBasicMaterial({ color: 0x3b4a42, transparent: true, opacity: 0.78 });
+      const random = seededRandom(seed);
+
+      fence.position.set(xStart, 0, zStart);
+      fence.rotation.y = -Math.atan2(deltaZ, deltaX);
+      world.add(fence);
+
+      const postCount = Math.ceil(length / 2);
+      for (let index = 0; index <= postCount; index += 1) {
+        addBox(fence, 0.07, 1.92, 0.07, fenceMaterial, length * index / postCount, 0.96, 0);
+      }
+      for (const railHeight of [0.22, 0.9, 1.62]) {
+        addBox(fence, length, 0.035, 0.045, fenceMaterial, length / 2, railHeight, 0);
+      }
+
+      const wirePoints = [];
+      for (let x = 0; x <= length; x += 0.2) {
+        wirePoints.push(new THREE.Vector3(x, 0.12, 0), new THREE.Vector3(x, height, 0));
+      }
+      for (let y = 0.12; y <= height; y += 0.2) {
+        wirePoints.push(new THREE.Vector3(0, y, 0), new THREE.Vector3(length, y, 0));
+      }
+      fence.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(wirePoints), wireMaterial));
+
+      const leafGeometry = new THREE.IcosahedronGeometry(0.17, 1);
+      const flowerGeometry = new THREE.SphereGeometry(0.035, 6, 5);
+      const leafMaterials = [
+        standard(0x315b3b, 0.96),
+        standard(0x47764a, 0.96),
+        standard(0x648b55, 0.96)
+      ];
+      const flowerMaterial = standard(0xf5f1df, 0.94);
+
+      for (let index = 0; index < Math.ceil(length * 7); index += 1) {
+        const leaf = new THREE.Mesh(leafGeometry, leafMaterials[index % leafMaterials.length]);
+        leaf.position.set(random() * length, 0.18 + random() * 1.55, 0.035 + random() * 0.08);
+        leaf.scale.set(0.65 + random() * 0.8, 0.8 + random() * 1.15, 0.42 + random() * 0.45);
+        leaf.rotation.set(random() * 0.5, random() * Math.PI, random() * 0.45);
+        leaf.castShadow = true;
+        fence.add(leaf);
+      }
+
+      for (let index = 0; index < Math.ceil(length * 2.4); index += 1) {
+        const flower = new THREE.Mesh(flowerGeometry, flowerMaterial);
+        flower.position.set(random() * length, 0.35 + random() * 1.35, 0.16);
+        flower.castShadow = true;
+        fence.add(flower);
+      }
+    }
+
+    function addPlanFence(startX, startY, endX, endY, seed) {
+      addFenceWithJasmine(siteX(startX), siteZ(startY), siteX(endX), siteZ(endY), seed);
+    }
+
+    const studioBoundaryNno = { x: 153.318017, y: 257.415865 };
+    const studioBoundaryZzw = { x: 177.733, y: 435.752 };
+
+    // Outer parcel only: B499k rear, WNW side to the house, and OZO side split around the studio wall.
+    addPlanFence(-0.262, 14.918, 120.998, 17.261, 2401);
+    addPlanFence(-0.262, 14.918, -0.225, 159.546, 2402);
+    addPlanFence(-0.225, 159.546, 0, 536.05, 2403);
+    addPlanFence(120.998, 17.261, 140.665, 161.659, 2404);
+    addPlanFence(140.665, 161.659, studioBoundaryNno.x, studioBoundaryNno.y, 2405);
+    addPlanFence(studioBoundaryZzw.x, studioBoundaryZzw.y, 240.137, 892.098, 2406);
+    addPlanFence(240.137, 892.098, 239.769, 945.156, 2407);
+    addPlanFence(239.769, 945.156, 239.45, 968, 2408);
+    addPlanFence(0, 806.05, -0.03, 904.941, 2409);
+    addPlanFence(-0.03, 904.941, 0, 968, 2410);
+
+    function addPlanLinearBox(startPlanX, startPlanY, endPlanX, endPlanY, height, depth, material) {
+      const startX = siteX(startPlanX);
+      const startZ = siteZ(startPlanY);
+      const endX = siteX(endPlanX);
+      const endZ = siteZ(endPlanY);
+      const deltaX = endX - startX;
+      const deltaZ = endZ - startZ;
+      const length = Math.hypot(deltaX, deltaZ);
+      const segment = addBox(world, length, height, depth, material, (startX + endX) / 2, height / 2, (startZ + endZ) / 2);
+      segment.rotation.y = -Math.atan2(deltaZ, deltaX);
+      return segment;
+    }
+
+    addPlanLinearBox(0, 1040, 238.798, 1040.061, 0.42, 0.2, standard(0x71695e, 0.92));
+
+
+    const hemisphere = new THREE.HemisphereLight(0xdcecf1, 0x5d624d, 2.25);
+    scene.add(hemisphere);
+    const sun = new THREE.DirectionalLight(0xfff0d8, 4.1);
+    sun.position.set(-8, 13, 9);
+    sun.castShadow = true;
+    sun.shadow.mapSize.set(2048, 2048);
+    sun.shadow.camera.left = -14;
+    sun.shadow.camera.right = 14;
+    sun.shadow.camera.top = 14;
+    sun.shadow.camera.bottom = -14;
+    sun.shadow.camera.near = 0.5;
+    sun.shadow.camera.far = 36;
+    sun.shadow.bias = -0.00025;
+    scene.add(sun);
+
+    const dimensions = new THREE.Group();
+    dimensions.visible = false;
+    world.add(dimensions);
+
+    function makeTextSprite(text) {
+      const canvas = document.createElement("canvas");
+      canvas.width = 512;
+      canvas.height = 160;
+      const context = canvas.getContext("2d");
+      context.fillStyle = "rgba(252, 251, 248, 0.94)";
+      context.roundRect(8, 8, 496, 144, 28);
+      context.fill();
+      context.strokeStyle = "rgba(86, 72, 58, 0.8)";
+      context.lineWidth = 5;
+      context.stroke();
+      context.fillStyle = "#2b2926";
+      context.font = "700 64px Segoe UI";
+      context.textAlign = "center";
+      context.textBaseline = "middle";
+      context.fillText(text, 256, 80);
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false }));
+      sprite.scale.set(0.82, 0.256, 1);
+      sprite.renderOrder = 20;
+      return sprite;
+    }
+
+    function makePlanLabel(text, width = 3.4) {
+      const canvas = document.createElement("canvas");
+      canvas.width = 512;
+      canvas.height = 128;
+      const context = canvas.getContext("2d");
+      context.font = "700 46px Segoe UI";
+      context.textAlign = "center";
+      context.textBaseline = "middle";
+      context.lineJoin = "round";
+      context.strokeStyle = "rgba(252, 251, 248, 0.94)";
+      context.lineWidth = 10;
+      context.strokeText(text, 256, 64);
+      context.fillStyle = "#263238";
+      context.fillText(text, 256, 64);
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false }));
+      sprite.scale.set(width, width / 4, 1);
+      sprite.renderOrder = 30;
+      return sprite;
+    }
+
+    function addPlanLabel(text, x, z, width = 3.4) {
+      const label = makePlanLabel(text, width);
+      label.position.set(x, 6.2, z);
+      planOnly.add(label);
+    }
+
+    const boundaryPoints = parcelOuterRing.map(([planX, planY]) => new THREE.Vector3(siteX(planX), 0.09, siteZ(planY)));
+    const boundary = new THREE.LineLoop(
+      new THREE.BufferGeometry().setFromPoints(boundaryPoints),
+      new THREE.LineDashedMaterial({ color: 0xc0392b, dashSize: 0.42, gapSize: 0.22, depthTest: false })
+    );
+    boundary.computeLineDistances();
+    boundary.renderOrder = 25;
+    planOnly.add(boundary);
+
+    const parcelJoin = new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(siteX(-0.225), 0.085, siteZ(159.546)),
+        new THREE.Vector3(siteX(140.665), 0.085, siteZ(161.659))
+      ]),
+      new THREE.LineDashedMaterial({ color: 0xc0392b, dashSize: 0.22, gapSize: 0.18, transparent: true, opacity: 0.66, depthTest: false })
+    );
+    parcelJoin.computeLineDistances();
+    parcelJoin.renderOrder = 24;
+    planOnly.add(parcelJoin);
+
+    studio.updateMatrixWorld(true);
+    const studioLabelPosition = studio.localToWorld(new THREE.Vector3(2, 0, 5));
+    addPlanLabel("TUINSTUDIO", studioLabelPosition.x, studioLabelPosition.z, 4.2);
+    addPlanLabel("LPW CITY+", -1.7, poolRearZ - 3.85, 3.2);
+    addPlanLabel("RW 7500 L", tankCenterX, tankCenterZ, 2.8);
+    addPlanLabel("TERRAS", (houseLeftX + houseRearRightX) / 2, (terraceGardenZ + houseRearZ) / 2, 2.5);
+    addPlanLabel("WONING", siteX(60), siteZ(671.05), 3.2);
+    addPlanLabel("P3", siteX(38), siteZ(872.65), 1.3);
+    addPlanLabel("P1", siteX(152.1), siteZ(872.65), 1.3);
+    addPlanLabel("P2", siteX(204.3), siteZ(872.65), 1.3);
+    addPlanLabel("BEDIENINGSWEG", siteX(119), siteZ(1004), 4.1);
+    addPlanLabel("BERM", siteX(120), siteZ(1058), 2.2);
+    addPlanLabel("FIETSPAD", siteX(120), siteZ(1091), 2.9);
+    addPlanLabel("N408", siteX(120), siteZ(1136), 2.4);
+
+    function addDimensionBetween(start, end, label, y = 0.22) {
+      const material = new THREE.LineBasicMaterial({ color: 0x5f3927, depthTest: false });
+      const deltaX = end.x - start.x;
+      const deltaZ = end.z - start.z;
+      const length = Math.hypot(deltaX, deltaZ);
+      const tickX = -deltaZ / length * 0.1;
+      const tickZ = deltaX / length * 0.1;
+      const points = [
+        new THREE.Vector3(start.x, y, start.z), new THREE.Vector3(end.x, y, end.z),
+        new THREE.Vector3(start.x - tickX, y, start.z - tickZ), new THREE.Vector3(start.x + tickX, y, start.z + tickZ),
+        new THREE.Vector3(end.x - tickX, y, end.z - tickZ), new THREE.Vector3(end.x + tickX, y, end.z + tickZ)
+      ];
+      const line = new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(points), material);
+      line.renderOrder = 15;
+      dimensions.add(line);
+      const sprite = makeTextSprite(label);
+      sprite.position.set((start.x + end.x) / 2, y + 0.28, (start.z + end.z) / 2);
+      dimensions.add(sprite);
+    }
+
+    addDimensionBetween({ x: 0, z: poolRearZ }, { x: studioPathStartX, z: 0 }, "0,36 m", 0.2);
+    addDimensionBetween(platformPoolEdge, platformStudioEdge, "0,70 m", 0.24);
+
+    const geometryChecks = {
+      minimum: platformRearEdgeLength,
+      pergolaEnd: pergolaEdgeLength,
+      poolOuter: [poolOuterLength, poolOuterWidth],
+      poolShift: poolShiftMeters,
+      studioOuter: [10, 4],
+      terrace: [terraceWidth, terraceDepth],
+      rainwaterTank: {
+        diameter: 2.7,
+        poolClearance: Math.abs(poolRearZ - poolOuterLength - (tankCenterZ + 1.35))
+      },
+      siteDepth: Math.abs(siteZ(1166) - siteZ(14.918)),
+      layout: {
+        poolPlanX: [14.4, 75.6],
+        studioPlanX: [81.983, 177.733],
+        housePlanX: [0, 126],
+        drivewayPlanX: [126, 240.137]
+      },
+      timberPlatform: {
+        studioEdgeLength: pergolaGlassLocalZ,
+        poolEdgeLength: Math.abs(platformPoolEdge.z),
+        glassEdgeLength: pergolaEdgeLength,
+        skewAtPool: Math.abs(platformPoolEdge.z - platformStudioEdge.z),
+        glassLineDeviation: Math.abs(platformPoolLocalZ - platformStudioLocalZ),
+        rearLineDeviation: Math.abs(platformRearPoolLocalZ),
+        startClearance: platformRearEdgeLength,
+        endClearance: pergolaEdgeLength
+      },
+      hybridPath: {
+        landingArea: hybridLandingArea,
+        landingGlazingEnd: sliderLandingEndLocalZ,
+        landingEndClearance: landingEdgeLength,
+        steppingStoneCount: steppingStonePlan.length,
+        steppingStoneArea: steppingStonePlan.length * Math.PI * 0.25 * 0.35
+      },
+      sourcePlan: "grondplan.html",
+      canonicalWorldScaleX: world.scale.x
+    };
+    console.assert(Math.abs(geometryChecks.minimum - 0.358) < 0.002, "Upper platform edge must be about 0.36 m");
+    console.assert(Math.abs(geometryChecks.pergolaEnd - 0.703) < 0.002, "Glass-line platform edge must be about 0.70 m");
+    console.assert(Math.abs(geometryChecks.poolShift - 0.048546) < 0.00001, "Pool must move 4.85 cm toward the house");
+    console.assert(poolOuterLength === 7.7 && poolOuterWidth === 3.4, "City+ outer dimensions must be 7.70 x 3.40 m");
+    console.assert(Math.abs(terraceWidth - 6.6) < 0.001 && Math.abs(terraceDepth - 4) < 0.001, "Terrace must be 6.60 x 4.00 m");
+    console.assert(Math.abs(geometryChecks.rainwaterTank.poolClearance - 0.399) < 0.005, "Tank clearance must be about 0.40 m");
+    console.assert(geometryChecks.layout.poolPlanX[1] < geometryChecks.layout.studioPlanX[0], "Pool must remain left of the studio");
+    console.assert(geometryChecks.layout.housePlanX[1] <= geometryChecks.layout.drivewayPlanX[0], "House must remain left of the driveway");
+    console.assert(Math.abs(geometryChecks.timberPlatform.studioEdgeLength - 2.522) < 0.001, "Timber platform must follow the pergola glass line");
+    console.assert(Math.abs(geometryChecks.timberPlatform.skewAtPool - 0.095) < 0.002, "Timber platform must meet the pool diagonally");
+    console.assert(geometryChecks.timberPlatform.glassLineDeviation < 1e-9, "Platform edge and pergola glass must be collinear");
+    console.assert(geometryChecks.timberPlatform.rearLineDeviation < 1e-9, "Upper platform edge and pergola rear must be collinear");
+    console.assert(Math.abs(geometryChecks.hybridPath.landingArea - 7.009) < 0.002, "Hybrid landing must be about 7.01 m²");
+    console.assert(Math.abs(geometryChecks.hybridPath.landingGlazingEnd - 7.837) < 1e-9, "Landing must end with the pool-facing glazing");
+    console.assert(geometryChecks.hybridPath.steppingStoneCount === 3, "Hybrid route must contain three stepping stones");
+    console.assert(Math.abs(geometryChecks.hybridPath.steppingStoneArea - 0.8246680716) < 1e-9, "Rounded stepping stones must cover about 0.82 m²");
+    console.assert(geometryChecks.canonicalWorldScaleX === -1, "All views must retain the Plan orientation");
+    window.__renderMetrics = geometryChecks;
+
+    dimensionsButton.addEventListener("click", () => {
+      dimensions.visible = !dimensions.visible;
+      dimensionsButton.setAttribute("aria-pressed", String(dimensions.visible));
+    });
+
+    passageButton.addEventListener("click", () => {
+      poolStudioPassage.visible = !poolStudioPassage.visible;
+      passageButton.setAttribute("aria-pressed", String(poolStudioPassage.visible));
+      document.documentElement.dataset.passage = poolStudioPassage.visible ? "hybrid" : "lawn";
+    });
+
+    document.querySelector(".control-dock").addEventListener("pointerdown", event => event.stopPropagation());
+
+    let currentView = "passage";
+
+    function setView(view) {
+      currentView = view;
+      console.assert(world.scale.x === -1, "Camera changes must not mirror the site");
+      window.__renderView = view;
+      mainHost.classList.toggle("plan-view", view === "plan");
+      mainHost.classList.toggle("overview-view", view === "overview");
+      viewButtons.forEach(button => button.setAttribute("aria-pressed", String(button.dataset.view === view)));
+
+      if (view === "plan") {
+        mainHost.classList.add("plan-view");
+        planOnly.visible = true;
+        scene.fog = null;
+        camera.up.set(0, 0, 1);
+        camera.position.set(-2.4, 82, -18);
+        controls.target.set(-2.4, 0, -18);
+      } else if (view === "overview") {
+        planOnly.visible = false;
+        scene.fog = null;
+        camera.up.set(0, 1, 0);
+        const overviewDistance = camera.aspect < 0.75 ? 92 : 58;
+        camera.position.set(11, overviewDistance * 0.72, -overviewDistance);
+        controls.target.set(-2.4, 0, -17);
+      } else {
+        planOnly.visible = false;
+        scene.fog = perspectiveFog;
+        camera.up.set(0, 1, 0);
+        camera.position.copy(initialCamera);
+        controls.target.copy(initialTarget);
+      }
+      controls.update();
+    }
+
+    viewButtons.forEach(button => button.addEventListener("click", () => setView(button.dataset.view)));
+
+    resetButton.addEventListener("click", () => {
+      setView(currentView);
+    });
+
+    window.addEventListener("resize", () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    const clock = new THREE.Clock();
+    function render() {
+      waterUniforms.time.value = clock.getElapsedTime();
+      controls.update();
+      renderer.render(scene, camera);
+      requestAnimationFrame(render);
+    }
+
+    window.__captureRender = (width, height) => {
+      const previousSize = renderer.getSize(new THREE.Vector2());
+      const previousPixelRatio = renderer.getPixelRatio();
+      const previousAspect = camera.aspect;
+      const previousStyle = [renderer.domElement.style.width, renderer.domElement.style.height];
+
+      renderer.setPixelRatio(1);
+      renderer.setSize(width, height, false);
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      controls.update();
+      renderer.render(scene, camera);
+      const image = renderer.domElement.toDataURL("image/png");
+
+      renderer.setPixelRatio(previousPixelRatio);
+      renderer.setSize(previousSize.x, previousSize.y, false);
+      renderer.domElement.style.width = previousStyle[0];
+      renderer.domElement.style.height = previousStyle[1];
+      camera.aspect = previousAspect;
+      camera.updateProjectionMatrix();
+      return image;
+    };
+
+    render();
+    requestAnimationFrame(() => {
+      loading.classList.add("ready");
+      window.__renderReady = true;
+      document.documentElement.dataset.geometry = "verified";
+    });
+  </script>
+</body>
+
+</html>
