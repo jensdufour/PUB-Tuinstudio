@@ -335,12 +335,12 @@
       <div class="metrics" aria-label="Belangrijkste doorgangen">
         <span class="metric">bovenrand 0,36 m</span>
         <span class="metric">glaslijn 0,70 m</span>
-        <span class="metric">houtdek 25,74 m²</span>
+        <span class="metric">houtdek 27,92 m²</span>
       </div>
     </header>
 
     <div class="material-note">
-      Wit crepi met blauwe-steenplint · tweedelige schuiframen met post 20 × 20 cm RAL 9005 · standaard aluminium bergingsdeur RAL 9005 · poolrand en dek in één doorlopend houtvlak.
+      Wit crepi met blauwe-steenplint · tweedelige schuiframen · aluminium bergingsdeur RAL 9005 · de 20 cm houten poolrand loopt op exact dezelfde hoogte en breedte naadloos door tot het terras als één dek.
     </div>
 
     <div class="control-dock" aria-label="Renderinstellingen">
@@ -728,10 +728,11 @@
     const poolOuterWidth = 3.4;
     const poolOuterLength = 7.7;
     const coping = 0.2;
+    const deckTop = 0.061;
 
     addBox(pool, 3.4, 1.38, 7.7, materials.stoneEdge, -1.7, -0.73, -3.85);
     addBox(pool, 3.0, 1.27, 7.3, standard(0xb8d8df, 0.48), -1.7, -0.72, -3.85);
-    const poolSideTimberCoping = addBox(pool, coping, 0.09, poolOuterLength, woodMaterial, -0.1, 0.015, -3.85);
+    const poolSideTimberCoping = addBox(pool, coping, 0.09, poolOuterLength, woodMaterial, -0.1, deckTop - 0.045, -3.85);
     poolSideTimberCoping.name = "pool-side-timber-coping";
     addBox(pool, coping, 0.09, poolOuterLength, materials.stone, -3.3, 0.015, -3.85);
     addBox(pool, 3.0, 0.09, coping, materials.stone, -1.7, 0.015, -0.1);
@@ -813,7 +814,10 @@
     ];
     const terraceDeckEndLocalZ = -siteZ(464.05) / Math.cos(studioAngle);
     const terracePoolLineEnd = [0, siteZ(464.05)];
+    const poolTimberInnerStart = [-coping, poolRearZ];
+    const poolTimberInnerEnd = [-coping, siteZ(464.05)];
     const integratedDeckPoints = [
+      poolTimberInnerStart,
       [0, poolRearZ],
       studioWorldPoint(0, 0),
       studioWorldPoint(4, 0),
@@ -822,17 +826,11 @@
       studioWorldPoint(0, 10),
       studioWorldPoint(4, 10),
       studioWorldPoint(4, terraceDeckEndLocalZ),
-      terracePoolLineEnd
+      terracePoolLineEnd,
+      poolTimberInnerEnd
     ];
-    const integratedDeck = addDeck(poolStudioPassage, integratedDeckPoints, 0.061);
+    const integratedDeck = addDeck(poolStudioPassage, integratedDeckPoints, deckTop);
     integratedDeck.name = "single-integrated-deck-surface";
-    const poolSideTimberCopingSurface = addDeck(world, [
-      [-coping, poolRearZ],
-      [0, poolRearZ],
-      [0, poolRearZ - poolOuterLength],
-      [-coping, poolRearZ - poolOuterLength]
-    ], 0.061);
-    poolSideTimberCopingSurface.name = "pool-side-timber-coping-surface";
     const integratedDeckArea = Math.abs(integratedDeckPoints.reduce((area, [x, z], index) => {
       const [nextX, nextZ] = integratedDeckPoints[(index + 1) % integratedDeckPoints.length];
       return area + x * nextZ - nextX * z;
@@ -1472,9 +1470,12 @@
         sideRun: 10,
         frontDepth: terraceDeckEndLocalZ - 10,
         pointCount: integratedDeckPoints.length,
-        straightPoolLine: integratedDeckPoints[0][0] === terracePoolLineEnd[0],
-        unifiedWoodSurface: poolSideTimberCopingSurface.material === integratedDeck.material
-          && Math.abs(poolSideTimberCopingSurface.position.y - integratedDeck.position.y) < 1e-9,
+        straightPoolLine: poolTimberInnerStart[0] === poolTimberInnerEnd[0],
+        unifiedWoodSurface: integratedDeck.name === "single-integrated-deck-surface"
+          && Math.abs(poolSideTimberCoping.position.y + 0.045 - deckTop) < 1e-9,
+        poolTimberWidth: coping,
+        poolTimberExtensionLength: Math.abs(poolTimberInnerEnd[1] - poolTimberInnerStart[1]),
+        deckTop,
         poolSideTimberCoping: poolSideTimberCoping.material === woodMaterial,
         poolSideCrepiWall: poolSideCrepiWall.material === materials.wall,
         poolSideBlueStonePlinth: poolSideBlueStonePlinth.material === materials.stone,
@@ -1518,12 +1519,13 @@
     console.assert(Math.abs(geometryChecks.timberPlatform.skewAtPool - 0.095) < 0.002, "Timber platform must meet the pool diagonally");
     console.assert(geometryChecks.timberPlatform.glassLineDeviation < 1e-9, "Platform edge and pergola glass must be collinear");
     console.assert(geometryChecks.timberPlatform.rearLineDeviation < 1e-9, "Upper platform edge and pergola rear must be collinear");
-    console.assert(Math.abs(geometryChecks.integratedDeck.area - 25.740039) < 0.001, "Pool-line deck must remain 25.74 m² including the pergola");
+    console.assert(Math.abs(geometryChecks.integratedDeck.area - 27.917763) < 0.001, "Merged pool-edge deck must remain 27.92 m² including the pergola");
     console.assert(geometryChecks.integratedDeck.sideRun === 10, "Deck must run along the complete studio side");
     console.assert(geometryChecks.integratedDeck.frontDepth > 1 && geometryChecks.integratedDeck.frontDepth < 1.1, "Front return must fill the studio-to-terrace gap");
-    console.assert(geometryChecks.integratedDeck.pointCount === 9, "Pool edge must continue directly to the terrace without an intermediate corner");
+    console.assert(geometryChecks.integratedDeck.pointCount === 11, "Merged deck must include the full-width timber strip to the terrace");
     console.assert(geometryChecks.integratedDeck.straightPoolLine, "Pool-side deck edge must stay on one straight line to the terrace");
     console.assert(geometryChecks.integratedDeck.unifiedWoodSurface, "Timber coping and deck must share one flush, texture-aligned surface");
+    console.assert(Math.abs(geometryChecks.integratedDeck.poolTimberWidth - 0.2) < 1e-9 && geometryChecks.integratedDeck.poolTimberExtensionLength > 10.8, "The 20 cm timber strip must continue from the pool to the terrace");
     console.assert(geometryChecks.integratedDeck.poolSideTimberCoping, "Pool border beside the studio must use the deck timber material");
     console.assert(geometryChecks.integratedDeck.poolSideCrepiWall, "Opaque pool-facing wall must remain crepi");
     console.assert(geometryChecks.integratedDeck.poolSideBlueStonePlinth, "Opaque pool-facing wall must retain its blue-stone plinth");
