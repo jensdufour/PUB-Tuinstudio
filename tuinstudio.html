@@ -217,10 +217,10 @@
             <rect width="7" height="7" fill="#dce3ea" />
             <line x1="0" y1="0" x2="0" y2="7" stroke="#2E4057" stroke-width="1.8" />
           </pattern>
-          <pattern id="pergolaFill" width="20" height="20" patternUnits="userSpaceOnUse">
-            <rect width="20" height="20" fill="#faf7f0" />
-            <line x1="0" y1="0" x2="20" y2="0" stroke="#c8b89a" stroke-width="0.7" stroke-dasharray="5,15" />
-            <line x1="0" y1="0" x2="0" y2="20" stroke="#c8b89a" stroke-width="0.7" stroke-dasharray="5,15" />
+          <pattern id="deckFill" width="75" height="12" patternUnits="userSpaceOnUse">
+            <rect width="75" height="12" fill="#b98250" />
+            <line x1="0" y1="0" x2="75" y2="0" stroke="#6f4729" stroke-width="1" />
+            <line x1="0" y1="1.8" x2="75" y2="1.8" stroke="#d3a270" stroke-width="0.45" />
           </pattern>
           <pattern id="cupboardFill" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(30)">
             <rect width="8" height="8" fill="#eae6de" />
@@ -250,6 +250,17 @@
             <path d="M0,0 L5,2.5 L0,5 Z" fill="#c0392b" />
           </marker>
         </defs>
+
+        <!-- Pergola, full studio side and terrace-facing return as one timber structure. -->
+        <path id="integrated-studio-deck"
+          d="M90,401.845 L90,375 L90,75 L278.025,75 L278.025,375 L840,375 L840,75 L917.938,75 L917.938,450 L677.775,482.307 L279.15,427.738 Z"
+          fill="url(#deckFill)" stroke="#6f4729" stroke-width="1.2" stroke-linejoin="round">
+          <title>Doorlopend houten dek 25,09 m² inclusief pergola; volledige studiozijde en 1,04 m retour tot het terras</title>
+        </path>
+        <polyline points="278.025,375 840,375 840,75" fill="none" stroke="#262d30" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" />
+        <text x="500" y="420" font-size="7" fill="#5a3822" text-anchor="middle" font-weight="700">DOORLOPEND HOUTEN DEK</text>
+        <text x="500" y="431" font-size="5.5" fill="#6f4729" text-anchor="middle">25,09 m² incl. pergola</text>
 
         <!-- ══════════════════════════════════════════════════════
              COMPASS (true north, rotated 330° CW — matches PID orientation)
@@ -518,8 +529,6 @@
         <!-- ══════════════════════════════════════════════════════
              PERGOLA INTERIOR  (2,27 x 3,50 m = 7,95 m²)
              ══════════════════════════════════════════════════════ -->
-        <rect x="108" y="93" width="170" height="264" fill="url(#pergolaFill)" />
-
         <!-- Pergola column — INWARD-DIAGONAL from NE corner
              Positioned ~0,53m from east outer edge, ~0,31m from north outer edge
              Carries roof load diagonally toward main foundation
@@ -968,6 +977,10 @@
         <div class="legend-item">
           <div class="legend-swatch" style="background:none; border-color:#2E4057; border-style:dashed;"></div>
           Halve-hoogte wand + vast glas
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background:#b98250; border-color:#6f4729;"></div>
+          Doorlopend houten dek
         </div>
         <div class="legend-item">
           <div class="legend-swatch" style="background:#faf7f0; border-color:#c8b89a; border-style:dashed;"></div>

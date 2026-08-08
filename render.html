@@ -335,12 +335,12 @@
       <div class="metrics" aria-label="Belangrijkste doorgangen">
         <span class="metric">bovenrand 0,36 m</span>
         <span class="metric">glaslijn 0,70 m</span>
-        <span class="metric">houtlanding 7,01 m²</span>
+        <span class="metric">houtdek 25,09 m²</span>
       </div>
     </header>
 
     <div class="material-note">
-      Wit crepi · wit interieurplafond · plint blauwe steen 0,30 m · raamkaders RAL 9005 · bestaande erfafsluiting met Toscaanse jasmijn. De houten landing eindigt gelijk met de zwembadgevelbeglazing, sluit aan via een donker voegprofiel en gaat via drie stapstenen over in het terras.
+      Wit crepi · wit interieurplafond · plint blauwe steen 0,30 m · raamkaders RAL 9005 · bestaande erfafsluiting met Toscaanse jasmijn. Het houten dek vormt één geheel: pergola, volledige zwembadgevel en de korte zijde tot aan het terras.
     </div>
 
     <div class="control-dock" aria-label="Renderinstellingen">
@@ -351,7 +351,7 @@
       </div>
       <div class="tool-switch" role="group" aria-label="Weergavehulpmiddelen">
         <button id="toggle-dimensions" type="button" aria-pressed="false" title="Toon of verberg maatvoering">Maten</button>
-        <button id="toggle-passage" type="button" aria-pressed="true" title="Toon of verberg de houten landing en stapstenen">Houtpad</button>
+        <button id="toggle-passage" type="button" aria-pressed="true" title="Toon of verberg het doorlopende houten dek">Houtdek</button>
         <button id="reset-camera" type="button" title="Herstel de huidige camerastand">Herstel</button>
       </div>
     </div>
@@ -557,7 +557,8 @@
       map: woodTexture,
       color: 0xffffff,
       roughness: 0.68,
-      metalness: 0
+      metalness: 0,
+      side: THREE.DoubleSide
     });
     const woodEdgeMaterial = standard(palette.timberDark, 0.75);
 
@@ -574,19 +575,15 @@
       const geometry = new THREE.BufferGeometry();
       const positions = [];
       const uvs = [];
-      const indices = [];
 
       points.forEach(([x, z]) => {
         positions.push(x, 0, z);
         uvs.push(x / uvScale.x, z / uvScale.z);
       });
-      const signedArea = points.reduce((area, [x, z], index) => {
-        const [nextX, nextZ] = points[(index + 1) % points.length];
-        return area + x * nextZ - nextX * z;
-      }, 0);
-      for (let index = 1; index < points.length - 1; index += 1) {
-        indices.push(...(signedArea >= 0 ? [0, index + 1, index] : [0, index, index + 1]));
-      }
+      const indices = THREE.ShapeUtils.triangulateShape(
+        points.map(([x, z]) => new THREE.Vector2(x, z)),
+        []
+      ).flat();
 
       geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
       geometry.setAttribute("uv", new THREE.Float32BufferAttribute(uvs, 2));
@@ -815,87 +812,60 @@
     const platformRearPoolLocalZ = Math.sin(studioAngle) * -studioPathStartX
       - Math.cos(studioAngle) * poolRearZ;
 
-    addDeck(studio, [[0, 0], [4, 0], [4, pergolaLength], [0, pergolaLength]]);
-    addBox(studio, 4, 0.08, pergolaLength, woodEdgeMaterial, 2, -0.005, pergolaLength / 2, { castShadow: false });
-
     const poolStudioPassage = new THREE.Group();
-    poolStudioPassage.name = "pool-pergola-timber-platform";
+    poolStudioPassage.name = "integrated-studio-deck";
     world.add(poolStudioPassage);
 
-    const hybridLandingPoints = [
+    const studioWorldPoint = (localX, localZ) => [
+      studioPathStartX + Math.cos(studioAngle) * localX + Math.sin(studioAngle) * localZ,
+      Math.sin(studioAngle) * localX - Math.cos(studioAngle) * localZ
+    ];
+    const deckSideWidth = 1;
+    const terraceDeckEndLocalZ = -siteZ(464.05) / Math.cos(studioAngle);
+    const integratedDeckPoints = [
       [0, poolRearZ],
-      [studioPathStartX, 0],
-      [platformStudioEdge.x, platformStudioEdge.z],
-      [landingStudioEdge.x, landingStudioEdge.z],
+      studioWorldPoint(0, 0),
+      studioWorldPoint(4, 0),
+      studioWorldPoint(4, pergolaLength),
+      studioWorldPoint(0, pergolaLength),
+      studioWorldPoint(0, 10),
+      studioWorldPoint(4, 10),
+      studioWorldPoint(4, terraceDeckEndLocalZ),
+      studioWorldPoint(-deckSideWidth, terraceDeckEndLocalZ),
       [landingPoolEdge.x, landingPoolEdge.z],
       [platformPoolEdge.x, platformPoolEdge.z]
     ];
-    addDeck(poolStudioPassage, hybridLandingPoints);
-    const hybridLandingArea = Math.abs(hybridLandingPoints.reduce((area, [x, z], index) => {
-      const [nextX, nextZ] = hybridLandingPoints[(index + 1) % hybridLandingPoints.length];
+    const integratedDeck = addDeck(poolStudioPassage, integratedDeckPoints);
+    integratedDeck.name = "single-integrated-deck-surface";
+    const integratedDeckArea = Math.abs(integratedDeckPoints.reduce((area, [x, z], index) => {
+      const [nextX, nextZ] = integratedDeckPoints[(index + 1) % integratedDeckPoints.length];
       return area + x * nextZ - nextX * z;
     }, 0)) / 2;
+
+    const deckOutline = new THREE.LineLoop(
+      new THREE.BufferGeometry().setFromPoints(
+        integratedDeckPoints.map(([x, z]) => new THREE.Vector3(x, 0.065, z))
+      ),
+      new THREE.LineBasicMaterial({ color: palette.timberDark })
+    );
+    deckOutline.name = "integrated-deck-perimeter";
+    poolStudioPassage.add(deckOutline);
 
     const landingEdgeDeltaX = landingStudioEdge.x - landingPoolEdge.x;
     const landingEdgeDeltaZ = landingStudioEdge.z - landingPoolEdge.z;
     const landingEdgeLength = Math.hypot(landingEdgeDeltaX, landingEdgeDeltaZ);
-    const platformEdgeTrim = addBox(
-      poolStudioPassage,
-      landingEdgeLength,
-      0.07,
-      0.07,
-      woodEdgeMaterial,
-      (landingPoolEdge.x + landingStudioEdge.x) / 2,
-      0,
-      (landingPoolEdge.z + landingStudioEdge.z) / 2
-    );
-    platformEdgeTrim.rotation.y = -Math.atan2(landingEdgeDeltaZ, landingEdgeDeltaX);
-
     const platformRearEdgeLength = Math.hypot(studioPathStartX, -poolRearZ);
-    const platformRearEdgeTrim = addBox(
-      poolStudioPassage,
-      platformRearEdgeLength,
-      0.07,
-      0.07,
-      woodEdgeMaterial,
-      studioPathStartX / 2,
-      0,
-      poolRearZ / 2
-    );
-    platformRearEdgeTrim.rotation.y = -Math.atan2(-poolRearZ, studioPathStartX);
 
-    const facadeJunction = new THREE.Group();
-    facadeJunction.position.set(studioPathStartX, 0, 0);
-    facadeJunction.rotation.y = -studioAngle;
-    facadeJunction.scale.z = -1;
-    poolStudioPassage.add(facadeJunction);
-    addBox(
-      facadeJunction,
-      0.06,
-      0.04,
-      sliderLandingEndLocalZ,
-      materials.charcoal,
-      -0.03,
-      0.055,
-      sliderLandingEndLocalZ / 2,
-      { castShadow: false }
+    const deckBuildingJoint = new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints(
+        [studioWorldPoint(0, pergolaLength), studioWorldPoint(0, 10), studioWorldPoint(4, 10)]
+          .map(([x, z]) => new THREE.Vector3(x, 0.07, z))
+      ),
+      new THREE.LineBasicMaterial({ color: palette.charcoal })
     );
-
-    const steppingStonePlan = [
-      [91.8, 420.5, -18],
-      [99.1, 438.3, -10],
-      [103.0, 456.2, -4]
-    ];
-    const steppingStoneGeometry = new THREE.CylinderGeometry(0.5, 0.48, 0.055, 10);
-    for (const [planX, planY, rotation] of steppingStonePlan) {
-      const stone = new THREE.Mesh(steppingStoneGeometry, materials.stone);
-      stone.position.set(siteX(planX), 0.025, siteZ(planY));
-      stone.scale.set(0.5, 1, 0.7);
-      stone.rotation.y = THREE.MathUtils.degToRad(rotation);
-      stone.receiveShadow = true;
-      poolStudioPassage.add(stone);
-    }
-    document.documentElement.dataset.passage = "hybrid";
+    deckBuildingJoint.name = "continuous-deck-building-joint";
+    poolStudioPassage.add(deckBuildingJoint);
+    document.documentElement.dataset.passage = "integrated";
 
     addBox(studio, 4, 0.14, shellLength, materials.interiorFloor, 2, 0.01, pergolaLength + shellLength / 2, { castShadow: false });
     addBox(studio, 4, 0.24, shellLength, materials.charcoalSoft, 2, 3.02, pergolaLength + shellLength / 2);
@@ -1433,12 +1403,13 @@
         startClearance: platformRearEdgeLength,
         endClearance: pergolaEdgeLength
       },
-      hybridPath: {
-        landingArea: hybridLandingArea,
-        landingGlazingEnd: sliderLandingEndLocalZ,
-        landingEndClearance: landingEdgeLength,
-        steppingStoneCount: steppingStonePlan.length,
-        steppingStoneArea: steppingStonePlan.length * Math.PI * 0.25 * 0.35
+      integratedDeck: {
+        area: integratedDeckArea,
+        sideRun: 10,
+        sideWidth: deckSideWidth,
+        frontDepth: terraceDeckEndLocalZ - 10,
+        pointCount: integratedDeckPoints.length,
+        transitionWidth: landingEdgeLength
       },
       sourcePlan: "grondplan.html",
       canonicalWorldScaleX: world.scale.x
@@ -1455,10 +1426,10 @@
     console.assert(Math.abs(geometryChecks.timberPlatform.skewAtPool - 0.095) < 0.002, "Timber platform must meet the pool diagonally");
     console.assert(geometryChecks.timberPlatform.glassLineDeviation < 1e-9, "Platform edge and pergola glass must be collinear");
     console.assert(geometryChecks.timberPlatform.rearLineDeviation < 1e-9, "Upper platform edge and pergola rear must be collinear");
-    console.assert(Math.abs(geometryChecks.hybridPath.landingArea - 7.009) < 0.002, "Hybrid landing must be about 7.01 m²");
-    console.assert(Math.abs(geometryChecks.hybridPath.landingGlazingEnd - 7.837) < 1e-9, "Landing must end with the pool-facing glazing");
-    console.assert(geometryChecks.hybridPath.steppingStoneCount === 3, "Hybrid route must contain three stepping stones");
-    console.assert(Math.abs(geometryChecks.hybridPath.steppingStoneArea - 0.8246680716) < 1e-9, "Rounded stepping stones must cover about 0.82 m²");
+    console.assert(Math.abs(geometryChecks.integratedDeck.area - 25.085557) < 0.001, "Integrated deck must remain 25.09 m² including the pergola");
+    console.assert(geometryChecks.integratedDeck.sideRun === 10, "Deck must run along the complete studio side");
+    console.assert(geometryChecks.integratedDeck.frontDepth > 1 && geometryChecks.integratedDeck.frontDepth < 1.1, "Front return must fill the studio-to-terrace gap");
+    console.assert(geometryChecks.integratedDeck.pointCount === 11, "Integrated deck must remain one concise outline");
     console.assert(geometryChecks.canonicalWorldScaleX === -1, "All views must retain the Plan orientation");
     window.__renderMetrics = geometryChecks;
 
@@ -1470,7 +1441,7 @@
     passageButton.addEventListener("click", () => {
       poolStudioPassage.visible = !poolStudioPassage.visible;
       passageButton.setAttribute("aria-pressed", String(poolStudioPassage.visible));
-      document.documentElement.dataset.passage = poolStudioPassage.visible ? "hybrid" : "lawn";
+      document.documentElement.dataset.passage = poolStudioPassage.visible ? "integrated" : "lawn";
     });
 
     document.querySelector(".control-dock").addEventListener("pointerdown", event => event.stopPropagation());
