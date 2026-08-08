@@ -340,7 +340,7 @@
     </header>
 
     <div class="material-note">
-      Wit crepi met blauwe-steenplint · één groot tweedelig schuifraam aan de zwembadzijde · tweedelig pergolaschuifraam · poolrand en dek in één doorlopend houtvlak. De zwembadlijn loopt zonder knik door tot het terras.
+      Wit crepi met blauwe-steenplint · één groot tweedelig schuifraam aan de zwembadzijde · tweedelig pergolaschuifraam · verbindingspost 20 × 20 cm in RAL 9005 · poolrand en dek in één doorlopend houtvlak.
     </div>
 
     <div class="control-dock" aria-label="Renderinstellingen">
@@ -870,19 +870,32 @@
     addBox(studio, 0.045, 0.3, shellLength, materials.stone, 4.0225, 0.15, pergolaLength + shellLength / 2);
     addBox(studio, 4, 0.3, 0.045, materials.stone, 2, 0.15, 10.0225);
 
-    addBox(studio, 0.26, 2.96, 0.33, woodEdgeMaterial, 0.12, 1.52, 2.672);
-    const poolSideSliderStart = 2.837;
-    const poolSideSliderEnd = 7.837;
+    const cornerPostSize = 0.2;
+    const cornerPostStart = 188 / 75;
+    const cornerPost = addBox(
+      studio,
+      cornerPostSize,
+      2.96,
+      cornerPostSize,
+      materials.charcoal,
+      cornerPostSize / 2,
+      1.52,
+      cornerPostStart + cornerPostSize / 2
+    );
+    cornerPost.name = "slider-corner-post-ral9005";
+    const poolSideOpaqueWallLength = 161 / 75;
+    const poolSideSliderStart = cornerPostStart + cornerPostSize;
+    const poolSideSliderEnd = 10 - poolSideOpaqueWallLength;
     const poolSideSliderPanels = 2;
     addGlassWallAlongZ(studio, poolSideSliderStart, poolSideSliderEnd, 0.015, poolSideSliderPanels);
-    const poolSideCrepiWall = addBox(studio, 0.24, 2.96, 2.163, materials.wall, 0.12, 1.52, 8.9185);
+    const poolSideCrepiWall = addBox(studio, 0.24, 2.96, poolSideOpaqueWallLength, materials.wall, 0.12, 1.52, poolSideSliderEnd + poolSideOpaqueWallLength / 2);
     poolSideCrepiWall.name = "pool-side-crepi-wall";
-    const poolSideBlueStonePlinth = addBox(studio, 0.045, 0.3, 2.163, materials.stone, -0.0225, 0.15, 8.9185);
+    const poolSideBlueStonePlinth = addBox(studio, 0.045, 0.3, poolSideOpaqueWallLength, materials.stone, -0.0225, 0.15, poolSideSliderEnd + poolSideOpaqueWallLength / 2);
     poolSideBlueStonePlinth.name = "pool-side-blue-stone-plinth";
 
-    addBox(studio, 0.18, 0.25, 5.0, materials.wall, 0.1, 2.925, 5.337);
-    const pergolaSliderStart = 0.28;
-    const pergolaSliderEnd = 3.77;
+    addBox(studio, 0.18, 0.25, poolSideSliderEnd - poolSideSliderStart, materials.wall, 0.1, 2.925, (poolSideSliderStart + poolSideSliderEnd) / 2);
+    const pergolaSliderStart = 0.24;
+    const pergolaSliderEnd = 3.76;
     const pergolaSliderPanels = 2;
     addGlassWallAlongX(studio, pergolaSliderStart, pergolaSliderEnd, pergolaLength + 0.015, pergolaSliderPanels);
 
@@ -1413,6 +1426,8 @@
         poolSideTimberCoping: poolSideTimberCoping.material === woodMaterial,
         poolSideCrepiWall: poolSideCrepiWall.material === materials.wall,
         poolSideBlueStonePlinth: poolSideBlueStonePlinth.material === materials.stone,
+        cornerPostSize: [cornerPostSize, cornerPostSize],
+        cornerPostRal: cornerPost.material === materials.charcoal ? "RAL 9005" : "unknown",
         poolSideSliderCount: 1,
         poolSideSliderWidth: poolSideSliderEnd - poolSideSliderStart,
         poolSideSliderPanels,
@@ -1443,9 +1458,10 @@
     console.assert(geometryChecks.integratedDeck.poolSideTimberCoping, "Pool border beside the studio must use the deck timber material");
     console.assert(geometryChecks.integratedDeck.poolSideCrepiWall, "Opaque pool-facing wall must remain crepi");
     console.assert(geometryChecks.integratedDeck.poolSideBlueStonePlinth, "Opaque pool-facing wall must retain its blue-stone plinth");
-    console.assert(geometryChecks.integratedDeck.poolSideSliderCount === 1 && Math.abs(geometryChecks.integratedDeck.poolSideSliderWidth - 5) < 1e-9, "Pool-facing façade must use one 5.00 m slider");
+    console.assert(geometryChecks.integratedDeck.cornerPostSize.every(value => Math.abs(value - 0.2) < 1e-9) && geometryChecks.integratedDeck.cornerPostRal === "RAL 9005", "Slider corner post must be 20 x 20 cm in RAL 9005");
+    console.assert(geometryChecks.integratedDeck.poolSideSliderCount === 1 && Math.abs(geometryChecks.integratedDeck.poolSideSliderWidth - 386 / 75) < 1e-9, "Pool-facing façade must use one full-width 5.15 m slider");
     console.assert(geometryChecks.integratedDeck.poolSideSliderPanels === 2, "Pool-facing slider must have two panels");
-    console.assert(Math.abs(geometryChecks.integratedDeck.pergolaSliderWidth - 3.49) < 1e-9 && geometryChecks.integratedDeck.pergolaSliderPanels === 2, "Pergola slider must have two panels");
+    console.assert(Math.abs(geometryChecks.integratedDeck.pergolaSliderWidth - 3.52) < 1e-9 && geometryChecks.integratedDeck.pergolaSliderPanels === 2, "Pergola slider must be 3.52 m with two panels");
     console.assert(geometryChecks.canonicalWorldScaleX === -1, "All views must retain the Plan orientation");
     window.__renderMetrics = geometryChecks;
 

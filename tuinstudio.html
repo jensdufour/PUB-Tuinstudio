@@ -165,11 +165,11 @@
 
     ZZW (BOTTOM) WALL — one economical two-panel pool-side slider, y=357..375:
       Pergola open 2,51 m:    x=90..278  (188px)  — open (WNW side)
-      Corner pier 0,33 m:    x=278..303 (25px)   — open corner column
-      Schuifraam 5,01 m:     x=303..679 (376px)  — 2 panels, one continuous opening
+      RAL 9005 post 0,20 m: x=278..293 (15px)   — connects both sliding windows
+      Schuifraam 5,15 m:     x=293..679 (386px)  — 2 panels, one continuous opening
       Bath south solid:       x=679..840 (161px = 2,15 m)
 
-      Sequence (right to left): bath solid → 5,01m two-panel slider → open corner at WNW.
+      Sequence (right to left): bath solid → 5,15m two-panel slider → RAL9005 post 20x20 → pergola.
 
     NNO (TOP) WALL, y=75..93:
       Pergola north solid:       x=90..278  (188px)
@@ -277,24 +277,27 @@
         <!-- Bath south solid masonry: x=679..840 (2,15 m) -->
         <rect x="679" y="357" width="161" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
 
-        <!-- One 5,01 m sliding window, split into two economical panels. -->
-        <rect id="pool-side-slider" x="303" y="357" width="376" height="18"
+        <!-- One 5,15 m sliding window, split into two economical panels. -->
+        <rect id="pool-side-slider" x="293" y="357" width="386" height="18"
           fill="#a8c5d8" stroke="#2E4057" stroke-width="2">
-          <title>Zwembadzijde: één schuifraam 5,01 m, tweedelig</title>
+          <title>Zwembadzijde: één schuifraam 5,15 m, tweedelig</title>
         </rect>
-        <line x1="491" y1="375" x2="491" y2="357" stroke="white" stroke-width="1.5" />
+        <line x1="486" y1="375" x2="486" y2="357" stroke="white" stroke-width="1.5" />
 
-        <!-- Corner piece masonry: x=278..303 (25px = 0,33 m) — open corner column -->
-        <rect x="278" y="357" width="25" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <!-- Exact 20x20 cm post connecting both sliders. -->
+        <rect id="slider-corner-post-ral9005" x="278" y="357" width="15" height="15"
+          fill="#0a0a0d" stroke="#000000" stroke-width="1.2">
+          <title>Verbindingspost 20 × 20 cm, RAL 9005</title>
+        </rect>
         <line id="pool-side-blue-stone-plinth" x1="679" y1="373" x2="840" y2="373"
           stroke="#788890" stroke-width="4" stroke-linecap="round">
           <title>Crepiwand met blauwe-steenplint aan de zwembadzijde</title>
         </line>
 
         <!-- INGANG arrow (centered on schuifraam) -->
-        <line x1="491" y1="455" x2="491" y2="366" stroke="#4A7C59" stroke-width="2" marker-end="url(#arrG)" />
-        <text x="491" y="472" font-size="8" fill="#4A7C59" text-anchor="middle" font-weight="700">INGANG</text>
-        <text x="491" y="462" font-size="7" fill="#4A7C59" text-anchor="middle">schuifraam 5,01 m · 2 delen</text>
+        <line x1="486" y1="455" x2="486" y2="366" stroke="#4A7C59" stroke-width="2" marker-end="url(#arrG)" />
+        <text x="486" y="472" font-size="8" fill="#4A7C59" text-anchor="middle" font-weight="700">INGANG</text>
+        <text x="486" y="462" font-size="7" fill="#4A7C59" text-anchor="middle">schuifraam 5,15 m · 2 delen</text>
 
         <!-- Pergola south — open (dashed, WNW side) -->
         <line x1="278" y1="366" x2="90" y2="366" stroke="#4A7C59" stroke-width="1.2" stroke-dasharray="6,4" />
@@ -736,7 +739,7 @@
         <!-- ─── BOTTOM: ZZW FACE BREAKDOWN at y≈515 ─── -->
         <line x1="840" y1="522" x2="840" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="679" y1="522" x2="679" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="303" y1="522" x2="303" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="293" y1="522" x2="293" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="278" y1="522" x2="278" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="90" y1="522" x2="90" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
 
@@ -745,14 +748,14 @@
         <rect x="741" y="512" width="46" height="11" fill="#faf8f4" />
         <text x="764" y="515" font-size="6" fill="#7a8a9a" text-anchor="middle">wand 2,15</text>
 
-        <!-- One full-width, two-panel slider 5,01 m. -->
-        <line x1="679" y1="515" x2="303" y2="515" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
-        <rect x="451" y="512" width="80" height="11" fill="#faf8f4" />
-        <text x="491" y="515" font-size="6" fill="#4A7C59" text-anchor="middle" font-weight="700">schuif 5,01 · 2-delig</text>
+        <!-- One full-width, two-panel slider 5,15 m. -->
+        <line x1="679" y1="515" x2="293" y2="515" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <rect x="442" y="512" width="88" height="11" fill="#faf8f4" />
+        <text x="486" y="515" font-size="6" fill="#4A7C59" text-anchor="middle" font-weight="700">schuif 5,15 · 2-delig</text>
 
-        <!-- Corner pier 0,33 m (open corner) -->
-        <line x1="303" y1="515" x2="278" y2="515" stroke="#8a9aaa" stroke-width="0.6" />
-        <text x="290" y="523" font-size="5" fill="#7a8a9a" text-anchor="middle">0,33</text>
+        <!-- RAL 9005 connection post 0,20 m. -->
+        <line x1="293" y1="515" x2="278" y2="515" stroke="#0a0a0d" stroke-width="0.8" />
+        <text x="285.5" y="523" font-size="4.5" fill="#0a0a0d" text-anchor="middle" font-weight="700">0,20 RAL9005</text>
 
         <!-- Pergola open 2,51 m -->
         <line x1="278" y1="515" x2="90" y2="515" stroke="#4A7C59" stroke-width="0.7" stroke-dasharray="4,3" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
