@@ -340,7 +340,7 @@
     </header>
 
     <div class="material-note">
-      Wit crepi · wit interieurplafond · blauwe-steenplint op de overige gevels · volledige houtcladding aan de zwembadzijde · raamkaders RAL 9005 · bestaande erfafsluiting met Toscaanse jasmijn. De zwembadlijn van het dek loopt zonder knik door tot het terras.
+      Wit crepi · volledige houtcladding aan de zwembadzijde · poolrand in hetzelfde hout aan de studiozijde en blauwe steen op de overige drie zijden · raamkaders RAL 9005. De zwembadlijn van het dek loopt zonder knik door tot het terras.
     </div>
 
     <div class="control-dock" aria-label="Renderinstellingen">
@@ -731,7 +731,8 @@
 
     addBox(pool, 3.4, 1.38, 7.7, materials.stoneEdge, -1.7, -0.73, -3.85);
     addBox(pool, 3.0, 1.27, 7.3, standard(0xb8d8df, 0.48), -1.7, -0.72, -3.85);
-    addBox(pool, coping, 0.09, poolOuterLength, materials.stone, -0.1, 0.015, -3.85);
+    const poolSideTimberCoping = addBox(pool, coping, 0.09, poolOuterLength, woodMaterial, -0.1, 0.015, -3.85);
+    poolSideTimberCoping.name = "pool-side-timber-coping";
     addBox(pool, coping, 0.09, poolOuterLength, materials.stone, -3.3, 0.015, -3.85);
     addBox(pool, 3.0, 0.09, coping, materials.stone, -1.7, 0.015, -0.1);
     addBox(pool, 3.0, 0.09, coping, materials.stone, -1.7, 0.015, -7.6);
@@ -1395,7 +1396,8 @@
         frontDepth: terraceDeckEndLocalZ - 10,
         pointCount: integratedDeckPoints.length,
         straightPoolLine: integratedDeckPoints[0][0] === terracePoolLineEnd[0],
-        poolSideTimberCladding: poolSideTimberCladding.material === woodMaterial
+        poolSideTimberCladding: poolSideTimberCladding.material === woodMaterial,
+        poolSideTimberCoping: poolSideTimberCoping.material === woodMaterial
       },
       sourcePlan: "grondplan.html",
       canonicalWorldScaleX: world.scale.x
@@ -1418,6 +1420,7 @@
     console.assert(geometryChecks.integratedDeck.pointCount === 9, "Pool edge must continue directly to the terrace without an intermediate corner");
     console.assert(geometryChecks.integratedDeck.straightPoolLine, "Pool-side deck edge must stay on one straight line to the terrace");
     console.assert(geometryChecks.integratedDeck.poolSideTimberCladding, "Full pool-facing opaque wall must use the deck timber material");
+    console.assert(geometryChecks.integratedDeck.poolSideTimberCoping, "Pool border beside the studio must use the deck timber material");
     console.assert(geometryChecks.canonicalWorldScaleX === -1, "All views must retain the Plan orientation");
     window.__renderMetrics = geometryChecks;
 

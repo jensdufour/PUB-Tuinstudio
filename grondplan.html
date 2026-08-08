@@ -1209,16 +1209,25 @@
             fill="none" stroke="#262d30" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
         </g>
 
-        <!-- LPW City+: boundary-to-shell 1,00 m, including the final 20 cm blue-stone edge. -->
+        <!-- LPW City+: 20 cm pool edge, timber beside the studio and blue stone on the other three sides. -->
         <g id="city-plus-pool" aria-label="LPW City+ zwembad" transform="translate(0 0.873828045)">
-          <title>LPW City+ zwembad met 20 cm blauwe steen; 4,85 cm verschoven naar de woning</title>
-          <rect id="city-plus-blue-stone" x="14.4" y="267.181" width="61.2" height="138.6"
-            fill="#788890" stroke="#1a1a2e" stroke-width="0.9" />
+          <title>LPW City+ zwembad met 20 cm rand: hout aan de studiozijde en blauwe steen op de overige drie zijden</title>
+          <g id="city-plus-blue-stone" fill="#788890">
+            <rect id="city-plus-left-blue-stone" x="14.4" y="267.181" width="3.6" height="138.6" />
+            <rect id="city-plus-top-blue-stone" x="18" y="267.181" width="54" height="3.6" />
+            <rect id="city-plus-bottom-blue-stone" x="18" y="402.181" width="54" height="3.6" />
+          </g>
           <rect id="city-plus-shell" x="18" y="270.781" width="54" height="131.4"
             fill="#b8ddec" stroke="#2E4057" stroke-width="0.9" />
+          <rect id="city-plus-studio-side-timber" x="72" y="267.181" width="3.6" height="138.6"
+            fill="url(#deckFill)" stroke="#6f4729" stroke-width="0.6">
+            <title>Poolrand aan de tuinstudio in hetzelfde hout als het dek</title>
+          </rect>
+          <rect x="14.4" y="267.181" width="61.2" height="138.6"
+            fill="none" stroke="#1a1a2e" stroke-width="0.9" />
           <text x="45" y="329.781" font-size="7" fill="#1a1a2e" text-anchor="middle" font-weight="700">LPW CITY+</text>
           <text x="45" y="340.781" font-size="4" fill="#2E4057" text-anchor="middle">7,30 × 3,00 m</text>
-          <text x="45" y="349.781" font-size="3.2" fill="#2E4057" text-anchor="middle">blauwe steen 20 cm</text>
+          <text x="45" y="349.781" font-size="3.2" fill="#2E4057" text-anchor="middle">rand 20 cm · hout studiozijde</text>
 
           <line x1="0" y1="256.781" x2="0" y2="267.181" stroke="#8a9aaa" stroke-width="0.5" />
           <line x1="18" y1="256.781" x2="18" y2="270.781" stroke="#8a9aaa" stroke-width="0.5" />
@@ -2083,7 +2092,7 @@
         </g><!-- end tuinstudio rotation group -->
 
         <g id="pool-studio-clearances" aria-label="Vrije doorgangen tussen zwembad en tuinstudio">
-          <title>Minimumdoorgangen tussen de blauwe steen en de tuinstudio</title>
+          <title>Minimumdoorgangen tussen de poolrand en de tuinstudio</title>
 
           <line x1="75.6" y1="268.054828045" x2="81.983306908" y2="267.181065259" stroke="#9a4b3f" stroke-width="0.8" />
           <line x1="75.6" y1="265.054828045" x2="75.6" y2="271.054828045" stroke="#9a4b3f" stroke-width="0.8" />
@@ -2147,8 +2156,8 @@
           Tuinstudio · 4,00 × 10,00 m
         </div>
         <div class="legend-item">
-          <div class="legend-swatch" style="background: #b8ddec; border: 3px solid #788890;"></div>
-          Zwembad · LPW City+
+          <div class="legend-swatch" style="background: linear-gradient(90deg, #b8ddec 0 75%, #a87545 75% 100%); border: 3px solid #788890;"></div>
+          Zwembad · LPW City+ · hout studiozijde
         </div>
         <div class="legend-item">
           <div class="legend-swatch" style="background: #d8e5e9; border: 1px dashed #6f7f89; border-radius: 50%;"></div>
