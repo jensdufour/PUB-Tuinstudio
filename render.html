@@ -340,7 +340,7 @@
     </header>
 
     <div class="material-note">
-      Wit crepi · volledige houtcladding aan de zwembadzijde · poolrand in hetzelfde hout aan de studiozijde en blauwe steen op de overige drie zijden · raamkaders RAL 9005. De zwembadlijn van het dek loopt zonder knik door tot het terras.
+      Wit crepi met blauwe-steenplint · één groot tweedelig schuifraam aan de zwembadzijde · tweedelig pergolaschuifraam · poolrand en dek in één doorlopend houtvlak. De zwembadlijn loopt zonder knik door tot het terras.
     </div>
 
     <div class="control-dock" aria-label="Renderinstellingen">
@@ -600,7 +600,7 @@
       return deck;
     }
 
-    function addGlassWallAlongZ(parent, zStart, zEnd, x = 0, panelCount = 3) {
+    function addGlassWallAlongZ(parent, zStart, zEnd, x = 0, panelCount = 2) {
       const length = zEnd - zStart;
       addBox(parent, 0.035, 2.7, length, glassMaterial, x, 1.45, zStart + length / 2, { castShadow: false });
       addBox(parent, 0.075, 0.075, length, materials.charcoal, x, 0.105, zStart + length / 2);
@@ -610,7 +610,7 @@
       }
     }
 
-    function addGlassWallAlongX(parent, xStart, xEnd, z, panelCount = 3) {
+    function addGlassWallAlongX(parent, xStart, xEnd, z, panelCount = 2) {
       const width = xEnd - xStart;
       addBox(parent, width, 2.7, 0.035, glassMaterial, xStart + width / 2, 1.45, z, { castShadow: false });
       addBox(parent, width, 0.075, 0.075, materials.charcoal, xStart + width / 2, 0.105, z);
@@ -824,14 +824,21 @@
       studioWorldPoint(4, terraceDeckEndLocalZ),
       terracePoolLineEnd
     ];
-    const integratedDeck = addDeck(poolStudioPassage, integratedDeckPoints);
+    const integratedDeck = addDeck(poolStudioPassage, integratedDeckPoints, 0.061);
     integratedDeck.name = "single-integrated-deck-surface";
+    const poolSideTimberCopingSurface = addDeck(world, [
+      [-coping, poolRearZ],
+      [0, poolRearZ],
+      [0, poolRearZ - poolOuterLength],
+      [-coping, poolRearZ - poolOuterLength]
+    ], 0.061);
+    poolSideTimberCopingSurface.name = "pool-side-timber-coping-surface";
     const integratedDeckArea = Math.abs(integratedDeckPoints.reduce((area, [x, z], index) => {
       const [nextX, nextZ] = integratedDeckPoints[(index + 1) % integratedDeckPoints.length];
       return area + x * nextZ - nextX * z;
     }, 0)) / 2;
 
-    const deckOutline = new THREE.LineLoop(
+    const deckOutline = new THREE.Line(
       new THREE.BufferGeometry().setFromPoints(
         integratedDeckPoints.map(([x, z]) => new THREE.Vector3(x, 0.065, z))
       ),
@@ -864,15 +871,20 @@
     addBox(studio, 4, 0.3, 0.045, materials.stone, 2, 0.15, 10.0225);
 
     addBox(studio, 0.26, 2.96, 0.33, woodEdgeMaterial, 0.12, 1.52, 2.672);
-    addGlassWallAlongZ(studio, 2.837, 6.337, 0.015, 3);
-    addBox(studio, 0.24, 2.96, 0.2, materials.charcoal, 0.12, 1.52, 6.437);
-    addGlassWallAlongZ(studio, 6.537, 7.837, 0.015, 1);
-    addBox(studio, 0.24, 2.96, 2.163, materials.wall, 0.12, 1.52, 8.9185);
-    const poolSideTimberCladding = addBox(studio, 0.045, 2.82, 2.163, woodMaterial, -0.0225, 1.49, 8.9185);
-    poolSideTimberCladding.name = "pool-side-timber-cladding";
+    const poolSideSliderStart = 2.837;
+    const poolSideSliderEnd = 7.837;
+    const poolSideSliderPanels = 2;
+    addGlassWallAlongZ(studio, poolSideSliderStart, poolSideSliderEnd, 0.015, poolSideSliderPanels);
+    const poolSideCrepiWall = addBox(studio, 0.24, 2.96, 2.163, materials.wall, 0.12, 1.52, 8.9185);
+    poolSideCrepiWall.name = "pool-side-crepi-wall";
+    const poolSideBlueStonePlinth = addBox(studio, 0.045, 0.3, 2.163, materials.stone, -0.0225, 0.15, 8.9185);
+    poolSideBlueStonePlinth.name = "pool-side-blue-stone-plinth";
 
     addBox(studio, 0.18, 0.25, 5.0, materials.wall, 0.1, 2.925, 5.337);
-    addGlassWallAlongX(studio, 0.28, 3.77, pergolaLength + 0.015, 3);
+    const pergolaSliderStart = 0.28;
+    const pergolaSliderEnd = 3.77;
+    const pergolaSliderPanels = 2;
+    addGlassWallAlongX(studio, pergolaSliderStart, pergolaSliderEnd, pergolaLength + 0.015, pergolaSliderPanels);
 
     addBox(studio, 4, 0.2, pergolaLength, materials.charcoalSoft, 2, 3.02, pergolaLength / 2);
     const soffit = new THREE.Mesh(new THREE.PlaneGeometry(4, pergolaLength), woodMaterial);
@@ -1396,8 +1408,16 @@
         frontDepth: terraceDeckEndLocalZ - 10,
         pointCount: integratedDeckPoints.length,
         straightPoolLine: integratedDeckPoints[0][0] === terracePoolLineEnd[0],
-        poolSideTimberCladding: poolSideTimberCladding.material === woodMaterial,
-        poolSideTimberCoping: poolSideTimberCoping.material === woodMaterial
+        unifiedWoodSurface: poolSideTimberCopingSurface.material === integratedDeck.material
+          && Math.abs(poolSideTimberCopingSurface.position.y - integratedDeck.position.y) < 1e-9,
+        poolSideTimberCoping: poolSideTimberCoping.material === woodMaterial,
+        poolSideCrepiWall: poolSideCrepiWall.material === materials.wall,
+        poolSideBlueStonePlinth: poolSideBlueStonePlinth.material === materials.stone,
+        poolSideSliderCount: 1,
+        poolSideSliderWidth: poolSideSliderEnd - poolSideSliderStart,
+        poolSideSliderPanels,
+        pergolaSliderWidth: pergolaSliderEnd - pergolaSliderStart,
+        pergolaSliderPanels
       },
       sourcePlan: "grondplan.html",
       canonicalWorldScaleX: world.scale.x
@@ -1419,8 +1439,13 @@
     console.assert(geometryChecks.integratedDeck.frontDepth > 1 && geometryChecks.integratedDeck.frontDepth < 1.1, "Front return must fill the studio-to-terrace gap");
     console.assert(geometryChecks.integratedDeck.pointCount === 9, "Pool edge must continue directly to the terrace without an intermediate corner");
     console.assert(geometryChecks.integratedDeck.straightPoolLine, "Pool-side deck edge must stay on one straight line to the terrace");
-    console.assert(geometryChecks.integratedDeck.poolSideTimberCladding, "Full pool-facing opaque wall must use the deck timber material");
+    console.assert(geometryChecks.integratedDeck.unifiedWoodSurface, "Timber coping and deck must share one flush, texture-aligned surface");
     console.assert(geometryChecks.integratedDeck.poolSideTimberCoping, "Pool border beside the studio must use the deck timber material");
+    console.assert(geometryChecks.integratedDeck.poolSideCrepiWall, "Opaque pool-facing wall must remain crepi");
+    console.assert(geometryChecks.integratedDeck.poolSideBlueStonePlinth, "Opaque pool-facing wall must retain its blue-stone plinth");
+    console.assert(geometryChecks.integratedDeck.poolSideSliderCount === 1 && Math.abs(geometryChecks.integratedDeck.poolSideSliderWidth - 5) < 1e-9, "Pool-facing façade must use one 5.00 m slider");
+    console.assert(geometryChecks.integratedDeck.poolSideSliderPanels === 2, "Pool-facing slider must have two panels");
+    console.assert(Math.abs(geometryChecks.integratedDeck.pergolaSliderWidth - 3.49) < 1e-9 && geometryChecks.integratedDeck.pergolaSliderPanels === 2, "Pergola slider must have two panels");
     console.assert(geometryChecks.canonicalWorldScaleX === -1, "All views must retain the Plan orientation");
     window.__renderMetrics = geometryChecks;
 

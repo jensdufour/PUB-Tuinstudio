@@ -1198,12 +1198,13 @@
 
         <!-- One integrated deck: full studio side, complete short-side return and terrace connection. -->
         <g id="integrated-studio-deck" aria-label="Doorlopend houten dek rond de tuinstudio">
-          <title>Doorlopend houten dek 25,74 m² inclusief pergola; zwembadlijn recht doorgetrokken tot het terras en volledige houtcladding aan de zwembadzijde</title>
+          <title>Doorlopend houten dek 25,74 m² inclusief pergola; naadloos verbonden met de houten poolrand</title>
           <polygon
             points="75.600000,268.054828 81.983307,267.181000 106.396308,445.517775 177.731018,435.752575 180.267944,454.284800 75.600000,464.050000"
             fill="url(#deckFill)" />
-          <polyline
-            points="81.983307,267.181000 75.600000,268.054828 75.600000,464.050000 180.267944,454.284800 177.731018,435.752575"
+          <polyline points="81.983307,267.181000 75.600000,268.054828"
+            fill="none" stroke="#6f4729" stroke-width="0.9" stroke-linecap="round" />
+          <polyline points="75.600000,464.050000 180.267944,454.284800 177.731018,435.752575"
             fill="none" stroke="#6f4729" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" />
           <polyline points="88.103646,311.890030 106.396308,445.517775 177.731018,435.752575"
             fill="none" stroke="#262d30" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
@@ -1219,11 +1220,7 @@
           </g>
           <rect id="city-plus-shell" x="18" y="270.781" width="54" height="131.4"
             fill="#b8ddec" stroke="#2E4057" stroke-width="0.9" />
-          <rect id="city-plus-studio-side-timber" x="72" y="267.181" width="3.6" height="138.6"
-            fill="url(#deckFill)" stroke="#6f4729" stroke-width="0.6">
-            <title>Poolrand aan de tuinstudio in hetzelfde hout als het dek</title>
-          </rect>
-          <rect x="14.4" y="267.181" width="61.2" height="138.6"
+          <path d="M75.6,267.181 H14.4 V405.781 H75.6"
             fill="none" stroke="#1a1a2e" stroke-width="0.9" />
           <text x="45" y="329.781" font-size="7" fill="#1a1a2e" text-anchor="middle" font-weight="700">LPW CITY+</text>
           <text x="45" y="340.781" font-size="4" fill="#2E4057" text-anchor="middle">7,30 × 3,00 m</text>
@@ -1236,6 +1233,10 @@
           <text x="9" y="258.781" font-size="3.2" fill="#7a8a9a" text-anchor="middle" font-weight="700">1,00 m</text>
           <text x="9" y="254.781" font-size="2.2" fill="#7a8a9a" text-anchor="middle">incl. blauwe steen</text>
         </g>
+        <rect id="city-plus-studio-side-timber" x="72" y="268.054828045" width="3.6" height="138.6"
+          fill="url(#deckFill)" stroke="none">
+          <title>Poolrand en dek vormen één doorlopend houtvlak zonder zichtbare naad</title>
+        </rect>
 
         <g id="rainwater-tank" aria-label="Regenwaterput 7500 liter">
           <title>Regenwaterput 7500 L, diameter 2,70 m</title>
@@ -1270,18 +1271,17 @@
             <line x1="82" y1="524" x2="86.32" y2="524" />
             <line x1="102.64" y1="524" x2="154" y2="524" />
             <line x1="82" y1="344" x2="82" y2="395.12" />
-            <line x1="82" y1="458.24" x2="82" y2="461.84" />
             <line x1="82" y1="485.36" x2="82" y2="524" />
             <line x1="154" y1="344" x2="154" y2="403.28" />
             <line x1="154" y1="475.28" x2="154" y2="494.72" />
             <line x1="154" y1="516.32" x2="154" y2="524" />
           </g>
-          <line id="pool-side-timber-cladding" x1="81.6" y1="485.066" x2="81.6" y2="524"
-            stroke="#b98250" stroke-width="2.2" stroke-linecap="round">
-            <title>Volledige houtcladding aan de zwembadzijde</title>
+          <line id="pool-side-blue-stone-plinth" x1="81.6" y1="485.36" x2="81.6" y2="524"
+            stroke="#788890" stroke-width="2.2" stroke-linecap="round">
+            <title>Crepiwand met blauwe-steenplint aan de zwembadzijde</title>
           </line>
           <g id="studio-site-plan" clip-path="url(#studioSiteClip)" aria-label="Vereenvoudigd grondplan tuinstudio">
-            <title>Kamers, deuren en raamopeningen uit tuinstudio.html</title>
+            <title>Kamers, deuren en tweedelige schuiframen uit tuinstudio.html</title>
 
             <g id="studio-room-partitions" fill="none" stroke="#82909d" stroke-width="0.7" stroke-dasharray="3,2">
               <line x1="86.32" y1="486.32" x2="115.24" y2="486.32" />
@@ -1292,10 +1292,17 @@
             <g id="studio-window-openings" fill="none" stroke="#3a7ab0" stroke-width="1.4"
               stroke-dasharray="2.4,1.6" stroke-linecap="round">
               <line x1="86.32" y1="391.28" x2="149.68" y2="391.28" />
-              <line x1="82" y1="395.12" x2="82" y2="458.24" />
-              <line x1="82" y1="461.84" x2="82" y2="485.36" />
+              <line x1="82" y1="395.12" x2="82" y2="485.36" />
               <line x1="154" y1="403.28" x2="154" y2="475.28" />
               <line x1="154" y1="494.72" x2="154" y2="516.32" />
+            </g>
+            <g id="studio-slider-dividers" stroke="#3a7ab0" stroke-width="0.7">
+              <line x1="118" y1="389.8" x2="118" y2="392.76">
+                <title>Pergolaschuifraam, 2 delen</title>
+              </line>
+              <line x1="80.5" y1="440.24" x2="83.5" y2="440.24">
+                <title>Zwembadschuifraam 5,01 m, 2 delen</title>
+              </line>
             </g>
 
             <g id="studio-bathroom-fixtures" fill="none" stroke="#7a8a9a" stroke-width="0.55"
@@ -1410,33 +1417,23 @@
         </g>
 
         <!-- ══════════════════════════════════════════════════════
-             ZZW (BOTTOM) WALL — v8: vast raam 1,30m + kolom 0,20m + schuifraam 3,50m (open corner)
+             ZZW (BOTTOM) WALL — one 5,01m two-panel slider (open corner)
              ══════════════════════════════════════════════════════ -->
         <!-- Bath south solid masonry: x=679..840 (2,15 m) -->
         <rect x="679" y="357" width="161" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
 
-        <!-- Vast raam (fixed glazing) 1,30 m: x=581..679 (98px) -->
-        <rect x="581" y="357" width="98" height="18" fill="#a8c5d8" stroke="#2E4057" stroke-width="1.5" />
-        <!-- Fixed glazing cross marks -->
-        <line x1="679" y1="375" x2="581" y2="357" stroke="#2E4057" stroke-width="0.5" opacity="0.4" />
-        <line x1="679" y1="357" x2="581" y2="375" stroke="#2E4057" stroke-width="0.5" opacity="0.4" />
-
-        <!-- Structural column 0,20 m: x=566..581 (15px) -->
-        <rect x="566" y="357" width="15" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
-
-        <!-- Schuifraam 3,50 m: x=303..566 (263px) — entrance, open corner -->
-        <rect x="303" y="357" width="263" height="18" fill="#a8c5d8" stroke="#2E4057" stroke-width="2" />
-        <!-- Panel dividers (3 panels ≈ 1,17m each) -->
-        <line x1="478" y1="375" x2="478" y2="357" stroke="white" stroke-width="1.5" />
-        <line x1="391" y1="375" x2="391" y2="357" stroke="white" stroke-width="1.5" />
+        <!-- One 5,01 m sliding window, split into two economical panels. -->
+        <rect x="303" y="357" width="376" height="18" fill="#a8c5d8" stroke="#2E4057" stroke-width="2" />
+        <line x1="491" y1="375" x2="491" y2="357" stroke="white" stroke-width="1.5" />
 
         <!-- Corner piece masonry: x=278..303 (25px = 0,33 m) — open corner column -->
         <rect x="278" y="357" width="25" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <line x1="679" y1="373" x2="840" y2="373" stroke="#788890" stroke-width="4" stroke-linecap="round" />
 
         <!-- INGANG arrow (centered on schuifraam) -->
-        <line x1="434" y1="455" x2="434" y2="366" stroke="#4A7C59" stroke-width="2" marker-end="url(#arrG)" />
-        <text x="434" y="472" font-size="8" fill="#4A7C59" text-anchor="middle" font-weight="700">INGANG</text>
-        <text x="434" y="462" font-size="7" fill="#4A7C59" text-anchor="middle">schuifraam 3,50 m</text>
+        <line x1="491" y1="455" x2="491" y2="366" stroke="#4A7C59" stroke-width="2" marker-end="url(#arrG)" />
+        <text x="491" y="472" font-size="8" fill="#4A7C59" text-anchor="middle" font-weight="700">INGANG</text>
+        <text x="491" y="462" font-size="7" fill="#4A7C59" text-anchor="middle">schuifraam 5,01 m · 2 delen</text>
 
         <!-- Pergola south — open (dashed, WNW side) -->
         <line x1="278" y1="366" x2="90" y2="366" stroke="#4A7C59" stroke-width="1.2" stroke-dasharray="6,4" />
@@ -1481,14 +1478,12 @@
         <rect x="90" y="75" width="188" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
 
         <!-- ══════════════════════════════════════════════════════
-             LOUNGE/PERGOLA WEST WALL (WNW) — schuifraam 3,50 m full height
+             LOUNGE/PERGOLA WEST WALL (WNW) — schuifraam 3,52 m, two panels
              ══════════════════════════════════════════════════════ -->
         <rect x="278" y="93" width="18" height="264" fill="#a8c5d8" stroke="#2E4057" stroke-width="2" />
-        <line x1="296" y1="291" x2="278" y2="291" stroke="white" stroke-width="1.5" />
         <line x1="296" y1="225" x2="278" y2="225" stroke="white" stroke-width="1.5" />
-        <line x1="296" y1="159" x2="278" y2="159" stroke="white" stroke-width="1.5" />
         <text x="287" y="223" font-size="6" fill="#2E4057" text-anchor="middle"
-          transform="rotate(-90,287,223)">schuifraam 3,50 m</text>
+          transform="rotate(-90,287,223)">schuifraam 3,52 m · 2 delen</text>
 
         <!-- Pergola east — open (dashed) -->
         <line x1="99" y1="357" x2="99" y2="93" stroke="#4A7C59" stroke-width="1.2" stroke-dasharray="6,4" />
@@ -1888,8 +1883,6 @@
         <!-- ─── BOTTOM: ZZW FACE BREAKDOWN at y≈515 ─── -->
         <line x1="840" y1="522" x2="840" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="679" y1="522" x2="679" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="581" y1="522" x2="581" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="566" y1="522" x2="566" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="303" y1="522" x2="303" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="278" y1="522" x2="278" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="90" y1="522" x2="90" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
@@ -1899,19 +1892,10 @@
         <rect x="741" y="512" width="46" height="11" fill="#faf8f4" />
         <text x="764" y="515" font-size="6" fill="#7a8a9a" text-anchor="middle">wand 2,15</text>
 
-        <!-- Vast raam 1,30 m -->
-        <line x1="679" y1="515" x2="581" y2="515" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
-        <rect x="609" y="512" width="46" height="11" fill="#faf8f4" />
-        <text x="632" y="515" font-size="6" fill="#4A7C59" text-anchor="middle" font-weight="700">vast 1,30</text>
-
-        <!-- Kolom 0,20 m -->
-        <line x1="581" y1="515" x2="566" y2="515" stroke="#2E4057" stroke-width="0.7" />
-        <text x="573" y="523" font-size="5" fill="#2E4057" text-anchor="middle" font-weight="700">0,20</text>
-
-        <!-- Schuifraam 3,50 m -->
-        <line x1="566" y1="515" x2="303" y2="515" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
-        <rect x="403" y="512" width="62" height="11" fill="#faf8f4" />
-        <text x="434" y="515" font-size="6" fill="#4A7C59" text-anchor="middle" font-weight="700">schuif 3,50</text>
+        <!-- One full-width, two-panel slider 5,01 m. -->
+        <line x1="679" y1="515" x2="303" y2="515" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <rect x="451" y="512" width="80" height="11" fill="#faf8f4" />
+        <text x="491" y="515" font-size="6" fill="#4A7C59" text-anchor="middle" font-weight="700">schuif 5,01 · 2-delig</text>
 
         <!-- Corner pier 0,33 m -->
         <line x1="303" y1="515" x2="278" y2="515" stroke="#8a9aaa" stroke-width="0.6" />
