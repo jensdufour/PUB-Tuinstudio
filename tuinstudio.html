@@ -381,10 +381,14 @@
              <rect x="687" y="244.5" width="135" height="112.5" fill="url(#cupboardFill)" />
         <!-- Berging/badkamer partition (0,10 m) -->
              <rect x="687" y="236.5" width="135" height="8" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
-        <!-- Door swing (0,90 m, outward west) -->
-        <line x1="840" y1="357" x2="840" y2="289" stroke="#2E4057" stroke-width="1.2" />
-        <line x1="840" y1="357" x2="908" y2="357" stroke="#2E4057" stroke-width="1.2" />
-        <path d="M840,289 A68 68 0 0 1 908,357" fill="none" stroke="#8a9aaa" stroke-width="0.9" stroke-dasharray="4,3" />
+        <!-- Standard aluminium RAL 9005 exterior door, opening outward to OZO. -->
+        <g id="storage-exterior-door-ral9005" fill="none" stroke="#0a0a0d">
+          <title>Standaard aluminium buitendeur berging, 0,90 m, RAL 9005, naar buiten draaiend</title>
+          <line x1="840" y1="357" x2="840" y2="289" stroke-width="1.2" />
+          <line x1="840" y1="357" x2="908" y2="357" stroke-width="2" />
+          <path d="M840,289 A68 68 0 0 1 908,357" stroke="#8a9aaa" stroke-width="0.9" stroke-dasharray="4,3" />
+        </g>
+        <text x="874" y="350" font-size="4.5" fill="#0a0a0d" text-anchor="middle" font-weight="700">ALU RAL9005</text>
         <!-- Label -->
            <text x="754" y="267" font-size="8" fill="#2E4057" text-anchor="middle" font-weight="700">BERGING</text>
            <text x="754" y="256" font-size="6" fill="#7a8a9a" text-anchor="middle">1,80 x 1,50 m (2,70 m&#178;)</text>
@@ -482,13 +486,13 @@
         <path d="M679,176.5 A60 60 0 0 0 619,236.5" fill="none" stroke="#8a9aaa" stroke-width="0.9"
           stroke-dasharray="4,3" />
 
-        <!-- Bureau 120x60cm -->
-        <rect x="559" y="93" width="90" height="45" rx="1" fill="#e4ddd4" stroke="#8a9aaa" stroke-width="1.2" />
+        <!-- Bureau 120x60cm, long axis aligned with the studio. -->
+        <rect id="office-desk" x="559" y="93" width="90" height="45" rx="1" fill="#e4ddd4" stroke="#8a9aaa" stroke-width="1.2" />
         <rect x="577" y="109" width="52" height="24" rx="2" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
         <line x1="603" y1="109" x2="603" y2="103" stroke="#8a9aaa" stroke-width="0.8" />
         <line x1="613" y1="103" x2="593" y2="103" stroke="#8a9aaa" stroke-width="0.8" />
         <!-- Bureaustoel -->
-        <circle cx="604" cy="160" r="17" fill="none" stroke="#8a9aaa" stroke-width="1" stroke-dasharray="3,2" />
+        <circle id="office-chair" cx="604" cy="160" r="17" fill="none" stroke="#8a9aaa" stroke-width="1" stroke-dasharray="3,2" />
 
 
         <!-- Airco binnenunit (achterwand berging, kantoor-zijde) -->
@@ -507,13 +511,13 @@
              ══════════════════════════════════════════════════════ -->
         <rect x="296" y="93" width="203" height="264" fill="#f7f5f0" />
 
-        <!-- Sofa -->
-        <rect x="309" y="106" width="178" height="52" rx="5" fill="none" stroke="#8a9aaa" stroke-width="1.2" />
+        <!-- Sofa aligned with the studio long axis, keeping the slider route open. -->
+        <rect id="lounge-sofa" x="309" y="106" width="178" height="52" rx="5" fill="none" stroke="#8a9aaa" stroke-width="1.2" />
         <rect x="309" y="142" width="178" height="16" rx="3" fill="none" stroke="#bbb" stroke-width="0.7" />
         <rect x="481" y="106" width="10" height="52" rx="3" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
         <rect x="305" y="106" width="10" height="52" rx="3" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
         <!-- Coffee table -->
-        <rect x="345" y="166" width="118" height="38" rx="3" fill="none" stroke="#8a9aaa" stroke-width="0.8"
+        <rect id="lounge-coffee-table" x="345" y="166" width="118" height="38" rx="3" fill="none" stroke="#8a9aaa" stroke-width="0.8"
           stroke-dasharray="3,2" />
 
         <!-- Combined open room label. -->
@@ -523,6 +527,13 @@
         <!-- ══════════════════════════════════════════════════════
              PERGOLA INTERIOR  (2,27 x 3,50 m = 7,95 m²)
              ══════════════════════════════════════════════════════ -->
+        <g id="pergola-furniture" fill="none" stroke="#8a9aaa">
+          <title>Pergolameubilair langs de gesloten zijde voor vrije doorgang aan de schuiframen</title>
+          <rect id="pergola-sofa" x="119.25" y="99" width="129" height="54.75" rx="4" stroke-width="1.1" />
+          <rect x="125" y="105" width="117.5" height="42.75" rx="3" stroke="#bbb5a8" stroke-width="0.7" />
+          <rect id="pergola-table" x="157.5" y="170.625" width="52.5" height="33.75" rx="3" stroke-width="0.8" stroke-dasharray="3,2" />
+        </g>
+        <text x="183.75" y="164" font-size="4.5" fill="#7a8a9a" text-anchor="middle">lounge 1,72 × 0,73 m</text>
         <!-- Pergola column — INWARD-DIAGONAL from NE corner
              Positioned ~0,53m from east outer edge, ~0,31m from north outer edge
              Carries roof load diagonally toward main foundation

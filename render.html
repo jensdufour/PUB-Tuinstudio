@@ -340,7 +340,7 @@
     </header>
 
     <div class="material-note">
-      Wit crepi met blauwe-steenplint · één groot tweedelig schuifraam aan de zwembadzijde · tweedelig pergolaschuifraam · verbindingspost 20 × 20 cm in RAL 9005 · poolrand en dek in één doorlopend houtvlak.
+      Wit crepi met blauwe-steenplint · tweedelige schuiframen met post 20 × 20 cm RAL 9005 · standaard aluminium bergingsdeur RAL 9005 · poolrand en dek in één doorlopend houtvlak.
     </div>
 
     <div class="control-dock" aria-label="Renderinstellingen">
@@ -865,10 +865,30 @@
     const studioCeiling = addBox(studio, 3.52, 0.04, shellLength - 0.48, materials.ceiling, 2, 2.88, pergolaLength + shellLength / 2, { castShadow: false });
     studioCeiling.name = "studio-white-interior-ceiling";
     addBox(studio, 0.24, 2.96, shellLength, materials.wall, 3.88, 1.52, pergolaLength + shellLength / 2);
-    addBox(studio, 4, 2.96, 0.24, materials.wall, 2, 1.52, 9.88);
+    const storageDoorWidth = 0.9;
+    const storageDoorHeight = 2.44;
+    const storageDoorStart = 0.24;
+    const storageDoorEnd = storageDoorStart + storageDoorWidth;
+    const wallBottom = 0.04;
+    const wallTop = 3;
+    const doorBottom = 0.08;
+    const doorTop = doorBottom + storageDoorHeight;
+    addBox(studio, storageDoorStart, wallTop - wallBottom, 0.24, materials.wall, storageDoorStart / 2, (wallTop + wallBottom) / 2, 9.88);
+    addBox(studio, 4 - storageDoorEnd, wallTop - wallBottom, 0.24, materials.wall, storageDoorEnd + (4 - storageDoorEnd) / 2, (wallTop + wallBottom) / 2, 9.88);
+    addBox(studio, storageDoorWidth, wallTop - doorTop, 0.24, materials.wall, (storageDoorStart + storageDoorEnd) / 2, (wallTop + doorTop) / 2, 9.88);
 
     addBox(studio, 0.045, 0.3, shellLength, materials.stone, 4.0225, 0.15, pergolaLength + shellLength / 2);
-    addBox(studio, 4, 0.3, 0.045, materials.stone, 2, 0.15, 10.0225);
+    addBox(studio, storageDoorStart, 0.3, 0.045, materials.stone, storageDoorStart / 2, 0.15, 10.0225);
+    addBox(studio, 4 - storageDoorEnd, 0.3, 0.045, materials.stone, storageDoorEnd + (4 - storageDoorEnd) / 2, 0.15, 10.0225);
+
+    const storageDoor = addBox(studio, storageDoorWidth, storageDoorHeight, 0.06, materials.charcoal, (storageDoorStart + storageDoorEnd) / 2, (doorBottom + doorTop) / 2, 10.03);
+    storageDoor.name = "storage-exterior-door-ral9005";
+    addBox(studio, 0.06, storageDoorHeight + 0.1, 0.09, materials.charcoal, storageDoorStart - 0.03, (doorBottom + doorTop) / 2, 10.035);
+    addBox(studio, 0.06, storageDoorHeight + 0.1, 0.09, materials.charcoal, storageDoorEnd + 0.03, (doorBottom + doorTop) / 2, 10.035);
+    addBox(studio, storageDoorWidth + 0.12, 0.06, 0.09, materials.charcoal, (storageDoorStart + storageDoorEnd) / 2, doorTop + 0.03, 10.035);
+    addBox(studio, storageDoorWidth + 0.12, 0.04, 0.09, materials.charcoal, (storageDoorStart + storageDoorEnd) / 2, doorBottom, 10.035);
+    const storageDoorHandle = addBox(studio, 0.035, 0.14, 0.055, materials.white, storageDoorEnd - 0.14, 1.12, 10.09, { castShadow: false });
+    storageDoorHandle.name = "storage-door-handle";
 
     const cornerPostSize = 0.2;
     const cornerPostStart = 188 / 75;
@@ -914,15 +934,47 @@
 
     const interior = new THREE.Group();
     studio.add(interior);
-    addBox(interior, 1.88, 0.34, 0.74, materials.darkFabric, 2.72, 0.31, 3.55);
-    addBox(interior, 1.78, 0.38, 0.22, materials.cushion, 2.72, 0.68, 3.82);
-    addBox(interior, 0.72, 0.08, 0.46, woodEdgeMaterial, 1.55, 0.32, 3.45);
+    const loungeSofaWidth = 52 / 75;
+    const loungeSofaLength = 178 / 75;
+    const loungeSofaX = (357 - 132) / 75 + 0.24;
+    const loungeSofaZ = (398 - 90) / 75;
+    const loungeSofa = addBox(interior, loungeSofaWidth, 0.34, loungeSofaLength, materials.darkFabric, loungeSofaX, 0.31, loungeSofaZ);
+    loungeSofa.name = "lounge-sofa-plan-aligned";
+    addBox(interior, 0.2, 0.38, loungeSofaLength - 0.1, materials.cushion, loungeSofaX + loungeSofaWidth / 2 - 0.1, 0.68, loungeSofaZ);
 
-    addBox(studio, 1.45, 0.36, 0.56, materials.darkFabric, 2.78, 0.31, 1.12);
-    addBox(studio, 1.35, 0.32, 0.18, materials.cushion, 2.78, 0.64, 1.33);
-    addBox(studio, 0.72, 0.06, 0.5, woodEdgeMaterial, 1.55, 0.34, 1.42);
-    addBox(studio, 0.06, 0.31, 0.06, materials.charcoal, 1.31, 0.17, 1.25);
-    addBox(studio, 0.06, 0.31, 0.06, materials.charcoal, 1.79, 0.17, 1.25);
+    const coffeeTableWidth = 38 / 75;
+    const coffeeTableLength = 118 / 75;
+    const coffeeTableX = (357 - 185) / 75 + 0.24;
+    const coffeeTableZ = (404 - 90) / 75;
+    const coffeeTable = addBox(interior, coffeeTableWidth, 0.08, coffeeTableLength, woodEdgeMaterial, coffeeTableX, 0.32, coffeeTableZ);
+    coffeeTable.name = "coffee-table-plan-aligned";
+
+    const deskWidth = 45 / 75;
+    const deskLength = 90 / 75;
+    const deskX = (357 - 115.5) / 75 + 0.24;
+    const deskZ = (604 - 90) / 75;
+    const desk = addBox(interior, deskWidth, 0.06, deskLength, woodEdgeMaterial, deskX, 0.76, deskZ);
+    desk.name = "office-desk-plan-aligned";
+    for (const x of [deskX - deskWidth / 2 + 0.05, deskX + deskWidth / 2 - 0.05]) {
+      for (const z of [deskZ - deskLength / 2 + 0.05, deskZ + deskLength / 2 - 0.05]) {
+        addBox(interior, 0.05, 0.72, 0.05, materials.charcoal, x, 0.38, z);
+      }
+    }
+    const monitor = addBox(interior, 0.05, 0.42, 0.65, materials.charcoal, deskX + deskWidth / 2 - 0.08, 1.06, deskZ, { castShadow: false });
+    monitor.name = "office-monitor";
+    const deskChairX = (357 - 160) / 75 + 0.24;
+    const deskChair = addBox(interior, 0.46, 0.12, 0.46, materials.darkFabric, deskChairX, 0.48, deskZ);
+    deskChair.name = "office-chair";
+    addBox(interior, 0.12, 0.55, 0.42, materials.darkFabric, deskChairX + 0.2, 0.74, deskZ);
+
+    const pergolaSofa = addBox(studio, 0.73, 0.36, 1.72, materials.darkFabric, 3.4, 0.31, 1.25);
+    pergolaSofa.name = "pergola-sofa-optimized";
+    addBox(studio, 0.18, 0.36, 1.62, materials.cushion, 3.68, 0.66, 1.25);
+    const pergolaTable = addBox(studio, 0.45, 0.06, 0.7, woodEdgeMaterial, 2.5, 0.34, 1.25);
+    pergolaTable.name = "pergola-table-optimized";
+    for (const z of [1.25 - 0.28, 1.25 + 0.28]) {
+      addBox(studio, 0.05, 0.31, 0.05, materials.charcoal, 2.5, 0.17, z);
+    }
 
     const warmLight = new THREE.PointLight(0xffd7a0, 18, 7, 2);
     warmLight.position.set(2.2, 2.45, 3.4);
@@ -1434,6 +1486,23 @@
         pergolaSliderWidth: pergolaSliderEnd - pergolaSliderStart,
         pergolaSliderPanels
       },
+      storageDoor: {
+        count: 1,
+        width: storageDoorWidth,
+        height: storageDoorHeight,
+        ral: storageDoor.material === materials.charcoal ? "RAL 9005" : "unknown",
+        material: "aluminium",
+        swing: "outward",
+        wallSegments: 2
+      },
+      furniture: {
+        loungeSofaAxis: loungeSofaLength > loungeSofaWidth ? "studio-long-axis" : "cross-axis",
+        coffeeTableAxis: coffeeTableLength > coffeeTableWidth ? "studio-long-axis" : "cross-axis",
+        deskAxis: deskLength > deskWidth ? "studio-long-axis" : "cross-axis",
+        pergolaSofaAxis: 1.72 > 0.73 ? "studio-long-axis" : "cross-axis",
+        sliderEntryClearance: coffeeTableX - coffeeTableWidth / 2,
+        deskToBathroomClearance: (687 - 90) / 75 - (deskZ + deskLength / 2)
+      },
       sourcePlan: "grondplan.html",
       canonicalWorldScaleX: world.scale.x
     };
@@ -1462,6 +1531,12 @@
     console.assert(geometryChecks.integratedDeck.poolSideSliderCount === 1 && Math.abs(geometryChecks.integratedDeck.poolSideSliderWidth - 386 / 75) < 1e-9, "Pool-facing façade must use one full-width 5.15 m slider");
     console.assert(geometryChecks.integratedDeck.poolSideSliderPanels === 2, "Pool-facing slider must have two panels");
     console.assert(Math.abs(geometryChecks.integratedDeck.pergolaSliderWidth - 3.52) < 1e-9 && geometryChecks.integratedDeck.pergolaSliderPanels === 2, "Pergola slider must be 3.52 m with two panels");
+    console.assert(geometryChecks.storageDoor.count === 1 && geometryChecks.storageDoor.wallSegments === 2, "Storage end wall must contain one real door opening");
+    console.assert(Math.abs(geometryChecks.storageDoor.width - 0.9) < 1e-9 && Math.abs(geometryChecks.storageDoor.height - 2.44) < 1e-9, "Storage exterior door must be 0.90 x 2.44 m");
+    console.assert(geometryChecks.storageDoor.ral === "RAL 9005" && geometryChecks.storageDoor.material === "aluminium" && geometryChecks.storageDoor.swing === "outward", "Storage exterior door must be outward-opening RAL 9005 aluminium");
+    console.assert(Object.values(geometryChecks.furniture).slice(0, 4).every(axis => axis === "studio-long-axis"), "Sofa, tables and desk must follow the studio long axis");
+    console.assert(geometryChecks.furniture.sliderEntryClearance > 2.2, "Furniture must preserve a clear route from the pool-side slider");
+    console.assert(geometryChecks.furniture.deskToBathroomClearance > 0.5, "Desk must clear the bathroom zone");
     console.assert(geometryChecks.canonicalWorldScaleX === -1, "All views must retain the Plan orientation");
     window.__renderMetrics = geometryChecks;
 

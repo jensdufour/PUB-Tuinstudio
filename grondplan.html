@@ -1293,6 +1293,16 @@
               <line x1="114.28" y1="487.28" x2="114.28" y2="519.68" />
             </g>
 
+            <g id="studio-furniture-layout" fill="none" stroke="#6f7f89" stroke-width="0.5" opacity="0.72">
+              <title>Meubilair langs de studio-as met vrije route vanaf het schuifraam</title>
+              <rect id="site-pergola-sofa" x="136.63" y="351.02" width="13.14" height="30.96" rx="0.8" />
+              <rect id="site-pergola-table" x="122.95" y="360.2" width="8.1" height="12.6" rx="0.6" />
+              <rect id="site-lounge-sofa" x="134.08" y="396.56" width="12.48" height="42.72" rx="0.8" />
+              <rect id="site-coffee-table" x="123.04" y="405.2" width="9.12" height="28.32" rx="0.6" />
+              <rect id="site-office-desk" x="138.88" y="456.56" width="10.8" height="21.6" rx="0.5" />
+              <circle id="site-office-chair" cx="133.6" cy="467.36" r="4.14" stroke-dasharray="1.5,1" />
+            </g>
+
             <g id="studio-window-openings" fill="none" stroke="#3a7ab0" stroke-width="1.4"
               stroke-dasharray="2.4,1.6" stroke-linecap="round">
               <line x1="86.32" y1="391.28" x2="149.68" y2="391.28" />
@@ -1353,14 +1363,14 @@
             </g>
           </g>
 
-          <g id="studio-door-openings" fill="none" stroke="#4A7C59" stroke-width="0.8" stroke-linecap="round">
-            <title>Deuren uit tuinstudio.html</title>
-
-            <!-- Berging: buitendeur 0,90 m. -->
+          <g id="storage-exterior-door-ral9005" fill="none" stroke="#0a0a0d" stroke-width="0.9" stroke-linecap="round">
+            <title>Standaard aluminium buitendeur berging 0,90 m, RAL 9005, naar buiten draaiend</title>
             <line x1="86.32" y1="524" x2="86.32" y2="540.32" />
-            <path d="M102.64,524 A16.32,16.32 0 0 1 86.32,540.32" stroke-dasharray="2,1.5" />
+            <path d="M102.64,524 A16.32,16.32 0 0 1 86.32,540.32" stroke="#8a9aaa" stroke-dasharray="2,1.5" />
+          </g>
 
-            <!-- Badkamer naar kantoor: binnendeur 0,80 m. -->
+          <g id="studio-internal-door" fill="none" stroke="#4A7C59" stroke-width="0.8" stroke-linecap="round">
+            <title>Binnendeur badkamer naar kantoor</title>
             <line x1="115.24" y1="486.32" x2="115.24" y2="471.92" />
             <path d="M129.64,486.32 A14.4,14.4 0 0 0 115.24,471.92" stroke-dasharray="2,1.5" />
           </g>
@@ -1527,10 +1537,14 @@
         <rect x="687" y="282" width="135" height="75" fill="url(#cupboardFill)" />
         <!-- Berging/badkamer partition (0,10 m) -->
         <rect x="687" y="274" width="135" height="8" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
-        <!-- Door swing (0,90 m, outward west) -->
-        <line x1="840" y1="357" x2="840" y2="289" stroke="#2E4057" stroke-width="1.2" />
-        <line x1="840" y1="357" x2="908" y2="357" stroke="#2E4057" stroke-width="1.2" />
-        <path d="M840,289 A68 68 0 0 1 908,357" fill="none" stroke="#8a9aaa" stroke-width="0.9" stroke-dasharray="4,3" />
+        <!-- Standard aluminium RAL 9005 exterior door, opening outward to OZO. -->
+        <g fill="none" stroke="#0a0a0d">
+          <title>Standaard aluminium buitendeur berging, 0,90 m, RAL 9005, naar buiten draaiend</title>
+          <line x1="840" y1="357" x2="840" y2="289" stroke-width="1.2" />
+          <line x1="840" y1="357" x2="908" y2="357" stroke-width="2" />
+          <path d="M840,289 A68 68 0 0 1 908,357" stroke="#8a9aaa" stroke-width="0.9" stroke-dasharray="4,3" />
+        </g>
+        <text x="874" y="350" font-size="4.5" fill="#0a0a0d" text-anchor="middle" font-weight="700">ALU RAL9005</text>
         <!-- Label -->
         <text x="754" y="324" font-size="8" fill="#2E4057" text-anchor="middle" font-weight="700">BERGING</text>
         <text x="754" y="313" font-size="6" fill="#7a8a9a" text-anchor="middle">1,80 x 1,00 m (1,80 m&#178;)</text>
@@ -1636,7 +1650,7 @@
         <path d="M679,214 A60 60 0 0 0 619,274" fill="none" stroke="#8a9aaa" stroke-width="0.9"
           stroke-dasharray="4,3" />
 
-        <!-- Bureau 120x60cm -->
+        <!-- Bureau 120x60cm, aligned with the studio long axis. -->
         <rect x="559" y="93" width="90" height="45" rx="1" fill="#e4ddd4" stroke="#8a9aaa" stroke-width="1.2" />
         <rect x="577" y="109" width="52" height="24" rx="2" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
         <line x1="603" y1="109" x2="603" y2="103" stroke="#8a9aaa" stroke-width="0.8" />
@@ -1680,6 +1694,13 @@
         <!-- ══════════════════════════════════════════════════════
              PERGOLA INTERIOR  (2,27 x 3,50 m = 7,95 m²)
              ══════════════════════════════════════════════════════ -->
+        <g fill="none" stroke="#8a9aaa">
+          <title>Pergolameubilair langs de gesloten zijde voor vrije doorgang aan de schuiframen</title>
+          <rect x="119.25" y="99" width="129" height="54.75" rx="4" stroke-width="1.1" />
+          <rect x="125" y="105" width="117.5" height="42.75" rx="3" stroke="#bbb5a8" stroke-width="0.7" />
+          <rect x="157.5" y="170.625" width="52.5" height="33.75" rx="3" stroke-width="0.8" stroke-dasharray="3,2" />
+        </g>
+        <text x="183.75" y="164" font-size="4.5" fill="#7a8a9a" text-anchor="middle">lounge 1,72 × 0,73 m</text>
         <rect x="108" y="93" width="170" height="264" fill="url(#pergolaFill)" />
 
         <!-- Pergola column -->
