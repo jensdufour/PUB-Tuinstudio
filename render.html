@@ -12,7 +12,7 @@
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Render Studio V2 met overdekt funderingspad</title>
+  <title>Render zwembadpad en tuinstudio</title>
   <style>
     :root {
       color-scheme: light;
@@ -330,17 +330,17 @@
 
     <header class="title-block">
       <p class="eyebrow">3D visualisatie · planbasis 05-08-2026</p>
-      <h1>Tuinstudio V2</h1>
-      <p class="subtitle">3,10 m gebouw · 0,90 m overdekt pad · dak 4,00 × 10,00 m</p>
+      <h1>Tuinplan Lot 24B</h1>
+      <p class="subtitle">Woning · terras · LPW City+ · tuinstudio · voortuin</p>
       <div class="metrics" aria-label="Belangrijkste doorgangen">
         <span class="metric">bovenrand 0,36 m</span>
         <span class="metric">glaslijn 0,70 m</span>
-        <span class="metric">pad op fundering 6,74 m²</span>
+        <span class="metric">houtlanding 7,01 m²</span>
       </div>
     </header>
 
     <div class="material-note">
-      De bestaande fundering en het dak blijven 4,00 × 10,00 m. De ombouw wordt 3,10 m breed, waardoor langs de zwembadzijde een overdekt houten pad van 0,90 m volledig op de fundering ligt. Badkamer en berging zijn naast elkaar heringedeeld.
+      Wit crepi · wit interieurplafond · plint blauwe steen 0,30 m · raamkaders RAL 9005 · bestaande erfafsluiting met Toscaanse jasmijn. De houten landing eindigt gelijk met de zwembadgevelbeglazing, sluit aan via een donker voegprofiel en gaat via drie stapstenen over in het terras.
     </div>
 
     <div class="control-dock" aria-label="Renderinstellingen">
@@ -351,7 +351,7 @@
       </div>
       <div class="tool-switch" role="group" aria-label="Weergavehulpmiddelen">
         <button id="toggle-dimensions" type="button" aria-pressed="false" title="Toon of verberg maatvoering">Maten</button>
-        <button id="toggle-passage" type="button" aria-pressed="true" title="Toon of verberg het overdekte pad en de terrasstap">Houtpad</button>
+        <button id="toggle-passage" type="button" aria-pressed="true" title="Toon of verberg de houten landing en stapstenen">Houtpad</button>
         <button id="reset-camera" type="button" title="Herstel de huidige camerastand">Herstel</button>
       </div>
     </div>
@@ -490,9 +490,7 @@
       darkFabric: standard(0x4a504f, 0.98),
       interiorFloor: standard(0xb9aa97, 0.83),
       ceiling: standard(0xffffff, 0.94),
-      white: standard(0xf0ece4, 0.86),
-      whiteAluminum: standard(0xf4f4ef, 0.28, 0.78),
-      paleOutdoorCushion: standard(0xd8d4ca, 0.92)
+      white: standard(0xf0ece4, 0.86)
     };
 
     const glassMaterial = new THREE.MeshPhysicalMaterial({
@@ -803,56 +801,90 @@
       platformStudioEdge.x - platformPoolEdge.x,
       platformStudioEdge.z - platformPoolEdge.z
     );
+    const sliderLandingEndLocalZ = 7.837;
+    const landingStudioEdge = {
+      x: studioPathStartX + Math.sin(studioAngle) * sliderLandingEndLocalZ,
+      z: -Math.cos(studioAngle) * sliderLandingEndLocalZ
+    };
+    const landingPoolLocalX = -landingStudioEdge.x / Math.cos(studioAngle);
+    const landingPoolEdge = {
+      x: 0,
+      z: Math.sin(studioAngle) * landingPoolLocalX - Math.cos(studioAngle) * sliderLandingEndLocalZ
+    };
     const clearancePergolaEndZ = -Math.cos(studioAngle) * pergolaLength;
     const platformRearPoolLocalZ = Math.sin(studioAngle) * -studioPathStartX
       - Math.cos(studioAngle) * poolRearZ;
-    const platformRearEdgeLength = Math.hypot(studioPathStartX, -poolRearZ);
-    const buildingWidth = 3.1;
-    const coveredPathWidth = 0.9;
-    const buildingCenterX = coveredPathWidth + buildingWidth / 2;
-    const coveredPathArea = coveredPathWidth * shellLength;
-    const continuousDeckArea = 4 * pergolaLength + coveredPathArea;
-    const glazingPostSize = 0.2;
-    const poolSliderStart = pergolaLength + glazingPostSize;
-    const poolSliderEnd = 6.35;
-    const storageDoorStart = 8.86;
-    const storageDoorEnd = 9.76;
-    const storageDoorCenter = (storageDoorStart + storageDoorEnd) / 2;
+
+    addDeck(studio, [[0, 0], [4, 0], [4, pergolaLength], [0, pergolaLength]]);
+    addBox(studio, 4, 0.08, pergolaLength, woodEdgeMaterial, 2, -0.005, pergolaLength / 2, { castShadow: false });
 
     const poolStudioPassage = new THREE.Group();
-    poolStudioPassage.name = "covered-foundation-path";
+    poolStudioPassage.name = "pool-pergola-timber-platform";
     world.add(poolStudioPassage);
 
-    const foundationPath = new THREE.Group();
-    foundationPath.position.set(studioPathStartX, 0, 0);
-    foundationPath.rotation.y = -studioAngle;
-    foundationPath.scale.z = -1;
-    poolStudioPassage.add(foundationPath);
-    const continuousDeck = addDeck(foundationPath, [
-      [0, 0],
-      [4, 0],
-      [4, pergolaLength],
-      [coveredPathWidth, pergolaLength],
-      [coveredPathWidth, 10],
-      [0, 10]
-    ]);
-    continuousDeck.name = "studio-v2-continuous-pergola-path-deck";
-    addBox(foundationPath, 4, 0.08, 0.07, woodEdgeMaterial, 2, -0.005, 0.035, { castShadow: false });
-    addBox(foundationPath, 0.07, 0.08, 10, woodEdgeMaterial, 0.035, -0.005, 5, { castShadow: false });
+    const hybridLandingPoints = [
+      [0, poolRearZ],
+      [studioPathStartX, 0],
+      [platformStudioEdge.x, platformStudioEdge.z],
+      [landingStudioEdge.x, landingStudioEdge.z],
+      [landingPoolEdge.x, landingPoolEdge.z],
+      [platformPoolEdge.x, platformPoolEdge.z]
+    ];
+    addDeck(poolStudioPassage, hybridLandingPoints);
+    const hybridLandingArea = Math.abs(hybridLandingPoints.reduce((area, [x, z], index) => {
+      const [nextX, nextZ] = hybridLandingPoints[(index + 1) % hybridLandingPoints.length];
+      return area + x * nextZ - nextX * z;
+    }, 0)) / 2;
+
+    const landingEdgeDeltaX = landingStudioEdge.x - landingPoolEdge.x;
+    const landingEdgeDeltaZ = landingStudioEdge.z - landingPoolEdge.z;
+    const landingEdgeLength = Math.hypot(landingEdgeDeltaX, landingEdgeDeltaZ);
+    const platformEdgeTrim = addBox(
+      poolStudioPassage,
+      landingEdgeLength,
+      0.07,
+      0.07,
+      woodEdgeMaterial,
+      (landingPoolEdge.x + landingStudioEdge.x) / 2,
+      0,
+      (landingPoolEdge.z + landingStudioEdge.z) / 2
+    );
+    platformEdgeTrim.rotation.y = -Math.atan2(landingEdgeDeltaZ, landingEdgeDeltaX);
+
+    const platformRearEdgeLength = Math.hypot(studioPathStartX, -poolRearZ);
+    const platformRearEdgeTrim = addBox(
+      poolStudioPassage,
+      platformRearEdgeLength,
+      0.07,
+      0.07,
+      woodEdgeMaterial,
+      studioPathStartX / 2,
+      0,
+      poolRearZ / 2
+    );
+    platformRearEdgeTrim.rotation.y = -Math.atan2(-poolRearZ, studioPathStartX);
+
+    const facadeJunction = new THREE.Group();
+    facadeJunction.position.set(studioPathStartX, 0, 0);
+    facadeJunction.rotation.y = -studioAngle;
+    facadeJunction.scale.z = -1;
+    poolStudioPassage.add(facadeJunction);
     addBox(
-      foundationPath,
+      facadeJunction,
       0.06,
       0.04,
-      shellLength,
+      sliderLandingEndLocalZ,
       materials.charcoal,
-      coveredPathWidth - 0.03,
+      -0.03,
       0.055,
-      pergolaLength + shellLength / 2,
+      sliderLandingEndLocalZ / 2,
       { castShadow: false }
     );
 
     const steppingStonePlan = [
-      [113.5, 455.0, -6]
+      [91.8, 420.5, -18],
+      [99.1, 438.3, -10],
+      [103.0, 456.2, -4]
     ];
     const steppingStoneGeometry = new THREE.CylinderGeometry(0.5, 0.48, 0.055, 10);
     for (const [planX, planY, rotation] of steppingStonePlan) {
@@ -865,54 +897,27 @@
     }
     document.documentElement.dataset.passage = "hybrid";
 
-    addBox(studio, buildingWidth, 0.14, shellLength, materials.interiorFloor, buildingCenterX, 0.01, pergolaLength + shellLength / 2, { castShadow: false });
-    const studioRoof = addBox(studio, 4, 0.24, 10, materials.charcoalSoft, 2, 3.02, 5);
-    studioRoof.name = "studio-v2-single-4x10-roof";
-    const studioCeiling = addBox(studio, 2.62, 0.04, shellLength - 0.48, materials.ceiling, buildingCenterX, 2.88, pergolaLength + shellLength / 2, { castShadow: false });
+    addBox(studio, 4, 0.14, shellLength, materials.interiorFloor, 2, 0.01, pergolaLength + shellLength / 2, { castShadow: false });
+    addBox(studio, 4, 0.24, shellLength, materials.charcoalSoft, 2, 3.02, pergolaLength + shellLength / 2);
+    const studioCeiling = addBox(studio, 3.52, 0.04, shellLength - 0.48, materials.ceiling, 2, 2.88, pergolaLength + shellLength / 2, { castShadow: false });
     studioCeiling.name = "studio-white-interior-ceiling";
     addBox(studio, 0.24, 2.96, shellLength, materials.wall, 3.88, 1.52, pergolaLength + shellLength / 2);
-    addBox(studio, buildingWidth, 2.96, 0.24, materials.wall, buildingCenterX, 1.52, 9.88);
+    addBox(studio, 4, 2.96, 0.24, materials.wall, 2, 1.52, 9.88);
 
     addBox(studio, 0.045, 0.3, shellLength, materials.stone, 4.0225, 0.15, pergolaLength + shellLength / 2);
-    addBox(studio, buildingWidth, 0.3, 0.045, materials.stone, buildingCenterX, 0.15, 10.0225);
+    addBox(studio, 4, 0.3, 0.045, materials.stone, 2, 0.15, 10.0225);
 
-    const glazingCornerPost = addBox(
-      studio,
-      glazingPostSize,
-      2.93,
-      glazingPostSize,
-      materials.charcoal,
-      coveredPathWidth + glazingPostSize / 2,
-      1.5,
-      pergolaLength + glazingPostSize / 2
-    );
-    glazingCornerPost.name = "studio-v2-ral9005-glazing-post";
-    addGlassWallAlongZ(studio, poolSliderStart, poolSliderEnd, coveredPathWidth + 0.015, 3);
-    addBox(studio, 0.24, 2.96, storageDoorStart - poolSliderEnd, materials.wall, 1.02, 1.52, (poolSliderEnd + storageDoorStart) / 2);
+    addBox(studio, 0.26, 2.96, 0.33, woodEdgeMaterial, 0.12, 1.52, 2.672);
+    addGlassWallAlongZ(studio, 2.837, 6.337, 0.015, 3);
+    addBox(studio, 0.24, 2.96, 0.2, materials.charcoal, 0.12, 1.52, 6.437);
+    addGlassWallAlongZ(studio, 6.537, 7.837, 0.015, 1);
+    addBox(studio, 0.24, 2.96, 2.163, materials.wall, 0.12, 1.52, 8.9185);
+    addBox(studio, 0.045, 0.3, 2.163, materials.stone, -0.0225, 0.15, 8.9185);
 
-    // Storage door: a framed RAL9005 aluminium leaf, swinging inward in plan.
-    const storageDoor = addBox(studio, 0.045, 2.44, 0.78, materials.charcoal, 0.875, 1.27, storageDoorCenter, { castShadow: false });
-    storageDoor.name = "studio-v2-storage-door";
-    addBox(studio, 0.1, 2.58, 0.08, materials.charcoal, 0.9, 1.34, storageDoorStart);
-    addBox(studio, 0.1, 2.58, 0.08, materials.charcoal, 0.9, 1.34, storageDoorEnd);
-    addBox(studio, 0.1, 0.1, 0.9, materials.charcoal, 0.9, 2.58, storageDoorCenter);
-    addBox(studio, 0.1, 0.05, 0.9, materials.charcoal, 0.9, 0.025, storageDoorCenter, { castShadow: false });
-    addBox(studio, 0.24, 0.33, 0.9, materials.wall, 1.02, 2.795, storageDoorCenter);
-    addBox(studio, 0.025, 0.18, 0.055, materials.stone, 0.84, 1.15, storageDoorStart + 0.14, { castShadow: false });
-    addBox(studio, 0.025, 0.035, 0.14, materials.stone, 0.825, 1.15, storageDoorStart + 0.18, { castShadow: false });
+    addBox(studio, 0.18, 0.25, 5.0, materials.wall, 0.1, 2.925, 5.337);
+    addGlassWallAlongX(studio, 0.28, 3.77, pergolaLength + 0.015, 3);
 
-    addBox(studio, 0.24, 2.96, 0.24, materials.wall, 1.02, 1.52, 9.88);
-    const poolFacadePlinthSpans = [
-      [poolSliderEnd, storageDoorStart],
-      [storageDoorEnd, 10]
-    ];
-    for (const [start, end] of poolFacadePlinthSpans) {
-      addBox(studio, 0.045, 0.3, end - start, materials.stone, 0.8775, 0.15, (start + end) / 2);
-    }
-
-    addBox(studio, 0.24, 0.25, poolSliderEnd - poolSliderStart, materials.wall, 1.02, 2.925, (poolSliderStart + poolSliderEnd) / 2);
-    addGlassWallAlongX(studio, coveredPathWidth + glazingPostSize, 3.72, pergolaLength + 0.015, 3);
-
+    addBox(studio, 4, 0.2, pergolaLength, materials.charcoalSoft, 2, 3.02, pergolaLength / 2);
     const soffit = new THREE.Mesh(new THREE.PlaneGeometry(4, pergolaLength), woodMaterial);
     soffit.rotation.x = Math.PI / 2;
     soffit.position.set(2, 2.91, pergolaLength / 2);
@@ -923,71 +928,22 @@
     addBox(studio, 0.045, 0.3, pergolaLength, materials.stone, 4.0225, 0.15, pergolaLength / 2);
     addVerticalCladding(studio, 3.755, 0, pergolaLength, 2.82, 1);
     addBox(studio, 4, 0.16, 0.18, materials.charcoal, 2, 2.94, 0.09);
-    addBox(studio, 4, 0.16, 0.18, materials.charcoal, 2, 2.94, 9.91);
-    addBox(studio, 0.18, 0.16, 9.82, materials.charcoal, 0.09, 2.94, 5);
-    addBox(studio, 0.18, 0.16, 9.82, materials.charcoal, 3.91, 2.94, 5);
+    addBox(studio, 0.18, 0.16, pergolaLength, materials.charcoal, 0.09, 2.94, pergolaLength / 2);
 
     const interior = new THREE.Group();
     studio.add(interior);
-    // 180 x 85 cm sofa on the long outer wall.
-    const loungeSofa = addBox(interior, 0.85, 0.34, 1.8, materials.darkFabric, 3.335, 0.31, 3.9);
-    loungeSofa.name = "studio-v2-sofa-on-long-wall";
-    addBox(interior, 0.2, 0.38, 1.68, materials.cushion, 3.66, 0.68, 3.9);
+    addBox(interior, 1.88, 0.34, 0.74, materials.darkFabric, 2.72, 0.31, 3.55);
+    addBox(interior, 1.78, 0.38, 0.22, materials.cushion, 2.72, 0.68, 3.82);
+    addBox(interior, 0.72, 0.08, 0.46, woodEdgeMaterial, 1.55, 0.32, 3.45);
 
-    // Standard 140 x 70 cm desk rotated into the bathroom-side corner.
-    const cornerDesk = addBox(interior, 1.4, 0.06, 0.7, woodEdgeMaterial, 3.06, 0.74, 6.05);
-    cornerDesk.name = "studio-v2-corner-desk";
-    addBox(interior, 0.62, 0.38, 0.04, materials.charcoalSoft, 3.06, 1.02, 5.73, { castShadow: false });
-    for (const x of [2.45, 3.67]) {
-      for (const z of [5.78, 6.32]) {
-        addBox(interior, 0.06, 0.62, 0.06, materials.charcoal, x, 0.42, z);
-      }
-    }
-    addBox(interior, 0.55, 0.1, 0.55, materials.darkFabric, 3.06, 0.5, 5.25);
-    addBox(interior, 0.48, 0.55, 0.12, materials.darkFabric, 3.06, 0.82, 5.0);
-
-    // Round coffee table between sofa and slider.
-    const coffeeTable = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 0.06, 32), woodEdgeMaterial);
-    coffeeTable.position.set(2.25, 0.42, 4.25);
-    coffeeTable.castShadow = true;
-    interior.add(coffeeTable);
-
-    // Optimized 3.60 / 1.70 / 1.50 m room chain.
-    addBox(studio, 0.19, 2.8, 0.1, materials.wall, 1.235, 1.45, 6.4);
-    addBox(studio, 0.63, 2.8, 0.1, materials.wall, 2.445, 1.45, 6.4);
-    const showerAlcoveWallLeft = addBox(studio, 1.0, 2.8, 0.1, materials.wall, 3.26, 1.45, 6.4);
-    showerAlcoveWallLeft.name = "studio-v2-shower-alcove-wall";
-    addBox(studio, 2.62, 2.8, 0.1, materials.wall, buildingCenterX, 1.45, 8.207);
-
-    // 80 x 100 shower alcove with full-height walls on both sides and an open front.
-    addBox(studio, 1.0, 0.08, 0.8, materials.white, 3.26, 0.08, 6.853, { castShadow: false });
-    const showerAlcoveWallRight = addBox(studio, 1.0, 2.8, 0.1, materials.wall, 3.26, 1.45, 7.253);
-    showerAlcoveWallRight.name = "studio-v2-shower-alcove-wall";
-
-    // Dry zone: vanity opposite the pocket door and wall-hung toilet right of the shower.
-    addBox(studio, 0.8, 0.72, 0.45, materials.white, 1.735, 0.46, 7.928);
-    addBox(studio, 0.5, 0.42, 0.4, materials.white, 3.51, 0.33, 7.755);
-
-    addBox(studio, 2.35, 0.06, 0.35, woodEdgeMaterial, 2.55, 1.15, 9.65);
-    addBox(studio, 0.35, 1.8, 1.1, woodEdgeMaterial, 3.55, 0.95, 8.85);
-
-    // Pergola lounge inspired by low white-aluminium Belgian outdoor modules.
-    const pergolaLounge = new THREE.Group();
-    pergolaLounge.name = "studio-v2-white-aluminium-pergola-lounge";
-    studio.add(pergolaLounge);
-    addBox(pergolaLounge, 0.73, 0.06, 1.72, materials.whiteAluminum, 3.55, 0.23, 1.21);
-    addBox(pergolaLounge, 0.69, 0.18, 1.62, materials.paleOutdoorCushion, 3.52, 0.36, 1.21);
-    addBox(pergolaLounge, 0.08, 0.72, 1.72, materials.whiteAluminum, 3.87, 0.52, 1.21);
-    addBox(pergolaLounge, 0.12, 0.5, 1.6, materials.paleOutdoorCushion, 3.78, 0.62, 1.21);
-    for (const z of [0.38, 2.04]) {
-      addBox(pergolaLounge, 0.07, 0.22, 0.07, materials.whiteAluminum, 3.25, 0.11, z);
-      addBox(pergolaLounge, 0.07, 0.22, 0.07, materials.whiteAluminum, 3.84, 0.11, z);
-    }
-    addBox(pergolaLounge, 0.45, 0.05, 0.7, materials.whiteAluminum, 2.25, 0.38, 1.25);
-    addBox(pergolaLounge, 0.38, 0.06, 0.62, materials.paleOutdoorCushion, 2.25, 0.42, 1.25);
+    addBox(studio, 1.45, 0.36, 0.56, materials.darkFabric, 2.78, 0.31, 1.12);
+    addBox(studio, 1.35, 0.32, 0.18, materials.cushion, 2.78, 0.64, 1.33);
+    addBox(studio, 0.72, 0.06, 0.5, woodEdgeMaterial, 1.55, 0.34, 1.42);
+    addBox(studio, 0.06, 0.31, 0.06, materials.charcoal, 1.31, 0.17, 1.25);
+    addBox(studio, 0.06, 0.31, 0.06, materials.charcoal, 1.79, 0.17, 1.25);
 
     const warmLight = new THREE.PointLight(0xffd7a0, 18, 7, 2);
-    warmLight.position.set(2.5, 2.45, 4.2);
+    warmLight.position.set(2.2, 2.45, 3.4);
     studio.add(warmLight);
     const pergolaLight = new THREE.PointLight(0xffd5a0, 8, 5, 2);
     pergolaLight.position.set(2.1, 2.7, 1.2);
@@ -1089,55 +1045,26 @@
     const houseSliderWidth = houseSliderRightX - houseSliderLeftX;
     addBox(
       world,
-      houseSliderWidth + 0.1,
-      2.55,
-      0.035,
-      materials.charcoalSoft,
-      (houseSliderLeftX + houseSliderRightX) / 2,
-      1.32,
-      houseRearZ + 0.02,
-      { castShadow: false }
-    );
-    const houseRearSlider = addBox(
-      world,
       houseSliderWidth,
       2.45,
       0.05,
       glassMaterial,
       (houseSliderLeftX + houseSliderRightX) / 2,
       1.32,
-      houseRearZ + 0.055,
+      houseRearZ + 0.035,
       { castShadow: false }
     );
-    houseRearSlider.name = "house-rear-slider";
     for (const x of [houseSliderLeftX, siteX(48), siteX(78), houseSliderRightX]) {
-      addBox(world, 0.065, 2.52, 0.075, materials.charcoal, x, 1.32, houseRearZ + 0.08);
+      addBox(world, 0.065, 2.52, 0.075, materials.charcoal, x, 1.32, houseRearZ + 0.07);
     }
-    addBox(world, houseSliderWidth, 0.07, 0.075, materials.charcoal, (houseSliderLeftX + houseSliderRightX) / 2, 0.095, houseRearZ + 0.08);
-    addBox(world, houseSliderWidth, 0.07, 0.075, materials.charcoal, (houseSliderLeftX + houseSliderRightX) / 2, 2.545, houseRearZ + 0.08);
+    addBox(world, houseSliderWidth, 0.07, 0.075, materials.charcoal, (houseSliderLeftX + houseSliderRightX) / 2, 0.095, houseRearZ + 0.07);
+    addBox(world, houseSliderWidth, 0.07, 0.075, materials.charcoal, (houseSliderLeftX + houseSliderRightX) / 2, 2.545, houseRearZ + 0.07);
 
     const houseOutline = [
       [0, 806.05], [91, 806.05], [91, 778.05], [126, 778.05],
       [126, 591.05], [118.8, 591.05], [118.8, 536.05], [0, 536.05]
     ];
-    const houseRoofShape = new THREE.Shape();
-    houseOutline.forEach(([planX, planY], index) => {
-      const x = siteX(planX);
-      const shapeY = -siteZ(planY);
-      if (index === 0) houseRoofShape.moveTo(x, shapeY);
-      else houseRoofShape.lineTo(x, shapeY);
-    });
-    houseRoofShape.closePath();
-    const houseRoof = new THREE.Mesh(
-      new THREE.ExtrudeGeometry(houseRoofShape, { depth: 0.18, bevelEnabled: false }),
-      materials.charcoalSoft
-    );
-    houseRoof.rotation.x = -Math.PI / 2;
-    houseRoof.position.y = houseHeight;
-    houseRoof.castShadow = true;
-    houseRoof.receiveShadow = true;
-    houseRoof.name = "house-single-roof";
-    world.add(houseRoof);
+    addPlanSurface(world, houseOutline, materials.charcoalSoft, houseHeight + 0.12);
 
     const studioPlanOutline = [
       [81.98330690803415, 267.1810652588368],
@@ -1145,56 +1072,28 @@
       [177.73101764709196, 435.75264022991456],
       [106.39630755512613, 445.51784048875135]
     ];
-    const studioLocalToPlan = (localX, localZ) => {
-      const worldX = studioPathStartX + Math.cos(studioAngle) * localX + Math.sin(studioAngle) * localZ;
-      const worldZ = Math.sin(studioAngle) * localX - Math.cos(studioAngle) * localZ;
-      return [worldX * planScale + planOriginX, planOriginY - worldZ * planScale];
-    };
-    const studioBuildingPlanOutline = [
-      studioLocalToPlan(coveredPathWidth, pergolaLength),
-      studioLocalToPlan(4, pergolaLength),
-      studioLocalToPlan(4, 10),
-      studioLocalToPlan(coveredPathWidth, 10)
-    ];
     addPlanSurface(planOnly, houseOutline, standard(0xe7e3db, 0.97), houseHeight + 0.26);
     addPlanOutline(planOnly, houseOutline, 0x2e4057, houseHeight + 0.285);
-    addPlanSurface(planOnly, studioBuildingPlanOutline, standard(0xe4e0d8, 0.97), 3.24);
-    addPlanOutline(planOnly, studioBuildingPlanOutline, 0x2e4057, 3.265);
-    addPlanOutline(planOnly, studioPlanOutline, 0xc0392b, 3.28);
+    addPlanSurface(planOnly, studioPlanOutline, standard(0xe4e0d8, 0.97), 3.24);
+    addPlanOutline(planOnly, studioPlanOutline, 0xc0392b, 3.265);
 
     function addHouseSideWindow(startPlanY, endPlanY, height, sill) {
       const startZ = siteZ(startPlanY);
       const endZ = siteZ(endPlanY);
-      const length = Math.abs(endZ - startZ);
-      const centerZ = (startZ + endZ) / 2;
       addBox(
-        world,
-        0.035,
-        height + 0.1,
-        length + 0.1,
-        materials.charcoalSoft,
-        siteX(126) + 0.02,
-        sill + height / 2,
-        centerZ,
-        { castShadow: false }
-      );
-      const window = addBox(
         world,
         0.055,
         height,
-        length,
+        Math.abs(endZ - startZ),
         glassMaterial,
-        siteX(126) + 0.055,
+        siteX(126) + 0.035,
         sill + height / 2,
-        centerZ,
+        (startZ + endZ) / 2,
         { castShadow: false }
       );
-      window.name = "house-side-window";
       for (const z of [startZ, endZ]) {
-        addBox(world, 0.075, height + 0.08, 0.055, materials.charcoal, siteX(126) + 0.08, sill + height / 2, z);
+        addBox(world, 0.075, height + 0.08, 0.055, materials.charcoal, siteX(126) + 0.065, sill + height / 2, z);
       }
-      addBox(world, 0.075, 0.055, length + 0.08, materials.charcoal, siteX(126) + 0.08, sill, centerZ);
-      addBox(world, 0.075, 0.055, length + 0.08, materials.charcoal, siteX(126) + 0.08, sill + height, centerZ);
     }
     addHouseSideWindow(709.95, 735.15, 1.4, 0.9);
     addHouseSideWindow(658.35, 690.75, 2.15, 0.15);
@@ -1203,41 +1102,13 @@
     function addHouseFrontWindow(startPlanX, endPlanX) {
       const startX = siteX(startPlanX);
       const endX = siteX(endPlanX);
-      const width = endX - startX;
-      const centerX = (startX + endX) / 2;
-      addBox(world, width + 0.1, 2.25, 0.035, materials.charcoalSoft, centerX, 1.225, houseFrontZ - 0.02, { castShadow: false });
-      const window = addBox(world, width, 2.15, 0.055, glassMaterial, centerX, 1.225, houseFrontZ - 0.055, { castShadow: false });
-      window.name = "house-front-window";
+      addBox(world, endX - startX, 2.15, 0.055, glassMaterial, (startX + endX) / 2, 1.225, houseFrontZ - 0.035, { castShadow: false });
       for (const x of [startX, endX]) {
-        addBox(world, 0.055, 2.23, 0.075, materials.charcoal, x, 1.225, houseFrontZ - 0.08);
+        addBox(world, 0.055, 2.23, 0.075, materials.charcoal, x, 1.225, houseFrontZ - 0.065);
       }
-      addBox(world, width + 0.08, 0.055, 0.075, materials.charcoal, centerX, 0.15, houseFrontZ - 0.08);
-      addBox(world, width + 0.08, 0.055, 0.075, materials.charcoal, centerX, 2.3, houseFrontZ - 0.08);
     }
     addHouseFrontWindow(16, 32.2);
     addHouseFrontWindow(71, 80);
-
-    const entranceDoorLeftX = siteX(99.5);
-    const entranceDoorRightX = siteX(117.5);
-    const entranceDoorWidth = entranceDoorRightX - entranceDoorLeftX;
-    const entranceDoorCenterX = (entranceDoorLeftX + entranceDoorRightX) / 2;
-    const houseEntranceDoor = addBox(
-      world,
-      entranceDoorWidth,
-      2.25,
-      0.055,
-      woodMaterial,
-      entranceDoorCenterX,
-      1.275,
-      houseStepFrontZ - 0.055,
-      { castShadow: false }
-    );
-    houseEntranceDoor.name = "house-entrance-door";
-    for (const x of [entranceDoorLeftX, entranceDoorRightX]) {
-      addBox(world, 0.065, 2.35, 0.075, materials.charcoal, x, 1.275, houseStepFrontZ - 0.08);
-    }
-    addBox(world, entranceDoorWidth + 0.08, 0.065, 0.075, materials.charcoal, entranceDoorCenterX, 2.4, houseStepFrontZ - 0.08);
-    addBox(world, 0.025, 0.18, 0.055, materials.stone, entranceDoorRightX - 0.18, 1.2, houseStepFrontZ - 0.09, { castShadow: false });
 
     // Visible front-garden design, transferred directly from grondplan.html.
     addPlanSurface(world, [
@@ -1534,14 +1405,12 @@
     addDimensionBetween({ x: 0, z: poolRearZ }, { x: studioPathStartX, z: 0 }, "0,36 m", 0.2);
     addDimensionBetween(platformPoolEdge, platformStudioEdge, "0,70 m", 0.24);
 
-    const showerAlcoveWalls = studio.children.filter(child => child.name === "studio-v2-shower-alcove-wall");
     const geometryChecks = {
       minimum: platformRearEdgeLength,
       pergolaEnd: pergolaEdgeLength,
       poolOuter: [poolOuterLength, poolOuterWidth],
       poolShift: poolShiftMeters,
-      studioRoofAndSlab: [10, 4],
-      studioBuilding: [10 - pergolaLength, buildingWidth],
+      studioOuter: [10, 4],
       terrace: [terraceWidth, terraceDepth],
       rainwaterTank: {
         diameter: 2.7,
@@ -1564,63 +1433,14 @@
         startClearance: platformRearEdgeLength,
         endClearance: pergolaEdgeLength
       },
-      coveredPath: {
-        area: coveredPathArea,
-        width: coveredPathWidth,
-        onExistingFoundation: true,
-        continuousDeckArea,
-        continuousDeckMeshCount: foundationPath.children.filter(child => child.name === "studio-v2-continuous-pergola-path-deck").length,
+      hybridPath: {
+        landingArea: hybridLandingArea,
+        landingGlazingEnd: sliderLandingEndLocalZ,
+        landingEndClearance: landingEdgeLength,
         steppingStoneCount: steppingStonePlan.length,
         steppingStoneArea: steppingStonePlan.length * Math.PI * 0.25 * 0.35
       },
-      compactRooms: {
-        lounge: [3.6, 2.62],
-        bathroom: [1.7, 2.62],
-        storage: [1.5, 2.62]
-      },
-      interior: {
-        desk: [1.4, 0.7],
-        deskLocation: "bathroom-side-corner",
-        deskMeshCount: interior.children.filter(child => child.name === "studio-v2-corner-desk").length,
-        sofa: [1.8, 0.85],
-        sofaLocation: "long-outer-wall",
-        sofaMeshCount: interior.children.filter(child => child.name === "studio-v2-sofa-on-long-wall").length,
-        coffeeTableDiameter: 0.7,
-        shower: [0.8, 1.0],
-        showerAlcoveSideWalls: showerAlcoveWalls.length,
-        showerAlcoveWallDimensions: showerAlcoveWalls.map(wall => [
-          wall.geometry.parameters.width,
-          wall.geometry.parameters.height,
-          wall.geometry.parameters.depth
-        ]),
-        showerAlcoveWallRotations: showerAlcoveWalls.map(wall => wall.rotation.y),
-        vanity: [0.8, 0.45],
-        vanityLocation: "opposite-pocket-door",
-        vanityCenter: [1.735, 7.928],
-        toiletLocation: "right-of-shower",
-        toiletCenter: [3.51, 7.755],
-        bathroomClearZone: 1.12,
-        pergolaLounge: [1.72, 0.73],
-        pergolaLoungeMeshCount: studio.children.filter(child => child.name === "studio-v2-white-aluminium-pergola-lounge").length
-      },
-      architecture: {
-        roofMeshCount: studio.children.filter(child => child.name === "studio-v2-single-4x10-roof").length,
-        roof: [10, 4],
-        storageDoor: [0.9, 2.44],
-        storageDoorMeshCount: studio.children.filter(child => child.name === "studio-v2-storage-door").length,
-        storageDoorFinish: storageDoor.material === materials.charcoal ? "RAL9005-aluminium" : "other",
-        poolFacadePlinthSpans,
-        poolFacadeOpenings: [[poolSliderStart, poolSliderEnd], [storageDoorStart, storageDoorEnd]],
-        poolFacadeSlider: [poolSliderStart, poolSliderEnd, poolSliderEnd - poolSliderStart],
-        glazingPost: [glazingPostSize, glazingPostSize],
-        glazingPostMeshCount: studio.children.filter(child => child.name === "studio-v2-ral9005-glazing-post").length,
-        houseRoofMeshCount: world.children.filter(child => child.name === "house-single-roof").length,
-        houseWindowMeshCount: world.children.filter(child =>
-          child.name === "house-rear-slider" || child.name === "house-side-window" || child.name === "house-front-window"
-        ).length,
-        houseEntranceDoorMeshCount: world.children.filter(child => child.name === "house-entrance-door").length
-      },
-      sourcePlan: "grondplan_studio_v2.html",
+      sourcePlan: "grondplan.html",
       canonicalWorldScaleX: world.scale.x
     };
     console.assert(Math.abs(geometryChecks.minimum - 0.358) < 0.002, "Upper platform edge must be about 0.36 m");
@@ -1635,43 +1455,10 @@
     console.assert(Math.abs(geometryChecks.timberPlatform.skewAtPool - 0.095) < 0.002, "Timber platform must meet the pool diagonally");
     console.assert(geometryChecks.timberPlatform.glassLineDeviation < 1e-9, "Platform edge and pergola glass must be collinear");
     console.assert(geometryChecks.timberPlatform.rearLineDeviation < 1e-9, "Upper platform edge and pergola rear must be collinear");
-    console.assert(Math.abs(geometryChecks.coveredPath.area - 6.7437) < 0.001, "Covered timber path must be 6.74 m²");
-    console.assert(geometryChecks.coveredPath.width === 0.9, "Covered path must be 0.90 m wide");
-    console.assert(geometryChecks.coveredPath.onExistingFoundation, "Timber path must remain on the existing foundation");
-    console.assert(Math.abs(geometryChecks.coveredPath.continuousDeckArea - 16.7717) < 0.001, "Pergola and path must form one 16.77 m² timber surface");
-    console.assert(geometryChecks.coveredPath.continuousDeckMeshCount === 1, "Pergola deck and path must use one continuous mesh");
-    console.assert(geometryChecks.coveredPath.steppingStoneCount === 1, "Only one terrace step is required");
-    console.assert(geometryChecks.compactRooms.storage[0] >= 1.5 && geometryChecks.compactRooms.storage[1] >= 1.5, "Storage must remain at least 1.50 x 1.50 m");
-    console.assert(geometryChecks.compactRooms.bathroom[0] === 1.7, "Optimized bathroom must be 1.70 m long");
-    console.assert(geometryChecks.interior.desk[0] === 1.4 && geometryChecks.interior.desk[1] === 0.7, "Office desk must be 140 x 70 cm");
-    console.assert(geometryChecks.interior.deskLocation === "bathroom-side-corner" && geometryChecks.interior.deskMeshCount === 1, "Desk must sit in the bathroom-side corner");
-    console.assert(geometryChecks.interior.sofaLocation === "long-outer-wall" && geometryChecks.interior.sofaMeshCount === 1, "Sofa must sit on the long outer wall");
-    console.assert(geometryChecks.interior.showerAlcoveSideWalls === 2, "Shower must have two full-height masonry side walls");
-    console.assert(geometryChecks.interior.showerAlcoveWallDimensions.every(([width, height, depth]) => width === 1 && height === 2.8 && depth === 0.1), "Shower side walls must each be 1.00 m deep and full height");
-    console.assert(geometryChecks.interior.showerAlcoveWallRotations.every(rotation => rotation === geometryChecks.interior.showerAlcoveWallRotations[0]), "Shower side walls must be parallel");
-    console.assert(geometryChecks.interior.vanityLocation === "opposite-pocket-door" && geometryChecks.interior.vanityCenter[0] === 1.735, "Vanity must align with the pocket-door opening");
-    console.assert(geometryChecks.interior.toiletLocation === "right-of-shower" && geometryChecks.interior.toiletCenter[0] === 3.51, "Wall-hung toilet must sit right of the shower");
-    console.assert(geometryChecks.interior.bathroomClearZone >= 1.1, "Bathroom must retain at least 1.10 m central clearance");
-    console.assert(geometryChecks.interior.pergolaLoungeMeshCount === 1, "Pergola must contain one white-aluminium lounge group");
-    console.assert(geometryChecks.studioRoofAndSlab[0] === 10 && geometryChecks.studioRoofAndSlab[1] === 4, "Roof and slab must remain 4 x 10 m");
-    console.assert(geometryChecks.architecture.roofMeshCount === 1, "Studio V2 must use one continuous roof mesh");
-    console.assert(geometryChecks.architecture.roof[0] === 10 && geometryChecks.architecture.roof[1] === 4, "Continuous roof must remain 4 x 10 m");
-    console.assert(geometryChecks.architecture.storageDoorMeshCount === 1, "Storage must have one dedicated door leaf");
-    console.assert(geometryChecks.architecture.storageDoor[0] === 0.9, "Storage door must remain 0.90 m wide");
-    console.assert(geometryChecks.architecture.storageDoorFinish === "RAL9005-aluminium", "Storage door must use RAL9005 aluminium");
-    console.assert(geometryChecks.architecture.glazingPostMeshCount === 1, "Sliding windows must meet on one aluminium post");
-    console.assert(geometryChecks.architecture.glazingPost[0] === 0.2 && geometryChecks.architecture.glazingPost[1] === 0.2, "Glazing post must be 20 x 20 cm");
-    console.assert(Math.abs(geometryChecks.architecture.poolFacadeSlider[1] - 6.35) < 0.001, "Pool-side slider must stop against the bathroom partition");
-    console.assert(Math.abs(geometryChecks.architecture.poolFacadeSlider[2] - 3.643) < 0.001, "Pool-side slider must provide about 3.64 m of glazing");
-    console.assert(
-      geometryChecks.architecture.poolFacadePlinthSpans.every(([start, end]) =>
-        geometryChecks.architecture.poolFacadeOpenings.every(([openingStart, openingEnd]) => end <= openingStart || start >= openingEnd)
-      ),
-      "Blue-stone plinth must not cross façade openings"
-    );
-    console.assert(geometryChecks.architecture.houseRoofMeshCount === 1, "House must use one continuous roof mesh");
-    console.assert(geometryChecks.architecture.houseWindowMeshCount === 6, "House must contain six recessed window assemblies");
-    console.assert(geometryChecks.architecture.houseEntranceDoorMeshCount === 1, "House must contain one recessed entrance door");
+    console.assert(Math.abs(geometryChecks.hybridPath.landingArea - 7.009) < 0.002, "Hybrid landing must be about 7.01 m²");
+    console.assert(Math.abs(geometryChecks.hybridPath.landingGlazingEnd - 7.837) < 1e-9, "Landing must end with the pool-facing glazing");
+    console.assert(geometryChecks.hybridPath.steppingStoneCount === 3, "Hybrid route must contain three stepping stones");
+    console.assert(Math.abs(geometryChecks.hybridPath.steppingStoneArea - 0.8246680716) < 1e-9, "Rounded stepping stones must cover about 0.82 m²");
     console.assert(geometryChecks.canonicalWorldScaleX === -1, "All views must retain the Plan orientation");
     window.__renderMetrics = geometryChecks;
 
@@ -1763,14 +1550,6 @@
       camera.aspect = previousAspect;
       camera.updateProjectionMatrix();
       return image;
-    };
-
-    window.__setInspectionView = (position, target) => {
-      camera.up.set(0, 1, 0);
-      camera.position.set(...position);
-      controls.target.set(...target);
-      controls.update();
-      renderer.render(scene, camera);
     };
 
     render();

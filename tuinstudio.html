@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grondplan v8 -- Tuinstudio Ninove</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1a2e;
+      --line: #2E4057;
+      --accent: #4A7C59;
+      --light-line: #c8d0dc;
+      --bg: #f4f1eb;
+      --paper: #faf8f4;
+      --dim: #7a8a9a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--ink);
+      padding: 40px 20px;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .drawing-block {
+      background: var(--paper);
+      border: 1px solid var(--light-line);
+      padding: 30px 30px 20px;
+    }
+
+    .drawing-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .drawing-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--light-line);
+    }
+
+    .legend {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--light-line);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 8px;
+      color: var(--dim);
+    }
+
+    .legend-swatch {
+      width: 20px;
+      height: 12px;
+      border: 1px solid var(--light-line);
+      flex-shrink: 0;
+    }
+
+    .scale-note {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      color: var(--dim);
+      margin-top: 14px;
+      text-align: right;
+    }
+
+    .doc-footer {
+      border-top: 1px solid var(--light-line);
+      padding-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      color: var(--dim);
+      margin-top: 20px;
+    }
+
+    svg text {
+      font-family: 'Space Mono', monospace;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <div class="drawing-block">
+      <div class="drawing-label">Tek. 01-G &mdash; Grondplan (bovenaanzicht) &mdash; Schaal 1:50</div>
+
+      <!--
+
+    SCALE: 1m = 75px
+    OUTER FOOTPRINT: 4,00 m x 10,00 m = 300px x 750px
+    Exterior wall thickness: 0,24 m = 18px
+    Interior partition: 0,10 m = 8px
+    Haard schouw: 0,40 m = 30px
+    Structural column (ZZW): 0,20 m = 15px
+
+    X coordinates (outer faces, left to right — WNW to OZO):
+      Pergola W outer (WNW):     x=90
+      Pergola W inner:           x=108    (18px = 0,24 m)
+      Pergola E inner:           x=278    (170px = 2,27 m interior)
+      Enclosed west wall:        x=278..296 (18px = 0,24 m)
+      Lounge inner W:            x=296
+      Lounge inner E / Haard W:  x=499    (203px = 2,70 m interior)
+      Haard wall:                x=499..529 (30px = 0,40 m)
+      Kantoor inner W:           x=529
+      Kantoor inner E:           x=679    (150px = 2,00 m interior)
+      Bath/Kant partition:       x=679..687 (8px = 0,10 m)
+      Bath/Berging inner:        x=687
+      East inner (OZO):          x=822    (135px = 1,80 m interior)
+      East outer (OZO):          x=840    (18px = 0,24 m)
+
+    Y coordinates (top to bottom — NNO to ZZW):
+      North outer (NNO):  y=75     (ramen side)
+      North inner:        y=93     (18px = 0,24 m)
+      South inner:        y=357
+      South outer (ZZW):  y=375    (18px = 0,24 m, ingang side)
+      Inner depth:        264px = 3,52 m
+
+    ORIENTATION (now matches PID / tuinplan_v5):
+      Plan-top:    NNO (ramen badkamer, kantoor, lounge)
+      Plan-bottom: ZZW (ingang via schuifraam)
+      Plan-left:   WNW (pergola open side)
+      Plan-right:  OZO (berging/badkamer deuren)
+
+    ROOM SCHEDULE (rotated coords, WNW→OZO left→right, NNO→ZZW top→bottom):
+      PERGOLA:  x=108..278, y=93..357   (170x264px = 2,27 x 3,52 m =  7,98 m²)
+      LOUNGE/KANTOOR: x=296..679, y=93..357, exclusief haard
+              2,70 + 2,00 = 4,70 x 3,52 m netto = 16,54 m²
+      BERGING:  x=687..822, y=244.5..357  (135x112.5px = 1,80 x 1,50 m = 2,70 m²)
+      BADKAMER: x=687..822, y=93..236.5   (135x143.5px = 1,80 x 1,91 m = 3,44 m²)
+
+    ZZW (BOTTOM) WALL — v8 layout (open corner concept), y=357..375:
+      Pergola open 2,51 m:    x=90..278  (188px)  — open (WNW side)
+      Corner pier 0,33 m:    x=278..303 (25px)   — open corner column
+      Schuifraam 3,50 m:     x=303..566 (263px)  — sliding door entrance
+      Kolom 0,20 m:          x=566..581 (15px)   — structural column
+      Vast raam 1,30 m:      x=581..679 (98px)   — fixed glazing
+      Bath south solid:       x=679..840 (161px = 2,15 m)
+
+      Sequence (right to left): bath solid → vast raam → kolom → schuifraam → open corner at WNW.
+      679 - 98(1,30m) = 581, -15(0,20m) = 566, -263(3,50m) = 303, -25(0,33m) = 278 ✓
+
+    NNO (TOP) WALL, y=75..93:
+      Pergola north solid:       x=90..278  (188px)
+      Pier E:                    x=278..337 (59px = 0,79 m)
+      Kantoor+lounge raam 4,00m: x=337..637 (300px)
+      Pier:                      x=637..718 (81px = 1,08 m)
+      Bath kipraam 1,20m:        x=718..808 (90px), h=0,30m, dorpel +2,00m
+      Pier W:                    x=808..840 (32px = 0,43 m)
+
+    OZO (RIGHT) WALL, x=822..840:
+      NE corner: y=75..93 (18px)
+      Badkamer buitenwand:       y=93..289 (geen buitendeur)
+      Solid: y=153..289 (136px = 1,81 m)
+      Berging deur 0,90 m: y=289..357 (68px)
+      SE corner: y=357..375 (18px)
+
+    WNW (LEFT) WALL (pergola/lounge): schuifraam 3,50 m full height, x=278..296
+
+    HAARD (Element4 Sky L Tunnel):
+      x=499..529 (30px = 0,40 m)
+      South opening (ZZW): y=274..357 (1,10 m)
+      South cap: y=263..274, Unit: y=187..263 (1,01 m), North cap: y=176..187
+      North opening (NNO): y=93..176 (1,10 m)
+
+    PERGOLA COLUMN: inward-diagonal from SW corner toward foundation
+      Position: approx x=800, y=100 (inset ~0,53m from E, ~0,33m from N)
+      Column size: 0,20 x 0,20 m = 15x15px
+
+    ELECTRICAL/DATA/WATER POINTS (E01–E06):
+      E01: POE camera (OZO-gevel, buitenzijde)
+      E02: POE camera (WNW-zijde, pergola open kant)
+      E03: Dubbel ethernet bij bureau (kantoor, NNO-wand)
+      E04: Stopcontact grasrobots (pergola, NNO+WNW hoek)
+      E05: Aansluiting terrasverwarmer (pergola, bij schuifraam lounge/pergola)
+      W01: Kraantje tuinslang (berging, binnenzijde bij partition)
+
+    -->
+
+      <svg viewBox="-40 -75 1010 650" width="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="wallFill" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="7" height="7" fill="#dce3ea" />
+            <line x1="0" y1="0" x2="0" y2="7" stroke="#2E4057" stroke-width="1.8" />
+          </pattern>
+          <pattern id="pergolaFill" width="20" height="20" patternUnits="userSpaceOnUse">
+            <rect width="20" height="20" fill="#faf7f0" />
+            <line x1="0" y1="0" x2="20" y2="0" stroke="#c8b89a" stroke-width="0.7" stroke-dasharray="5,15" />
+            <line x1="0" y1="0" x2="0" y2="20" stroke="#c8b89a" stroke-width="0.7" stroke-dasharray="5,15" />
+          </pattern>
+          <pattern id="cupboardFill" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(30)">
+            <rect width="8" height="8" fill="#eae6de" />
+            <line x1="0" y1="0" x2="8" y2="0" stroke="#bbb5a8" stroke-width="0.6" />
+          </pattern>
+          <pattern id="tileFill" width="14" height="14" patternUnits="userSpaceOnUse">
+            <rect width="14" height="14" fill="#eeece8" />
+            <line x1="0" y1="0" x2="14" y2="0" stroke="#d4d0c8" stroke-width="0.5" />
+            <line x1="0" y1="0" x2="0" y2="14" stroke="#d4d0c8" stroke-width="0.5" />
+          </pattern>
+          <marker id="arr" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto">
+            <path d="M0,0 L5,2.5 L0,5 Z" fill="#8a9aaa" />
+          </marker>
+          <marker id="arrR" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto-start-reverse">
+            <path d="M0,0 L5,2.5 L0,5 Z" fill="#8a9aaa" />
+          </marker>
+          <marker id="arrG" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto">
+            <path d="M0,0 L5,2.5 L0,5 Z" fill="#4A7C59" />
+          </marker>
+          <marker id="arrGR" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto-start-reverse">
+            <path d="M0,0 L5,2.5 L0,5 Z" fill="#4A7C59" />
+          </marker>
+          <marker id="arrRed" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto">
+            <path d="M0,0 L5,2.5 L0,5 Z" fill="#c0392b" />
+          </marker>
+          <marker id="arrRedR" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto-start-reverse">
+            <path d="M0,0 L5,2.5 L0,5 Z" fill="#c0392b" />
+          </marker>
+        </defs>
+
+        <!-- ══════════════════════════════════════════════════════
+             COMPASS (true north, rotated 330° CW — matches PID orientation)
+             ══════════════════════════════════════════════════════ -->
+        <g transform="translate(20,420)">
+          <circle cx="0" cy="0" r="22" fill="none" stroke="#c8d0dc" stroke-width="1" />
+          <g transform="rotate(330)">
+            <polygon points="0,-18 -5,-5 0,-10 5,-5" fill="#2E4057" />
+            <polygon points="0,18 -5,5 0,10 5,5" fill="#c8d0dc" />
+          </g>
+          <text x="12" y="27" font-size="10" fill="#2E4057" text-anchor="middle" font-weight="700">N</text>
+        </g>
+
+        <!-- ══════════════════════════════════════════════════════
+             ZZW (BOTTOM) WALL — v8: vast raam 1,30m + kolom 0,20m + schuifraam 3,50m (open corner)
+             ══════════════════════════════════════════════════════ -->
+        <!-- Bath south solid masonry: x=679..840 (2,15 m) -->
+        <rect x="679" y="357" width="161" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+
+        <!-- Vast raam (fixed glazing) 1,30 m: x=581..679 (98px) -->
+        <rect x="581" y="357" width="98" height="18" fill="#a8c5d8" stroke="#2E4057" stroke-width="1.5" />
+        <!-- Fixed glazing cross marks -->
+        <line x1="679" y1="375" x2="581" y2="357" stroke="#2E4057" stroke-width="0.5" opacity="0.4" />
+        <line x1="679" y1="357" x2="581" y2="375" stroke="#2E4057" stroke-width="0.5" opacity="0.4" />
+
+        <!-- Structural column 0,20 m: x=566..581 (15px) -->
+        <rect x="566" y="357" width="15" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+
+        <!-- Schuifraam 3,50 m: x=303..566 (263px) — entrance, open corner -->
+        <rect x="303" y="357" width="263" height="18" fill="#a8c5d8" stroke="#2E4057" stroke-width="2" />
+        <!-- Panel dividers (3 panels ≈ 1,17m each) -->
+        <line x1="478" y1="375" x2="478" y2="357" stroke="white" stroke-width="1.5" />
+        <line x1="391" y1="375" x2="391" y2="357" stroke="white" stroke-width="1.5" />
+
+        <!-- Corner piece masonry: x=278..303 (25px = 0,33 m) — open corner column -->
+        <rect x="278" y="357" width="25" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+
+        <!-- INGANG arrow (centered on schuifraam) -->
+        <line x1="434" y1="455" x2="434" y2="366" stroke="#4A7C59" stroke-width="2" marker-end="url(#arrG)" />
+        <text x="434" y="472" font-size="8" fill="#4A7C59" text-anchor="middle" font-weight="700">INGANG</text>
+        <text x="434" y="462" font-size="7" fill="#4A7C59" text-anchor="middle">schuifraam 3,50 m</text>
+
+        <!-- Pergola south — open (dashed, WNW side) -->
+        <line x1="278" y1="366" x2="90" y2="366" stroke="#4A7C59" stroke-width="1.2" stroke-dasharray="6,4" />
+        <text x="184" y="378" font-size="7" fill="#4A7C59" text-anchor="middle" font-style="italic">open (ZZW)</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             OZO (RIGHT) WALL
+             ══════════════════════════════════════════════════════ -->
+        <rect x="822" y="357" width="18" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <!-- Berging door opening 0,90 m: y=289..357 (68px) -->
+        <rect x="822" y="289" width="18" height="68" fill="#faf8f4" stroke="none" />
+        <line x1="840" y1="357" x2="822" y2="357" stroke="#2E4057" stroke-width="1.2" />
+        <line x1="840" y1="289" x2="822" y2="289" stroke="#2E4057" stroke-width="1.2" />
+        <!-- Solid bathroom exterior wall: y=93..289; redundant outside door removed. -->
+        <rect x="822" y="93" width="18" height="196" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <!-- SW corner -->
+        <rect x="822" y="75" width="18" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+
+        <!-- ══════════════════════════════════════════════════════
+             NNO (TOP) WALL
+             ══════════════════════════════════════════════════════ -->
+        <!-- Pier W: x=90..122 (0,43 m) -->
+        <rect x="808" y="75" width="32" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <!-- Hoog bath kipraam 1,20 x 0,30 m: x=718..808, dorpel +2,00 m. -->
+        <rect x="718" y="75" width="90" height="18" fill="#a8c5d8" stroke="#2E4057" stroke-width="1.5" />
+        <line x1="778" y1="93" x2="778" y2="75" stroke="white" stroke-width="1" />
+        <line x1="748" y1="93" x2="748" y2="75" stroke="white" stroke-width="1" />
+        <!-- Pier: x=637..718 (1,08 m) -->
+        <rect x="637" y="75" width="81" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <!-- Kantoor+lounge raam 4,00 m: x=337..637 (300px) -->
+        <rect x="337" y="75" width="300" height="18" fill="#a8c5d8" stroke="#2E4057" stroke-width="1.5" />
+        <line x1="562" y1="93" x2="562" y2="75" stroke="white" stroke-width="1" />
+        <line x1="487" y1="93" x2="487" y2="75" stroke="white" stroke-width="1" />
+        <line x1="412" y1="93" x2="412" y2="75" stroke="white" stroke-width="1" />
+        <!-- Pier E (WNW side): x=278..337 (0,79 m) -->
+        <rect x="278" y="75" width="59" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <!-- Pergola north solid masonry: x=90..278 -->
+        <rect x="90" y="75" width="188" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+
+        <!-- ══════════════════════════════════════════════════════
+             LOUNGE/PERGOLA WEST WALL (WNW) — schuifraam 3,50 m full height
+             ══════════════════════════════════════════════════════ -->
+        <rect x="278" y="93" width="18" height="264" fill="#a8c5d8" stroke="#2E4057" stroke-width="2" />
+        <line x1="296" y1="291" x2="278" y2="291" stroke="white" stroke-width="1.5" />
+        <line x1="296" y1="225" x2="278" y2="225" stroke="white" stroke-width="1.5" />
+        <line x1="296" y1="159" x2="278" y2="159" stroke="white" stroke-width="1.5" />
+        <text x="287" y="223" font-size="6" fill="#2E4057" text-anchor="middle"
+          transform="rotate(-90,287,223)">schuifraam 3,50 m</text>
+
+        <!-- Pergola east — open (dashed) -->
+        <line x1="99" y1="357" x2="99" y2="93" stroke="#4A7C59" stroke-width="1.2" stroke-dasharray="6,4" />
+        <text x="80" y="225" font-size="7" fill="#4A7C59" text-anchor="middle" transform="rotate(-90,80,225)"
+          font-style="italic">open (WNW)</text>
+
+        <!-- ══════════════════════════════════════════════════════
+               BATH / KANTOOR PARTITION  (0,10 m)
+               Door gap y=176.5..236.5 (0,80 m)
+             ══════════════════════════════════════════════════════ -->
+             <rect x="679" y="236.5" width="8" height="138.5" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
+             <rect x="679" y="75" width="8" height="101.5" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
+
+        <!-- ══════════════════════════════════════════════════════
+             HAARD — Element4 Sky L Tunnel (0,40 m schouw)
+             ══════════════════════════════════════════════════════ -->
+        <!-- North cap masonry -->
+        <rect x="499" y="263" width="30" height="11" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <!-- Haard unit housing -->
+        <rect x="498" y="187" width="32" height="76" fill="#fff0ee" stroke="#c0392b" stroke-width="2" />
+        <!-- Firebox opening -->
+        <rect x="499" y="198" width="30" height="54" fill="#ffe8e4" stroke="#c0392b" stroke-width="1" />
+        <text x="514" y="237" font-size="7" fill="#c0392b" text-anchor="middle">HAARD</text>
+        <text x="514" y="227" font-size="5.5" fill="#c0392b" text-anchor="middle">Element4</text>
+        <text x="514" y="218" font-size="5.5" fill="#c0392b" text-anchor="middle">Sky L-T</text>
+        <path d="M514,201 Q518,207 514,213 Q512,207 509,213 Q506,207 508,203 Q511,207 514,201Z" fill="#c0392b"
+          opacity="0.55" />
+        <!-- South cap masonry -->
+        <rect x="499" y="176" width="30" height="11" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+
+        <!-- ══════════════════════════════════════════════════════
+               BERGING INTERIOR  (1,80 x 1,50 m = 2,70 m²)
+             ══════════════════════════════════════════════════════ -->
+        <!-- Floor fill -->
+             <rect x="687" y="244.5" width="135" height="112.5" fill="url(#cupboardFill)" />
+        <!-- Berging/badkamer partition (0,10 m) -->
+             <rect x="687" y="236.5" width="135" height="8" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
+        <!-- Door swing (0,90 m, outward west) -->
+        <line x1="840" y1="357" x2="840" y2="289" stroke="#2E4057" stroke-width="1.2" />
+        <line x1="840" y1="357" x2="908" y2="357" stroke="#2E4057" stroke-width="1.2" />
+        <path d="M840,289 A68 68 0 0 1 908,357" fill="none" stroke="#8a9aaa" stroke-width="0.9" stroke-dasharray="4,3" />
+        <!-- Label -->
+           <text x="754" y="267" font-size="8" fill="#2E4057" text-anchor="middle" font-weight="700">BERGING</text>
+           <text x="754" y="256" font-size="6" fill="#7a8a9a" text-anchor="middle">1,80 x 1,50 m (2,70 m&#178;)</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             BADKAMER INTERIOR  (1,80 x 1,91 m = 3,44 m²)
+             ══════════════════════════════════════════════════════ -->
+        <!-- Floor fill -->
+           <rect x="687" y="93" width="135" height="143.5" fill="#f8f6f2" />
+
+        <!-- Wall-hung vanity on NNO wall: 80x45cm. -->
+        <rect x="762" y="93" width="60" height="33.75" rx="2" fill="#e4ddd4" stroke="#8a9aaa" stroke-width="1.2" />
+        <!-- Waskom -->
+        <ellipse cx="792" cy="109.875" rx="14" ry="10" fill="none" stroke="#8a7a6a" stroke-width="1.2" />
+        <circle cx="792" cy="109.875" r="3" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
+        <!-- Kraan -->
+        <circle cx="792" cy="99" r="2" fill="#c8b89a" stroke="#8a7a6a" stroke-width="0.6" />
+        <!-- Warm + koud water wastafel (NNO-wand). -->
+        <circle cx="800" cy="97" r="3" fill="none" stroke="#c0392b" stroke-width="0.8" />
+        <text x="800" y="96" font-size="3.5" fill="#c0392b" text-anchor="middle">W</text>
+        <circle cx="784" cy="97" r="3" fill="none" stroke="#2980b9" stroke-width="0.8" />
+        <text x="784" y="96" font-size="3.5" fill="#2980b9" text-anchor="middle">K</text>
+        <!-- Afvoer wastafel (floor drain under cabinet) -->
+        <circle cx="792" cy="123" r="3.5" fill="none" stroke="#7a8a9a" stroke-width="0.8" />
+        <text x="792" y="121" font-size="4" fill="#7a8a9a" text-anchor="middle">↓</text>
+
+        <!-- Compact wall-hung toilet: approximately 40x50cm. -->
+        <rect x="776" y="236.5" width="32" height="8" fill="#e8e2d8" stroke="#8a9aaa" stroke-width="0.8" />
+        <rect x="778.5" y="199" width="27" height="37.5" rx="3" fill="none" stroke="#8a9aaa" stroke-width="1" />
+        <ellipse cx="792" cy="216" rx="11" ry="13" fill="none" stroke="#8a9aaa" stroke-width="1" />
+        <rect x="785" y="234" width="14" height="3" rx="1" fill="#c8b89a" stroke="#8a7a6a" stroke-width="0.5" />
+        <!-- Koud water toilet (achter inbouwreservoir, bergingwand) -->
+        <circle cx="801.5" cy="238.5" r="3" fill="none" stroke="#2980b9" stroke-width="0.8" />
+        <text x="801.5" y="237.5" font-size="3.5" fill="#2980b9" text-anchor="middle">K</text>
+        <!-- Afvoer toilet (hangtoilet, door bergingwand) -->
+        <circle cx="785.5" cy="238.5" r="3.5" fill="none" stroke="#7a8a9a" stroke-width="0.8" />
+        <text x="785.5" y="237" font-size="4" fill="#7a8a9a" text-anchor="middle">↓</text>
+
+        <!-- Douchebak: 80x100cm, -90 graden gedraaid. -->
+        <rect x="687" y="93" width="60" height="75" fill="url(#tileFill)" stroke="#2E4057" stroke-width="1.2" />
+        <!-- 20cm halfhoge wand tussen douche en wastafel, met vast glas erboven. -->
+        <rect x="747" y="93" width="15" height="75" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
+        <line x1="754.5" y1="93" x2="754.5" y2="168" stroke="#4a8ab0" stroke-width="2" />
+        <text x="754.5" y="132" font-size="4" fill="#4a8ab0" text-anchor="middle"
+          transform="rotate(90,754.5,132)">glas op halfhoge wand</text>
+        <!-- Hoofddouche Ø30cm -->
+        <circle cx="717" cy="130.5" r="11" fill="none" stroke="#c8b89a" stroke-width="1" stroke-dasharray="2,2" />
+        <circle cx="717" cy="130.5" r="2" fill="#c8b89a" />
+        <text x="717" y="160" font-size="5" fill="#7a8a9a" text-anchor="middle">douche 80x100</text>
+        <!-- Warm + koud water douche (partition wand) -->
+        <circle cx="689" cy="140" r="3" fill="none" stroke="#c0392b" stroke-width="0.8" />
+        <text x="689" y="139" font-size="3.5" fill="#c0392b" text-anchor="middle">W</text>
+        <circle cx="689" cy="128" r="3" fill="none" stroke="#2980b9" stroke-width="0.8" />
+        <text x="689" y="127" font-size="3.5" fill="#2980b9" text-anchor="middle">K</text>
+        <!-- Afvoer douche (douchebak vloer) -->
+        <circle cx="717" cy="105" r="3.5" fill="none" stroke="#7a8a9a" stroke-width="0.8" />
+        <text x="717" y="102" font-size="4" fill="#7a8a9a" text-anchor="middle">↓</text>
+
+        <!-- Room label -->
+        <text x="790" y="180" font-size="8" fill="#2E4057" text-anchor="middle" font-weight="700">BADKAMER</text>
+        <text x="790" y="189" font-size="5.5" fill="#7a8a9a" text-anchor="middle">1,80 x 1,91 m (3,44 m&#178;)</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             LIGHT FIXTURES
+             ══════════════════════════════════════════════════════ -->
+
+        <!-- L01: Berging plafondlamp -->
+        <circle cx="754" cy="315" r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
+        <line x1="758" y1="315" x2="750" y2="315" stroke="#d4a017" stroke-width="0.6" />
+        <line x1="754" y1="319" x2="754" y2="311" stroke="#d4a017" stroke-width="0.6" />
+        <text x="754" y="305" font-size="4" fill="#d4a017" text-anchor="middle">L01</text>
+
+        <!-- L02: Badkamer spot (center non-shower zone) -->
+        <circle cx="790" cy="140" r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
+        <line x1="794" y1="140" x2="786" y2="140" stroke="#d4a017" stroke-width="0.6" />
+        <line x1="790" y1="144" x2="790" y2="136" stroke="#d4a017" stroke-width="0.6" />
+
+        <!-- L03: Badkamer spot douche -->
+        <circle cx="724" cy="123" r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
+        <line x1="728" y1="123" x2="720" y2="123" stroke="#d4a017" stroke-width="0.6" />
+        <line x1="724" y1="127" x2="724" y2="119" stroke="#d4a017" stroke-width="0.6" />
+
+
+
+        <!-- ══════════════════════════════════════════════════════
+             KANTOOR INTERIOR  (2,00 x 3,52 m = 7,04 m²)
+             ══════════════════════════════════════════════════════ -->
+        <rect x="529" y="93" width="150" height="264" fill="#f8f7f3" />
+
+        <!-- Badkamer/kantoor door (0,80 m, swings east into kantoor) -->
+        <rect x="679" y="176.5" width="8" height="60" fill="#faf8f4" stroke="none" />
+        <line x1="687" y1="236.5" x2="679" y2="236.5" stroke="#2E4057" stroke-width="1.2" />
+        <line x1="687" y1="176.5" x2="679" y2="176.5" stroke="#2E4057" stroke-width="1.2" />
+        <line x1="679" y1="236.5" x2="619" y2="236.5" stroke="#2E4057" stroke-width="1.2" />
+        <path d="M679,176.5 A60 60 0 0 0 619,236.5" fill="none" stroke="#8a9aaa" stroke-width="0.9"
+          stroke-dasharray="4,3" />
+
+        <!-- Bureau 120x60cm -->
+        <rect x="559" y="93" width="90" height="45" rx="1" fill="#e4ddd4" stroke="#8a9aaa" stroke-width="1.2" />
+        <rect x="577" y="109" width="52" height="24" rx="2" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
+        <line x1="603" y1="109" x2="603" y2="103" stroke="#8a9aaa" stroke-width="0.8" />
+        <line x1="613" y1="103" x2="593" y2="103" stroke="#8a9aaa" stroke-width="0.8" />
+        <!-- Bureaustoel -->
+        <circle cx="604" cy="160" r="17" fill="none" stroke="#8a9aaa" stroke-width="1" stroke-dasharray="3,2" />
+
+
+        <!-- Airco binnenunit (achterwand berging, kantoor-zijde) -->
+        <rect x="670" y="290" width="6" height="50" rx="2" fill="#d5e8f0" stroke="#2980b9" stroke-width="1" />
+        <text x="666" y="320" font-size="4.5" fill="#2980b9" text-anchor="end">AIRCO</text>
+        <text x="666" y="312" font-size="4" fill="#2980b9" text-anchor="end">binnenunit</text>
+        <!-- Enkel stopcontact airco (links van unit) -->
+        <g transform="translate(676,345)">
+          <rect x="-4" y="-4" width="8" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="0" cy="0" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="666" y="345" font-size="4.5" fill="#e67e22" text-anchor="end">S14</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             LOUNGE INTERIOR  (2,70 x 3,52 m = 9,50 m²)
+             ══════════════════════════════════════════════════════ -->
+        <rect x="296" y="93" width="203" height="264" fill="#f7f5f0" />
+
+        <!-- Sofa -->
+        <rect x="309" y="106" width="178" height="52" rx="5" fill="none" stroke="#8a9aaa" stroke-width="1.2" />
+        <rect x="309" y="142" width="178" height="16" rx="3" fill="none" stroke="#bbb" stroke-width="0.7" />
+        <rect x="481" y="106" width="10" height="52" rx="3" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
+        <rect x="305" y="106" width="10" height="52" rx="3" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
+        <!-- Coffee table -->
+        <rect x="345" y="166" width="118" height="38" rx="3" fill="none" stroke="#8a9aaa" stroke-width="0.8"
+          stroke-dasharray="3,2" />
+
+        <!-- Combined open room label. -->
+        <text x="487.5" y="295" font-size="9" fill="#2E4057" text-anchor="middle" font-weight="700">LOUNGE / KANTOOR</text>
+        <text x="487.5" y="283" font-size="6" fill="#7a8a9a" text-anchor="middle">4,70 x 3,52 m netto (16,54 m&#178;)</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             PERGOLA INTERIOR  (2,27 x 3,50 m = 7,95 m²)
+             ══════════════════════════════════════════════════════ -->
+        <rect x="108" y="93" width="170" height="264" fill="url(#pergolaFill)" />
+
+        <!-- Pergola column — INWARD-DIAGONAL from NE corner
+             Positioned ~0,53m from east outer edge, ~0,31m from north outer edge
+             Carries roof load diagonally toward main foundation
+             x=793, y=98, size 15x15px (0,20 x 0,20 m) -->
+        <rect x="122" y="337" width="15" height="15" fill="#8B6914" stroke="#5a4008" stroke-width="1.5" />
+        <!-- Load path indicator (diagonal to foundation corner) -->
+        <line x1="130" y1="345" x2="90" y2="375" stroke="#5a4008" stroke-width="0.6" stroke-dasharray="3,3" opacity="0.5" />
+        <text x="130" y="328" font-size="5" fill="#8B6914" text-anchor="middle">kolom 20x20</text>
+
+        <!-- Roof beams (dashed) -->
+        <line x1="244" y1="357" x2="244" y2="93" stroke="#c8b89a" stroke-width="1" stroke-dasharray="8,6" />
+        <line x1="210" y1="357" x2="210" y2="93" stroke="#c8b89a" stroke-width="1" stroke-dasharray="8,6" />
+        <line x1="176" y1="357" x2="176" y2="93" stroke="#c8b89a" stroke-width="1" stroke-dasharray="8,6" />
+        <line x1="142" y1="357" x2="142" y2="93" stroke="#c8b89a" stroke-width="1" stroke-dasharray="8,6" />
+
+        <!-- Room label -->
+        <text x="193" y="240" font-size="9" fill="#8B6914" text-anchor="middle" font-weight="700">PERGOLA</text>
+        <text x="193" y="228" font-size="6" fill="#c8b89a" text-anchor="middle">2,27 x 3,52 m (7,98 m&#178;)</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             LIGHT FIXTURES — KANTOOR / LOUNGE / PERGOLA
+             (drawn after room fills so they remain visible)
+             ══════════════════════════════════════════════════════ -->
+
+        <!-- L04: Kantoor spot 1 (center-x=326, ⅓ height y=181) -->
+        <circle cx="604" cy="269" r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
+        <line x1="608" y1="269" x2="600" y2="269" stroke="#d4a017" stroke-width="0.6" />
+        <line x1="604" y1="273" x2="604" y2="265" stroke="#d4a017" stroke-width="0.6" />
+
+        <!-- L05: Kantoor spot 2 (center-x=326, ⅔ height y=269) -->
+        <circle cx="604" cy="181" r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
+        <line x1="608" y1="181" x2="600" y2="181" stroke="#d4a017" stroke-width="0.6" />
+        <line x1="604" y1="185" x2="604" y2="177" stroke="#d4a017" stroke-width="0.6" />
+
+        <!-- L06: Lounge spot 1 (center-x=533, ⅓ height y=181) -->
+        <circle cx="397" cy="269" r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
+        <line x1="401" y1="269" x2="393" y2="269" stroke="#d4a017" stroke-width="0.6" />
+        <line x1="397" y1="273" x2="397" y2="265" stroke="#d4a017" stroke-width="0.6" />
+
+        <!-- L07: Lounge spot 2 (center-x=533, ⅔ height y=269) -->
+        <circle cx="397" cy="181" r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
+        <line x1="401" y1="181" x2="393" y2="181" stroke="#d4a017" stroke-width="0.6" />
+        <line x1="397" y1="185" x2="397" y2="177" stroke="#d4a017" stroke-width="0.6" />
+
+        <!-- L08: Pergola spot 1 (center-x=737, ⅓ height y=181) -->
+        <circle cx="193" cy="269" r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
+        <line x1="197" y1="269" x2="189" y2="269" stroke="#d4a017" stroke-width="0.6" />
+        <line x1="193" y1="273" x2="193" y2="265" stroke="#d4a017" stroke-width="0.6" />
+
+        <!-- L09: Pergola spot 2 (center-x=737, ⅔ height y=269) -->
+        <circle cx="193" cy="181" r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
+        <line x1="197" y1="181" x2="189" y2="181" stroke="#d4a017" stroke-width="0.6" />
+        <line x1="193" y1="185" x2="193" y2="177" stroke="#d4a017" stroke-width="0.6" />
+
+        <!-- ══════════════════════════════════════════════════════
+             ELECTRICAL, DATA & WATER POINTS
+             ══════════════════════════════════════════════════════ -->
+
+        <!-- ─── POE CAMERAS ─── -->
+
+        <!-- === E01: POE Camera OZO-zijde (right wall exterior) === -->
+        <g transform="translate(846,225)">
+          <circle cx="0" cy="0" r="5" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="0" cy="0" r="1.5" fill="#e67e22" />
+          <line x1="4" y1="3" x2="4" y2="-3" stroke="#e67e22" stroke-width="0.7" />
+        </g>
+        <text x="858" y="230" font-size="5" fill="#e67e22" text-anchor="start" font-weight="700">E01</text>
+        <text x="858" y="222" font-size="4.5" fill="#e67e22" text-anchor="start">POE CAM</text>
+
+        <!-- === E02: POE Camera WNW-zijde (pergola, left open side) === -->
+        <g transform="translate(92,225)">
+          <circle cx="0" cy="0" r="5" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="0" cy="0" r="1.5" fill="#e67e22" />
+          <line x1="-4" y1="3" x2="-4" y2="-3" stroke="#e67e22" stroke-width="0.7" />
+        </g>
+        <text x="76" y="228" font-size="5" fill="#e67e22" text-anchor="end" font-weight="700">E02</text>
+        <text x="76" y="220" font-size="4.5" fill="#e67e22" text-anchor="end">POE CAM</text>
+
+        <!-- ─── DATA ─── -->
+
+        <!-- === E03: Dubbel Ethernet bij bureau (kantoor, NNO pier) === -->
+        <g transform="translate(662,88)">
+          <rect x="-6" y="-4" width="12" height="8" rx="1" fill="none" stroke="#2980b9" stroke-width="1.2" />
+          <rect x="0.5" y="-2" width="3.5" height="4" rx="0.5" fill="#2980b9" />
+          <rect x="-4" y="-2" width="3.5" height="4" rx="0.5" fill="#2980b9" />
+        </g>
+        <text x="662" y="96" font-size="5" fill="#2980b9" text-anchor="middle" font-weight="700">E03 2xETH</text>
+
+        <!-- ─── STOPCONTACTEN ─── -->
+
+        <!-- === S01: Stopcontact kantoor bij bureau (NNO pier, next to E03) === -->
+        <g transform="translate(645,88)">
+          <rect x="-5" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="1.5" cy="0" r="1.5" fill="#e67e22" />
+          <circle cx="-2.5" cy="0" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="645" y="96" font-size="4.5" fill="#e67e22" text-anchor="middle">S01</text>
+
+        <!-- === S09: Dubbelstopcontact kantoor andere zijde bureau (NNO pier) === -->
+        <g transform="translate(555,88)">
+          <rect x="-5" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="1.5" cy="0" r="1.5" fill="#e67e22" />
+          <circle cx="-2.5" cy="0" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="555" y="96" font-size="4.5" fill="#e67e22" text-anchor="middle">S09</text>
+
+        <!-- === S10: Enkel stopcontact haard ZZW-zijde (south cap, near lounge) === -->
+        <g transform="translate(514,277)">
+          <rect x="-4" y="0" width="8" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="0" cy="4" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="500" y="280" font-size="4.5" fill="#e67e22" text-anchor="end">S10</text>
+
+        <!-- === S11: Enkel stopcontact haard NNO-zijde (north cap, near kantoor) === -->
+        <g transform="translate(514,173)">
+          <rect x="-4" y="-8" width="8" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="0" cy="-4" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="500" y="166" font-size="4.5" fill="#e67e22" text-anchor="end">S11</text>
+
+        <!-- === S04: Stopcontact lounge pier E (near schuifraam) === -->
+        <g transform="translate(300,88)">
+          <rect x="-5" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="1.5" cy="0" r="1.5" fill="#e67e22" />
+          <circle cx="-2.5" cy="0" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="300" y="96" font-size="4.5" fill="#e67e22" text-anchor="middle">S04</text>
+
+        <!-- === S13: Stopcontact pergola NNO-wand (tegenover S04) === -->
+        <g transform="translate(268,88)">
+          <rect x="-5" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="1.5" cy="0" r="1.5" fill="#e67e22" />
+          <circle cx="-2.5" cy="0" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="268" y="96" font-size="4.5" fill="#e67e22" text-anchor="middle">S13</text>
+
+        <!-- === S05: Stopcontact badkamer bij wastafel (OZO-binnenwand) === -->
+        <g transform="translate(815,138)">
+          <rect x="-5" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="1.5" cy="0" r="1.5" fill="#e67e22" />
+          <circle cx="-2.5" cy="0" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="800" y="136" font-size="4.5" fill="#e67e22" text-anchor="end">S05</text>
+
+        <!-- === S06: Stopcontact berging (achterwand, partition east) === -->
+        <g transform="translate(692,330)">
+          <rect x="0" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="6.5" cy="0" r="1.5" fill="#e67e22" />
+          <circle cx="2.5" cy="0" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="708" y="332" font-size="4.5" fill="#e67e22" text-anchor="start">S06</text>
+
+        <!-- === S08: Enkel stopcontact in ZZW kolom (facing inward/south into kantoor) === -->
+        <g transform="translate(573,353)">
+          <rect x="-4" y="-8" width="8" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="0" cy="-4" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="560" y="346" font-size="4.5" fill="#e67e22" text-anchor="end">S08</text>
+
+        <!-- ─── PERGOLA ELECTRICAL ─── -->
+
+        <!-- === E04: Enkel stopcontact grasrobot (NNO+WNW hoek, facing WNW) === -->
+        <g transform="translate(85,84)">
+          <rect x="-4" y="-4" width="8" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="0" cy="0" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="72" y="88" font-size="5" fill="#e67e22" text-anchor="end" font-weight="700">E04</text>
+        <text x="72" y="80" font-size="4.5" fill="#e67e22" text-anchor="end">grasrobot</text>
+
+        <!-- === E05: Terrasverwarmer (midden schuifraam lounge/pergola) === -->
+        <g transform="translate(270,225)">
+          <polygon points="0,5 4,-3 -4,-3" fill="none" stroke="#c0392b" stroke-width="1.2" />
+          <line x1="0" y1="2" x2="0" y2="-2" stroke="#c0392b" stroke-width="0.8" />
+        </g>
+        <text x="255" y="228" font-size="4.5" fill="#c0392b" text-anchor="end" font-weight="700">E05 terras-</text>
+        <text x="255" y="220" font-size="4.5" fill="#c0392b" text-anchor="end">verwarmer</text>
+
+        <!-- === S07: Stopcontact terrasverwarmer (ZZW hoekkolom, facing WNW) === -->
+        <g transform="translate(278,366)">
+          <rect x="-10" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="-3.5" cy="0" r="1.5" fill="#e67e22" />
+          <circle cx="-7.5" cy="0" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="265" y="373" font-size="4.5" fill="#e67e22" text-anchor="middle">S07</text>
+
+        <!-- ─── WATER ─── -->
+
+        <!-- === W01: Kraantje tuinslang (berging, achterwand partition east) === -->
+        <g transform="translate(692,302)">
+          <circle cx="0" cy="0" r="5" fill="none" stroke="#2980b9" stroke-width="1.2" />
+          <line x1="3" y1="0" x2="-3" y2="0" stroke="#2980b9" stroke-width="1" />
+          <line x1="0" y1="3" x2="0" y2="-3" stroke="#2980b9" stroke-width="1" />
+        </g>
+        <text x="708" y="304" font-size="5" fill="#2980b9" text-anchor="start" font-weight="700">W01</text>
+        <text x="708" y="296" font-size="4.5" fill="#2980b9" text-anchor="start">kraantje</text>
+        <text x="708" y="289" font-size="4.5" fill="#2980b9" text-anchor="start">tuinslang</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             CARDINAL / ORIENTATION LABELS
+             ══════════════════════════════════════════════════════ -->
+        <text x="470" y="-60" font-size="9" fill="#7a8a9a" text-anchor="middle" font-style="italic">NNO-zijde &mdash;
+          ramen badkamer, kantoor &amp; lounge</text>
+        <text x="470" y="542" font-size="9" fill="#4A7C59" text-anchor="middle" font-style="italic">ZZW-zijde &mdash;
+          ingang via schuifraam</text>
+        <text x="928" y="225" font-size="9" fill="#7a8a9a" text-anchor="middle" transform="rotate(90,928,225)"
+          font-style="italic">OZO-zijde</text>
+        <text x="-30" y="225" font-size="9" fill="#4A7C59" text-anchor="middle" transform="rotate(-90,-30,225)"
+          font-style="italic">WNW-zijde &mdash; open</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             DIMENSION LINES
+             ══════════════════════════════════════════════════════ -->
+
+        <!-- ─── BOTTOM: ZZW FACE BREAKDOWN at y≈515 ─── -->
+        <line x1="840" y1="522" x2="840" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="679" y1="522" x2="679" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="581" y1="522" x2="581" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="566" y1="522" x2="566" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="303" y1="522" x2="303" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="278" y1="522" x2="278" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="90" y1="522" x2="90" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
+
+        <!-- Solid bath wall 2,15 m -->
+        <line x1="840" y1="515" x2="679" y2="515" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="741" y="512" width="46" height="11" fill="#faf8f4" />
+        <text x="764" y="515" font-size="6" fill="#7a8a9a" text-anchor="middle">wand 2,15</text>
+
+        <!-- Vast raam 1,30 m -->
+        <line x1="679" y1="515" x2="581" y2="515" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <rect x="609" y="512" width="46" height="11" fill="#faf8f4" />
+        <text x="632" y="515" font-size="6" fill="#4A7C59" text-anchor="middle" font-weight="700">vast 1,30</text>
+
+        <!-- Kolom 0,20 m -->
+        <line x1="581" y1="515" x2="566" y2="515" stroke="#2E4057" stroke-width="0.7" />
+        <text x="573" y="523" font-size="5" fill="#2E4057" text-anchor="middle" font-weight="700">0,20</text>
+
+        <!-- Schuifraam 3,50 m -->
+        <line x1="566" y1="515" x2="303" y2="515" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <rect x="403" y="512" width="62" height="11" fill="#faf8f4" />
+        <text x="434" y="515" font-size="6" fill="#4A7C59" text-anchor="middle" font-weight="700">schuif 3,50</text>
+
+        <!-- Corner pier 0,33 m (open corner) -->
+        <line x1="303" y1="515" x2="278" y2="515" stroke="#8a9aaa" stroke-width="0.6" />
+        <text x="290" y="523" font-size="5" fill="#7a8a9a" text-anchor="middle">0,33</text>
+
+        <!-- Pergola open 2,51 m -->
+        <line x1="278" y1="515" x2="90" y2="515" stroke="#4A7C59" stroke-width="0.7" stroke-dasharray="4,3" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <rect x="164" y="512" width="44" height="11" fill="#faf8f4" />
+        <text x="186" y="515" font-size="6" fill="#4A7C59" text-anchor="middle">open 2,51</text>
+
+        <!-- ─── TOP LVL 1: STRUCTURAL CHAIN at y≈54 ─── -->
+        <line x1="840" y1="68" x2="840" y2="44" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="822" y1="68" x2="822" y2="44" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="687" y1="68" x2="687" y2="44" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="679" y1="68" x2="679" y2="44" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="529" y1="68" x2="529" y2="44" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="499" y1="68" x2="499" y2="44" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="296" y1="68" x2="296" y2="44" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="278" y1="68" x2="278" y2="44" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="108" y1="68" x2="108" y2="44" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="90" y1="68" x2="90" y2="44" stroke="#8a9aaa" stroke-width="0.5" />
+
+        <!-- West wall 0,24 -->
+        <line x1="840" y1="54" x2="822" y2="54" stroke="#2E4057" stroke-width="0.7" />
+        <text x="831" y="58" font-size="5" fill="#2E4057" text-anchor="middle" font-weight="700">0,24</text>
+        <!-- Badkamer/berging 1,80 -->
+        <line x1="822" y1="54" x2="687" y2="54" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="748" y="50" width="32" height="10" fill="#faf8f4" />
+        <text x="764" y="52" font-size="6" fill="#7a8a9a" text-anchor="middle">1,80</text>
+        <!-- Partition 0,10 -->
+        <line x1="687" y1="54" x2="679" y2="54" stroke="#2E4057" stroke-width="0.7" />
+        <text x="683" y="58" font-size="4.5" fill="#2E4057" text-anchor="middle" font-weight="700">0,10</text>
+        <!-- Kantoor 2,00 -->
+        <line x1="679" y1="54" x2="529" y2="54" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="592" y="50" width="32" height="10" fill="#faf8f4" />
+        <text x="608" y="52" font-size="6" fill="#7a8a9a" text-anchor="middle">2,00</text>
+        <!-- Haard 0,40 -->
+        <line x1="529" y1="54" x2="499" y2="54" stroke="#c0392b" stroke-width="0.7" marker-start="url(#arrRedR)" marker-end="url(#arrRed)" />
+        <text x="514" y="58" font-size="5" fill="#c0392b" text-anchor="middle" font-weight="700">0,40</text>
+        <!-- Lounge 2,70 -->
+        <line x1="499" y1="54" x2="296" y2="54" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="386" y="50" width="32" height="10" fill="#faf8f4" />
+        <text x="402" y="52" font-size="6" fill="#7a8a9a" text-anchor="middle">2,70</text>
+        <!-- East wall 0,24 -->
+        <line x1="296" y1="54" x2="278" y2="54" stroke="#2E4057" stroke-width="0.7" />
+        <text x="287" y="58" font-size="5" fill="#2E4057" text-anchor="middle" font-weight="700">0,24</text>
+        <!-- Pergola 2,27 -->
+        <line x1="278" y1="54" x2="108" y2="54" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="182" y="50" width="32" height="10" fill="#faf8f4" />
+        <text x="198" y="52" font-size="6" fill="#7a8a9a" text-anchor="middle">2,27</text>
+        <!-- Pergola east wall 0,24 -->
+        <line x1="108" y1="54" x2="90" y2="54" stroke="#2E4057" stroke-width="0.7" />
+        <text x="99" y="58" font-size="5" fill="#2E4057" text-anchor="middle" font-weight="700">0,24</text>
+
+        <!-- ─── TOP LVL 2: OVERALL 10,00 m at y≈30 ─── -->
+        <line x1="840" y1="38" x2="840" y2="22" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="90" y1="38" x2="90" y2="22" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="840" y1="30" x2="90" y2="30" stroke="#8a9aaa" stroke-width="0.9" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="438" y="25" width="70" height="12" fill="#faf8f4" />
+        <text x="473" y="28" font-size="9" fill="#7a8a9a" text-anchor="middle" font-weight="700">10,00 m</text>
+
+        <!-- ─── TOP LVL 3: NNO WALL FACE DIMENSIONS at y≈5 ─── -->
+        <line x1="840" y1="15" x2="840" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="808" y1="15" x2="808" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="718" y1="15" x2="718" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="637" y1="15" x2="637" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="337" y1="15" x2="337" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="278" y1="15" x2="278" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="90" y1="15" x2="90" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
+
+        <!-- Pier W 0,43 -->
+        <line x1="840" y1="5" x2="808" y2="5" stroke="#8a9aaa" stroke-width="0.6" />
+        <text x="824" y="8" font-size="5" fill="#7a8a9a" text-anchor="middle">0,43</text>
+        <!-- Kipraam 1,20 -->
+        <line x1="808" y1="5" x2="718" y2="5" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <rect x="743" y="2" width="46" height="10" fill="#faf8f4" />
+        <text x="766" y="4" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">raam 1,20</text>
+        <!-- Pier midden 1,08 -->
+        <line x1="718" y1="5" x2="637" y2="5" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="678" y="8" font-size="5" fill="#7a8a9a" text-anchor="middle">1,08</text>
+        <!-- Raam 4,00 -->
+        <line x1="637" y1="5" x2="337" y2="5" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <rect x="464" y="2" width="46" height="10" fill="#faf8f4" />
+        <text x="487" y="4" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">raam 4,00</text>
+        <!-- Pier E 0,79 -->
+        <line x1="337" y1="5" x2="278" y2="5" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="308" y="8" font-size="5" fill="#7a8a9a" text-anchor="middle">0,79</text>
+        <!-- Pergola wand 2,51 -->
+        <line x1="278" y1="5" x2="90" y2="5" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="176" y="2" width="30" height="10" fill="#faf8f4" />
+        <text x="191" y="4" font-size="5.5" fill="#7a8a9a" text-anchor="middle">2,51</text>
+
+        <!-- ─── LEFT LVL 1: OVERALL 4,00 m at x≈60 ─── -->
+        <line x1="85" y1="375" x2="55" y2="375" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="85" y1="75" x2="55" y2="75" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="60" y1="375" x2="60" y2="75" stroke="#8a9aaa" stroke-width="0.9" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="14" y="220" width="40" height="12" fill="#faf8f4" />
+        <text x="34" y="223" font-size="9" fill="#7a8a9a" text-anchor="middle" font-weight="700">4,00 m</text>
+
+        <!-- ─── LEFT LVL 2: STRUCTURAL 0,24 + 3,52 + 0,24 at x≈30 ─── -->
+        <line x1="35" y1="375" x2="25" y2="375" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="35" y1="357" x2="25" y2="357" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="35" y1="93" x2="25" y2="93" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="35" y1="75" x2="25" y2="75" stroke="#8a9aaa" stroke-width="0.5" />
+        <!-- North wall 0,24 -->
+        <line x1="30" y1="375" x2="30" y2="357" stroke="#2E4057" stroke-width="0.6" />
+        <text x="18" y="362" font-size="5.5" fill="#2E4057" text-anchor="end" font-weight="700">0,24</text>
+        <!-- Interior 3,52 -->
+        <line x1="30" y1="357" x2="30" y2="93" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="-6" y="220" width="28" height="10" fill="#faf8f4" />
+        <text x="8" y="222" font-size="6" fill="#7a8a9a" text-anchor="middle">3,52</text>
+        <!-- South wall 0,24 -->
+        <line x1="30" y1="93" x2="30" y2="75" stroke="#2E4057" stroke-width="0.6" />
+        <text x="18" y="80" font-size="5.5" fill="#2E4057" text-anchor="end" font-weight="700">0,24</text>
+
+        <!-- ─── RIGHT LVL 1: BERGING / BADKAMER CHAIN at x≈855 ─── -->
+        <line x1="860" y1="357" x2="850" y2="357" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="860" y1="244.5" x2="850" y2="244.5" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="860" y1="236.5" x2="850" y2="236.5" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="860" y1="93" x2="850" y2="93" stroke="#8a9aaa" stroke-width="0.5" />
+        <!-- Berging 1,50 -->
+        <line x1="855" y1="357" x2="855" y2="244.5" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="867" y="301" font-size="6" fill="#7a8a9a" text-anchor="middle">1,50</text>
+        <!-- Partition 0,10 -->
+        <line x1="855" y1="244.5" x2="855" y2="236.5" stroke="#2E4057" stroke-width="0.6" />
+        <text x="867" y="241" font-size="4.5" fill="#2E4057" text-anchor="middle" font-weight="700">0,10</text>
+        <!-- Badkamer 1,91 -->
+        <line x1="855" y1="236.5" x2="855" y2="93" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="867" y="165" font-size="6" fill="#7a8a9a" text-anchor="middle">1,91</text>
+
+        <!-- ─── RIGHT LVL 2: OZO WALL OPENINGS at x≈888 ─── -->
+        <line x1="893" y1="357" x2="883" y2="357" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="893" y1="289" x2="883" y2="289" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="893" y1="93" x2="883" y2="93" stroke="#8a9aaa" stroke-width="0.5" />
+        <!-- Berging deur 0,90 -->
+        <line x1="888" y1="357" x2="888" y2="289" stroke="#4A7C59" stroke-width="0.6" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <text x="900" y="328" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">0,90</text>
+        <text x="900" y="320" font-size="4.5" fill="#4A7C59" text-anchor="middle">deur</text>
+        <!-- Gesloten badkamergevel 2,61 m. -->
+        <line x1="888" y1="289" x2="888" y2="93" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="900" y="194" font-size="6" fill="#7a8a9a" text-anchor="middle">2,61</text>
+
+        <!-- ─── INTERNAL: Badkamer/kantoor deur dim ─── -->
+        <line x1="700" y1="236.5" x2="693" y2="236.5" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="700" y1="176.5" x2="693" y2="176.5" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="697" y1="236.5" x2="697" y2="176.5" stroke="#4A7C59" stroke-width="0.6" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <text x="709" y="210" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">0,80</text>
+        <text x="709" y="201" font-size="4.5" fill="#4A7C59" text-anchor="middle">deur</text>
+
+        <!-- ─── INTERNAL: Haard opening dimensions ─── -->
+        <!-- North opening 1,10 m -->
+        <line x1="492" y1="357" x2="492" y2="274" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="496" y1="357" x2="488" y2="357" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="496" y1="274" x2="488" y2="274" stroke="#4A7C59" stroke-width="0.5" />
+        <text x="514" y="314" font-size="5.5" fill="#4A7C59" text-anchor="middle">1,10</text>
+        <!-- Haard unit 1,01 m -->
+        <line x1="492" y1="263" x2="492" y2="187" stroke="#c0392b" stroke-width="0.5" />
+        <line x1="496" y1="263" x2="488" y2="263" stroke="#c0392b" stroke-width="0.5" />
+        <line x1="496" y1="187" x2="488" y2="187" stroke="#c0392b" stroke-width="0.5" />
+        <text x="480" y="222" font-size="5" fill="#c0392b" text-anchor="end">1,01</text>
+        <!-- South opening 1,10 m -->
+        <line x1="492" y1="176" x2="492" y2="93" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="496" y1="176" x2="488" y2="176" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="496" y1="93" x2="488" y2="93" stroke="#4A7C59" stroke-width="0.5" />
+        <text x="514" y="132" font-size="5.5" fill="#4A7C59" text-anchor="middle">1,10</text>
+
+        <!-- ─── IN-PLAN WALL THICKNESS NOTES ─── -->
+        <text x="760" y="363" font-size="4.5" fill="#2E4057" text-anchor="middle" opacity="0.55">wand 0,24</text>
+        <text x="677" y="81" font-size="4.5" fill="#2E4057" text-anchor="middle" opacity="0.55">wand 0,24</text>
+        <text x="184" y="81" font-size="4.5" fill="#2E4057" text-anchor="middle" opacity="0.55">wand 0,24</text>
+        <text x="831" y="215" font-size="4.5" fill="#2E4057" text-anchor="middle" transform="rotate(90,831,215)" opacity="0.55">wand 0,24</text>
+        <!-- ZZW kolom label -->
+        <text x="573" y="363" font-size="4.5" fill="#2E4057" text-anchor="middle" opacity="0.7">kolom</text>
+
+      </svg>
+
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-swatch"
+            style="background:repeating-linear-gradient(45deg,#dce3ea,#dce3ea 2px,#faf8f4 2px,#faf8f4 5px); border-color:#2E4057;">
+          </div>
+          Dragend metselwerk (0,24 m)
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background:#a8c5d8; border-color:#2E4057; border-width:2px;"></div>
+          Schuifraam (beglazing)
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background:#a8c5d8; border-color:#2E4057;">
+            <svg viewBox="0 0 20 12" width="20" height="12"><line x1="0" y1="0" x2="20" y2="12" stroke="#2E4057" stroke-width="0.8"/><line x1="0" y1="12" x2="20" y2="0" stroke="#2E4057" stroke-width="0.8"/></svg>
+          </div>
+          Vast raam (fixed glazing)
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background:#ffe8e4; border-color:#c0392b;"></div>
+          Haard Element4 Sky L Tunnel
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background:#eeece8; border-color:#d4d0c8;"></div>
+          Douchebak (100 x 80 cm)
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background:#eae6de; border-color:#bbb5a8;"></div>
+          Buitenberging
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background:none; border-color:#2E4057; border-style:dashed;"></div>
+          Halve-hoogte wand + vast glas
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background:#faf7f0; border-color:#c8b89a; border-style:dashed;"></div>
+          Pergola (open structuur)
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background:#8B6914; border-color:#5a4008;"></div>
+          Pergola kolom (20 x 20 cm)
+        </div>
+        <div class="legend-item">
+          <svg viewBox="0 0 20 12" width="20" height="12">
+            <circle cx="10" cy="6" r="5" fill="none" stroke="#e67e22" stroke-width="1.2"/>
+            <circle cx="10" cy="6" r="1.5" fill="#e67e22"/>
+          </svg>
+          POE / Camera
+        </div>
+        <div class="legend-item">
+          <svg viewBox="0 0 20 12" width="20" height="12">
+            <rect x="4" y="2" width="12" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2"/>
+            <circle cx="8" cy="6" r="1.5" fill="#e67e22"/>
+            <circle cx="13" cy="6" r="1.5" fill="#e67e22"/>
+          </svg>
+          Stopcontact
+        </div>
+        <div class="legend-item">
+          <svg viewBox="0 0 20 12" width="20" height="12">
+            <rect x="4" y="2" width="12" height="8" rx="1" fill="none" stroke="#2980b9" stroke-width="1.2"/>
+            <rect x="5.5" y="3.5" width="4" height="5" rx="0.5" fill="#2980b9"/>
+            <rect x="10.5" y="3.5" width="4" height="5" rx="0.5" fill="#2980b9"/>
+          </svg>
+          Data (Ethernet)
+        </div>
+        <div class="legend-item">
+          <svg viewBox="0 0 20 12" width="20" height="12">
+            <circle cx="10" cy="6" r="5" fill="none" stroke="#2980b9" stroke-width="1.2"/>
+            <line x1="7" y1="6" x2="13" y2="6" stroke="#2980b9" stroke-width="1"/>
+            <line x1="10" y1="3" x2="10" y2="9" stroke="#2980b9" stroke-width="1"/>
+          </svg>
+          Waterpunt
+        </div>
+        <div class="legend-item">
+          <svg viewBox="0 0 20 12" width="20" height="12">
+            <polygon points="10,1 6,10 14,10" fill="none" stroke="#c0392b" stroke-width="1.2"/>
+          </svg>
+          Terrasverwarmer
+        </div>
+        <div class="legend-item">
+          <svg viewBox="0 0 20 12" width="20" height="12">
+            <circle cx="10" cy="5" r="3.5" fill="none" stroke="#7a8a9a" stroke-width="0.8"/>
+            <text x="10" y="10" font-size="8" fill="#7a8a9a" text-anchor="middle" font-family="sans-serif">↓</text>
+          </svg>
+          Afvoer
+        </div>
+        <div class="legend-item">
+          <svg viewBox="0 0 20 12" width="20" height="12">
+            <circle cx="10" cy="6" r="3" fill="none" stroke="#c0392b" stroke-width="0.8"/>
+            <text x="10" y="8" font-size="5" fill="#c0392b" text-anchor="middle" font-family="sans-serif">W</text>
+          </svg>
+          Warm water
+        </div>
+        <div class="legend-item">
+          <svg viewBox="0 0 20 12" width="20" height="12">
+            <circle cx="10" cy="6" r="3" fill="none" stroke="#2980b9" stroke-width="0.8"/>
+            <text x="10" y="8" font-size="5" fill="#2980b9" text-anchor="middle" font-family="sans-serif">K</text>
+          </svg>
+          Koud water
+        </div>
+        <div class="legend-item">
+          <svg viewBox="0 0 20 12" width="20" height="12">
+            <circle cx="10" cy="6" r="5" fill="none" stroke="#d4a017" stroke-width="0.8"/>
+            <line x1="6" y1="6" x2="14" y2="6" stroke="#d4a017" stroke-width="0.6"/>
+            <line x1="10" y1="2" x2="10" y2="10" stroke="#d4a017" stroke-width="0.6"/>
+          </svg>
+          Lichtpunt (plafond)
+        </div>
+      </div>
+      <div class="scale-note">
+        Schaal 1:50 &nbsp;|&nbsp; 1 cm = 0,50 m &nbsp;|&nbsp; Schematisch &mdash; niet vergunningsgeldig &nbsp;|&nbsp;
+        Tek. 01-G, v8.1, April 2026
+      </div>
+    </div>
+
+    <div class="doc-footer">
+      <span>Tuinstudio &mdash; Geraardsbergsesteenweg 371, 9404 Ninove &nbsp;|&nbsp; SA/2025/41 &nbsp;|&nbsp; Jens Du
+        Four</span>
+      <span>Tek. 01-G &nbsp;|&nbsp; Grondplan v8.1 &nbsp;|&nbsp; April 2026</span>
+    </div>
+  </div>
+</body>
+
+</html>

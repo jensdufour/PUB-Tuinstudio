@@ -1,0 +1,2183 @@
+﻿<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tuinplan Lot 24B</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1a2e;
+      --line: #2E4057;
+      --accent: #4A7C59;
+      --light-line: #c8d0dc;
+      --bg: #f4f1eb;
+      --paper: #faf8f4;
+      --dim: #7a8a9a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--ink);
+      padding: 24px 16px;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .drawing-block {
+      background: var(--paper);
+      border: 1px solid var(--light-line);
+      padding: 24px 24px 18px;
+    }
+
+    .drawing-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .drawing-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--light-line);
+    }
+
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px 16px;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--light-line);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 8.5px;
+      color: var(--dim);
+    }
+
+    .legend-swatch {
+      width: 20px;
+      height: 12px;
+      border: 1px solid var(--light-line);
+      flex-shrink: 0;
+    }
+
+    .scale-note {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      color: var(--dim);
+      margin-top: 14px;
+      text-align: right;
+    }
+
+    .doc-footer {
+      border-top: 1px solid var(--light-line);
+      padding-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      color: var(--dim);
+      margin-top: 20px;
+    }
+
+    svg text {
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <div class="drawing-block">
+      <div class="drawing-label">Tek. 02-T &middot; Tuinplan Lot 24B &middot; 1:200</div>
+      <svg viewBox="-100 -90 450 1330" width="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- House walls: solid gray fill with the same dark outline language as the windows. -->
+          <pattern id="wallFill" width="1" height="1" patternUnits="userSpaceOnUse">
+            <rect width="1" height="1" fill="#d5d7da" />
+          </pattern>
+          <!-- Grass fill -->
+          <pattern id="grassFill" width="12" height="12" patternUnits="userSpaceOnUse">
+            <rect width="12" height="12" fill="#e8f0e4" />
+            <circle cx="3" cy="3" r="0.6" fill="#c4d8bc" />
+            <circle cx="9" cy="9" r="0.6" fill="#c4d8bc" />
+            <circle cx="3" cy="10" r="0.4" fill="#b8ceae" />
+            <circle cx="10" cy="4" r="0.4" fill="#b8ceae" />
+          </pattern>
+          <!-- Terrace / paving fill -->
+          <pattern id="pavingFill" width="10" height="10" patternUnits="userSpaceOnUse">
+            <rect width="10" height="10" fill="#e8e2d8" />
+            <line x1="0" y1="0" x2="10" y2="0" stroke="#d4cec4" stroke-width="0.5" />
+            <line x1="0" y1="0" x2="0" y2="10" stroke="#d4cec4" stroke-width="0.5" />
+          </pattern>
+          <!-- Road fill -->
+          <pattern id="roadFill" width="20" height="20" patternUnits="userSpaceOnUse">
+            <rect width="20" height="20" fill="#c8c4bc" />
+          </pattern>
+          <!-- Grass paver fill (groenstenen / doorlatende verharding) -->
+          <pattern id="grassPaverFill" width="10" height="10" patternUnits="userSpaceOnUse">
+            <rect width="10" height="10" fill="#d4e8cc" />
+            <rect x="0.5" y="0.5" width="4" height="4" rx="0.5" fill="#b8d4a8" stroke="#a4c494" stroke-width="0.3"/>
+            <rect x="5.5" y="0.5" width="4" height="4" rx="0.5" fill="#b8d4a8" stroke="#a4c494" stroke-width="0.3"/>
+            <rect x="0.5" y="5.5" width="4" height="4" rx="0.5" fill="#b8d4a8" stroke="#a4c494" stroke-width="0.3"/>
+            <rect x="5.5" y="5.5" width="4" height="4" rx="0.5" fill="#b8d4a8" stroke="#a4c494" stroke-width="0.3"/>
+          </pattern>
+          <!-- Cottage flower bed fill -->
+          <pattern id="flowerFill" width="14" height="14" patternUnits="userSpaceOnUse">
+            <rect width="14" height="14" fill="#d4e8c4" />
+            <circle cx="4" cy="4" r="1.8" fill="#e8a0b0" opacity="0.8"/>
+            <circle cx="10" cy="10" r="1.5" fill="#f0c060" opacity="0.8"/>
+            <circle cx="10" cy="3" r="1.2" fill="#c8a0d0" opacity="0.8"/>
+            <circle cx="3" cy="10" r="1.4" fill="#a8c8f8" opacity="0.8"/>
+            <circle cx="7" cy="7" r="1" fill="#f0e060" opacity="0.7"/>
+          </pattern>
+          <!-- Dune grass fill (helmgras / duingras) -->
+          <pattern id="duneGrassFill" width="10" height="16" patternUnits="userSpaceOnUse">
+            <rect width="10" height="16" fill="#c8d4a8" />
+            <line x1="5" y1="15" x2="3" y2="3" stroke="#8aaa60" stroke-width="1.2"/>
+            <line x1="5" y1="15" x2="7" y2="4" stroke="#8aaa60" stroke-width="1"/>
+            <line x1="5" y1="15" x2="1" y2="7" stroke="#9ab870" stroke-width="0.8"/>
+            <line x1="5" y1="15" x2="9" y2="6" stroke="#9ab870" stroke-width="0.8"/>
+          </pattern>
+          <!-- Vertical slat fill (Castello thermowood ayous, Prindal) -->
+          <pattern id="slatFill" width="2.5" height="8" patternUnits="userSpaceOnUse">
+            <rect width="2.5" height="8" fill="#7a5c3a"/>
+            <line x1="2.1" y1="0" x2="2.1" y2="8" stroke="#4a3018" stroke-width="0.5"/>
+          </pattern>
+          <!-- Timber landing beside the pool-facing slider. -->
+          <pattern id="deckFill" width="8" height="8" patternUnits="userSpaceOnUse"
+            patternTransform="rotate(-7.794923)">
+            <rect width="8" height="8" fill="#a87545" />
+            <line x1="0" y1="0" x2="0" y2="8" stroke="#6f4729" stroke-width="0.7" />
+            <line x1="1.2" y1="0" x2="1.2" y2="8" stroke="#c19466" stroke-width="0.35" />
+          </pattern>
+          <!-- Gravel fill (grind — bestaande toestand, geen wijziging) -->
+          <pattern id="gravelFill" width="12" height="12" patternUnits="userSpaceOnUse">
+            <rect width="12" height="12" fill="#ddd8cc"/>
+            <circle cx="2" cy="2" r="0.9" fill="#b8b2a8" opacity="0.9"/>
+            <circle cx="7" cy="1" r="0.7" fill="#c4beb4" opacity="0.8"/>
+            <circle cx="11" cy="3" r="0.8" fill="#aaa49a" opacity="0.9"/>
+            <circle cx="4" cy="6" r="1.0" fill="#b0aaa0" opacity="0.8"/>
+            <circle cx="9" cy="5" r="0.7" fill="#c0bab0" opacity="0.9"/>
+            <circle cx="1" cy="9" r="0.8" fill="#b8b2a8" opacity="0.8"/>
+            <circle cx="6" cy="10" r="1.0" fill="#aaa49a" opacity="0.9"/>
+            <circle cx="10" cy="9" r="0.7" fill="#c4beb4" opacity="0.8"/>
+            <circle cx="3" cy="11" r="0.6" fill="#b0aaa0" opacity="0.7"/>
+          </pattern>
+
+          <!-- Dimension arrow markers -->
+          <marker id="arr" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto">
+            <path d="M0,0 L5,2.5 L0,5 Z" fill="#8a9aaa" />
+          </marker>
+          <marker id="arrR" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto-start-reverse">
+            <path d="M0,0 L5,2.5 L0,5 Z" fill="#8a9aaa" />
+          </marker>
+          <marker id="arrG" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto">
+            <path d="M0,0 L5,2.5 L0,5 Z" fill="#4A7C59" />
+          </marker>
+          <marker id="arrGR" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto-start-reverse">
+            <path d="M0,0 L5,2.5 L0,5 Z" fill="#4A7C59" />
+          </marker>
+          <clipPath id="houseClip">
+          <path d="M0,884 L91,884 L91,856 L126,856 L126,669 L118.8,669 L118.8,614 L0,614 Z"/>
+    </clipPath>
+          <clipPath id="studioSiteClip">
+            <rect x="82" y="344" width="72" height="180" />
+          </clipPath>
+  </defs>
+
+        <g aria-label="Bronvermelding" display="none">
+          <rect x="-95" y="-85" width="440" height="25" rx="2" fill="#faf8f4" stroke="#c8d0dc" stroke-width="0.8" />
+          <text x="-87" y="-75" font-size="5" fill="#4A7C59" font-weight="700">CADGIS · B862b / B499k · WFS EPSG:3812 · 05-08-2026</text>
+          <text x="-87" y="-66" font-size="4.2" fill="#7a8a9a">woningpositie CadGIS · orthogonale huisvorm PID · studiofundering Google aerial</text>
+        </g>
+
+        <!-- True north from CadGIS frontage frame: 59,04° clockwise from SVG-up. -->
+        <g id="cadgis-compass" transform="translate(310,1010)">
+          <circle cx="0" cy="0" r="18" fill="#faf8f4" stroke="#c8d0dc" stroke-width="0.8" />
+          <g transform="rotate(59.05)">
+            <line x1="0" y1="9" x2="0" y2="-12" stroke="#2E4057" stroke-width="1.5" />
+            <polygon points="0,-17 -3,-10 3,-10" fill="#2E4057" />
+          </g>
+          <text x="17" y="-9" font-size="7" fill="#2E4057" text-anchor="middle" font-weight="700">N</text>
+        </g>
+
+        <!-- ══════════════════════════════════════════════════════
+             BERM — grasberm (publiek domein, buiten perceelsgrens)
+             Breedte: 2,00 m = 36 px (18 px/m)
+             Bevestigd door GRB ADP-kadastrale grens: 1,88 m (perpendiculaire afstand
+             perceelsgrens naar ADP-wegzijde punt 120596.78/169798.58, Lambert72)
+             en overeenkomstig gebruiker visuele controle op opmetingsplan/CadGIS
+             ══════════════════════════════════════════════════════ -->
+        <rect x="-60" y="1040" width="360" height="36" fill="url(#grassFill)" stroke="none" />
+        <line x1="-60" y1="1076" x2="300" y2="1076" stroke="#bbb" stroke-width="0.6" />
+        <g id="public-domain-detail" display="none">
+        <!-- Dimension: 2,00 m berm -->
+        <line x1="247" y1="1040" x2="255" y2="1040" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="247" y1="1076" x2="255" y2="1076" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="251" y1="1040" x2="251" y2="1076" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="258" y="1061" font-size="4.2" fill="#7a8a9a" text-anchor="start">niet CadGIS-bemaat</text>
+        <!-- Dimension: 1,65 m fietspad -->
+        <line x1="261" y1="1076" x2="269" y2="1076" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="261" y1="1106" x2="269" y2="1106" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="265" y1="1076" x2="265" y2="1106" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="272" y="1094" font-size="4.2" fill="#7a8a9a" text-anchor="start">niet CadGIS-bemaat</text>
+        <!-- ══════════════════════════════════════════════════════
+             ELEKTRICITEITSKAST — Fluvius LS-distributiekabine op perceelsgrens
+             Bevestigd: opmetingsplan legende nr. 5 (Electriciteitskast)
+             Afmetingen: ca. 0.84 m × 0.56 m (Fluvius standaard LS-kast)
+             = 15 px breed × 10 px diep bij 18 px/m (1:200)
+             Positie N-S: straddles perceelsgrens y=1040 (y=1035–1045)
+               → top 5px (0.28m) binnen perceel, bottom 5px (0.28m) in public berm
+               Utility cabinets sit ON the cadastral boundary: -8.65- confirms
+               perceelsgrens at y=1040; -9.64- is the OZO pt14→pt13 segment.
+             x-positie: offset 7.54 m vanuit WNW perceelsgrens (x=0),
+             afgeleid uit maatgetal "7.54" in opmetingsplan tekst.
+             Visuele check tegen plan vereist.
+             ══════════════════════════════════════════════════════ -->
+        <rect x="128" y="1035" width="15" height="10"
+          fill="#b5c0b0" stroke="#4a5842" stroke-width="0.8" />
+        <line x1="128" y1="1035" x2="143" y2="1045" stroke="#4a5842" stroke-width="0.5" />
+        <line x1="143" y1="1035" x2="128" y2="1045" stroke="#4a5842" stroke-width="0.5" />
+        <text x="135.5" y="1033" font-size="4.5" fill="#4a5842" text-anchor="middle" font-weight="700">E-kast</text>
+        <text x="50" y="1055" font-size="6" fill="#4A7C59" text-anchor="middle" font-weight="700" letter-spacing="0.1em">BERM</text>
+        <text x="50" y="1064" font-size="4.5" fill="#4A7C59" text-anchor="middle" font-style="italic">publiek domein</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             P4 — horizontale parkeerplaats in berm
+             Rechts van E-kast (x=143), doorlatende verharding (groenstenen)
+             5,00 m × 2,00 m = 90 px × 36 px
+             ══════════════════════════════════════════════════════ -->
+        <rect x="143" y="1040" width="96" height="36"
+          fill="url(#grassPaverFill)" stroke="#a4c494" stroke-width="0.8"/>
+        <!-- P4 label -->
+        <text x="188" y="1061" font-size="5" fill="#4a7040" text-anchor="middle" font-style="italic">P4</text>
+        <!-- Dimension: 5,00 m -->
+        <line x1="143" y1="1078" x2="143" y2="1082" stroke="#8a9aaa" stroke-width="0.5"/>
+        <line x1="239" y1="1078" x2="239" y2="1082" stroke="#8a9aaa" stroke-width="0.5"/>
+        <line x1="143" y1="1080" x2="239" y2="1080" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)"/>
+        <text x="191" y="1087" font-size="4.5" fill="#7a8a9a" text-anchor="middle">P4 5,33 m</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             LEI-KERSBLOESEMBOMEN (Prunus × yedoensis 'Akebono')
+             In berm (publiek domein), LEFT of elektriciteitskast (x<128)
+             Espalier-trained flat against property boundary line (y=1040)
+             3 trees spaced ~2,5m apart: x≈20, x≈65, x≈108
+             Early bloomer: March–April (roze-wit)
+             ══════════════════════════════════════════════════════ -->
+             </g>
+             <text x="120" y="1059" font-size="5" fill="#4A7C59" text-anchor="middle" font-weight="700">BERM</text>
+             <text x="120" y="1067" font-size="3.6" fill="#7a8a9a" text-anchor="middle">publiek domein</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             FIETSPAD (publiek domein)
+             Breedte: 1,65 m = 30 px
+             Afgeleid: opmetingsplan dwarsprofiel — perceelsgrens→as = 8,65 m
+             minus KWS-rijbaan/2 = 5,00 m en berm = 2,00 m → 1,65 m
+             ══════════════════════════════════════════════════════ -->
+        <rect x="-60" y="1076" width="360" height="30" fill="#d0ccc4" stroke="none" />
+        <line x1="-60" y1="1106" x2="300" y2="1106" stroke="#bbb" stroke-width="0.6" />
+        <text x="120" y="1091" font-size="5.5" fill="#555" text-anchor="middle">fietspad</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             STREET — Geraardsbergsesteenweg (gewestweg N408)
+             ══════════════════════════════════════════════════════ -->
+        <rect x="-60" y="1106" width="360" height="60" fill="url(#roadFill)" />
+        <line x1="-60" y1="1136" x2="300" y2="1136" stroke="#fff" stroke-width="1.5" stroke-dasharray="12,8" />
+        <text x="120" y="1144" font-size="8" fill="#666" text-anchor="middle" font-weight="700"
+          letter-spacing="0.3em">GERAARDSBERGSESTEENWEG</text>
+        <text x="120" y="1118" font-size="6" fill="#888" text-anchor="middle">gewestweg (N408)</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             CADGIS CURRENT SITUATION — WFS EPSG:3812, 05-08-2026
+             B862b: 41004B0862/00B000 · SuVaCn 556 m² · shape 539,35 m²
+             SVG origin = CadGIS front-left; 18 px/m; full 13-vertex ring.
+             ══════════════════════════════════════════════════════ -->
+        <polygon id="cadgis-b862b"
+          points="159.889,1040.041 147.154,1040.038 115.604,1040.03 114.605,1040.029 0,1040 -0.03,904.941 -0.214,198.773 -0.225,159.546 140.665,161.659 240.137,892.098 239.769,945.156 239.664,944.428 238.798,1040.061"
+          fill="url(#grassFill)" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="8,4" />
+
+        <!-- Major CadGIS kink between the two OZO chains -->
+        <circle cx="240.137" cy="892.098" r="2.5" fill="none" stroke="#c0392b" stroke-width="0.8" />
+
+        <!-- ══════════════════════════════════════════════════════
+             CADGIS B499k — 41004B0499/00K000
+             SuVaCn 58 m² · shape 58,40 m² · full 4-vertex ring.
+             ══════════════════════════════════════════════════════ -->
+        <polygon id="cadgis-b499k"
+          points="-0.262,14.918 120.998,17.261 140.665,161.659 -0.225,159.546"
+          fill="url(#grassFill)" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="8,4" />
+        <line x1="-0.225" y1="159.546" x2="140.665" y2="161.659" stroke="#c0392b"
+          stroke-width="0.8" stroke-dasharray="3,3" opacity="0.6" />
+
+        <!-- Property_Stones WFS confirms only these two parcel-junction points. -->
+        <circle cx="140.665" cy="161.659" r="1.6" fill="#2E4057" />
+        <text x="144" y="160" font-size="3" fill="#7a8a9a" text-anchor="start">PS</text>
+        <circle cx="120.998" cy="17.261" r="1.6" fill="#2E4057" />
+        <text x="124" y="16" font-size="3" fill="#7a8a9a" text-anchor="start">PS</text>
+
+        <text x="90" y="177" font-size="5" fill="#2E4057" font-weight="700">B862b</text>
+        <text x="90" y="185" font-size="3.6" fill="#7a8a9a">556 m²</text>
+        <text x="8" y="30" font-size="5" fill="#2E4057" font-weight="700">B499k</text>
+        <text x="8" y="38" font-size="3.6" fill="#7a8a9a">58 m²</text>
+
+        <!-- Boundary labels -->
+        <text x="-28" y="590" font-size="7" fill="#7a8a9a" text-anchor="middle"
+          transform="rotate(90,-28,590)" font-weight="700">LOT 24A</text>
+        <text x="-40" y="590" font-size="5" fill="#7a8a9a" text-anchor="middle"
+          transform="rotate(90,-40,590)">(gemeenschappelijke muur)</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             BEDIENINGSWEG — op perceel (PID p.21), 4,00 m breed
+             Polygon volgt opmetingsplan perceelsgrens OZO:
+             y=968: x=238 (op segment pt13←14, t=72/174)
+             y=1040: x=239 (pt13, voorste perceelshoek)
+             4,00 m × 18 px/m = 72 px; afgeleid uit PID situatieplan -4.00- maatlijnen
+             ══════════════════════════════════════════════════════ -->
+        <polygon points="0,968 239.45,968 238.798,1040.061 0,1040"
+          fill="url(#pavingFill)" stroke="none" />
+        <!-- ══════════════════════════════════════════════════════
+             KOPMUUR — lage muur langs volledige frontale perceelsgrens
+             Bevestigd: opmetingsplan legende nr. 4 (Kopmuur)
+             Dikte: ca. 20 cm = 4 px; gecentreerd op perceelsgrens (y=1040)
+             Loopt over volledige frontbreedte: x=0 tot x=239
+             Plaatsing hier (na lot-polygon) zodat bovenop grassFill gerenderd
+             ══════════════════════════════════════════════════════ -->
+        <polyline points="0,1040 114.605,1040.029 115.604,1040.03 147.154,1040.038 159.889,1040.041 238.798,1040.061"
+          fill="none" stroke="#7a6e5e" stroke-width="5" />
+        <text x="-28" y="1042" font-size="4.5" fill="#7a6e5e" text-anchor="end">kopmuur</text>
+        <!-- Re-draw perceelsgrens front + right edges over kopmuur -->
+        <polyline points="0,1040 114.605,1040.029 115.604,1040.03 147.154,1040.038 159.889,1040.041 238.798,1040.061"
+          fill="none" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="8,4" />
+        <polyline points="239.45,968 239.769,945.156 239.664,944.428 238.798,1040.061"
+          fill="none" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="8,4" />
+
+        <g id="berm-landscape-detail" display="none">
+        <!-- ══════════════════════════════════════════════════════
+             LEI-KERSBLOESEMBOMEN (Prunus × yedoensis 'Akebono')
+             In berm (publiek domein), links van elektriciteitskast (x<128)
+             2 bomen op x≈20 en x≈108 (middelste verwijderd)
+             Drawn here (after kopmuur + perceelsgrens) for correct z-order
+             ══════════════════════════════════════════════════════ -->
+        <!-- Tree 1 at x=20 -->
+        <g transform="translate(20,1048)">
+          <line x1="0" y1="-8" x2="0" y2="8" stroke="#7a5c3a" stroke-width="1.5"/>
+          <line x1="-12" y1="-3" x2="12" y2="-3" stroke="#7a5c3a" stroke-width="1"/>
+          <ellipse cx="0" cy="-5" rx="13" ry="5" fill="#f8c8d8" stroke="#e8a0b8" stroke-width="0.8" opacity="0.88"/>
+          <circle cx="-8" cy="-5" r="3.5" fill="#fad8e4" stroke="#e8a0b8" stroke-width="0.5" opacity="0.8"/>
+          <circle cx="8" cy="-5" r="3.5" fill="#fad8e4" stroke="#e8a0b8" stroke-width="0.5" opacity="0.8"/>
+          <circle cx="0" cy="-7" r="3" fill="#fff0f4" stroke="#e8a0b8" stroke-width="0.5" opacity="0.7"/>
+        </g>
+        <!-- Tree 2 at x=108 -->
+        <g transform="translate(108,1048)">
+          <line x1="0" y1="-8" x2="0" y2="8" stroke="#7a5c3a" stroke-width="1.5"/>
+          <line x1="-12" y1="-3" x2="12" y2="-3" stroke="#7a5c3a" stroke-width="1"/>
+          <ellipse cx="0" cy="-5" rx="13" ry="5" fill="#f8c8d8" stroke="#e8a0b8" stroke-width="0.8" opacity="0.88"/>
+          <circle cx="-8" cy="-5" r="3.5" fill="#fad8e4" stroke="#e8a0b8" stroke-width="0.5" opacity="0.8"/>
+          <circle cx="8" cy="-5" r="3.5" fill="#fad8e4" stroke="#e8a0b8" stroke-width="0.5" opacity="0.8"/>
+          <circle cx="0" cy="-7" r="3" fill="#fff0f4" stroke="#e8a0b8" stroke-width="0.5" opacity="0.7"/>
+        </g>
+        <!-- Label for berm trees -->
+        <text x="64" y="1077" font-size="4" fill="#c06080" text-anchor="middle" font-style="italic">Prunus × yedoensis 'Akebono' (lei)</text>
+        </g>
+        <!-- Dimension: 4,00 m depth (PID situatieplan -4.00-) -->
+        <line x1="-10" y1="968" x2="-22" y2="968" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="-10" y1="1040" x2="-22" y2="1040" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="-17" y1="968" x2="-17" y2="1040" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="-28" y="1008" font-size="5" fill="#7a8a9a" text-anchor="end">4,00 m</text>
+
+        <!-- ── CadGIS geregistreerde woning ten opzichte van frontgrens ── -->
+        <line x1="-36" y1="806.05" x2="-50" y2="806.05" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="-36" y1="1040" x2="-50" y2="1040" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="-44" y1="806.05" x2="-44" y2="1040" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="-51" y="925" font-size="5" fill="#7a8a9a" text-anchor="end" font-weight="700">13,00 m</text>
+        <line x1="-50" y1="536.05" x2="-64" y2="536.05" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="-50" y1="806.05" x2="-64" y2="806.05" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="-58" y1="536.05" x2="-58" y2="806.05" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="-65" y="671" font-size="5" fill="#7a8a9a" text-anchor="end" font-weight="700">15,00 m</text>
+
+        <!-- ── CadGIS frontbreedte: collineaire WFS-keten 13,27 m ── -->
+        <line x1="0" y1="1020" x2="0" y2="1034" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="238.798" y1="1020" x2="238.798" y2="1034" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="0" y1="1027" x2="238.798" y2="1027" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="83" y="1022" width="72" height="8" fill="#e8e2d8" opacity="0.92" />
+        <text x="119" y="1030" font-size="5" fill="#7a8a9a" text-anchor="middle">frontbreedte 13,27 m</text>
+
+        <!-- Labels -->
+        <text x="119" y="1004" font-size="6.5" fill="#2E4057" text-anchor="middle" font-weight="700" letter-spacing="0.1em">BEDIENINGSWEG</text>
+        <text x="119" y="1014" font-size="5" fill="#7a8a9a" text-anchor="middle">4,00 m</text>
+
+        <g id="non-cadgis-front-concept" display="none">
+        <!-- ══════════════════════════════════════════════════════
+             LINKER PERCEELRAND — 60cm beplantingsstrook + brievenbus
+             Loopt langs x=0 perceelsgrens, y=884 (voorgevel)→y=968 (bedieningsweg)
+             Breedte: 60cm = 11px
+             Brievenbus: 38cm breed × 24,5cm diep = 7px × 4px
+               aan voorzijde strip (y=964, rand bedieningsweg)
+             Vulling: duingrasachtige planten (Carex, Festuca glauca, Stipa)
+             ══════════════════════════════════════════════════════ -->
+        <!-- Dune grass strip along left boundary (voortuin) -->
+        <rect x="0" y="884" width="11" height="84" fill="url(#duneGrassFill)" stroke="#88aa60" stroke-width="0.6"/>
+        <!-- Letterbox (brievenbus): 38cm×24.5cm = 7px×4px, aan voorzijde strip (y=964) -->
+        <rect x="0" y="964" width="7" height="4" fill="#6a7a8a" stroke="#2E4057" stroke-width="0.8" rx="0.5"/>
+        <line x1="3.5" y1="964" x2="3.5" y2="968" stroke="#4a5a6a" stroke-width="0.4"/>
+        <!-- Label -->
+        <text x="-3" y="940" font-size="4" fill="#5a7040" text-anchor="end" font-style="italic" transform="rotate(90,-3,926)">duingras + brievenbus</text>
+        <!-- Dimension indicator for 60cm strip -->
+        <line x1="0" y1="870" x2="0" y2="882" stroke="#8a9aaa" stroke-width="0.5"/>
+        <line x1="11" y1="870" x2="11" y2="882" stroke="#8a9aaa" stroke-width="0.5"/>
+        <line x1="0" y1="876" x2="11" y2="876" stroke="#8a9aaa" stroke-width="0.5" marker-start="url(#arrR)" marker-end="url(#arr)"/>
+        <text x="5.5" y="869" font-size="3.5" fill="#7a8a9a" text-anchor="middle">60cm</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             TRACHELOSPERMUM JASMINOIDES — OZO percEELSGRENS (buiten)
+             Groeit op hek (1m80 hoog) langs BUITENSTE OZO perceelsgrens
+             Van poort rechterpost (232,843) → start tuinstudio (182,522)
+             Volgt perceelsgrens diagonaal: (121,138)→(237,866) segment
+             Hekhoek ≈ –9° van verticaal (overeenkomstig perceelsgrens OZO)
+             ══════════════════════════════════════════════════════ -->
+        <!-- Vine trunk line along OZO outer perceelsgrens -->
+        <line x1="232" y1="843" x2="182" y2="522"
+          stroke="#3a8a4a" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+        <!-- Jasmine leaf clusters spaced ~20px apart along diagonal
+             Base rotation ≈99° (aligns ellipse major axis with fence slope –9° from vertical) -->
+        <g opacity="0.85">
+          <ellipse cx="229" cy="817" rx="5" ry="3" fill="#5aaa5a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(89,229,817)"/>
+          <ellipse cx="226" cy="797" rx="5" ry="3" fill="#4a9a4a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(109,226,797)"/>
+          <ellipse cx="222" cy="778" rx="5" ry="3" fill="#5aaa5a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(95,222,778)"/>
+          <ellipse cx="219" cy="758" rx="5" ry="3" fill="#4a9a4a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(103,219,758)"/>
+          <ellipse cx="216" cy="738" rx="5" ry="3" fill="#5aaa5a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(88,216,738)"/>
+          <ellipse cx="213" cy="719" rx="5" ry="3" fill="#4a9a4a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(111,213,719)"/>
+          <ellipse cx="210" cy="699" rx="5" ry="3" fill="#5aaa5a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(93,210,699)"/>
+          <ellipse cx="207" cy="679" rx="5" ry="3" fill="#4a9a4a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(102,207,679)"/>
+          <ellipse cx="204" cy="660" rx="5" ry="3" fill="#5aaa5a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(87,204,660)"/>
+          <ellipse cx="201" cy="640" rx="5" ry="3" fill="#4a9a4a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(108,201,640)"/>
+          <ellipse cx="198" cy="620" rx="5" ry="3" fill="#5aaa5a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(96,198,620)"/>
+          <ellipse cx="195" cy="601" rx="5" ry="3" fill="#4a9a4a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(100,195,601)"/>
+          <ellipse cx="191" cy="581" rx="5" ry="3" fill="#5aaa5a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(90,191,581)"/>
+          <ellipse cx="188" cy="561" rx="5" ry="3" fill="#4a9a4a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(106,188,561)"/>
+          <ellipse cx="185" cy="542" rx="5" ry="3" fill="#5aaa5a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(94,185,542)"/>
+        </g>
+        <!-- Label for Trachelospermum — along the OZO boundary diagonal -->
+        <text x="220" y="680" font-size="4.5" fill="#3a7a3a" text-anchor="middle" font-style="italic"
+          transform="rotate(-81,220,680)">Trachelospermum jasminoides</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             TRACHELOSPERMUM JASMINOIDES — WNW perceelsgrens
+             Groeit op hek (1m80 hoog) langs WNW perceelsgrens
+             Van achtergevel (0,614) → NNO-end tuinstudio (0,355)
+             Hekhoek 0° van verticaal (perceelsgrens WNW is recht ~N–Z)
+             ══════════════════════════════════════════════════════ -->
+        <!-- Vine trunk line along WNW perceelsgrens -->
+        <line x1="2" y1="614" x2="2" y2="355"
+          stroke="#3a8a4a" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+        <!-- Jasmine leaf clusters spaced ~20px apart along WNW fence
+             Rotation ≈90° (aligns ellipse major axis with vertical fence) -->
+        <g opacity="0.85">
+          <ellipse cx="2" cy="594" rx="5" ry="3" fill="#5aaa5a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(89,2,594)"/>
+          <ellipse cx="2" cy="574" rx="5" ry="3" fill="#4a9a4a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(109,2,574)"/>
+          <ellipse cx="2" cy="554" rx="5" ry="3" fill="#5aaa5a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(95,2,554)"/>
+          <ellipse cx="2" cy="534" rx="5" ry="3" fill="#4a9a4a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(103,2,534)"/>
+          <ellipse cx="2" cy="514" rx="5" ry="3" fill="#5aaa5a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(88,2,514)"/>
+          <ellipse cx="2" cy="494" rx="5" ry="3" fill="#4a9a4a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(111,2,494)"/>
+          <ellipse cx="2" cy="474" rx="5" ry="3" fill="#5aaa5a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(93,2,474)"/>
+          <ellipse cx="2" cy="454" rx="5" ry="3" fill="#4a9a4a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(102,2,454)"/>
+          <ellipse cx="2" cy="434" rx="5" ry="3" fill="#5aaa5a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(87,2,434)"/>
+          <ellipse cx="2" cy="414" rx="5" ry="3" fill="#4a9a4a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(108,2,414)"/>
+          <ellipse cx="2" cy="394" rx="5" ry="3" fill="#5aaa5a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(96,2,394)"/>
+          <ellipse cx="2" cy="374" rx="5" ry="3" fill="#4a9a4a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(100,2,374)"/>
+          <ellipse cx="2" cy="354" rx="5" ry="3" fill="#5aaa5a" stroke="#3a8a4a" stroke-width="0.4" transform="rotate(90,2,354)"/>
+        </g>
+        <!-- Label for Trachelospermum — along WNW fence -->
+        <text x="-8" y="484" font-size="4.5" fill="#3a7a3a" text-anchor="middle" font-style="italic"
+          transform="rotate(90,-8,484)">Trachelospermum jasminoides</text>
+
+
+
+        <!-- ══════════════════════════════════════════════════════
+             OPRIT — private verharding, volgt perceelsgrens OZO exact
+             Polygon punten (opmetingsplan):
+               126,837 → 232,837  (gate, pt14←15 segment: y=837 → x≈232)
+               232,837 → 237,866  (pt14 survey kink)
+               237,866 → 238,968  (pt13←14 segment: y=968 → x≈238)
+               238,968 → 126,968  (bedieningsweg bovenrand)
+             ══════════════════════════════════════════════════════ -->
+        <polygon points="126,843 232,843 237,866 238,968 126,968"
+          fill="url(#pavingFill)" stroke="#c8c0b4" stroke-width="0.8" />
+        <!-- Gravel strip between Castello gate (y=843) and parking P1+P2 (y=884) -->
+        <!-- Right edge follows OZO fence diagonal: at y=884 → x = 232+(884−843)×(237−232)/(866−843) ≈ 241 -->
+        <polygon points="126,843 232,843 234,884 126,884"
+          fill="url(#gravelFill)" stroke="none" opacity="0.9"/>
+        <!-- Re-draw perceelsgrens OZO right edge over oprit fill -->
+        <polyline points="232,843 237,866 238,968" fill="none" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="8,4" />
+        <!-- Survey point 14 kink marker (on top) -->
+        <circle cx="237" cy="866" r="2.5" fill="none" stroke="#c0392b" stroke-width="0.8" />
+        <!-- Oprit labels -->
+        <text x="184" y="905" font-size="7" fill="#2E4057" text-anchor="middle" font-weight="700">OPRIT</text>
+        <text x="184" y="915" font-size="5.5" fill="#7a8a9a" text-anchor="middle">verharding</text>
+        <!-- Dimension: oprit diepte 6,94 m (poort y=843 → bedieningsweg y=968) -->
+        <line x1="239" y1="843" x2="259" y2="843" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="239" y1="968" x2="259" y2="968" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="253" y1="843" x2="253" y2="968" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="259" y="906" font-size="5" fill="#7a8a9a" text-anchor="start">6,94 m</text>
+
+        <!-- Voortuin zone label -->
+        <text x="79" y="880" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">VOORTUIN</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             PARKING LAYOUT — 3 plaatsen
+             Voortuin:
+               x=0..11:   duingras + brievenbus
+               x=11..61:  P3 (50px = 2,78m) — groenstenen, voortuin
+               x=61..91:  welkomstborder LINKS (1,67m, symmetrisch voor raam B)
+               x=91..126: inkompad (35px = 1,94m = breedte voordeurnis)
+             Oprit:
+               x=126..137: welkomstborder RECHTS (11px = 61cm)
+               x=137..187: P1 (50px = 2,78m)
+               x=187..238: P2 (~51px, rechterrand volgt OZO perceelsgrens)
+             ══════════════════════════════════════════════════════ -->
+        <!-- P3: voortuin, x=11..61 (trimmed to allow symmetric welkomstborder before raam B) -->
+        <rect x="11" y="884" width="50" height="84" fill="url(#grassPaverFill)" stroke="#a4c494" stroke-width="0.8"/>
+        <text x="36" y="928" font-size="5" fill="#4a7040" text-anchor="middle" font-style="italic">P3</text>
+        <!-- P1: oprit, x=137..187 -->
+        <rect x="137" y="884" width="50" height="84" fill="url(#grassPaverFill)" stroke="#a4c494" stroke-width="0.8"/>
+        <!-- P2: oprit, x=187..238, rechts volgt OZO perceelsgrens -->
+        <polygon points="187,968 238,968 237,884 187,884"
+          fill="url(#grassPaverFill)" stroke="#a4c494" stroke-width="0.8"/>
+        <!-- Parking dividers -->
+        <line x1="187" y1="884" x2="187" y2="968" stroke="#88aa78" stroke-width="0.8" stroke-dasharray="4,3"/>
+        <!-- Parking bay labels -->
+        <text x="162" y="928" font-size="5" fill="#4a7040" text-anchor="middle" font-style="italic">P1</text>
+        <text x="212" y="928" font-size="5" fill="#4a7040" text-anchor="middle" font-style="italic">P2</text>
+        <!-- Dimension P1+P2 combined -->
+        <line x1="137" y1="870" x2="137" y2="881" stroke="#8a9aaa" stroke-width="0.5"/>
+        <line x1="238" y1="870" x2="238" y2="881" stroke="#8a9aaa" stroke-width="0.5"/>
+        <line x1="137" y1="875" x2="238" y2="875" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrGR)" marker-end="url(#arrG)"/>
+        <rect x="163" y="871" width="50" height="7" fill="#faf8f4" opacity="0.9"/>
+        <text x="187" y="878" font-size="4.5" fill="#4a7040" text-anchor="middle">P1+P2 ~5,57m</text>
+        <!-- Dimension P1 and P2 individual (y=862, above combined) -->
+        <line x1="187" y1="863" x2="187" y2="870" stroke="#8a9aaa" stroke-width="0.5"/>
+        <line x1="137" y1="866" x2="187" y2="866" stroke="#8a9aaa" stroke-width="0.5" marker-start="url(#arrR)" marker-end="url(#arr)"/>
+        <text x="162" y="862" font-size="4" fill="#7a8a9a" text-anchor="middle">P1 2,78m</text>
+        <line x1="187" y1="866" x2="238" y2="866" stroke="#8a9aaa" stroke-width="0.5" marker-start="url(#arrR)" marker-end="url(#arr)"/>
+        <text x="212" y="862" font-size="4" fill="#7a8a9a" text-anchor="middle">P2 2,83m</text>
+        <!-- Dimension P3 -->
+        <line x1="11" y1="870" x2="11" y2="881" stroke="#8a9aaa" stroke-width="0.5"/>
+        <line x1="61" y1="870" x2="61" y2="881" stroke="#8a9aaa" stroke-width="0.5"/>
+        <line x1="11" y1="875" x2="61" y2="875" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrGR)" marker-end="url(#arrG)"/>
+        <text x="36" y="869" font-size="4" fill="#4a7040" text-anchor="middle">P3 ~2,78m</text>
+        <!-- Dimension welkomstborder LINKS (1,67m) — extends same y=875 chain -->
+        <line x1="91" y1="870" x2="91" y2="881" stroke="#8a9aaa" stroke-width="0.5"/>
+        <line x1="61" y1="875" x2="91" y2="875" stroke="#8a9aaa" stroke-width="0.5" marker-start="url(#arrR)" marker-end="url(#arr)"/>
+        <text x="76" y="869" font-size="4" fill="#7a8a9a" text-anchor="middle">1,67m</text>
+        <!-- Dimension inkompad (1,94m) — extends same y=875 chain -->
+        <line x1="126" y1="870" x2="126" y2="881" stroke="#8a9aaa" stroke-width="0.5"/>
+        <line x1="91" y1="875" x2="126" y2="875" stroke="#8a9aaa" stroke-width="0.5" marker-start="url(#arrR)" marker-end="url(#arr)"/>
+        <text x="108" y="869" font-size="4" fill="#7a8a9a" text-anchor="middle">pad 1,94m</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             WELKOMSTBORDER — bij voordeur (cottage garden style)
+             LINKS:  x=61..91  (1,67m breed) — symmetrisch voor raam B (center x=76)
+             RECHTS: x=126..137 (61cm breed) — oprit, rechts van inkompad
+             INKOMPAD: x=91..126 (35px = 1,94m = breedte voordeurnis)
+             ══════════════════════════════════════════════════════ -->
+        <!-- Welkomstborder LINKS: x=61..91, y=884..968 -->
+        <rect x="61" y="884" width="30" height="84" fill="url(#flowerFill)" stroke="#88aa78" stroke-width="0.6"/>
+        <!-- Inkompad: x=91..126 (breedte = voordeurnis), y=856..968 — grind (bestaande toestand) -->
+        <rect x="91" y="856" width="35" height="112" fill="url(#gravelFill)" stroke="#c8c0b4" stroke-width="0.5"/>
+        <!-- Welkomstborder RECHTS: x=126..137, y=884..968 -->
+        <rect x="126" y="884" width="11" height="84" fill="url(#flowerFill)" stroke="#88aa78" stroke-width="0.6"/>
+        <!-- Welkomstborder label -->
+        <text x="76" y="960" font-size="4" fill="#c06080" text-anchor="middle" font-style="italic" transform="rotate(-90,76,926)">welkomstborder</text>
+        <!-- Plant accent dots LINKS (spread across x=61..91, center aligned on window x=76) -->
+        <circle cx="64" cy="896" r="2" fill="#e8a0b8" opacity="0.9"/>
+        <circle cx="70" cy="910" r="1.8" fill="#f0c060" opacity="0.9"/>
+        <circle cx="76" cy="924" r="2" fill="#c8a0d0" opacity="0.9"/>
+        <circle cx="82" cy="938" r="1.8" fill="#a8c8f8" opacity="0.9"/>
+        <circle cx="88" cy="952" r="2" fill="#f08060" opacity="0.9"/>
+        <circle cx="65" cy="952" r="1.8" fill="#f0c060" opacity="0.9"/>
+        <!-- Plant accent dots RECHTS -->
+        <circle cx="131" cy="900" r="1.5" fill="#e8a0b8" opacity="0.9"/>
+        <circle cx="131" cy="920" r="1.5" fill="#c8a0d0" opacity="0.9"/>
+        <circle cx="131" cy="940" r="1.5" fill="#f0c060" opacity="0.9"/>
+        <circle cx="131" cy="960" r="1.5" fill="#a8c8f8" opacity="0.9"/>
+
+        <!-- ══════════════════════════════════════════════════════
+             POORT / INRIT — Castello systeem (Prindal, thermowood ayous, RAL9004)
+             Dagmaat post-tot-post: 5,89 m (x=132..227)
+             Opbouw huiszijde → straatzijde (links→rechts):
+               50cm vaste terugkeer  (x=132..141) — aansluitig huis, architecturaal retour
+               2× Castello scherm   (x=141..209) — 2 × 1,89m privacyschermen
+               1,00m Castello deur  (x=209..227) — voetgangersdeur OZO-kant (straatzijde)
+             Logica: voetgangers komen van rechts (OZO/straatzijde) → deur bereikbaar
+             ══════════════════════════════════════════════════════ -->
+        <!-- Posts -->
+        <!-- LEFT: corten steel column / EV wallbox pillar -->
+        <rect x="127" y="838" width="5" height="10" fill="#2E4057" rx="1"/>
+        <!-- RIGHT: standard pillar -->
+        <rect x="227" y="838" width="5" height="10" fill="#2E4057" rx="1"/>
+
+        <!-- ── Vaste terugkeer 50cm (x=132..141) — tegen huismuur ── -->
+        <rect x="132" y="839" width="9" height="8" fill="url(#slatFill)" stroke="#1a1a2e" stroke-width="0.8"/>
+        <line x1="132" y1="839" x2="141" y2="839" stroke="#1a1a2e" stroke-width="1.5"/>
+        <line x1="132" y1="847" x2="141" y2="847" stroke="#1a1a2e" stroke-width="1.5"/>
+
+        <!-- ── Castello scherm 2× 1,89m (x=141..209) ── -->
+        <!-- Panel 1: x=141..175 (1,89m) -->
+        <rect x="141" y="839" width="34" height="8" fill="url(#slatFill)" stroke="#1a1a2e" stroke-width="0.8"/>
+        <line x1="141" y1="839" x2="175" y2="839" stroke="#1a1a2e" stroke-width="1.5"/>
+        <line x1="141" y1="847" x2="175" y2="847" stroke="#1a1a2e" stroke-width="1.5"/>
+        <!-- Panel 2: x=175..209 (1,89m) -->
+        <rect x="175" y="839" width="34" height="8" fill="url(#slatFill)" stroke="#1a1a2e" stroke-width="0.8"/>
+        <line x1="175" y1="839" x2="209" y2="839" stroke="#1a1a2e" stroke-width="1.5"/>
+        <line x1="175" y1="847" x2="209" y2="847" stroke="#1a1a2e" stroke-width="1.5"/>
+        <!-- Verticale scheidingslijn panelen -->
+        <line x1="175" y1="839" x2="175" y2="847" stroke="#1a1a2e" stroke-width="0.8"/>
+
+        <!-- ── Kastpost tussen scherm en deur (structureel) ── -->
+        <rect x="207" y="837" width="4" height="12" fill="#1a1a2e" rx="0.5"/>
+
+        <!-- ── Castello deur 1,00m (x=209..227) — scharniert links, OZO-zijde ── -->
+        <rect x="209" y="839" width="18" height="8" fill="url(#slatFill)" stroke="#1a1a2e" stroke-width="1.2"/>
+        <line x1="209" y1="839" x2="227" y2="839" stroke="#1a1a2e" stroke-width="1.5"/>
+        <line x1="209" y1="847" x2="227" y2="847" stroke="#1a1a2e" stroke-width="1.5"/>
+        <!-- Scharnieren (hinge) links (schermkant) -->
+        <circle cx="210.5" cy="841.5" r="1" fill="#1a1a2e"/>
+        <circle cx="210.5" cy="845" r="1" fill="#1a1a2e"/>
+        <!-- Greep/slagpen rechts (straatzijde) -->
+        <circle cx="225" cy="843" r="0.9" fill="#888" stroke="#1a1a2e" stroke-width="0.5"/>
+        <!-- Swing arc: deur opent naar binnen (tuin), pivot (209,843), r=18px
+             van (227,843) boog linksom naar (209,825) -->
+        <path d="M227,843 A18,18 0 0,0 209,825"
+          fill="none" stroke="#2E4057" stroke-width="0.7" stroke-dasharray="3,2"/>
+        <!-- Deur volledig open lijn -->
+        <line x1="209" y1="843" x2="209" y2="825" stroke="#2E4057" stroke-width="0.5" stroke-dasharray="2,2" opacity="0.5"/>
+
+        <!-- ── Beplantingsstrook OZO-wand — RAAM 1 → Castello ── -->
+        <!-- Loopt langs x=126 (buitenzijde OZO-wand), van onderkant RAAM 1 (y=814) tot bovenkant Castello gate (y=839) -->
+        <!-- Breedte: 9px = 50cm (zelfde als diepte bloembak) -->
+        <rect x="126" y="814" width="9" height="24" rx="0.5"
+          fill="#8a7a6a" stroke="#4a3a2a" stroke-width="0.6"/>
+        <rect x="127" y="815" width="7" height="22" fill="url(#flowerFill)" rx="0.3"/>
+        <circle cx="130" cy="820" r="1.2" fill="#e8a0b8" opacity="0.9"/>
+        <circle cx="130" cy="829" r="1.2" fill="#c8a0d0" opacity="0.9"/>
+        <circle cx="130" cy="835" r="1.2" fill="#f0c060" opacity="0.9"/>
+
+        <!-- ── Doorlopende bloembak voor Castello scherm (huismuur → kastpost/deur, deuropening vrijgehouden) ── -->
+        <!-- x=126..209 (huismuur → kastpost binnenkant), y=847..856 (50cm) — rechts 1,00m deuropening vrij -->
+        <rect x="126" y="847" width="83" height="9" rx="1"
+          fill="#8a7a6a" stroke="#4a3a2a" stroke-width="0.8"/>
+        <!-- Plantenvulling -->
+        <rect x="127" y="848" width="81" height="7" fill="url(#flowerFill)" rx="0.5"/>
+        <!-- Bloem accenten, verspreid over volle breedte -->
+        <circle cx="131" cy="853" r="1.5" fill="#f8c8d8" opacity="0.9"/>
+        <circle cx="141" cy="851" r="1.2" fill="#f0c060" opacity="0.9"/>
+        <circle cx="151" cy="854" r="1.5" fill="#c8a0d0" opacity="0.9"/>
+        <circle cx="161" cy="851" r="1.2" fill="#f8c8d8" opacity="0.9"/>
+        <circle cx="171" cy="854" r="1.5" fill="#a8c8f8" opacity="0.9"/>
+        <circle cx="181" cy="851" r="1.2" fill="#f0c060" opacity="0.9"/>
+        <circle cx="191" cy="854" r="1.5" fill="#f8c8d8" opacity="0.9"/>
+        <circle cx="201" cy="851" r="1.2" fill="#c8a0d0" opacity="0.9"/>
+        <!-- Redraw kastpost on top of bloembak so it stays visible -->
+        <rect x="207" y="847" width="4" height="2" fill="#1a1a2e" rx="0.5"/>
+
+        <!-- Label bloembakken -->
+        <text x="167" y="868" font-size="3.5" fill="#c06080" text-anchor="middle" font-style="italic">bloembak (doorlopend)</text>
+
+        <!-- ── Labels ── -->
+        <text x="175" y="822" font-size="5" fill="#2E4057" text-anchor="middle" font-weight="700">SCHERM + DEUR</text>
+        <text x="175" y="828" font-size="3.5" fill="#7a8a9a" text-anchor="middle" font-style="italic">Castello (Prindal) — thermowood ayous RAL9004</text>
+
+        <!-- ── Sub-dimensies (above bloembakken at y=838, clear of parking dims) ── -->
+        <line x1="132" y1="847" x2="132" y2="839" stroke="#8a9aaa" stroke-width="0.4"/>
+        <line x1="141" y1="847" x2="141" y2="837" stroke="#8a9aaa" stroke-width="0.4"/>
+        <line x1="209" y1="847" x2="209" y2="837" stroke="#8a9aaa" stroke-width="0.4"/>
+        <line x1="227" y1="847" x2="227" y2="837" stroke="#8a9aaa" stroke-width="0.4"/>
+        <line x1="132" y1="840" x2="141" y2="840" stroke="#8a9aaa" stroke-width="0.5" marker-start="url(#arrR)" marker-end="url(#arr)"/>
+        <line x1="141" y1="840" x2="209" y2="840" stroke="#8a9aaa" stroke-width="0.5" marker-start="url(#arrR)" marker-end="url(#arr)"/>
+        <line x1="209" y1="840" x2="227" y2="840" stroke="#8a9aaa" stroke-width="0.5" marker-start="url(#arrR)" marker-end="url(#arr)"/>
+        <text x="136.5" y="844" font-size="3.5" fill="#7a8a9a" text-anchor="middle">50cm</text>
+        <text x="175" y="844" font-size="3.5" fill="#7a8a9a" text-anchor="middle">2 × 1,89m scherm</text>
+        <text x="218" y="844" font-size="3.5" fill="#7a8a9a" text-anchor="middle">1,00m deur</text>
+
+        <!-- ── Totaalmaat: 5,89 m (above sub-dims, clear of swing arc at y=819) ── -->
+        <line x1="132" y1="811" x2="132" y2="805" stroke="#8a9aaa" stroke-width="0.5"/>
+        <line x1="227" y1="811" x2="227" y2="805" stroke="#8a9aaa" stroke-width="0.5"/>
+        <line x1="132" y1="808" x2="227" y2="808" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)"/>
+        <rect x="157" y="802" width="46" height="8" fill="#faf8f4" opacity="0.9"/>
+        <text x="180" y="810" font-size="5.5" fill="#2E4057" text-anchor="middle" font-weight="700">5,89 m</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             EV LADER — Shell Recharge / NewMotion
+             Gemonteerd op achterzijde (NNO-face, y=837) kastpost
+             → onzichtbaar vanuit straat / bedieningsweg
+             Kabellengte: 7m = 126px (1:200) → bereik dekt P1 + P2
+             ══════════════════════════════════════════════════════ -->
+        <!-- 7m cable reach arc — centered on mount point (cx=209, cy=834) -->
+        <circle cx="209" cy="834" r="126"
+          fill="none" stroke="#2980b9" stroke-width="0.6"
+          stroke-dasharray="4,3" opacity="0.35"/>
+        <!-- Charger unit — wall-mounted on NNO face of kastpost (y=832..837)
+             8px wide × 5px deep; protrudes into oprit/tuin side -->
+        <rect x="205" y="832" width="8" height="5" rx="1"
+          fill="#3a3a3a" stroke="#222" stroke-width="0.7"/>
+        <!-- Shell yellow accent stripe -->
+        <rect x="205" y="834" width="8" height="1" fill="#f7be00" opacity="0.9"/>
+        <!-- Lightning bolt symbol -->
+        <text x="209" y="836" font-size="4" fill="#f7be00" text-anchor="middle"
+          font-weight="700">⚡</text>
+        <!-- Cable reach label -->
+        <text x="230" y="886" font-size="4" fill="#2980b9" text-anchor="start"
+          font-style="italic">7m bereik</text>
+        <!-- EV label (NNO/tuin side, right of kastpost to avoid SCHERM+DEUR label) -->
+        <text x="213" y="830" font-size="4" fill="#3a3a3a" text-anchor="start"
+          font-weight="700">EV</text>
+        <text x="213" y="835" font-size="3.5" fill="#7a8a9a" text-anchor="start"
+          font-style="italic">achterzijde kastpost</text>
+        </g>
+
+        <!-- Minimal front garden, redrawn for the current house position. -->
+        <g id="front-garden-design" aria-label="Voortuin met beplanting, parkeren, poort en laadpunt">
+          <title>Voortuinontwerp op de huidige woningpositie</title>
+
+          <!-- Oprit: current gate line to the bedieningsweg, following the parcel edge. -->
+          <path d="M126,765.05 L222.835,765.05 L240.137,892.098 L239.769,945.156 L239.45,968 L126,968 Z"
+            fill="url(#pavingFill)" stroke="#c8c0b4" stroke-width="0.8" />
+
+          <!-- Gravel pockets matching the entrance and walking paths. -->
+          <g id="front-gravel-aprons" fill="url(#gravelFill)" stroke="#c8c0b4" stroke-width="0.6">
+            <path d="M126,765.05 L222.835,765.05 L228.2,806.05 L126,806.05 Z" />
+            <path d="M126,921.25 L239.7,921.25 L239.45,968 L126,968 Z" />
+            <rect x="0" y="921.25" width="11" height="46.75" />
+            <rect x="65" y="921.25" width="26" height="46.75" />
+          </g>
+
+          <!-- Inkompad through the recessed entrance. -->
+          <rect x="91" y="778.05" width="35" height="189.95"
+            fill="url(#gravelFill)" stroke="#c8c0b4" stroke-width="0.6" />
+
+          <!-- Continuous 1 m walking path between the house entrance and P3. -->
+          <path d="M11,806.05 L126,806.05 L126,824.05 L11,824.05 Z"
+            fill="url(#gravelFill)" stroke="#c8c0b4" stroke-width="0.6" />
+          <text x="108.5" y="812" font-size="3.5" fill="#5a6672" text-anchor="middle">PAD 1,00 m</text>
+
+          <!-- Planting bands; broad patterns replace the former flower micro-detail. -->
+          <rect x="0" y="806.05" width="11" height="115.2"
+            fill="url(#duneGrassFill)" stroke="#88aa60" stroke-width="0.6" />
+          <rect x="65" y="824.05" width="26" height="97.2"
+            fill="url(#flowerFill)" stroke="#88aa78" stroke-width="0.6" />
+          <!-- 1,00 m planting bed above P1-P2, aligned with the OZO house wall and parcel edge. -->
+          <path id="p1-p2-planting-bed" d="M126,806.05 L228.2,806.05 L230.4,824.05 L126,824.05 Z"
+            fill="url(#flowerFill)" stroke="#88aa78" stroke-width="0.6" />
+
+          <!-- Winnie: bottom-right of grass strip, 385 mm front facing OZO/street. -->
+          <g id="winny-mailbox" aria-label="Pakketbrievenbus Winnie">
+            <title>Zelfbouwmarkt Winnie, 385 × 253 mm, brede voorzijde naar OZO</title>
+            <rect x="4.07" y="916.696" width="6.93" height="4.554" rx="0.6"
+              fill="#4f5964" stroke="#1a1a2e" stroke-width="0.7" />
+            <line x1="5.235" y1="920.25" x2="9.835" y2="920.25" stroke="#c8d0dc" stroke-width="0.45" />
+          </g>
+          <text x="9" y="913.25" font-size="2.8" fill="#2E4057" text-anchor="start"
+            transform="rotate(-90,9,913.25)">WINNIE</text>
+
+          <!--
+            Parking sized around the controlling Tesla Model Y (ca. 4,79 m long,
+            2,13 m wide with mirrors); BMW i4 and Mercedes EQA also fit.
+          -->
+          <!-- P3 access apron from the parking bay to the bedieningsweg. -->
+          <rect x="11" y="921.25" width="54" height="46.75"
+            fill="url(#gravelFill)" stroke="none" opacity="0.72" />
+
+          <!-- All parking bays share one OZO edge and retain their full 5,40 m length. -->
+          <g fill="url(#grassPaverFill)" fill-opacity="0.72" stroke="#88aa78" stroke-width="0.7" stroke-dasharray="4,3">
+            <rect x="11" y="824.05" width="54" height="97.2" />
+            <rect x="126" y="824.05" width="52.2" height="97.2" />
+            <path d="M178.2,824.05 L230.4,824.05 L239.7,921.25 L178.2,921.25 Z" />
+          </g>
+          <g fill="#4a7040" text-anchor="middle">
+            <text x="38" y="869" font-size="4" font-style="italic">P3</text>
+            <text x="38" y="876" font-size="2.8">3,00 × 5,40 m</text>
+            <text x="152.1" y="869" font-size="4" font-style="italic">P1</text>
+            <text x="152.1" y="876" font-size="2.8">2,90 × 5,40 m</text>
+            <text x="204.3" y="869" font-size="4" font-style="italic">P2</text>
+            <text x="204.3" y="876" font-size="2.8">min. 2,90 × 5,40 m</text>
+          </g>
+
+          <!-- Castello screen and 1 m pedestrian gate, fitted to the current parcel width. -->
+          <g id="front-gate" fill="none" stroke="#2E4057" stroke-linecap="square">
+            <line x1="127.8" y1="765.05" x2="204.5" y2="765.05" stroke-width="4" />
+            <line x1="204.5" y1="765.05" x2="222.5" y2="765.05" stroke-width="1.4" />
+            <line x1="204.5" y1="765.05" x2="204.5" y2="747.05" stroke-width="0.7" stroke-dasharray="2,2" />
+            <path d="M222.5,765.05 A18,18 0 0,0 204.5,747.05" stroke-width="0.7" stroke-dasharray="3,2" />
+          </g>
+          <!-- 0,60 m flowerbed below the screen, aligned with the house's outer wall corner. -->
+          <rect id="screen-planting-bed" x="126" y="767.25" width="75.5" height="10.8" rx="0.8"
+            fill="url(#flowerFill)" stroke="#88aa78" stroke-width="0.6" />
+          <text x="166" y="752" font-size="4" fill="#2E4057" text-anchor="middle" font-weight="700">SCHERM</text>
+          <text x="213.5" y="742" font-size="3.5" fill="#2E4057" text-anchor="middle">POORT 1,00 m</text>
+
+          <!-- Charging point on the screen/gate post. -->
+          <rect x="201.5" y="765.05" width="6" height="8" rx="1"
+            fill="#3a3a3a" stroke="#1a1a2e" stroke-width="0.6" />
+          <line x1="202.5" y1="768" x2="206.5" y2="768" stroke="#f7be00" stroke-width="1" />
+          <text x="204.5" y="779" font-size="3.2" fill="#2E4057" text-anchor="middle" font-weight="700">EV</text>
+
+          <text x="78" y="866" font-size="3.2" fill="#5a7040" text-anchor="middle" transform="rotate(-90,78,866)">BEPLANTING</text>
+          <text x="182" y="796" font-size="5" fill="#2E4057" text-anchor="middle" font-weight="700">OPRIT</text>
+        </g>
+
+           <!-- ══════════════════════════════════════════════════════
+             CADGIS POSITION + PID ORTHOGONAL FOOTPRINT
+             Position/setback follows regional building gbg_7212524.
+             Shape follows PID: front 7,00 m · depth 15,00 m · rear 6,60 m.
+             ══════════════════════════════════════════════════════ -->
+           <g id="cadgis-house" transform="translate(0 -77.95)">
+        <g id="legacy-house-envelope" display="none">
+        <!-- House footprint: L-shape with voordeur notch (PID p.23) -->
+        <!-- Voorgevel: y=884. Achtergevel: y=614 (15,00 m = 270px) -->
+        <!-- L-step: y=669 (12,00 m from achtergevel = 3,06 m upper section, per PID paths) -->
+        <!-- Voordeur notch: 194cm WIDE (x=91..126 = 35px) × 1.56m deep (y=856..884), 1m door within -->
+        <path d="M0.492,883.999 L-0.269,617.11 L118.855,613.468 L126.555,859.78 L91.117,859.832 L91.176,884.245 Z"
+          fill="url(#wallFill)" stroke="#2E4057" stroke-width="0.8" />
+        <!-- Shared wall with lot 24A (thicker) -->
+        <line x1="0" y1="884" x2="0" y2="614" stroke="#2E4057" stroke-width="3" />
+        <!-- Interior fill — 4px inset from outer wall; steps around notch jamb -->
+        <path d="M4,880 L91,880 L91,860 L122,860 L122,669 L115,669 L115,618 L4,618 Z"
+          fill="#f0ece4" stroke="none" />
+        <!-- ══════════════════════════════════════════════════════
+             PID PAGE 23 FLOOR PLAN — gelijkvloers lot 24B
+             Source: PID OMV_2021030286 | Schaal 1/50 → 1:200
+             Transform: PDF(21685,5183)–(25671,13518) → SVG(0,884)–(126,614)
+             ══════════════════════════════════════════════════════ -->
+        <g id="pidFloorPlan" clip-path="url(#houseClip)" display="none">
+          <path d="M102.80,830.43L102.80,840.15" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M104.47,830.43L104.47,840.15" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M120.33,814.18L123.29,814.18" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M123.06,813.95L123.06,859.19" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M120.56,813.95L120.56,829.26" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M120.56,830.43L120.56,856.63" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M85.66,838.05L88.62,838.05" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M85.89,783.31L85.89,838.28" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M88.39,830.43L88.39,838.28" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M88.39,780.67L88.39,829.26" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M60.47,862.85L63.43,862.85" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M60.70,783.31L60.70,863.08" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M63.20,783.31L63.20,863.08" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M3.57,616.55L3.57,781.14" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M3.57,783.31L3.57,881.43" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M1.07,613.99L1.07,883.99" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M-2.50,616.55L-2.50,781.14" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M-2.50,783.31L-2.50,881.43" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M0.01,613.99L0.01,883.99" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M70.64,880.96L70.64,883.99" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M33.69,880.96L33.69,883.99" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M33.46,883.76L70.86,883.76" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M44.39,881.19L70.86,881.19" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M33.46,881.19L42.34,881.19" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M41.88,837.50L44.84,837.50" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M44.62,837.27L44.62,881.43" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M42.11,837.27L42.11,881.43" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M88.39,880.96L88.39,883.99" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M81.33,880.96L81.33,883.99" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M81.11,883.76L88.62,883.76" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M81.11,881.19L88.62,881.19" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M15.71,880.96L15.71,883.99" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M0.84,883.76L15.94,883.76" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M3.34,881.19L15.94,881.19" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M17.53,613.99L17.53,617.02" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M0.84,614.22L17.76,614.22" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M3.34,616.79L17.76,616.79" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M108.95,613.99L108.95,617.02" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M108.72,614.22L116.16,614.22" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M108.72,616.79L113.65,616.79" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M115.93,613.99L115.93,669.50" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M113.43,616.55L113.43,672.06" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M115.70,669.26L123.36,669.26" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M113.20,671.83L120.78,671.83" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M120.33,683.80L123.36,683.80" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M123.14,669.03L123.14,684.03" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M120.56,671.60L120.56,684.03" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M120.33,718.71L123.36,718.71" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M120.40,735.19L123.36,735.19" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M123.14,718.48L123.14,735.42" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M120.33,718.48L120.78,718.48L120.86,734.96L120.86,735.42L120.40,735.42L120.33,718.94" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M120.40,726.95L123.36,726.95" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M120.40,729.52L123.36,729.52" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M123.14,726.72L123.14,729.75" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M120.63,726.72L120.63,729.75" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M104.25,830.66L120.78,830.66" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M88.16,830.66L103.03,830.66" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M88.16,829.03L120.78,829.03" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M120.33,770.10L123.29,770.10" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M120.33,786.66L123.29,786.66" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M123.06,769.86L123.06,786.89" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M120.56,769.86L120.56,786.89" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M65.55,780.67L65.55,783.78" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M38.55,780.67L38.55,783.78" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M62.97,783.55L65.78,783.55" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M38.32,783.55L60.93,783.55" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M38.32,780.90L65.78,780.90" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M22.39,780.67L22.39,783.78" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M3.34,783.55L22.61,783.55" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M3.34,780.90L22.61,780.90" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M83.53,780.67L83.53,783.78" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M83.31,783.55L86.11,783.55" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+          <path d="M83.31,780.90L88.62,780.90" fill="none" stroke="#2E4057" stroke-width="1.40"/>
+        </g>
+        <!-- Notch back wall hatch (y=856..860, x=91..122) — above pidFloorPlan -->
+        <rect x="91" y="856" width="31" height="4" fill="url(#wallFill)" stroke="none"/>
+        <!-- Exterior wall strokes -->
+        <!-- ── ZZW VOORGEVEL — y=884, outer face; inner face y=880
+             PID path gaps (ground truth):
+               Raam A  x=16..34  18px = 1,00 m
+               Raam B  x=71..81  10px = 0,56 m
+             WNW party wall x=0: solid masonry (halfopen), no openings
+        -->
+        <!-- Solid: x=0..16 -->
+        <line x1="0" y1="884" x2="16" y2="884" stroke="#2E4057" stroke-width="2"/>
+        <!-- Raam A — 1,00 m (x=16..34) -->
+        <rect x="16" y="880" width="18" height="4" fill="#d8edf8" stroke="none"/>
+        <line x1="17.5" y1="880" x2="17.5" y2="884" stroke="#4a8ab0" stroke-width="0.8"/>
+        <line x1="31.5" y1="880" x2="31.5" y2="884" stroke="#4a8ab0" stroke-width="0.8"/>
+        <line x1="16" y1="880" x2="34" y2="880" stroke="#2E4057" stroke-width="2"/>
+        <line x1="16" y1="884" x2="34" y2="884" stroke="#2E4057" stroke-width="2"/>
+        <!-- Solid: x=34..71 -->
+        <line x1="34" y1="884" x2="71" y2="884" stroke="#2E4057" stroke-width="2"/>
+        <!-- Raam B — 0,56 m (x=71..81) -->
+        <rect x="71" y="880" width="10" height="4" fill="#d8edf8" stroke="none"/>
+        <line x1="72.5" y1="880" x2="72.5" y2="884" stroke="#4a8ab0" stroke-width="0.8"/>
+        <line x1="78.5" y1="880" x2="78.5" y2="884" stroke="#4a8ab0" stroke-width="0.8"/>
+        <line x1="71" y1="880" x2="81" y2="880" stroke="#2E4057" stroke-width="2"/>
+        <line x1="71" y1="884" x2="81" y2="884" stroke="#2E4057" stroke-width="2"/>
+        <!-- Solid: x=81..91 -->
+        <line x1="81" y1="884" x2="91" y2="884" stroke="#2E4057" stroke-width="2"/>
+        <!-- Window labels are retained in source but hidden at site-plan scale. -->
+        <g display="none">
+        <text x="25" y="878" font-size="3.5" fill="#3a7ab0" text-anchor="middle">raam 1,00m</text>
+        <text x="76" y="878" font-size="3.5" fill="#3a7ab0" text-anchor="middle">0,56m</text>
+        </g>
+        <line x1="91" y1="884" x2="91" y2="856" stroke="#2E4057" stroke-width="2"/>
+        <line x1="91" y1="856" x2="126" y2="856" stroke="#2E4057" stroke-width="2"/>
+        <!-- ── OZO ZIJMUUR — rechter wand met raamopeningen (grondplan) ──
+             PID paths ground truth:
+               Outer face lower section: x=123 (inner), outer ≈x=126  (y=669..856)
+               Outer face upper section: x=116 (inner), outer = x=119  (y=614..669)
+               L-step: y=669  (3,06 m upper / 10,39 m lower  → totaal 15,00 m)
+             Windows (from PID path gaps):
+               RAAM 1  y=787..814  27px = 1,50m  (verhoogde drempel)
+               RAAM 2  y=735..770  35px = 1,94m
+               RAAM 3  y=684..718  34px = 1,89m  (in lower section, x=126)
+        -->
+        <!-- Solid wall x=126: notch corner → top of RAAM 1 (y=856..814) -->
+        <line x1="126" y1="856" x2="126" y2="814" stroke="#2E4057" stroke-width="2"/>
+        <!-- RAAM 1 — verhoogde drempel 1,50 m (y=787..814) -->
+        <rect x="122" y="787" width="4" height="27" fill="#d8edf8" stroke="none"/>
+        <line x1="122.7" y1="787" x2="122.7" y2="814" stroke="#4a8ab0" stroke-width="0.8"/>
+        <line x1="125.3" y1="787" x2="125.3" y2="814" stroke="#4a8ab0" stroke-width="0.8"/>
+        <line x1="122" y1="814" x2="126" y2="814" stroke="#2E4057" stroke-width="2"/>
+        <line x1="122" y1="787" x2="126" y2="787" stroke="#2E4057" stroke-width="2"/>
+        <!-- Solid pier x=126: between RAAM 1 and RAAM 2 (y=787..770) -->
+        <line x1="126" y1="787" x2="126" y2="770" stroke="#2E4057" stroke-width="2"/>
+        <!-- RAAM 2 — 1,94 m (y=735..770) -->
+        <rect x="122" y="735" width="4" height="35" fill="#d8edf8" stroke="none"/>
+        <line x1="122.7" y1="735" x2="122.7" y2="770" stroke="#4a8ab0" stroke-width="0.8"/>
+        <line x1="125.3" y1="735" x2="125.3" y2="770" stroke="#4a8ab0" stroke-width="0.8"/>
+        <line x1="122" y1="770" x2="126" y2="770" stroke="#2E4057" stroke-width="2"/>
+        <line x1="122" y1="735" x2="126" y2="735" stroke="#2E4057" stroke-width="2"/>
+        <!-- Solid pier x=126: between RAAM 2 and RAAM 3 (y=735..718) -->
+        <line x1="126" y1="735" x2="126" y2="718" stroke="#2E4057" stroke-width="2"/>
+        <!-- RAAM 3 — 1,89 m (y=684..718) — lower section x=126 -->
+        <rect x="122" y="684" width="4" height="34" fill="#d8edf8" stroke="none"/>
+        <line x1="122.7" y1="684" x2="122.7" y2="718" stroke="#4a8ab0" stroke-width="0.8"/>
+        <line x1="125.3" y1="684" x2="125.3" y2="718" stroke="#4a8ab0" stroke-width="0.8"/>
+        <line x1="122" y1="718" x2="126" y2="718" stroke="#2E4057" stroke-width="2"/>
+        <line x1="122" y1="684" x2="126" y2="684" stroke="#2E4057" stroke-width="2"/>
+        <!-- Solid wangmuur x=126: bottom of RAAM 3 to L-step (y=684..669) -->
+        <line x1="126" y1="684" x2="126" y2="669" stroke="#2E4057" stroke-width="2"/>
+        <!-- L-step horizontal y=669 -->
+        <line x1="119" y1="669" x2="126" y2="669" stroke="#2E4057" stroke-width="2"/>
+        <!-- Upper section solid wall x=119: L-step to achtergevel (y=669..614) — no windows -->
+        <line x1="119" y1="669" x2="119" y2="614" stroke="#2E4057" stroke-width="2"/>
+        <!-- Window labels — hidden at site-plan scale. -->
+        <g display="none">
+        <text x="129" y="801" font-size="3.5" fill="#3a7ab0" text-anchor="middle" transform="rotate(-90,129,801)">raam 1,50m</text>
+        <text x="129" y="752" font-size="3.5" fill="#3a7ab0" text-anchor="middle" transform="rotate(-90,129,752)">raam 1,94m</text>
+        <text x="129" y="701" font-size="3.5" fill="#3a7ab0" text-anchor="middle" transform="rotate(-90,129,701)">raam 1,89m</text>
+        </g>
+
+        <g id="planting-detail" display="none">
+        <!-- ══════════════════════════════════════════════════════
+             ZIJTUINPAD — MUURBED huiszijde (cottage)
+             3 bedden tegen rechter buitenmuur, 30 cm diep
+             Bed 1: Castello (y=832) → RAAM 2 onderkant (y=770)  — polygon met ondiepe nis onder RAAM 1 (verhoogde drempel)
+             Bed 2: pier RAAM 2 ↔ RAAM 3  (y=718..735)           — smalle accentbed 94 cm
+             Bed 3: RAAM 3 bovenkant (y=684) → terras (y=614)    — L-vorm over de muuropsprong y=669
+             ══════════════════════════════════════════════════════ -->
+
+        <!-- MUURBED 1 — Castello → RAAM 2 (y=770..832), 50cm = 9px -->
+        <rect x="126" y="770" width="9" height="62"
+          fill="#8a7a6a" stroke="#4a3a2a" stroke-width="0.8"/>
+        <rect x="127" y="771" width="7" height="60" fill="url(#flowerFill)" opacity="0.9"/>
+        <circle cx="128" cy="778" r="1.8" fill="#e8a0b8" opacity="0.9"/>
+        <circle cx="133" cy="785" r="1.5" fill="#f0c060" opacity="0.9"/>
+        <circle cx="129" cy="795" r="1.8" fill="#c8a0d0" opacity="0.9"/>
+        <circle cx="133" cy="805" r="1.5" fill="#a8c8f8" opacity="0.9"/>
+        <circle cx="128" cy="815" r="1.8" fill="#f08060" opacity="0.9"/>
+        <circle cx="133" cy="825" r="1.5" fill="#e8a0b8" opacity="0.9"/>
+        <text x="137" y="801" font-size="3" fill="#4a3a2a" text-anchor="middle"
+          transform="rotate(-90,137,801)">muurbed</text>
+
+        <!-- MUURBED 2 — pier RAAM 2 ↔ RAAM 3 (y=718..735, 94cm), 50cm = 9px -->
+        <rect x="126" y="718" width="9" height="17"
+          fill="#8a7a6a" stroke="#4a3a2a" stroke-width="0.8"/>
+        <rect x="127" y="719" width="7" height="15" fill="url(#flowerFill)" opacity="0.9"/>
+        <circle cx="129" cy="722" r="1.5" fill="#f08060" opacity="0.9"/>
+        <circle cx="133" cy="729" r="1.5" fill="#c8a0d0" opacity="0.9"/>
+
+        <!-- MUURBED 3 — RAAM 3 top → terras (y=614..684), outer edge x=135, 50cm = 9px -->
+        <!-- Lower 9px wide (x=126..135), upper 16px wide (x=119..135) -->
+        <polygon points="126,684 135,684 135,614 119,614 119,669 126,669"
+          fill="url(#flowerFill)" stroke="#4a3a2a" stroke-width="0.8"/>
+        <circle cx="121" cy="621" r="1.8" fill="#e8a0b8" opacity="0.9"/>
+        <circle cx="130" cy="625" r="1.5" fill="#f0c060" opacity="0.9"/>
+        <circle cx="122" cy="634" r="1.8" fill="#c8a0d0" opacity="0.9"/>
+        <circle cx="131" cy="641" r="1.5" fill="#a8c8f8" opacity="0.9"/>
+        <circle cx="121" cy="650" r="1.8" fill="#f08060" opacity="0.9"/>
+        <circle cx="130" cy="657" r="1.5" fill="#e8a0b8" opacity="0.9"/>
+        <circle cx="122" cy="666" r="1.8" fill="#f0c060" opacity="0.9"/>
+        <circle cx="130" cy="676" r="1.5" fill="#c8a0d0" opacity="0.9"/>
+        <text x="138" y="641" font-size="3" fill="#4a3a2a" text-anchor="middle"
+          transform="rotate(-90,138,641)">muurbed</text>
+
+        <!-- ── HEKBED huiszijde — alternerende chicane, hekzijde OZO ──
+             fence_x = 232 − (837−y) × 0.159  (loodrecht op perceelsgrens, −9°)
+             Bed breedte 50 cm = 9 px, zelfde breedte als muurbeds
+             HEKBED 1 — tegenover open zone RAAM 2 (y=735..770)
+               center y=752 → fence_x = 232 − 85×0.159 ≈ 219
+             HEKBED 2 — tegenover open zone RAAM 3 (y=684..718)
+               center y=701 → fence_x = 232 − 136×0.159 ≈ 210
+        -->
+        <!-- HEKBED 1 (y=735..770, 1,94 m) -->
+        <g transform="rotate(-9,219,752)">
+          <rect x="210" y="735" width="9" height="35"
+            fill="url(#flowerFill)" stroke="#4a3a2a" stroke-width="0.8"/>
+          <circle cx="212" cy="742" r="1.8" fill="#e8a0b8" opacity="0.9"/>
+          <circle cx="217" cy="749" r="1.5" fill="#f0c060" opacity="0.9"/>
+          <circle cx="212" cy="758" r="1.8" fill="#c8a0d0" opacity="0.9"/>
+          <circle cx="217" cy="766" r="1.5" fill="#a8c8f8" opacity="0.9"/>
+          <text x="207" y="752" font-size="3" fill="#4a3a2a" text-anchor="middle"
+            transform="rotate(0,207,752)">hekbed</text>
+        </g>
+
+        <!-- HEKBED 2 (y=684..718, 1,89 m) -->
+        <g transform="rotate(-9,210,701)">
+          <rect x="201" y="684" width="9" height="34"
+            fill="url(#flowerFill)" stroke="#4a3a2a" stroke-width="0.8"/>
+          <circle cx="203" cy="691" r="1.8" fill="#f08060" opacity="0.9"/>
+          <circle cx="208" cy="698" r="1.5" fill="#e8a0b8" opacity="0.9"/>
+          <circle cx="203" cy="707" r="1.8" fill="#f0c060" opacity="0.9"/>
+          <circle cx="208" cy="714" r="1.5" fill="#c8a0d0" opacity="0.9"/>
+          <text x="198" y="701" font-size="3" fill="#4a3a2a" text-anchor="middle"
+            transform="rotate(0,198,701)">hekbed</text>
+        </g>
+        </g>
+
+        <!-- ── NNO ACHTERGEVEL — y=614, outer face; inner face y=618
+             Faces terras/tuin — large schuifraam terras per PID:
+               Solid  x=0..18   (18px = 1,00 m)
+               Schuifraam x=18..109  (91px = 5,06 m)  — 3 panels
+               Solid  x=109..119 (10px = 0,56 m)
+        -->
+        <!-- Solid: x=0..18 -->
+        <line x1="0" y1="614" x2="18" y2="614" stroke="#2E4057" stroke-width="2"/>
+        <!-- Schuifraam 5,06 m (x=18..109) -->
+        <rect x="18" y="614" width="91" height="4" fill="#d8edf8" stroke="none"/>
+        <line x1="18" y1="615.3" x2="109" y2="615.3" stroke="#4a8ab0" stroke-width="0.7"/>
+        <line x1="18" y1="616.7" x2="109" y2="616.7" stroke="#4a8ab0" stroke-width="0.7"/>
+        <!-- 3 panel dividers -->
+        <line x1="48.3" y1="614" x2="48.3" y2="618" stroke="white" stroke-width="1.5"/>
+        <line x1="78.7" y1="614" x2="78.7" y2="618" stroke="white" stroke-width="1.5"/>
+        <!-- Jambs -->
+        <line x1="18" y1="614" x2="18" y2="618" stroke="#2E4057" stroke-width="2"/>
+        <line x1="109" y1="614" x2="109" y2="618" stroke="#2E4057" stroke-width="2"/>
+        <!-- Solid: x=109..119 -->
+        <line x1="109" y1="614" x2="119" y2="614" stroke="#2E4057" stroke-width="2"/>
+        <!-- Opening label retained in source but hidden at site-plan scale. -->
+        <text x="63" y="612" font-size="3.5" fill="#3a7ab0" text-anchor="middle" display="none">schuifraam 5,06 m</text>
+        </g>
+
+        <!-- One continuous wall ring. Window polygons span outer-to-inner wall faces. -->
+        <g id="clean-house-envelope">
+          <path id="house-outer-face"
+            d="M0,884 L91,884 L91,856 L126,856 L126,669 L118.8,669 L118.8,614 L0,614 Z"
+            fill="#d5d7da" stroke="#1a1a2e" stroke-width="1.2" stroke-linejoin="round" />
+          <path id="house-inner-face"
+            d="M4,880 L87,880 L87,852 L122,852 L122,673 L114.8,673 L114.8,618 L4,618 Z"
+            fill="#f0ece4" stroke="#1a1a2e" stroke-width="0.8" stroke-linejoin="round" />
+
+          <g id="pid-window-openings" fill="#d8edf8" stroke="#1a1a2e" stroke-width="1" stroke-linejoin="round">
+            <!-- Front: PID 90/215 and 50/215. -->
+            <rect x="16" y="880" width="16.2" height="4" />
+            <rect x="71" y="880" width="9" height="4" />
+
+            <!-- Right façade: PID 140/140 and two 180/215 openings. -->
+            <rect x="122" y="787.9" width="4" height="25.2" />
+            <rect x="122" y="736.3" width="4" height="32.4" />
+            <rect x="122" y="684.8" width="4" height="32.4" />
+
+            <!-- Rear: PID 500/215 slider. -->
+            <rect x="18" y="614" width="90" height="4" />
+          </g>
+          <g stroke="#1a1a2e" stroke-width="0.65">
+            <line x1="48" y1="614" x2="48" y2="618" />
+            <line x1="78" y1="614" x2="78" y2="618" />
+          </g>
+        </g>
+
+        <!-- House label -->
+        <text x="61" y="746" font-size="9" fill="#2E4057" text-anchor="middle" font-weight="700">WONING</text>
+        <text x="61" y="757" font-size="3.8" fill="#7a8a9a" text-anchor="middle">7,00 × 15,00 m</text>
+        <!-- Dimension: voorgevel breedte 7,00 m (PID 700) -->
+        <line x1="0" y1="884" x2="0" y2="897" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="126" y1="884" x2="126" y2="897" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="0" y1="892" x2="126" y2="892" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="40" y="888" width="46" height="8" fill="#faf8f4" opacity="0.9" />
+        <text x="63" y="896" font-size="5.5" fill="#2E4057" text-anchor="middle" font-weight="700">7,00 m</text>
+        </g>
+
+
+        <!-- ══════════════════════════════════════════════════════
+             TERRAS — behind house achtergevel (left side only)
+             4,00 m deep: y=542 to y=614
+             ══════════════════════════════════════════════════════ -->
+        <g id="cadgis-terrace" transform="translate(0 -77.95)">
+        <rect x="0" y="542" width="118.8" height="72" fill="url(#pavingFill)" stroke="#c8c0b4" stroke-width="1" />
+        <text x="60" y="581" font-size="8" fill="#2E4057" text-anchor="middle" font-weight="700">TERRAS</text>
+        <!-- Dimension: terras diepte 4,00 m (achtergevel → ZZW-kant, PID 400) -->
+        <line x1="119" y1="542" x2="132" y2="542" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="119" y1="614" x2="132" y2="614" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="126" y1="542" x2="126" y2="614" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="133" y="578" font-size="5" fill="#7a8a9a" text-anchor="start">4,00 m</text>
+        <!-- Dimension: terras breedte 6,60 m -->
+        <line x1="0" y1="542" x2="0" y2="556" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="119" y1="542" x2="119" y2="556" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="0" y1="549" x2="119" y2="549" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="35" y="544" width="50" height="10" fill="#faf8f4" opacity="0.9" />
+        <text x="60" y="552" font-size="5" fill="#7a8a9a" text-anchor="middle">6,60 m</text>
+
+        </g>
+
+        <!-- Hybrid pool connection: timber landing through the full slider, then stepping stones. -->
+        <g id="hybrid-pool-path" aria-label="Houten landing en stapstenen naar het terras">
+          <title>Houten landing 7,01 m² tot einde gevelbeglazing; drie organisch afgeronde stapstenen</title>
+          <polygon
+            points="75.600000,268.054828 81.983307,267.181065 88.140266,312.157535 101.115776,406.943531 75.600000,410.436454 75.600000,313.874205"
+            fill="url(#deckFill)" stroke="#6f4729" stroke-width="0.9" stroke-linejoin="round" />
+          <line x1="81.983307" y1="267.181065" x2="101.115776" y2="406.943531"
+            stroke="#262d30" stroke-width="1.6" stroke-linecap="round" />
+          <g id="terrace-stepping-stones" fill="#aeb7b9" stroke="#66767c" stroke-width="0.7">
+            <path d="M0,-6.3 C3.1,-6.5 4.8,-3.1 4.5,0.2 C4.4,3.6 2.4,6.4 -0.4,6.2 C-3.4,6.4 -4.7,3.1 -4.5,-0.2 C-4.7,-3.5 -2.7,-6.2 0,-6.3 Z" transform="translate(91.8 420.5) rotate(-18)" />
+            <path d="M0,-6.3 C3.1,-6.5 4.8,-3.1 4.5,0.2 C4.4,3.6 2.4,6.4 -0.4,6.2 C-3.4,6.4 -4.7,3.1 -4.5,-0.2 C-4.7,-3.5 -2.7,-6.2 0,-6.3 Z" transform="translate(99.1 438.3) rotate(-10)" />
+            <path d="M0,-6.3 C3.1,-6.5 4.8,-3.1 4.5,0.2 C4.4,3.6 2.4,6.4 -0.4,6.2 C-3.4,6.4 -4.7,3.1 -4.5,-0.2 C-4.7,-3.5 -2.7,-6.2 0,-6.3 Z" transform="translate(103.0 456.2) rotate(-4)" />
+          </g>
+        </g>
+
+        <!-- LPW City+: boundary-to-shell 1,00 m, including the final 20 cm blue-stone edge. -->
+        <g id="city-plus-pool" aria-label="LPW City+ zwembad" transform="translate(0 0.873828045)">
+          <title>LPW City+ zwembad met 20 cm blauwe steen; 4,85 cm verschoven naar de woning</title>
+          <rect id="city-plus-blue-stone" x="14.4" y="267.181" width="61.2" height="138.6"
+            fill="#788890" stroke="#1a1a2e" stroke-width="0.9" />
+          <rect id="city-plus-shell" x="18" y="270.781" width="54" height="131.4"
+            fill="#b8ddec" stroke="#2E4057" stroke-width="0.9" />
+          <text x="45" y="329.781" font-size="7" fill="#1a1a2e" text-anchor="middle" font-weight="700">LPW CITY+</text>
+          <text x="45" y="340.781" font-size="4" fill="#2E4057" text-anchor="middle">7,30 × 3,00 m</text>
+          <text x="45" y="349.781" font-size="3.2" fill="#2E4057" text-anchor="middle">blauwe steen 20 cm</text>
+
+          <line x1="0" y1="256.781" x2="0" y2="267.181" stroke="#8a9aaa" stroke-width="0.5" />
+          <line x1="18" y1="256.781" x2="18" y2="270.781" stroke="#8a9aaa" stroke-width="0.5" />
+          <line x1="0" y1="261.281" x2="18" y2="261.281" stroke="#8a9aaa" stroke-width="0.6"
+            marker-start="url(#arrR)" marker-end="url(#arr)" />
+          <text x="9" y="258.781" font-size="3.2" fill="#7a8a9a" text-anchor="middle" font-weight="700">1,00 m</text>
+          <text x="9" y="254.781" font-size="2.2" fill="#7a8a9a" text-anchor="middle">incl. blauwe steen</text>
+        </g>
+
+        <g id="rainwater-tank" aria-label="Regenwaterput 7500 liter">
+          <title>Regenwaterput 7500 L, diameter 2,70 m</title>
+          <circle cx="68.4" cy="438.13" r="24.3" fill="#d8e5e9" fill-opacity="0.65"
+            stroke="#6f7f89" stroke-width="0.9" stroke-dasharray="3,2" />
+          <circle cx="68.4" cy="438.13" r="5.4" fill="#c1ced3" stroke="#6f7f89" stroke-width="0.7" />
+          <text x="68.4" y="425" font-size="3.8" fill="#2E4057" text-anchor="middle" font-weight="700">RW-PUT</text>
+          <text x="68.4" y="430" font-size="3.2" fill="#2E4057" text-anchor="middle">7500 L</text>
+          <text x="68.4" y="457" font-size="3.2" fill="#7a8a9a" text-anchor="middle">Ø 2,70 m</text>
+
+          <line x1="35" y1="406.654828045" x2="44" y2="406.654828045" stroke="#8a9aaa" stroke-width="0.5" />
+          <line x1="35" y1="413.83" x2="44" y2="413.83" stroke="#8a9aaa" stroke-width="0.5" />
+          <line x1="38" y1="406.654828045" x2="38" y2="413.83" stroke="#8a9aaa" stroke-width="0.8" />
+          <text x="35" y="411" font-size="3.4" fill="#7a8a9a" text-anchor="end">0,40 m</text>
+        </g>
+
+        <!-- ══════════════════════════════════════════════════════
+               VOORGESTELDE TUINSTUDIO — 4,00 x 10,00 m (niet geregistreerd in CadGIS)
+               OZO edge follows CadGIS chain at -7,794923°.
+               WNW front corner is 5,00 m behind the registered house rear.
+               Google satellite visual check 05-08-2026: visible slab matches
+               the four transformed corners; imagery acquisition date unavailable.
+             ══════════════════════════════════════════════════════ -->
+             <g id="cadgis-studio-proposal" transform="translate(-0.681983 -86.584135) rotate(-7.794923, 154, 344)">
+          <!-- Concrete foundation slab -->
+          <!-- rect right edge (x=154) lands on perceelsgrens at y=344 (NNO face) -->
+          <!-- After rotation ZZW-right corner lands at boundary at y≈522 ✓ -->
+          <rect x="82" y="344" width="72" height="180" fill="#e4e0d8" stroke="none" />
+          <g id="studio-boundary" fill="none" stroke="#c0392b" stroke-width="0.8" stroke-dasharray="4,3">
+            <line x1="82" y1="344" x2="154" y2="344" />
+            <line x1="82" y1="524" x2="86.32" y2="524" />
+            <line x1="102.64" y1="524" x2="154" y2="524" />
+            <line x1="82" y1="344" x2="82" y2="395.12" />
+            <line x1="82" y1="458.24" x2="82" y2="461.84" />
+            <line x1="82" y1="485.36" x2="82" y2="524" />
+            <line x1="154" y1="344" x2="154" y2="403.28" />
+            <line x1="154" y1="475.28" x2="154" y2="494.72" />
+            <line x1="154" y1="516.32" x2="154" y2="524" />
+          </g>
+          <g id="studio-site-plan" clip-path="url(#studioSiteClip)" aria-label="Vereenvoudigd grondplan tuinstudio">
+            <title>Kamers, deuren en raamopeningen uit tuinstudio.html</title>
+
+            <g id="studio-room-partitions" fill="none" stroke="#82909d" stroke-width="0.7" stroke-dasharray="3,2">
+              <line x1="86.32" y1="486.32" x2="115.24" y2="486.32" />
+              <line x1="129.64" y1="486.32" x2="149.68" y2="486.32" />
+              <line x1="114.28" y1="487.28" x2="114.28" y2="519.68" />
+            </g>
+
+            <g id="studio-window-openings" fill="none" stroke="#3a7ab0" stroke-width="1.4"
+              stroke-dasharray="2.4,1.6" stroke-linecap="round">
+              <line x1="86.32" y1="391.28" x2="149.68" y2="391.28" />
+              <line x1="82" y1="395.12" x2="82" y2="458.24" />
+              <line x1="82" y1="461.84" x2="82" y2="485.36" />
+              <line x1="154" y1="403.28" x2="154" y2="475.28" />
+              <line x1="154" y1="494.72" x2="154" y2="516.32" />
+            </g>
+
+            <g id="studio-bathroom-fixtures" fill="none" stroke="#7a8a9a" stroke-width="0.55"
+              stroke-dasharray="1.8,1.3" opacity="0.82">
+              <title>Badkamermeubilair uit tuinstudio.html</title>
+
+              <!-- Douche 0,80 × 1,00 m, -90 graden gedraaid. -->
+              <rect x="131.68" y="487.28" width="18" height="14.4" rx="0.5" />
+              <line x1="131.68" y1="487.28" x2="149.68" y2="501.68" />
+              <line x1="149.68" y1="487.28" x2="131.68" y2="501.68" />
+              <circle cx="140.68" cy="494.48" r="2.64" />
+              <!-- 20cm halfhoge wand met glas erboven; wastafel sluit erop aan. -->
+              <rect x="131.68" y="501.68" width="18" height="3.6" rx="0.3" />
+              <line x1="131.68" y1="503.48" x2="149.68" y2="503.48"
+                stroke="#4a8ab0" stroke-width="0.8" stroke-dasharray="none" />
+
+              <!-- Hangtoilet. -->
+              <rect x="115.24" y="508.88" width="9" height="7.2" rx="1.2" />
+              <ellipse cx="120.16" cy="512.48" rx="3.12" ry="2.64" />
+
+              <!-- Wastafelmeubel 0,80 × 0,45 m tegen NNO-wand. -->
+              <rect x="141.58" y="505.28" width="8.1" height="14.4" rx="0.5" />
+              <ellipse cx="145.63" cy="512.48" rx="2.4" ry="3.36" />
+              <path d="M140,484.5 L140,489" />
+            </g>
+
+            <g text-anchor="middle">
+              <g fill="#2E4057">
+                <text x="118" y="354" font-size="3.8" font-weight="700">PERGOLA</text>
+                <text x="118" y="361" font-size="2.1">2,27 × 3,52 m · 7,98 m²</text>
+
+                <text x="118" y="433" font-size="3.8" font-weight="700">LOUNGE / KANTOOR</text>
+                <text x="118" y="440" font-size="2.3">4,70 × 3,52 m netto</text>
+                <text x="118" y="446" font-size="2.5" font-weight="700">16,54 m²</text>
+
+                <text x="140" y="474" font-size="2.8" font-weight="700">BADKAMER</text>
+                <text x="140" y="479" font-size="1.9">1,80 × 1,91 m</text>
+                <text x="140" y="484" font-size="2.2" font-weight="700">3,44 m²</text>
+
+                <text x="99.82" y="497" font-size="2.8" font-weight="700">BERGING</text>
+                <text x="99.82" y="503" font-size="1.9">1,80 × 1,50 m</text>
+                <text x="99.82" y="509" font-size="2.2" font-weight="700">2,70 m²</text>
+              </g>
+            </g>
+          </g>
+
+          <g id="studio-door-openings" fill="none" stroke="#4A7C59" stroke-width="0.8" stroke-linecap="round">
+            <title>Deuren uit tuinstudio.html</title>
+
+            <!-- Berging: buitendeur 0,90 m. -->
+            <line x1="86.32" y1="524" x2="86.32" y2="540.32" />
+            <path d="M102.64,524 A16.32,16.32 0 0 1 86.32,540.32" stroke-dasharray="2,1.5" />
+
+            <!-- Badkamer naar kantoor: binnendeur 0,80 m. -->
+            <line x1="115.24" y1="486.32" x2="115.24" y2="471.92" />
+            <path d="M129.64,486.32 A14.4,14.4 0 0 0 115.24,471.92" stroke-dasharray="2,1.5" />
+          </g>
+
+          <!-- Extracted from grondplan_v8 (scaled to 1:200) -->
+          <g transform="translate(154, 344) scale(0.24) rotate(90)" display="none">
+
+      <svg viewBox="90 75 750 300" width="750" height="300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="wallFill" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="7" height="7" fill="#dce3ea" />
+            <line x1="0" y1="0" x2="0" y2="7" stroke="#2E4057" stroke-width="1.8" />
+          </pattern>
+          <pattern id="pergolaFill" width="20" height="20" patternUnits="userSpaceOnUse">
+            <rect width="20" height="20" fill="#faf7f0" />
+            <line x1="0" y1="0" x2="20" y2="0" stroke="#c8b89a" stroke-width="0.7" stroke-dasharray="5,15" />
+            <line x1="0" y1="0" x2="0" y2="20" stroke="#c8b89a" stroke-width="0.7" stroke-dasharray="5,15" />
+          </pattern>
+          <pattern id="cupboardFill" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(30)">
+            <rect width="8" height="8" fill="#eae6de" />
+            <line x1="0" y1="0" x2="8" y2="0" stroke="#bbb5a8" stroke-width="0.6" />
+          </pattern>
+          <pattern id="tileFill" width="14" height="14" patternUnits="userSpaceOnUse">
+            <rect width="14" height="14" fill="#eeece8" />
+            <line x1="0" y1="0" x2="14" y2="0" stroke="#d4d0c8" stroke-width="0.5" />
+            <line x1="0" y1="0" x2="0" y2="14" stroke="#d4d0c8" stroke-width="0.5" />
+          </pattern>
+          <marker id="arr" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto">
+            <path d="M0,0 L5,2.5 L0,5 Z" fill="#8a9aaa" />
+          </marker>
+          <marker id="arrR" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto-start-reverse">
+            <path d="M0,0 L5,2.5 L0,5 Z" fill="#8a9aaa" />
+          </marker>
+          <marker id="arrG" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto">
+            <path d="M0,0 L5,2.5 L0,5 Z" fill="#4A7C59" />
+          </marker>
+          <marker id="arrGR" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto-start-reverse">
+            <path d="M0,0 L5,2.5 L0,5 Z" fill="#4A7C59" />
+          </marker>
+          <marker id="arrRed" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto">
+            <path d="M0,0 L5,2.5 L0,5 Z" fill="#c0392b" />
+          </marker>
+          <marker id="arrRedR" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto-start-reverse">
+            <path d="M0,0 L5,2.5 L0,5 Z" fill="#c0392b" />
+          </marker>
+        </defs>
+
+        <!-- ══════════════════════════════════════════════════════
+             COMPASS (true north, rotated 330° CW — matches PID orientation)
+             ══════════════════════════════════════════════════════ -->
+        <g transform="translate(20,420)">
+          <circle cx="0" cy="0" r="22" fill="none" stroke="#c8d0dc" stroke-width="1" />
+          <g transform="rotate(330)">
+            <polygon points="0,-18 -5,-5 0,-10 5,-5" fill="#2E4057" />
+            <polygon points="0,18 -5,5 0,10 5,5" fill="#c8d0dc" />
+          </g>
+          <text x="12" y="27" font-size="10" fill="#2E4057" text-anchor="middle" font-weight="700">N</text>
+        </g>
+
+        <!-- ══════════════════════════════════════════════════════
+             ZZW (BOTTOM) WALL — v8: vast raam 1,30m + kolom 0,20m + schuifraam 3,50m (open corner)
+             ══════════════════════════════════════════════════════ -->
+        <!-- Bath south solid masonry: x=679..840 (2,15 m) -->
+        <rect x="679" y="357" width="161" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+
+        <!-- Vast raam (fixed glazing) 1,30 m: x=581..679 (98px) -->
+        <rect x="581" y="357" width="98" height="18" fill="#a8c5d8" stroke="#2E4057" stroke-width="1.5" />
+        <!-- Fixed glazing cross marks -->
+        <line x1="679" y1="375" x2="581" y2="357" stroke="#2E4057" stroke-width="0.5" opacity="0.4" />
+        <line x1="679" y1="357" x2="581" y2="375" stroke="#2E4057" stroke-width="0.5" opacity="0.4" />
+
+        <!-- Structural column 0,20 m: x=566..581 (15px) -->
+        <rect x="566" y="357" width="15" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+
+        <!-- Schuifraam 3,50 m: x=303..566 (263px) — entrance, open corner -->
+        <rect x="303" y="357" width="263" height="18" fill="#a8c5d8" stroke="#2E4057" stroke-width="2" />
+        <!-- Panel dividers (3 panels ≈ 1,17m each) -->
+        <line x1="478" y1="375" x2="478" y2="357" stroke="white" stroke-width="1.5" />
+        <line x1="391" y1="375" x2="391" y2="357" stroke="white" stroke-width="1.5" />
+
+        <!-- Corner piece masonry: x=278..303 (25px = 0,33 m) — open corner column -->
+        <rect x="278" y="357" width="25" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+
+        <!-- INGANG arrow (centered on schuifraam) -->
+        <line x1="434" y1="455" x2="434" y2="366" stroke="#4A7C59" stroke-width="2" marker-end="url(#arrG)" />
+        <text x="434" y="472" font-size="8" fill="#4A7C59" text-anchor="middle" font-weight="700">INGANG</text>
+        <text x="434" y="462" font-size="7" fill="#4A7C59" text-anchor="middle">schuifraam 3,50 m</text>
+
+        <!-- Pergola south — open (dashed, WNW side) -->
+        <line x1="278" y1="366" x2="90" y2="366" stroke="#4A7C59" stroke-width="1.2" stroke-dasharray="6,4" />
+        <text x="184" y="378" font-size="7" fill="#4A7C59" text-anchor="middle" font-style="italic">open (ZZW)</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             OZO (RIGHT) WALL
+             ══════════════════════════════════════════════════════ -->
+        <rect x="822" y="357" width="18" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <!-- Berging door opening 0,90 m: y=289..357 (68px) -->
+        <rect x="822" y="289" width="18" height="68" fill="#faf8f4" stroke="none" />
+        <line x1="840" y1="357" x2="822" y2="357" stroke="#2E4057" stroke-width="1.2" />
+        <line x1="840" y1="289" x2="822" y2="289" stroke="#2E4057" stroke-width="1.2" />
+        <!-- Solid masonry: y=153..289 (1,81 m) -->
+        <rect x="822" y="153" width="18" height="136" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <!-- Badkamer door opening 0,80 m: y=93..153 (60px) -->
+        <rect x="822" y="93" width="18" height="60" fill="#faf8f4" stroke="none" />
+        <line x1="840" y1="153" x2="822" y2="153" stroke="#2E4057" stroke-width="1.2" />
+        <line x1="840" y1="93" x2="822" y2="93" stroke="#2E4057" stroke-width="1.2" />
+        <!-- SW corner -->
+        <rect x="822" y="75" width="18" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+
+        <!-- ══════════════════════════════════════════════════════
+             NNO (TOP) WALL
+             ══════════════════════════════════════════════════════ -->
+        <!-- Pier W: x=90..122 (0,43 m) -->
+        <rect x="808" y="75" width="32" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <!-- Bath kipraam 1,20 m: x=718..808 (90px) -->
+        <rect x="718" y="75" width="90" height="18" fill="#a8c5d8" stroke="#2E4057" stroke-width="1.5" />
+        <line x1="778" y1="93" x2="778" y2="75" stroke="white" stroke-width="1" />
+        <line x1="748" y1="93" x2="748" y2="75" stroke="white" stroke-width="1" />
+        <!-- Pier: x=637..718 (1,08 m) -->
+        <rect x="637" y="75" width="81" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <!-- Kantoor+lounge raam 4,00 m: x=337..637 (300px) -->
+        <rect x="337" y="75" width="300" height="18" fill="#a8c5d8" stroke="#2E4057" stroke-width="1.5" />
+        <line x1="562" y1="93" x2="562" y2="75" stroke="white" stroke-width="1" />
+        <line x1="487" y1="93" x2="487" y2="75" stroke="white" stroke-width="1" />
+        <line x1="412" y1="93" x2="412" y2="75" stroke="white" stroke-width="1" />
+        <!-- Pier E (WNW side): x=278..337 (0,79 m) -->
+        <rect x="278" y="75" width="59" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <!-- Pergola north solid masonry: x=90..278 -->
+        <rect x="90" y="75" width="188" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+
+        <!-- ══════════════════════════════════════════════════════
+             LOUNGE/PERGOLA WEST WALL (WNW) — schuifraam 3,50 m full height
+             ══════════════════════════════════════════════════════ -->
+        <rect x="278" y="93" width="18" height="264" fill="#a8c5d8" stroke="#2E4057" stroke-width="2" />
+        <line x1="296" y1="291" x2="278" y2="291" stroke="white" stroke-width="1.5" />
+        <line x1="296" y1="225" x2="278" y2="225" stroke="white" stroke-width="1.5" />
+        <line x1="296" y1="159" x2="278" y2="159" stroke="white" stroke-width="1.5" />
+        <text x="287" y="223" font-size="6" fill="#2E4057" text-anchor="middle"
+          transform="rotate(-90,287,223)">schuifraam 3,50 m</text>
+
+        <!-- Pergola east — open (dashed) -->
+        <line x1="99" y1="357" x2="99" y2="93" stroke="#4A7C59" stroke-width="1.2" stroke-dasharray="6,4" />
+        <text x="80" y="225" font-size="7" fill="#4A7C59" text-anchor="middle" transform="rotate(-90,80,225)"
+          font-style="italic">open (WNW)</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             BATH / KANTOOR PARTITION  (0,10 m)
+             Door gap y=176..236 (0,80 m)
+             ══════════════════════════════════════════════════════ -->
+        <rect x="679" y="274" width="8" height="101" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
+        <rect x="679" y="75" width="8" height="139" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
+
+        <!-- ══════════════════════════════════════════════════════
+             HAARD — Element4 Sky L Tunnel (0,40 m schouw)
+             ══════════════════════════════════════════════════════ -->
+        <!-- North cap masonry -->
+        <rect x="499" y="263" width="30" height="11" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <!-- Haard unit housing -->
+        <rect x="498" y="187" width="32" height="76" fill="#fff0ee" stroke="#c0392b" stroke-width="2" />
+        <!-- Firebox opening -->
+        <rect x="499" y="198" width="30" height="54" fill="#ffe8e4" stroke="#c0392b" stroke-width="1" />
+        <text x="514" y="237" font-size="7" fill="#c0392b" text-anchor="middle">HAARD</text>
+        <text x="514" y="227" font-size="5.5" fill="#c0392b" text-anchor="middle">Element4</text>
+        <text x="514" y="218" font-size="5.5" fill="#c0392b" text-anchor="middle">Sky L-T</text>
+        <path d="M514,201 Q518,207 514,213 Q512,207 509,213 Q506,207 508,203 Q511,207 514,201Z" fill="#c0392b"
+          opacity="0.55" />
+        <!-- South cap masonry -->
+        <rect x="499" y="176" width="30" height="11" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+
+        <!-- ══════════════════════════════════════════════════════
+             BERGING INTERIOR  (1,80 x 1,00 m = 1,80 m²)
+             ══════════════════════════════════════════════════════ -->
+        <!-- Floor fill -->
+        <rect x="687" y="282" width="135" height="75" fill="url(#cupboardFill)" />
+        <!-- Berging/badkamer partition (0,10 m) -->
+        <rect x="687" y="274" width="135" height="8" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
+        <!-- Door swing (0,90 m, outward west) -->
+        <line x1="840" y1="357" x2="840" y2="289" stroke="#2E4057" stroke-width="1.2" />
+        <line x1="840" y1="357" x2="908" y2="357" stroke="#2E4057" stroke-width="1.2" />
+        <path d="M840,289 A68 68 0 0 1 908,357" fill="none" stroke="#8a9aaa" stroke-width="0.9" stroke-dasharray="4,3" />
+        <!-- Label -->
+        <text x="754" y="324" font-size="8" fill="#2E4057" text-anchor="middle" font-weight="700">BERGING</text>
+        <text x="754" y="313" font-size="6" fill="#7a8a9a" text-anchor="middle">1,80 x 1,00 m (1,80 m&#178;)</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             BADKAMER INTERIOR  (1,80 x 2,41 m = 4,34 m²)
+             ══════════════════════════════════════════════════════ -->
+        <!-- Floor fill -->
+        <rect x="687" y="93" width="135" height="181" fill="#f8f6f2" />
+
+        <!-- Door swing (0,80 m, outward west) -->
+        <line x1="840" y1="93" x2="840" y2="153" stroke="#2E4057" stroke-width="1.2" />
+        <line x1="840" y1="93" x2="900" y2="93" stroke="#2E4057" stroke-width="1.2" />
+        <path d="M840,153 A60 60 0 0 0 900,93" fill="none" stroke="#8a9aaa" stroke-width="0.9"
+          stroke-dasharray="4,3" />
+
+        <!-- Wastafelmeubel: Balmani Moon 100x55cm -->
+        <rect x="781" y="199" width="41" height="75" rx="2" fill="#e4ddd4" stroke="#8a9aaa" stroke-width="1.2" />
+        <line x1="801" y1="274" x2="801" y2="199" stroke="#c8bfb0" stroke-width="0.5" />
+        <!-- Waskom Ø38cm -->
+        <circle cx="800" cy="237" r="14" fill="none" stroke="#8a7a6a" stroke-width="1.2" />
+        <circle cx="800" cy="237" r="3" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
+        <!-- Kraan -->
+        <circle cx="791" cy="237" r="2" fill="#c8b89a" stroke="#8a7a6a" stroke-width="0.6" />
+        <!-- Warm + koud water wastafel -->
+        <circle cx="818" cy="243" r="3" fill="none" stroke="#c0392b" stroke-width="0.8" />
+        <text x="818" y="242" font-size="3.5" fill="#c0392b" text-anchor="middle">W</text>
+        <circle cx="818" cy="231" r="3" fill="none" stroke="#2980b9" stroke-width="0.8" />
+        <text x="818" y="230" font-size="3.5" fill="#2980b9" text-anchor="middle">K</text>
+        <!-- Afvoer wastafel -->
+        <circle cx="795" cy="197" r="3.5" fill="none" stroke="#7a8a9a" stroke-width="0.8" />
+        <text x="795" y="195" font-size="4" fill="#7a8a9a" text-anchor="middle">↓</text>
+        <text x="786" y="194" font-size="3.5" fill="#7a8a9a" text-anchor="end">afv.</text>
+
+        <!-- Hangtoilet: Linie Waldo -->
+        <rect x="687" y="168" width="8" height="32" fill="#e8e2d8" stroke="#8a9aaa" stroke-width="0.8" />
+        <rect x="687" y="170" width="40" height="27" rx="3" fill="none" stroke="#8a9aaa" stroke-width="1" />
+        <ellipse cx="710" cy="183" rx="14" ry="11" fill="none" stroke="#8a9aaa" stroke-width="1" />
+        <rect x="694" y="176" width="3" height="14" rx="1" fill="#c8b89a" stroke="#8a7a6a" stroke-width="0.5" />
+        <!-- Koud water toilet -->
+        <circle cx="689" cy="190" r="3" fill="none" stroke="#2980b9" stroke-width="0.8" />
+        <text x="689" y="189" font-size="3.5" fill="#2980b9" text-anchor="middle">K</text>
+        <!-- Afvoer toilet -->
+        <circle cx="689" cy="178" r="3.5" fill="none" stroke="#7a8a9a" stroke-width="0.8" />
+        <text x="689" y="176" font-size="4" fill="#7a8a9a" text-anchor="middle">↓</text>
+
+        <!-- Halve-hoogte wand 1,20 m -->
+        <rect x="687" y="153" width="75" height="8" fill="none" stroke="#2E4057" stroke-width="1.2"
+          stroke-dasharray="6,3" />
+        <text x="724" y="164" font-size="5" fill="#8a9aaa" text-anchor="middle">halve-hoogte wand 1,20 m</text>
+
+        <!-- Douchebak: Linie Rumba 100x80cm -->
+        <rect x="687" y="93" width="75" height="60" fill="url(#tileFill)" stroke="#2E4057" stroke-width="1.2" />
+        <!-- Hoofddouche Ø30cm -->
+        <circle cx="724" cy="130" r="11" fill="none" stroke="#c8b89a" stroke-width="1" stroke-dasharray="2,2" />
+        <circle cx="724" cy="130" r="2" fill="#c8b89a" />
+        <text x="724" y="146" font-size="5" fill="#7a8a9a" text-anchor="middle">douche 100x80</text>
+        <!-- Warm + koud water douche -->
+        <circle cx="689" cy="140" r="3" fill="none" stroke="#c0392b" stroke-width="0.8" />
+        <text x="689" y="139" font-size="3.5" fill="#c0392b" text-anchor="middle">W</text>
+        <circle cx="689" cy="128" r="3" fill="none" stroke="#2980b9" stroke-width="0.8" />
+        <text x="689" y="127" font-size="3.5" fill="#2980b9" text-anchor="middle">K</text>
+        <!-- Afvoer douche -->
+        <circle cx="724" cy="105" r="3.5" fill="none" stroke="#7a8a9a" stroke-width="0.8" />
+        <text x="724" y="102" font-size="4" fill="#7a8a9a" text-anchor="middle">↓</text>
+
+        <!-- Room label -->
+        <text x="765" y="183" font-size="8" fill="#2E4057" text-anchor="middle" font-weight="700">BADKAMER</text>
+        <text x="765" y="174" font-size="5.5" fill="#7a8a9a" text-anchor="middle">1,80 x 2,41 m</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             LIGHT FIXTURES
+             ══════════════════════════════════════════════════════ -->
+
+        <!-- L01: Berging plafondlamp -->
+        <circle cx="754" cy="320" r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
+        <line x1="758" y1="320" x2="750" y2="320" stroke="#d4a017" stroke-width="0.6" />
+        <line x1="754" y1="324" x2="754" y2="316" stroke="#d4a017" stroke-width="0.6" />
+        <text x="754" y="310" font-size="4" fill="#d4a017" text-anchor="middle">L01</text>
+
+        <!-- L02: Badkamer spot -->
+        <circle cx="754" cy="213" r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
+        <line x1="758" y1="213" x2="750" y2="213" stroke="#d4a017" stroke-width="0.6" />
+        <line x1="754" y1="217" x2="754" y2="209" stroke="#d4a017" stroke-width="0.6" />
+        <text x="754" y="203" font-size="4" fill="#d4a017" text-anchor="middle">L02</text>
+
+        <!-- L03: Badkamer spot douche -->
+        <circle cx="724" cy="123" r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
+        <line x1="728" y1="123" x2="720" y2="123" stroke="#d4a017" stroke-width="0.6" />
+        <line x1="724" y1="127" x2="724" y2="119" stroke="#d4a017" stroke-width="0.6" />
+        <text x="724" y="113" font-size="4" fill="#d4a017" text-anchor="middle">L03</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             KANTOOR INTERIOR  (2,00 x 3,52 m = 7,04 m²)
+             ══════════════════════════════════════════════════════ -->
+        <rect x="529" y="93" width="150" height="264" fill="#f8f7f3" />
+
+        <!-- Badkamer/kantoor door (0,80 m, swings east into kantoor) -->
+        <rect x="679" y="214" width="8" height="60" fill="#faf8f4" stroke="none" />
+        <line x1="687" y1="274" x2="679" y2="274" stroke="#2E4057" stroke-width="1.2" />
+        <line x1="687" y1="214" x2="679" y2="214" stroke="#2E4057" stroke-width="1.2" />
+        <line x1="679" y1="274" x2="619" y2="274" stroke="#2E4057" stroke-width="1.2" />
+        <path d="M679,214 A60 60 0 0 0 619,274" fill="none" stroke="#8a9aaa" stroke-width="0.9"
+          stroke-dasharray="4,3" />
+
+        <!-- Bureau 120x60cm -->
+        <rect x="559" y="93" width="90" height="45" rx="1" fill="#e4ddd4" stroke="#8a9aaa" stroke-width="1.2" />
+        <rect x="577" y="109" width="52" height="24" rx="2" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
+        <line x1="603" y1="109" x2="603" y2="103" stroke="#8a9aaa" stroke-width="0.8" />
+        <line x1="613" y1="103" x2="593" y2="103" stroke="#8a9aaa" stroke-width="0.8" />
+        <!-- Bureaustoel -->
+        <circle cx="604" cy="160" r="17" fill="none" stroke="#8a9aaa" stroke-width="1" stroke-dasharray="3,2" />
+
+        <!-- Room label -->
+        <text x="604" y="295" font-size="9" fill="#2E4057" text-anchor="middle" font-weight="700">KANTOOR</text>
+        <text x="604" y="283" font-size="6" fill="#7a8a9a" text-anchor="middle">2,00 x 3,52 m (7,04 m&#178;)</text>
+
+        <!-- Airco binnenunit -->
+        <rect x="670" y="290" width="6" height="50" rx="2" fill="#d5e8f0" stroke="#2980b9" stroke-width="1" />
+        <text x="666" y="320" font-size="4.5" fill="#2980b9" text-anchor="end">AIRCO</text>
+        <text x="666" y="312" font-size="4" fill="#2980b9" text-anchor="end">binnenunit</text>
+        <!-- Enkel stopcontact airco -->
+        <g transform="translate(676,345)">
+          <rect x="-4" y="-4" width="8" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="0" cy="0" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="666" y="345" font-size="4.5" fill="#e67e22" text-anchor="end">S14</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             LOUNGE INTERIOR  (2,70 x 3,52 m = 9,50 m²)
+             ══════════════════════════════════════════════════════ -->
+        <rect x="296" y="93" width="203" height="264" fill="#f7f5f0" />
+
+        <!-- Sofa -->
+        <rect x="309" y="106" width="178" height="52" rx="5" fill="none" stroke="#8a9aaa" stroke-width="1.2" />
+        <rect x="309" y="142" width="178" height="16" rx="3" fill="none" stroke="#bbb" stroke-width="0.7" />
+        <rect x="481" y="106" width="10" height="52" rx="3" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
+        <rect x="305" y="106" width="10" height="52" rx="3" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
+        <!-- Coffee table -->
+        <rect x="345" y="166" width="118" height="38" rx="3" fill="none" stroke="#8a9aaa" stroke-width="0.8"
+          stroke-dasharray="3,2" />
+
+        <!-- Room label -->
+        <text x="397" y="295" font-size="9" fill="#2E4057" text-anchor="middle" font-weight="700">LOUNGE</text>
+        <text x="397" y="283" font-size="6" fill="#7a8a9a" text-anchor="middle">2,70 x 3,52 m (9,50 m&#178;)</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             PERGOLA INTERIOR  (2,27 x 3,50 m = 7,95 m²)
+             ══════════════════════════════════════════════════════ -->
+        <rect x="108" y="93" width="170" height="264" fill="url(#pergolaFill)" />
+
+        <!-- Pergola column -->
+        <rect x="122" y="337" width="15" height="15" fill="#8B6914" stroke="#5a4008" stroke-width="1.5" />
+        <line x1="130" y1="345" x2="90" y2="375" stroke="#5a4008" stroke-width="0.6" stroke-dasharray="3,3" opacity="0.5" />
+        <text x="130" y="328" font-size="5" fill="#8B6914" text-anchor="middle">kolom 20x20</text>
+
+        <!-- Roof beams (dashed) -->
+        <line x1="244" y1="357" x2="244" y2="93" stroke="#c8b89a" stroke-width="1" stroke-dasharray="8,6" />
+        <line x1="210" y1="357" x2="210" y2="93" stroke="#c8b89a" stroke-width="1" stroke-dasharray="8,6" />
+        <line x1="176" y1="357" x2="176" y2="93" stroke="#c8b89a" stroke-width="1" stroke-dasharray="8,6" />
+        <line x1="142" y1="357" x2="142" y2="93" stroke="#c8b89a" stroke-width="1" stroke-dasharray="8,6" />
+
+        <!-- Room label -->
+        <text x="193" y="240" font-size="9" fill="#8B6914" text-anchor="middle" font-weight="700">PERGOLA</text>
+        <text x="193" y="228" font-size="6" fill="#c8b89a" text-anchor="middle">2,27 x 3,52 m (7,98 m&#178;)</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             LIGHT FIXTURES — KANTOOR / LOUNGE / PERGOLA
+             ══════════════════════════════════════════════════════ -->
+
+        <!-- L04: Kantoor spot 1 -->
+        <circle cx="604" cy="269" r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
+        <line x1="608" y1="269" x2="600" y2="269" stroke="#d4a017" stroke-width="0.6" />
+        <line x1="604" y1="273" x2="604" y2="265" stroke="#d4a017" stroke-width="0.6" />
+        <text x="604" y="259" font-size="4" fill="#d4a017" text-anchor="middle">L04</text>
+
+        <!-- L05: Kantoor spot 2 -->
+        <circle cx="604" cy="181" r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
+        <line x1="608" y1="181" x2="600" y2="181" stroke="#d4a017" stroke-width="0.6" />
+        <line x1="604" y1="185" x2="604" y2="177" stroke="#d4a017" stroke-width="0.6" />
+        <text x="604" y="171" font-size="4" fill="#d4a017" text-anchor="middle">L05</text>
+
+        <!-- L06: Lounge spot 1 -->
+        <circle cx="397" cy="269" r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
+        <line x1="401" y1="269" x2="393" y2="269" stroke="#d4a017" stroke-width="0.6" />
+        <line x1="397" y1="273" x2="397" y2="265" stroke="#d4a017" stroke-width="0.6" />
+        <text x="397" y="259" font-size="4" fill="#d4a017" text-anchor="middle">L06</text>
+
+        <!-- L07: Lounge spot 2 -->
+        <circle cx="397" cy="181" r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
+        <line x1="401" y1="181" x2="393" y2="181" stroke="#d4a017" stroke-width="0.6" />
+        <line x1="397" y1="185" x2="397" y2="177" stroke="#d4a017" stroke-width="0.6" />
+        <text x="397" y="171" font-size="4" fill="#d4a017" text-anchor="middle">L07</text>
+
+        <!-- L08: Pergola spot 1 -->
+        <circle cx="193" cy="269" r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
+        <line x1="197" y1="269" x2="189" y2="269" stroke="#d4a017" stroke-width="0.6" />
+        <line x1="193" y1="273" x2="193" y2="265" stroke="#d4a017" stroke-width="0.6" />
+        <text x="193" y="259" font-size="4" fill="#d4a017" text-anchor="middle">L08</text>
+
+        <!-- L09: Pergola spot 2 -->
+        <circle cx="193" cy="181" r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
+        <line x1="197" y1="181" x2="189" y2="181" stroke="#d4a017" stroke-width="0.6" />
+        <line x1="193" y1="185" x2="193" y2="177" stroke="#d4a017" stroke-width="0.6" />
+        <text x="193" y="171" font-size="4" fill="#d4a017" text-anchor="middle">L09</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             ELECTRICAL, DATA & WATER POINTS
+             ══════════════════════════════════════════════════════ -->
+
+        <!-- === E01: POE Camera OZO-zijde === -->
+        <g transform="translate(846,225)">
+          <circle cx="0" cy="0" r="5" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="0" cy="0" r="1.5" fill="#e67e22" />
+          <line x1="4" y1="3" x2="4" y2="-3" stroke="#e67e22" stroke-width="0.7" />
+        </g>
+        <text x="858" y="230" font-size="5" fill="#e67e22" text-anchor="start" font-weight="700">E01</text>
+        <text x="858" y="222" font-size="4.5" fill="#e67e22" text-anchor="start">POE CAM</text>
+
+        <!-- === E02: POE Camera WNW-zijde === -->
+        <g transform="translate(92,225)">
+          <circle cx="0" cy="0" r="5" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="0" cy="0" r="1.5" fill="#e67e22" />
+          <line x1="-4" y1="3" x2="-4" y2="-3" stroke="#e67e22" stroke-width="0.7" />
+        </g>
+        <text x="76" y="228" font-size="5" fill="#e67e22" text-anchor="end" font-weight="700">E02</text>
+        <text x="76" y="220" font-size="4.5" fill="#e67e22" text-anchor="end">POE CAM</text>
+
+        <!-- === E03: Dubbel Ethernet bij bureau === -->
+        <g transform="translate(662,88)">
+          <rect x="-6" y="-4" width="12" height="8" rx="1" fill="none" stroke="#2980b9" stroke-width="1.2" />
+          <rect x="0.5" y="-2" width="3.5" height="4" rx="0.5" fill="#2980b9" />
+          <rect x="-4" y="-2" width="3.5" height="4" rx="0.5" fill="#2980b9" />
+        </g>
+        <text x="662" y="96" font-size="5" fill="#2980b9" text-anchor="middle" font-weight="700">E03 2xETH</text>
+
+        <!-- === S01: Stopcontact kantoor bij bureau === -->
+        <g transform="translate(645,88)">
+          <rect x="-5" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="1.5" cy="0" r="1.5" fill="#e67e22" />
+          <circle cx="-2.5" cy="0" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="645" y="96" font-size="4.5" fill="#e67e22" text-anchor="middle">S01</text>
+
+        <!-- === S09: Dubbelstopcontact kantoor andere zijde === -->
+        <g transform="translate(555,88)">
+          <rect x="-5" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="1.5" cy="0" r="1.5" fill="#e67e22" />
+          <circle cx="-2.5" cy="0" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="555" y="96" font-size="4.5" fill="#e67e22" text-anchor="middle">S09</text>
+
+        <!-- === S10: Enkel stopcontact haard ZZW-zijde === -->
+        <g transform="translate(514,277)">
+          <rect x="-4" y="0" width="8" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="0" cy="4" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="500" y="280" font-size="4.5" fill="#e67e22" text-anchor="end">S10</text>
+
+        <!-- === S11: Enkel stopcontact haard NNO-zijde === -->
+        <g transform="translate(514,173)">
+          <rect x="-4" y="-8" width="8" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="0" cy="-4" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="500" y="166" font-size="4.5" fill="#e67e22" text-anchor="end">S11</text>
+
+        <!-- === S04: Stopcontact lounge pier E === -->
+        <g transform="translate(300,88)">
+          <rect x="-5" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="1.5" cy="0" r="1.5" fill="#e67e22" />
+          <circle cx="-2.5" cy="0" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="300" y="96" font-size="4.5" fill="#e67e22" text-anchor="middle">S04</text>
+
+        <!-- === S13: Stopcontact pergola NNO-wand === -->
+        <g transform="translate(268,88)">
+          <rect x="-5" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="1.5" cy="0" r="1.5" fill="#e67e22" />
+          <circle cx="-2.5" cy="0" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="268" y="96" font-size="4.5" fill="#e67e22" text-anchor="middle">S13</text>
+
+        <!-- === S05: Stopcontact badkamer bij wastafel === -->
+        <g transform="translate(815,192)">
+          <rect x="-5" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="1.5" cy="0" r="1.5" fill="#e67e22" />
+          <circle cx="-2.5" cy="0" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="800" y="190" font-size="4.5" fill="#e67e22" text-anchor="end">S05</text>
+
+        <!-- === S06: Stopcontact berging === -->
+        <g transform="translate(692,330)">
+          <rect x="0" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="6.5" cy="0" r="1.5" fill="#e67e22" />
+          <circle cx="2.5" cy="0" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="708" y="332" font-size="4.5" fill="#e67e22" text-anchor="start">S06</text>
+
+        <!-- === S08: Enkel stopcontact in ZZW kolom === -->
+        <g transform="translate(573,353)">
+          <rect x="-4" y="-8" width="8" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="0" cy="-4" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="560" y="346" font-size="4.5" fill="#e67e22" text-anchor="end">S08</text>
+
+        <!-- === E04: Enkel stopcontact grasrobot === -->
+        <g transform="translate(85,84)">
+          <rect x="-4" y="-4" width="8" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="0" cy="0" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="72" y="88" font-size="5" fill="#e67e22" text-anchor="end" font-weight="700">E04</text>
+        <text x="72" y="80" font-size="4.5" fill="#e67e22" text-anchor="end">grasrobot</text>
+
+        <!-- === E05: Terrasverwarmer === -->
+        <g transform="translate(270,225)">
+          <polygon points="0,5 4,-3 -4,-3" fill="none" stroke="#c0392b" stroke-width="1.2" />
+          <line x1="0" y1="2" x2="0" y2="-2" stroke="#c0392b" stroke-width="0.8" />
+        </g>
+        <text x="255" y="228" font-size="4.5" fill="#c0392b" text-anchor="end" font-weight="700">E05 terras-</text>
+        <text x="255" y="220" font-size="4.5" fill="#c0392b" text-anchor="end">verwarmer</text>
+
+        <!-- === S07: Stopcontact terrasverwarmer === -->
+        <g transform="translate(278,366)">
+          <rect x="-10" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
+          <circle cx="-3.5" cy="0" r="1.5" fill="#e67e22" />
+          <circle cx="-7.5" cy="0" r="1.5" fill="#e67e22" />
+        </g>
+        <text x="265" y="373" font-size="4.5" fill="#e67e22" text-anchor="middle">S07</text>
+
+        <!-- === W01: Kraantje tuinslang (berging) === -->
+        <g transform="translate(692,302)">
+          <circle cx="0" cy="0" r="5" fill="none" stroke="#2980b9" stroke-width="1.2" />
+          <line x1="3" y1="0" x2="-3" y2="0" stroke="#2980b9" stroke-width="1" />
+          <line x1="0" y1="3" x2="0" y2="-3" stroke="#2980b9" stroke-width="1" />
+        </g>
+        <text x="708" y="304" font-size="5" fill="#2980b9" text-anchor="start" font-weight="700">W01</text>
+        <text x="708" y="296" font-size="4.5" fill="#2980b9" text-anchor="start">kraantje</text>
+        <text x="708" y="289" font-size="4.5" fill="#2980b9" text-anchor="start">tuinslang</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             CARDINAL / ORIENTATION LABELS
+             ══════════════════════════════════════════════════════ -->
+        <text x="470" y="-60" font-size="9" fill="#7a8a9a" text-anchor="middle" font-style="italic">NNO-zijde &mdash;
+          ramen badkamer, kantoor &amp; lounge</text>
+        <text x="470" y="542" font-size="9" fill="#4A7C59" text-anchor="middle" font-style="italic">ZZW-zijde &mdash;
+          ingang via schuifraam</text>
+        <text x="928" y="225" font-size="9" fill="#7a8a9a" text-anchor="middle" transform="rotate(90,928,225)"
+          font-style="italic">OZO-zijde</text>
+        <text x="-30" y="225" font-size="9" fill="#4A7C59" text-anchor="middle" transform="rotate(-90,-30,225)"
+          font-style="italic">WNW-zijde &mdash; open</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             DIMENSION LINES
+             ══════════════════════════════════════════════════════ -->
+
+        <!-- ─── BOTTOM: ZZW FACE BREAKDOWN at y≈515 ─── -->
+        <line x1="840" y1="522" x2="840" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="679" y1="522" x2="679" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="581" y1="522" x2="581" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="566" y1="522" x2="566" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="303" y1="522" x2="303" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="278" y1="522" x2="278" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="90" y1="522" x2="90" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
+
+        <!-- Solid bath wall 2,15 m -->
+        <line x1="840" y1="515" x2="679" y2="515" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="741" y="512" width="46" height="11" fill="#faf8f4" />
+        <text x="764" y="515" font-size="6" fill="#7a8a9a" text-anchor="middle">wand 2,15</text>
+
+        <!-- Vast raam 1,30 m -->
+        <line x1="679" y1="515" x2="581" y2="515" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <rect x="609" y="512" width="46" height="11" fill="#faf8f4" />
+        <text x="632" y="515" font-size="6" fill="#4A7C59" text-anchor="middle" font-weight="700">vast 1,30</text>
+
+        <!-- Kolom 0,20 m -->
+        <line x1="581" y1="515" x2="566" y2="515" stroke="#2E4057" stroke-width="0.7" />
+        <text x="573" y="523" font-size="5" fill="#2E4057" text-anchor="middle" font-weight="700">0,20</text>
+
+        <!-- Schuifraam 3,50 m -->
+        <line x1="566" y1="515" x2="303" y2="515" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <rect x="403" y="512" width="62" height="11" fill="#faf8f4" />
+        <text x="434" y="515" font-size="6" fill="#4A7C59" text-anchor="middle" font-weight="700">schuif 3,50</text>
+
+        <!-- Corner pier 0,33 m -->
+        <line x1="303" y1="515" x2="278" y2="515" stroke="#8a9aaa" stroke-width="0.6" />
+        <text x="290" y="523" font-size="5" fill="#7a8a9a" text-anchor="middle">0,33</text>
+
+        <!-- Pergola open 2,51 m -->
+        <line x1="278" y1="515" x2="90" y2="515" stroke="#4A7C59" stroke-width="0.7" stroke-dasharray="4,3" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <rect x="164" y="512" width="44" height="11" fill="#faf8f4" />
+        <text x="186" y="515" font-size="6" fill="#4A7C59" text-anchor="middle">open 2,51</text>
+
+        <!-- ─── TOP LVL 1: STRUCTURAL CHAIN at y≈54 ─── -->
+        <line x1="840" y1="68" x2="840" y2="44" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="822" y1="68" x2="822" y2="44" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="687" y1="68" x2="687" y2="44" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="679" y1="68" x2="679" y2="44" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="529" y1="68" x2="529" y2="44" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="499" y1="68" x2="499" y2="44" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="296" y1="68" x2="296" y2="44" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="278" y1="68" x2="278" y2="44" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="108" y1="68" x2="108" y2="44" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="90" y1="68" x2="90" y2="44" stroke="#8a9aaa" stroke-width="0.5" />
+
+        <!-- West wall 0,24 -->
+        <line x1="840" y1="54" x2="822" y2="54" stroke="#2E4057" stroke-width="0.7" />
+        <text x="831" y="58" font-size="5" fill="#2E4057" text-anchor="middle" font-weight="700">0,24</text>
+        <!-- Badkamer/berging 1,80 -->
+        <line x1="822" y1="54" x2="687" y2="54" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="748" y="50" width="32" height="10" fill="#faf8f4" />
+        <text x="764" y="52" font-size="6" fill="#7a8a9a" text-anchor="middle">1,80</text>
+        <!-- Partition 0,10 -->
+        <line x1="687" y1="54" x2="679" y2="54" stroke="#2E4057" stroke-width="0.7" />
+        <text x="683" y="58" font-size="4.5" fill="#2E4057" text-anchor="middle" font-weight="700">0,10</text>
+        <!-- Kantoor 2,00 -->
+        <line x1="679" y1="54" x2="529" y2="54" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="592" y="50" width="32" height="10" fill="#faf8f4" />
+        <text x="608" y="52" font-size="6" fill="#7a8a9a" text-anchor="middle">2,00</text>
+        <!-- Haard 0,40 -->
+        <line x1="529" y1="54" x2="499" y2="54" stroke="#c0392b" stroke-width="0.7" marker-start="url(#arrRedR)" marker-end="url(#arrRed)" />
+        <text x="514" y="58" font-size="5" fill="#c0392b" text-anchor="middle" font-weight="700">0,40</text>
+        <!-- Lounge 2,70 -->
+        <line x1="499" y1="54" x2="296" y2="54" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="386" y="50" width="32" height="10" fill="#faf8f4" />
+        <text x="402" y="52" font-size="6" fill="#7a8a9a" text-anchor="middle">2,70</text>
+        <!-- East wall 0,24 -->
+        <line x1="296" y1="54" x2="278" y2="54" stroke="#2E4057" stroke-width="0.7" />
+        <text x="287" y="58" font-size="5" fill="#2E4057" text-anchor="middle" font-weight="700">0,24</text>
+        <!-- Pergola 2,27 -->
+        <line x1="278" y1="54" x2="108" y2="54" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="182" y="50" width="32" height="10" fill="#faf8f4" />
+        <text x="198" y="52" font-size="6" fill="#7a8a9a" text-anchor="middle">2,27</text>
+        <!-- Pergola east wall 0,24 -->
+        <line x1="108" y1="54" x2="90" y2="54" stroke="#2E4057" stroke-width="0.7" />
+        <text x="99" y="58" font-size="5" fill="#2E4057" text-anchor="middle" font-weight="700">0,24</text>
+
+        <!-- ─── TOP LVL 2: OVERALL 10,00 m at y≈30 ─── -->
+        <line x1="840" y1="38" x2="840" y2="22" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="90" y1="38" x2="90" y2="22" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="840" y1="30" x2="90" y2="30" stroke="#8a9aaa" stroke-width="0.9" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="438" y="25" width="70" height="12" fill="#faf8f4" />
+        <text x="473" y="28" font-size="9" fill="#7a8a9a" text-anchor="middle" font-weight="700">10,00 m</text>
+
+        <!-- ─── TOP LVL 3: NNO WALL FACE DIMENSIONS at y≈5 ─── -->
+        <line x1="840" y1="15" x2="840" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="808" y1="15" x2="808" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="718" y1="15" x2="718" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="637" y1="15" x2="637" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="337" y1="15" x2="337" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="278" y1="15" x2="278" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="90" y1="15" x2="90" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
+
+        <!-- Pier W 0,43 -->
+        <line x1="840" y1="5" x2="808" y2="5" stroke="#8a9aaa" stroke-width="0.6" />
+        <text x="824" y="8" font-size="5" fill="#7a8a9a" text-anchor="middle">0,43</text>
+        <!-- Kipraam 1,20 -->
+        <line x1="808" y1="5" x2="718" y2="5" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <rect x="743" y="2" width="46" height="10" fill="#faf8f4" />
+        <text x="766" y="4" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">raam 1,20</text>
+        <!-- Pier midden 1,08 -->
+        <line x1="718" y1="5" x2="637" y2="5" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="678" y="8" font-size="5" fill="#7a8a9a" text-anchor="middle">1,08</text>
+        <!-- Raam 4,00 -->
+        <line x1="637" y1="5" x2="337" y2="5" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <rect x="464" y="2" width="46" height="10" fill="#faf8f4" />
+        <text x="487" y="4" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">raam 4,00</text>
+        <!-- Pier E 0,79 -->
+        <line x1="337" y1="5" x2="278" y2="5" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="308" y="8" font-size="5" fill="#7a8a9a" text-anchor="middle">0,79</text>
+        <!-- Pergola wand 2,51 -->
+        <line x1="278" y1="5" x2="90" y2="5" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="176" y="2" width="30" height="10" fill="#faf8f4" />
+        <text x="191" y="4" font-size="5.5" fill="#7a8a9a" text-anchor="middle">2,51</text>
+
+        <!-- ─── LEFT LVL 1: OVERALL 4,00 m at x≈60 ─── -->
+        <line x1="85" y1="375" x2="55" y2="375" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="85" y1="75" x2="55" y2="75" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="60" y1="375" x2="60" y2="75" stroke="#8a9aaa" stroke-width="0.9" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="14" y="220" width="40" height="12" fill="#faf8f4" />
+        <text x="34" y="223" font-size="9" fill="#7a8a9a" text-anchor="middle" font-weight="700">4,00 m</text>
+
+        <!-- ─── LEFT LVL 2: STRUCTURAL 0,24 + 3,52 + 0,24 at x≈30 ─── -->
+        <line x1="35" y1="375" x2="25" y2="375" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="35" y1="357" x2="25" y2="357" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="35" y1="93" x2="25" y2="93" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="35" y1="75" x2="25" y2="75" stroke="#8a9aaa" stroke-width="0.5" />
+        <!-- North wall 0,24 -->
+        <line x1="30" y1="375" x2="30" y2="357" stroke="#2E4057" stroke-width="0.6" />
+        <text x="18" y="362" font-size="5.5" fill="#2E4057" text-anchor="end" font-weight="700">0,24</text>
+        <!-- Interior 3,52 -->
+        <line x1="30" y1="357" x2="30" y2="93" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="-6" y="220" width="28" height="10" fill="#faf8f4" />
+        <text x="8" y="222" font-size="6" fill="#7a8a9a" text-anchor="middle">3,52</text>
+        <!-- South wall 0,24 -->
+        <line x1="30" y1="93" x2="30" y2="75" stroke="#2E4057" stroke-width="0.6" />
+        <text x="18" y="80" font-size="5.5" fill="#2E4057" text-anchor="end" font-weight="700">0,24</text>
+
+        <!-- ─── RIGHT LVL 1: BERGING / BADKAMER CHAIN at x≈855 ─── -->
+        <line x1="860" y1="357" x2="850" y2="357" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="860" y1="282" x2="850" y2="282" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="860" y1="274" x2="850" y2="274" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="860" y1="93" x2="850" y2="93" stroke="#8a9aaa" stroke-width="0.5" />
+        <!-- Berging 1,00 -->
+        <line x1="855" y1="357" x2="855" y2="282" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="867" y="316" font-size="6" fill="#7a8a9a" text-anchor="middle">1,00</text>
+        <!-- Partition 0,10 -->
+        <line x1="855" y1="282" x2="855" y2="274" stroke="#2E4057" stroke-width="0.6" />
+        <text x="867" y="275" font-size="4.5" fill="#2E4057" text-anchor="middle" font-weight="700">0,10</text>
+        <!-- Badkamer 2,41 -->
+        <line x1="855" y1="274" x2="855" y2="93" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="867" y="180" font-size="6" fill="#7a8a9a" text-anchor="middle">2,41</text>
+
+        <!-- ─── RIGHT LVL 2: OZO WALL OPENINGS at x≈888 ─── -->
+        <line x1="893" y1="357" x2="883" y2="357" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="893" y1="289" x2="883" y2="289" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="893" y1="153" x2="883" y2="153" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="893" y1="93" x2="883" y2="93" stroke="#8a9aaa" stroke-width="0.5" />
+        <!-- Berging deur 0,90 -->
+        <line x1="888" y1="357" x2="888" y2="289" stroke="#4A7C59" stroke-width="0.6" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <text x="900" y="328" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">0,90</text>
+        <text x="900" y="320" font-size="4.5" fill="#4A7C59" text-anchor="middle">deur</text>
+        <!-- Wand dicht 1,81 -->
+        <line x1="888" y1="289" x2="888" y2="153" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="900" y="218" font-size="6" fill="#7a8a9a" text-anchor="middle">1,81</text>
+        <!-- Badkamer deur 0,80 -->
+        <line x1="888" y1="153" x2="888" y2="93" stroke="#4A7C59" stroke-width="0.6" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <text x="900" y="126" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">0,80</text>
+        <text x="900" y="118" font-size="4.5" fill="#4A7C59" text-anchor="middle">deur</text>
+
+        <!-- ─── INTERNAL: Badkamer/kantoor deur dim ─── -->
+        <line x1="700" y1="274" x2="693" y2="274" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="700" y1="214" x2="693" y2="214" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="697" y1="274" x2="697" y2="214" stroke="#4A7C59" stroke-width="0.6" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <text x="709" y="247" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">0,80</text>
+        <text x="709" y="238" font-size="4.5" fill="#4A7C59" text-anchor="middle">deur</text>
+
+        <!-- ─── INTERNAL: Haard opening dimensions ─── -->
+        <line x1="492" y1="357" x2="492" y2="274" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="496" y1="357" x2="488" y2="357" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="496" y1="274" x2="488" y2="274" stroke="#4A7C59" stroke-width="0.5" />
+        <text x="514" y="314" font-size="5.5" fill="#4A7C59" text-anchor="middle">1,10</text>
+        <line x1="492" y1="263" x2="492" y2="187" stroke="#c0392b" stroke-width="0.5" />
+        <line x1="496" y1="263" x2="488" y2="263" stroke="#c0392b" stroke-width="0.5" />
+        <line x1="496" y1="187" x2="488" y2="187" stroke="#c0392b" stroke-width="0.5" />
+        <text x="480" y="222" font-size="5" fill="#c0392b" text-anchor="end">1,01</text>
+        <line x1="492" y1="176" x2="492" y2="93" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="496" y1="176" x2="488" y2="176" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="496" y1="93" x2="488" y2="93" stroke="#4A7C59" stroke-width="0.5" />
+        <text x="514" y="132" font-size="5.5" fill="#4A7C59" text-anchor="middle">1,10</text>
+
+        <!-- ─── IN-PLAN WALL THICKNESS NOTES ─── -->
+        <text x="760" y="363" font-size="4.5" fill="#2E4057" text-anchor="middle" opacity="0.55">wand 0,24</text>
+        <text x="677" y="81" font-size="4.5" fill="#2E4057" text-anchor="middle" opacity="0.55">wand 0,24</text>
+        <text x="184" y="81" font-size="4.5" fill="#2E4057" text-anchor="middle" opacity="0.55">wand 0,24</text>
+        <text x="831" y="215" font-size="4.5" fill="#2E4057" text-anchor="middle" transform="rotate(90,831,215)" opacity="0.55">wand 0,24</text>
+        <text x="573" y="363" font-size="4.5" fill="#2E4057" text-anchor="middle" opacity="0.7">kolom</text>
+
+      </svg>
+          </g>
+        </g><!-- end tuinstudio rotation group -->
+
+        <g id="pool-studio-clearances" aria-label="Vrije doorgangen tussen zwembad en tuinstudio">
+          <title>Minimumdoorgangen tussen de blauwe steen en de tuinstudio</title>
+
+          <line x1="75.6" y1="268.054828045" x2="81.983306908" y2="267.181065259" stroke="#9a4b3f" stroke-width="0.8" />
+          <line x1="75.6" y1="265.054828045" x2="75.6" y2="271.054828045" stroke="#9a4b3f" stroke-width="0.8" />
+          <line x1="81.983306908" y1="264.181065259" x2="81.983306908" y2="270.181065259" stroke="#9a4b3f" stroke-width="0.8" />
+          <path d="M78.791653454,267.617946652 L93,251" fill="none" stroke="#9a4b3f" stroke-width="0.6" />
+          <rect x="89" y="240" width="33" height="14" fill="#faf8f4" opacity="0.94" />
+          <text x="105.5" y="247" font-size="4" fill="#9a4b3f" text-anchor="middle" font-weight="700">0,36 m</text>
+          <text x="105.5" y="252" font-size="2.8" fill="#9a4b3f" text-anchor="middle">bovenhoek</text>
+
+          <line x1="75.6" y1="313.874205397" x2="88.140265671" y2="312.157534713" stroke="#9a4b3f" stroke-width="0.8" />
+          <line x1="75.6" y1="310.874205397" x2="75.6" y2="316.874205397" stroke="#9a4b3f" stroke-width="0.8" />
+          <line x1="88.140265671" y1="309.157534713" x2="88.140265671" y2="315.157534713" stroke="#9a4b3f" stroke-width="0.8" />
+          <path d="M81.870132836,313.015870055 L95,295" fill="none" stroke="#9a4b3f" stroke-width="0.6" />
+          <rect x="92" y="283" width="42" height="14" fill="#faf8f4" opacity="0.94" />
+          <text x="113" y="290" font-size="4" fill="#9a4b3f" text-anchor="middle" font-weight="700">0,70 m</text>
+          <text x="113" y="295" font-size="2.8" fill="#9a4b3f" text-anchor="middle">einde pergola</text>
+        </g>
+
+        <!-- Cardinal side labels derived from CadGIS bearings. -->
+        <text x="120" y="1167" font-size="6" fill="#4A7C59" text-anchor="middle" font-weight="700">OZO · STRAAT / VOORGEVEL</text>
+        <text x="60" y="-50" font-size="6" fill="#7a8a9a" text-anchor="middle" font-weight="700">WNW · ACHTERGRENS</text>
+        <text x="-55" y="590" font-size="6" fill="#7a8a9a" text-anchor="middle"
+          transform="rotate(90,-55,590)" font-weight="700">ZZW · LINKERZIJDE</text>
+        <text x="270" y="590" font-size="6" fill="#7a8a9a" text-anchor="middle"
+          transform="rotate(-90,270,590)" font-weight="700">NNO · RECHTERZIJDE</text>
+
+        <!-- LOT label -->
+        <text x="60" y="117" font-size="8" fill="#2E4057" text-anchor="middle" font-weight="700">LOT 24B</text>
+        <text x="60" y="105" font-size="5" fill="#7a8a9a" text-anchor="middle">Geraardsbergsesteenweg 371</text>
+
+        <!-- ══════════════════════════════════════════════════════
+             SCALE BAR — 5m graphical reference
+             ══════════════════════════════════════════════════════ -->
+        <g transform="translate(270,1212)">
+          <line x1="0" y1="0" x2="90" y2="0" stroke="#2E4057" stroke-width="1.5" />
+          <line x1="0" y1="-3" x2="0" y2="3" stroke="#2E4057" stroke-width="1" />
+          <line x1="18" y1="-2" x2="18" y2="2" stroke="#2E4057" stroke-width="0.5" />
+          <line x1="36" y1="-2" x2="36" y2="2" stroke="#2E4057" stroke-width="0.5" />
+          <line x1="54" y1="-2" x2="54" y2="2" stroke="#2E4057" stroke-width="0.5" />
+          <line x1="72" y1="-2" x2="72" y2="2" stroke="#2E4057" stroke-width="0.5" />
+          <line x1="90" y1="-3" x2="90" y2="3" stroke="#2E4057" stroke-width="1" />
+          <rect x="0" y="0" width="18" height="3" fill="#2E4057" />
+          <rect x="36" y="0" width="18" height="3" fill="#2E4057" />
+          <rect x="72" y="0" width="18" height="3" fill="#2E4057" />
+          <text x="0" y="10" font-size="5" fill="#2E4057" text-anchor="middle">0</text>
+          <text x="90" y="10" font-size="5" fill="#2E4057" text-anchor="middle">5m</text>
+        </g>
+      </svg>
+
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-swatch" style="border: 2px dashed #c0392b; background: transparent;"></div>
+          Perceelsgrens
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background: #dce3ea; border: 2px solid #2E4057;"></div>
+          Woning
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background: #e4e0d8; border: 1px dashed #c0392b;"></div>
+          Tuinstudio · 4,00 × 10,00 m
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background: #b8ddec; border: 3px solid #788890;"></div>
+          Zwembad · LPW City+
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background: #d8e5e9; border: 1px dashed #6f7f89; border-radius: 50%;"></div>
+          Regenwaterput
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background: #e8e2d8; border: 1px solid #c4beb4;"></div>
+          Terras / verharding
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background: linear-gradient(90deg, #a87545 0 62%, #aeb7b9 62% 100%); border: 1px solid #6f4729;"></div>
+          Houtlanding / stapstenen
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background: #d0ccc4;"></div>
+          Publiek domein
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background: #2E4057; width: 8px; height: 8px; border-radius: 50%;"></div>
+          Grenspaal
+        </div>
+      </div>
+      <div class="scale-note">
+        Schaal 1:200 &nbsp;|&nbsp; 1 cm = 2 m
+      </div>
+    </div>
+
+    <div class="doc-footer">
+      <span>Geraardsbergsesteenweg 371, 9404 Ninove &nbsp;|&nbsp; Lot 24B</span>
+      <span>Tek. 02-T &nbsp;|&nbsp; Tuinplan &nbsp;|&nbsp; Augustus 2026</span>
+    </div>
+  </div>
+</body>
+
+</html>

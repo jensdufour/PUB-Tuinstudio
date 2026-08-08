@@ -1,0 +1,6 @@
+# Track web source only; references and generated renders stay local.
+.env*
+node_modules/
+*.docx
+*.pdf
+*.png
