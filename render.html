@@ -335,12 +335,12 @@
       <div class="metrics" aria-label="Belangrijkste doorgangen">
         <span class="metric">bovenrand 0,36 m</span>
         <span class="metric">glaslijn 0,70 m</span>
-        <span class="metric">houtdek 22,78 m²</span>
+        <span class="metric">houtdek 25,74 m²</span>
       </div>
     </header>
 
     <div class="material-note">
-      Wit crepi · wit interieurplafond · blauwe-steenplint op de overige gevels · houtafwerking aan de zwembadzijde · raamkaders RAL 9005 · bestaande erfafsluiting met Toscaanse jasmijn. Het dek vormt één geheel met een rechte rand langs de RW-put.
+      Wit crepi · wit interieurplafond · blauwe-steenplint op de overige gevels · volledige houtcladding aan de zwembadzijde · raamkaders RAL 9005 · bestaande erfafsluiting met Toscaanse jasmijn. De zwembadlijn van het dek loopt zonder knik door tot het terras.
     </div>
 
     <div class="control-dock" aria-label="Renderinstellingen">
@@ -810,8 +810,8 @@
       studioPathStartX + Math.cos(studioAngle) * localX + Math.sin(studioAngle) * localZ,
       Math.sin(studioAngle) * localX - Math.cos(studioAngle) * localZ
     ];
-    const deckSideWidth = 1;
     const terraceDeckEndLocalZ = -siteZ(464.05) / Math.cos(studioAngle);
+    const terracePoolLineEnd = [0, siteZ(464.05)];
     const integratedDeckPoints = [
       [0, poolRearZ],
       studioWorldPoint(0, 0),
@@ -821,8 +821,7 @@
       studioWorldPoint(0, 10),
       studioWorldPoint(4, 10),
       studioWorldPoint(4, terraceDeckEndLocalZ),
-      studioWorldPoint(-deckSideWidth, terraceDeckEndLocalZ),
-      [platformPoolEdge.x, platformPoolEdge.z]
+      terracePoolLineEnd
     ];
     const integratedDeck = addDeck(poolStudioPassage, integratedDeckPoints);
     integratedDeck.name = "single-integrated-deck-surface";
@@ -868,8 +867,8 @@
     addBox(studio, 0.24, 2.96, 0.2, materials.charcoal, 0.12, 1.52, 6.437);
     addGlassWallAlongZ(studio, 6.537, 7.837, 0.015, 1);
     addBox(studio, 0.24, 2.96, 2.163, materials.wall, 0.12, 1.52, 8.9185);
-    const poolSideTimberPlinth = addBox(studio, 0.045, 0.3, 2.163, woodMaterial, -0.0225, 0.15, 8.9185);
-    poolSideTimberPlinth.name = "pool-side-timber-plinth";
+    const poolSideTimberCladding = addBox(studio, 0.045, 2.82, 2.163, woodMaterial, -0.0225, 1.49, 8.9185);
+    poolSideTimberCladding.name = "pool-side-timber-cladding";
 
     addBox(studio, 0.18, 0.25, 5.0, materials.wall, 0.1, 2.925, 5.337);
     addGlassWallAlongX(studio, 0.28, 3.77, pergolaLength + 0.015, 3);
@@ -1393,11 +1392,10 @@
       integratedDeck: {
         area: integratedDeckArea,
         sideRun: 10,
-        sideWidth: deckSideWidth,
         frontDepth: terraceDeckEndLocalZ - 10,
         pointCount: integratedDeckPoints.length,
-        straightRwEdge: true,
-        poolSideTimberPlinth: poolSideTimberPlinth.material === woodMaterial
+        straightPoolLine: integratedDeckPoints[0][0] === terracePoolLineEnd[0],
+        poolSideTimberCladding: poolSideTimberCladding.material === woodMaterial
       },
       sourcePlan: "grondplan.html",
       canonicalWorldScaleX: world.scale.x
@@ -1414,11 +1412,12 @@
     console.assert(Math.abs(geometryChecks.timberPlatform.skewAtPool - 0.095) < 0.002, "Timber platform must meet the pool diagonally");
     console.assert(geometryChecks.timberPlatform.glassLineDeviation < 1e-9, "Platform edge and pergola glass must be collinear");
     console.assert(geometryChecks.timberPlatform.rearLineDeviation < 1e-9, "Upper platform edge and pergola rear must be collinear");
-    console.assert(Math.abs(geometryChecks.integratedDeck.area - 22.775878) < 0.001, "Straight-edged deck must remain 22.78 m² including the pergola");
+    console.assert(Math.abs(geometryChecks.integratedDeck.area - 25.740039) < 0.001, "Pool-line deck must remain 25.74 m² including the pergola");
     console.assert(geometryChecks.integratedDeck.sideRun === 10, "Deck must run along the complete studio side");
     console.assert(geometryChecks.integratedDeck.frontDepth > 1 && geometryChecks.integratedDeck.frontDepth < 1.1, "Front return must fill the studio-to-terrace gap");
-    console.assert(geometryChecks.integratedDeck.pointCount === 10, "RW-put side must use one straight edge without an intermediate corner");
-    console.assert(geometryChecks.integratedDeck.poolSideTimberPlinth, "Pool-side plinth must use the deck timber material");
+    console.assert(geometryChecks.integratedDeck.pointCount === 9, "Pool edge must continue directly to the terrace without an intermediate corner");
+    console.assert(geometryChecks.integratedDeck.straightPoolLine, "Pool-side deck edge must stay on one straight line to the terrace");
+    console.assert(geometryChecks.integratedDeck.poolSideTimberCladding, "Full pool-facing opaque wall must use the deck timber material");
     console.assert(geometryChecks.canonicalWorldScaleX === -1, "All views must retain the Plan orientation");
     window.__renderMetrics = geometryChecks;
 
