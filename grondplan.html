@@ -1199,13 +1199,15 @@
 
         <!-- One integrated deck: full studio side, pool rear edge and terrace connection. -->
         <g id="integrated-studio-deck" aria-label="Doorlopend houten dek rond de tuinstudio">
-          <title>Doorlopend houten dek 30,12 m² inclusief pergola en 20 cm poolrand langs studio- en tuinzijde; de retour achter de studio volgt de terraslijn</title>
+          <title>Doorlopend houten dek 39,38 m² inclusief zonnedek tussen zwembad en terras, met 1,00 m groene grensstrook en 0,10 m infiltratievoeg</title>
           <polygon
-            points="18.000000,268.054828 75.600000,268.054828 81.983307,267.181000 106.396308,445.517775 177.731018,435.752575 181.604728,464.050000 75.600000,464.050000 72.000000,464.050000 72.000000,271.654828 18.000000,271.654828"
+            points="18.000000,268.054828 75.600000,268.054828 81.983307,267.181000 106.396308,445.517775 177.731018,435.752575 181.604728,464.050000 75.600000,464.050000 72.000000,464.050000 72.000000,462.250000 18.000000,462.250000 18.000000,406.654828 72.000000,406.654828 72.000000,271.654828 18.000000,271.654828"
             fill="url(#deckFill)" />
           <polyline points="18.000000,268.054828 75.600000,268.054828 81.983307,267.181000"
             fill="none" stroke="#6f4729" stroke-width="0.9" stroke-linecap="round" />
           <polyline points="75.600000,464.050000 181.604728,464.050000 177.731018,435.752575"
+            fill="none" stroke="#6f4729" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" />
+          <polyline points="18.000000,406.654828 18.000000,462.250000 72.000000,462.250000"
             fill="none" stroke="#6f4729" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" />
           <polyline points="88.103646,311.890030 106.396308,445.517775 177.731018,435.752575"
             fill="none" stroke="#262d30" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
@@ -1235,10 +1237,11 @@
         </g>
 
         <g id="rainwater-tank" aria-label="Regenwaterput 7500 liter">
-          <title>Regenwaterput 7500 L, diameter 2,70 m</title>
+          <title>Regenwaterput 7500 L onder het houten zonnedek, bereikbaar via een uitneembaar houten luik</title>
           <circle cx="68.4" cy="438.13" r="24.3" fill="#d8e5e9" fill-opacity="0.65"
             stroke="#6f7f89" stroke-width="0.9" stroke-dasharray="3,2" />
-          <circle cx="68.4" cy="438.13" r="5.4" fill="#c1ced3" stroke="#6f7f89" stroke-width="0.7" />
+          <rect id="rainwater-tank-removable-timber-hatch" x="63" y="432.73" width="10.8" height="10.8"
+            fill="url(#deckFill)" stroke="#263238" stroke-width="0.8" />
           <text x="68.4" y="425" font-size="3.8" fill="#2E4057" text-anchor="middle" font-weight="700">RW-PUT</text>
           <text x="68.4" y="430" font-size="3.2" fill="#2E4057" text-anchor="middle">7500 L</text>
           <text x="68.4" y="457" font-size="3.2" fill="#7a8a9a" text-anchor="middle">Ø 2,70 m</text>
@@ -1247,6 +1250,26 @@
           <line x1="35" y1="413.83" x2="44" y2="413.83" stroke="#8a9aaa" stroke-width="0.5" />
           <line x1="38" y1="406.654828045" x2="38" y2="413.83" stroke="#8a9aaa" stroke-width="0.8" />
           <text x="35" y="411" font-size="3.4" fill="#7a8a9a" text-anchor="end">0,40 m</text>
+        </g>
+
+        <g id="pool-terrace-sunbeds" fill="#f1eee7" stroke="#6f7f89" stroke-width="0.65">
+          <title>Twee ligbedden van 1,80 × 0,52 m op het houten zonnedek tussen zwembad en terras</title>
+          <g id="pool-terrace-sunbed-1">
+            <rect x="20.16" y="418.252414" width="9.36" height="32.4" rx="1.2" />
+            <line x1="20.76" y1="430" x2="28.92" y2="430" stroke-dasharray="1.8,1.2" />
+          </g>
+          <g id="pool-terrace-sunbed-2">
+            <rect x="31.68" y="418.252414" width="9.36" height="32.4" rx="1.2" />
+            <line x1="32.28" y1="430" x2="40.44" y2="430" stroke-dasharray="1.8,1.2" />
+          </g>
+          <line x1="0" y1="448" x2="18" y2="448" stroke="#8a9aaa" stroke-width="0.6"
+            marker-start="url(#arrR)" marker-end="url(#arr)">
+            <title>Groene grensstrook van 1,00 m</title>
+          </line>
+          <text x="9" y="441" font-size="3.2" fill="#7a8a9a" text-anchor="middle" font-weight="700">1,00 m</text>
+          <line x1="18" y1="462.25" x2="72" y2="462.25" stroke="#4A7C59" stroke-width="0.8">
+            <title>Open infiltratievoeg van 0,10 m tussen houten zonnedek en terras</title>
+          </line>
         </g>
 
         <!-- ══════════════════════════════════════════════════════
@@ -1363,18 +1386,6 @@
             <title>Standaard aluminium buitendeur berging 0,90 m, RAL 9005, naar buiten draaiend</title>
             <line x1="86.32" y1="524" x2="86.32" y2="540.32" />
             <path d="M102.64,524 A16.32,16.32 0 0 1 86.32,540.32" stroke="#8a9aaa" stroke-dasharray="2,1.5" />
-          </g>
-
-          <g id="terrace-sunbeds" fill="#f1eee7" stroke="#6f7f89" stroke-width="0.65">
-            <title>Twee ligbedden van 1,80 × 0,52 m op de houten retour, vrij van de bergingsdeur</title>
-            <g id="terrace-sunbed-1">
-              <rect x="117.1" y="524.9" width="32.4" height="9.36" rx="1.2" />
-              <line x1="128.8" y1="525.5" x2="128.8" y2="533.66" stroke-dasharray="1.8,1.2" />
-            </g>
-            <g id="terrace-sunbed-2">
-              <rect x="117.1" y="535.16" width="32.4" height="9.36" rx="1.2" />
-              <line x1="128.8" y1="535.76" x2="128.8" y2="543.92" stroke-dasharray="1.8,1.2" />
-            </g>
           </g>
 
           <g id="studio-internal-door" fill="none" stroke="#4A7C59" stroke-width="0.8" stroke-linecap="round">
