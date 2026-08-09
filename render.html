@@ -336,13 +336,13 @@
       <div class="metrics" aria-label="Belangrijkste doorgangen">
         <span class="metric">bovenrand 0,36 m</span>
         <span class="metric">glaslijn 0,70 m</span>
-        <span class="metric">houtdek 38,78 m²</span>
+        <span class="metric">houtdek 39,42 m²</span>
         <span class="metric">raming 79,79 / 80 m²</span>
       </div>
     </header>
 
     <div class="material-note">
-      De WNW-kop van het zwembad blijft blauwe steen. Het houten zonnedek boven de RW-put sluit visueel aan op verticale houtbekleding rond de bergingsdeur, zodat terras en studiokop één geheel vormen.
+      WNW en het grootste deel van ZZW blijven blauwe steen. Aan OZO loopt het zonnedek door tot tegen het zwembad en draait het 0,20 m om de ZZW-hoek; samen met de houten studiokop leest het geheel als één dekstructuur.
     </div>
 
     <div class="control-dock" aria-label="Renderinstellingen">
@@ -754,10 +754,24 @@
     addBox(pool, 3.0, 1.27, 7.3, standard(0xb8d8df, 0.48), -1.7, -0.72, -3.85);
     const poolSideTimberCoping = addBox(pool, coping, 0.09, poolOuterLength, woodMaterial, -0.1, deckTop - 0.045, -3.85);
     poolSideTimberCoping.name = "pool-side-timber-coping";
-    addBox(pool, coping, 0.09, poolOuterLength, materials.stone, -3.3, 0.015, -3.85);
+    const poolZzwBlueStoneLength = poolOuterLength - coping;
+    const poolZzwBlueStoneCoping = addBox(
+      pool,
+      coping,
+      0.09,
+      poolZzwBlueStoneLength,
+      materials.stone,
+      -3.3,
+      0.015,
+      -poolZzwBlueStoneLength / 2
+    );
+    poolZzwBlueStoneCoping.name = "pool-zzw-blue-stone-coping";
+    const poolZzwTimberReturn = addBox(pool, coping, 0.09, coping, woodMaterial, -3.3, deckTop - 0.045, -7.6);
+    poolZzwTimberReturn.name = "pool-zzw-timber-return-20cm";
     const poolRearBlueStoneCoping = addBox(pool, 3.0, 0.09, coping, materials.stone, -1.7, 0.015, -0.1);
     poolRearBlueStoneCoping.name = "pool-wnw-blue-stone-coping";
-    addBox(pool, 3.0, 0.09, coping, materials.stone, -1.7, 0.015, -7.6);
+    const poolOzoTimberCoping = addBox(pool, 3.0, 0.09, coping, woodMaterial, -1.7, deckTop - 0.045, -7.6);
+    poolOzoTimberCoping.name = "pool-ozo-timber-coping";
 
     const waterUniforms = { time: { value: 0 } };
     const waterMaterial = new THREE.ShaderMaterial({
@@ -844,11 +858,15 @@
     const poolTerraceDeckTerraceZ = terraceLineZ + infiltrationJointWidth;
     const poolTerraceDeckArea = (poolTerraceDeckRightX - poolTerraceDeckBoundaryX)
       * (poolHouseEdgeZ - poolTerraceDeckTerraceZ);
-    const poolDeckOverlapArea = coping * poolOuterLength;
+    const poolDeckOverlapArea = coping * poolOuterLength
+      + coping * (poolOuterWidth - coping);
     const tankCenterX = siteX(68.4);
     const tankCenterZ = siteZ(438.13);
     const tankHatchSize = 0.6;
     const poolSideTimberOuterStart = [-coping, poolRearZ];
+    const poolOzoZzwOuterCorner = [-poolOuterWidth, poolHouseEdgeZ];
+    const poolOzoZzwInnerCorner = [-poolOuterWidth, poolHouseEdgeZ + coping];
+    const poolOzoInnerCorner = [poolTerraceDeckRightX, poolHouseEdgeZ + coping];
     const poolTimberInnerStart = [-coping, poolRearZ - coping];
     const poolTimberInnerEnd = [-coping, terraceLineZ];
     const integratedDeckPoints = [
@@ -866,7 +884,9 @@
       [poolTerraceDeckRightX, poolTerraceDeckTerraceZ],
       [poolTerraceDeckBoundaryX, poolTerraceDeckTerraceZ],
       [poolTerraceDeckBoundaryX, poolHouseEdgeZ],
-      [poolTerraceDeckRightX, poolHouseEdgeZ],
+      poolOzoZzwOuterCorner,
+      poolOzoZzwInnerCorner,
+      poolOzoInnerCorner,
       poolTimberInnerStart
     ];
     const integratedDeck = addDeck(poolStudioPassage, integratedDeckPoints, deckTop);
@@ -1580,6 +1600,11 @@
         deckTop,
         poolSideTimberCoping: poolSideTimberCoping.material === woodMaterial,
         poolRearBlueStoneCoping: poolRearBlueStoneCoping.material === materials.stone,
+        poolOzoTimberCoping: poolOzoTimberCoping.material === woodMaterial,
+        poolZzwTimberReturn: poolZzwTimberReturn.material === woodMaterial,
+        poolZzwTimberReturnLength: coping,
+        poolZzwBlueStoneCoping: poolZzwBlueStoneCoping.material === materials.stone,
+        poolZzwBlueStoneLength,
         poolSideCrepiWall: poolSideCrepiWall.material === materials.wall,
         poolSideBlueStonePlinth: poolSideBlueStonePlinth.material === materials.stone,
         cornerPostSize: [cornerPostSize, cornerPostSize],
@@ -1645,17 +1670,20 @@
     console.assert(Math.abs(geometryChecks.timberPlatform.skewAtPool - 0.095) < 0.002, "Timber platform must meet the pool diagonally");
     console.assert(geometryChecks.timberPlatform.glassLineDeviation < 1e-9, "Platform edge and pergola glass must be collinear");
     console.assert(geometryChecks.timberPlatform.rearLineDeviation < 1e-9, "Upper platform edge and pergola rear must be collinear");
-    console.assert(Math.abs(geometryChecks.integratedDeck.area - 38.78109) < 0.001, "Merged pool-edge deck must be 38.78 m² with blue stone on the WNW pool edge");
+    console.assert(Math.abs(geometryChecks.integratedDeck.area - 39.42109) < 0.001, "Merged pool-edge deck must be 39.42 m² with the OZO and ZZW timber wrap");
     console.assert(geometryChecks.integratedDeck.sideRun === 10, "Deck must run along the complete studio side");
     console.assert(geometryChecks.integratedDeck.innerReturnDepth > 1 && geometryChecks.integratedDeck.innerReturnDepth < 1.1, "Pool-side return must fill the studio-to-terrace gap");
     console.assert(geometryChecks.integratedDeck.outerReturnDepth > 1.5 && geometryChecks.integratedDeck.outerReturnDepth < 1.6, "Outer return must extend to the terrace line");
     console.assert(geometryChecks.integratedDeck.terraceLineDeviation < 1e-9, "Studio-end timber edge must follow the terrace line");
-    console.assert(geometryChecks.integratedDeck.pointCount === 16, "Merged deck must include the side run, pool platform and terrace connection without the WNW pool strip");
+    console.assert(geometryChecks.integratedDeck.pointCount === 18, "Merged deck must include the OZO coping and 20 cm ZZW timber return");
     console.assert(geometryChecks.integratedDeck.straightPoolLine, "Pool-side deck edge must stay on one straight line to the terrace");
     console.assert(geometryChecks.integratedDeck.unifiedWoodSurface, "Timber coping and deck must share one flush, texture-aligned surface");
     console.assert(Math.abs(geometryChecks.integratedDeck.poolTimberWidth - 0.2) < 1e-9 && geometryChecks.integratedDeck.poolTimberExtensionLength > 10.8, "The 20 cm timber strip must continue from the pool to the terrace");
     console.assert(geometryChecks.integratedDeck.poolSideTimberCoping, "Pool border beside the studio must use the deck timber material");
     console.assert(geometryChecks.integratedDeck.poolRearBlueStoneCoping, "WNW pool border must remain blue stone");
+    console.assert(geometryChecks.integratedDeck.poolOzoTimberCoping, "OZO pool border must continue in timber to the water");
+    console.assert(geometryChecks.integratedDeck.poolZzwTimberReturn && geometryChecks.integratedDeck.poolZzwTimberReturnLength === 0.2, "Timber must return exactly 0.20 m into the ZZW pool edge");
+    console.assert(geometryChecks.integratedDeck.poolZzwBlueStoneCoping && Math.abs(geometryChecks.integratedDeck.poolZzwBlueStoneLength - 7.5) < 1e-9, "Remaining 7.50 m of ZZW pool coping must stay blue stone");
     console.assert(geometryChecks.integratedDeck.poolSideCrepiWall, "Opaque pool-facing wall must remain crepi");
     console.assert(geometryChecks.integratedDeck.poolSideBlueStonePlinth, "Opaque pool-facing wall must retain its blue-stone plinth");
     console.assert(geometryChecks.integratedDeck.cornerPostSize.every(value => Math.abs(value - 0.2) < 1e-9) && geometryChecks.integratedDeck.cornerPostRal === "RAL 9005", "Slider corner post must be 20 x 20 cm in RAL 9005");
