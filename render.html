@@ -336,12 +336,12 @@
       <div class="metrics" aria-label="Belangrijkste doorgangen">
         <span class="metric">bovenrand 0,36 m</span>
         <span class="metric">glaslijn 0,70 m</span>
-        <span class="metric">houtdek 28,52 m²</span>
+        <span class="metric">houtdek 30,12 m²</span>
       </div>
     </header>
 
     <div class="material-note">
-      Wit crepi met blauwe-steenplint · tweedelige schuiframen · aluminium bergingsdeur RAL 9005 · de 20 cm houten poolrand loopt langs de studio én de tuinzijde en sluit naadloos aan op het doorlopende dek tot aan het terras.
+      Wit crepi met blauwe-steenplint · tweedelige schuiframen · aluminium bergingsdeur RAL 9005 · de houten retour achter de studio volgt exact de terraslijn en biedt plaats aan twee ligbedden, vrij van de bergingsdeur.
     </div>
 
     <div class="control-dock" aria-label="Renderinstellingen">
@@ -814,12 +814,14 @@
       studioPathStartX + Math.cos(studioAngle) * localX + Math.sin(studioAngle) * localZ,
       Math.sin(studioAngle) * localX - Math.cos(studioAngle) * localZ
     ];
-    const terraceDeckEndLocalZ = -siteZ(464.05) / Math.cos(studioAngle);
-    const terracePoolLineEnd = [0, siteZ(464.05)];
+    const terraceLineZ = siteZ(464.05);
+    const terraceDeckInnerEndLocalZ = -terraceLineZ / Math.cos(studioAngle);
+    const terraceDeckEndLocalZ = (Math.sin(studioAngle) * 4 - terraceLineZ) / Math.cos(studioAngle);
+    const terracePoolLineEnd = [0, terraceLineZ];
     const poolRearTimberOuterLeft = [-poolOuterWidth + coping, poolRearZ];
     const poolRearTimberInnerLeft = [-poolOuterWidth + coping, poolRearZ - coping];
     const poolTimberInnerStart = [-coping, poolRearZ - coping];
-    const poolTimberInnerEnd = [-coping, siteZ(464.05)];
+    const poolTimberInnerEnd = [-coping, terraceLineZ];
     const integratedDeckPoints = [
       poolRearTimberOuterLeft,
       [0, poolRearZ],
@@ -980,6 +982,40 @@
       addBox(studio, 0.05, 0.31, 0.05, materials.charcoal, 2.5, 0.17, z);
     }
 
+    const sunbedLength = 1.8;
+    const sunbedWidth = 0.52;
+    const sunbedX = 2.85;
+    const sunbedZPositions = [10.31, 10.88];
+    const sunbeds = new THREE.Group();
+    sunbeds.name = "terrace-sunbeds";
+    sunbeds.position.copy(studio.position);
+    sunbeds.rotation.copy(studio.rotation);
+    sunbeds.scale.copy(studio.scale);
+    poolStudioPassage.add(sunbeds);
+
+    for (const [index, z] of sunbedZPositions.entries()) {
+      const sunbed = new THREE.Group();
+      sunbed.name = `terrace-sunbed-${index + 1}`;
+      sunbed.position.set(sunbedX, 0, z);
+      sunbeds.add(sunbed);
+      addBox(sunbed, sunbedLength, 0.07, sunbedWidth, materials.white, 0, 0.13, 0);
+      addBox(sunbed, 1.15, 0.08, sunbedWidth - 0.06, materials.cushion, 0.325, 0.2, 0);
+      const backrest = addBox(sunbed, 0.65, 0.08, sunbedWidth - 0.06, materials.cushion, -0.55, 0.39, 0);
+      backrest.rotation.z = -0.58;
+      for (const x of [-0.72, 0.72]) {
+        addBox(sunbed, 0.05, 0.12, 0.05, materials.charcoal, x, 0.06, -0.19);
+        addBox(sunbed, 0.05, 0.12, 0.05, materials.charcoal, x, 0.06, 0.19);
+      }
+    }
+
+    const sunbedDoorClearance = sunbedX - sunbedLength / 2 - storageDoorEnd;
+    const sunbedRowGap = sunbedZPositions[1] - sunbedZPositions[0] - sunbedWidth;
+    const sunbedOuterEdgeZ = sunbedZPositions[1] + sunbedWidth / 2;
+    const sunbedTerraceBoundaryZ = (
+      Math.sin(studioAngle) * (sunbedX - sunbedLength / 2) - terraceLineZ
+    ) / Math.cos(studioAngle);
+    const sunbedTerraceClearance = sunbedTerraceBoundaryZ - sunbedOuterEdgeZ;
+
     const warmLight = new THREE.PointLight(0xffd7a0, 18, 7, 2);
     warmLight.position.set(2.2, 2.45, 3.4);
     studio.add(warmLight);
@@ -987,7 +1023,7 @@
     pergolaLight.position.set(2.1, 2.7, 1.2);
     studio.add(pergolaLight);
 
-    const terraceGardenZ = siteZ(464.05);
+    const terraceGardenZ = terraceLineZ;
     const houseRearZ = siteZ(536.05);
     const houseFrontZ = siteZ(806.05);
     const houseLeftX = siteX(0);
@@ -1474,7 +1510,9 @@
       integratedDeck: {
         area: integratedDeckArea,
         sideRun: 10,
-        frontDepth: terraceDeckEndLocalZ - 10,
+        innerReturnDepth: terraceDeckInnerEndLocalZ - 10,
+        outerReturnDepth: terraceDeckEndLocalZ - 10,
+        terraceLineDeviation: Math.abs(studioWorldPoint(4, terraceDeckEndLocalZ)[1] - terraceLineZ),
         pointCount: integratedDeckPoints.length,
         straightPoolLine: poolTimberInnerStart[0] === poolTimberInnerEnd[0],
         unifiedWoodSurface: integratedDeck.name === "single-integrated-deck-surface"
@@ -1512,7 +1550,12 @@
         deskAxis: deskLength > deskWidth ? "studio-long-axis" : "cross-axis",
         pergolaSofaAxis: 1.72 > 0.73 ? "studio-long-axis" : "cross-axis",
         sliderEntryClearance: coffeeTableX - coffeeTableWidth / 2,
-        deskToBathroomClearance: (687 - 90) / 75 - (deskZ + deskLength / 2)
+        deskToBathroomClearance: (687 - 90) / 75 - (deskZ + deskLength / 2),
+        sunbedCount: sunbeds.children.filter(child => child.name.startsWith("terrace-sunbed-")).length,
+        sunbedSize: [sunbedLength, sunbedWidth],
+        sunbedDoorClearance,
+        sunbedRowGap,
+        sunbedTerraceClearance
       },
       sourcePlan: "grondplan.html",
       canonicalWorldScaleX: world.scale.x
@@ -1529,9 +1572,11 @@
     console.assert(Math.abs(geometryChecks.timberPlatform.skewAtPool - 0.095) < 0.002, "Timber platform must meet the pool diagonally");
     console.assert(geometryChecks.timberPlatform.glassLineDeviation < 1e-9, "Platform edge and pergola glass must be collinear");
     console.assert(geometryChecks.timberPlatform.rearLineDeviation < 1e-9, "Upper platform edge and pergola rear must be collinear");
-    console.assert(Math.abs(geometryChecks.integratedDeck.area - 28.517763) < 0.001, "Merged pool-edge deck must be 28.52 m² including the rear pool edge");
+    console.assert(Math.abs(geometryChecks.integratedDeck.area - 30.115228) < 0.001, "Merged pool-edge deck must be 30.12 m² after aligning with the terrace");
     console.assert(geometryChecks.integratedDeck.sideRun === 10, "Deck must run along the complete studio side");
-    console.assert(geometryChecks.integratedDeck.frontDepth > 1 && geometryChecks.integratedDeck.frontDepth < 1.1, "Front return must fill the studio-to-terrace gap");
+    console.assert(geometryChecks.integratedDeck.innerReturnDepth > 1 && geometryChecks.integratedDeck.innerReturnDepth < 1.1, "Pool-side return must fill the studio-to-terrace gap");
+    console.assert(geometryChecks.integratedDeck.outerReturnDepth > 1.5 && geometryChecks.integratedDeck.outerReturnDepth < 1.6, "Outer return must extend to the terrace line");
+    console.assert(geometryChecks.integratedDeck.terraceLineDeviation < 1e-9, "Studio-end timber edge must follow the terrace line");
     console.assert(geometryChecks.integratedDeck.pointCount === 13, "Merged deck must include the side run, rear return and terrace connection");
     console.assert(geometryChecks.integratedDeck.straightPoolLine, "Pool-side deck edge must stay on one straight line to the terrace");
     console.assert(geometryChecks.integratedDeck.unifiedWoodSurface, "Timber coping and deck must share one flush, texture-aligned surface");
@@ -1551,6 +1596,10 @@
     console.assert(Object.values(geometryChecks.furniture).slice(0, 4).every(axis => axis === "studio-long-axis"), "Sofa, tables and desk must follow the studio long axis");
     console.assert(geometryChecks.furniture.sliderEntryClearance > 2.2, "Furniture must preserve a clear route from the pool-side slider");
     console.assert(geometryChecks.furniture.deskToBathroomClearance > 0.5, "Desk must clear the bathroom zone");
+    console.assert(geometryChecks.furniture.sunbedCount === 2 && geometryChecks.furniture.sunbedSize[0] === 1.8 && geometryChecks.furniture.sunbedSize[1] === 0.52, "Terrace return must contain two 1.80 x 0.52 m sunbeds");
+    console.assert(geometryChecks.furniture.sunbedDoorClearance >= 0.8, "Sunbeds must remain at least 0.80 m clear of the storage door");
+    console.assert(geometryChecks.furniture.sunbedRowGap >= 0.05, "Sunbeds must retain a gap between rows");
+    console.assert(geometryChecks.furniture.sunbedTerraceClearance >= 0.15, "Sunbeds must remain fully inside the terrace-line timber edge");
     console.assert(geometryChecks.canonicalWorldScaleX === -1, "All views must retain the Plan orientation");
     window.__renderMetrics = geometryChecks;
 
