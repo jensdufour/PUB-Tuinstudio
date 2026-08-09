@@ -1552,10 +1552,76 @@
       const sprite = makeTextSprite(label);
       sprite.position.set((start.x + end.x) / 2, y + 0.28, (start.z + end.z) / 2);
       dimensions.add(sprite);
+      return { line, sprite };
     }
 
-    addDimensionBetween({ x: poolNnoShift, z: poolRearZ }, { x: studioPathStartX, z: 0 }, "0,16 m", 0.2);
-    addDimensionBetween(platformPoolEdge, platformStudioEdge, "0,50 m", 0.24);
+    function addVerticalDimension(position, startY, endY, label, tick = { x: 0.1, z: 0 }) {
+      const material = new THREE.LineBasicMaterial({ color: 0x5f3927, depthTest: false });
+      const points = [
+        new THREE.Vector3(position.x, startY, position.z), new THREE.Vector3(position.x, endY, position.z),
+        new THREE.Vector3(position.x - tick.x, startY, position.z - tick.z), new THREE.Vector3(position.x + tick.x, startY, position.z + tick.z),
+        new THREE.Vector3(position.x - tick.x, endY, position.z - tick.z), new THREE.Vector3(position.x + tick.x, endY, position.z + tick.z)
+      ];
+      const line = new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(points), material);
+      line.renderOrder = 15;
+      dimensions.add(line);
+      const sprite = makeTextSprite(label);
+      sprite.position.set(position.x, (startY + endY) / 2, position.z);
+      dimensions.add(sprite);
+      return { line, sprite };
+    }
+
+    const upperJointDimension = addDimensionBetween(
+      { x: poolNnoShift, z: poolRearZ },
+      { x: studioPathStartX, z: 0 },
+      "0,16 m",
+      0.2
+    );
+    upperJointDimension.line.name = "dimension-upper-construction-joint";
+    const glassJointDimension = addDimensionBetween(platformPoolEdge, platformStudioEdge, "0,50 m", 0.24);
+    glassJointDimension.line.name = "dimension-glass-construction-joint";
+
+    const claddingFacadeStart = studioWorldPoint(0, 10.38);
+    const claddingFacadeEnd = studioWorldPoint(4, 10.38);
+    const claddingFacadeDimension = addDimensionBetween(
+      { x: claddingFacadeStart[0], z: claddingFacadeStart[1] },
+      { x: claddingFacadeEnd[0], z: claddingFacadeEnd[1] },
+      "hout 3,10 m + deur 0,90 m",
+      0.3
+    );
+    claddingFacadeDimension.line.name = "dimension-storage-end-cladding-width";
+    claddingFacadeDimension.sprite.name = "dimension-storage-end-cladding-width-label";
+
+    const claddingDoorStart = studioWorldPoint(storageDoorStart, 10.7);
+    const claddingDoorEnd = studioWorldPoint(storageDoorEnd, 10.7);
+    const claddingDoorDimension = addDimensionBetween(
+      { x: claddingDoorStart[0], z: claddingDoorStart[1] },
+      { x: claddingDoorEnd[0], z: claddingDoorEnd[1] },
+      "deur 0,90 m",
+      0.34
+    );
+    claddingDoorDimension.line.name = "dimension-storage-door-width";
+    claddingDoorDimension.sprite.name = "dimension-storage-door-width-label";
+
+    const claddingHeightAnchor = studioWorldPoint(4.28, 10.38);
+    const claddingHeightDimension = addVerticalDimension(
+      { x: claddingHeightAnchor[0], z: claddingHeightAnchor[1] },
+      0.08,
+      2.9,
+      "hout h 2,82 m",
+      { x: Math.cos(studioAngle) * 0.1, z: Math.sin(studioAngle) * 0.1 }
+    );
+    claddingHeightDimension.line.name = "dimension-storage-end-cladding-height";
+    claddingHeightDimension.sprite.name = "dimension-storage-end-cladding-height-label";
+
+    const zzwWrapDimension = addDimensionBetween(
+      { x: poolNnoShift - poolOuterWidth, z: poolHouseEdgeZ },
+      { x: poolNnoShift - poolOuterWidth, z: poolHouseEdgeZ + coping },
+      "houtretour 0,20 m",
+      0.26
+    );
+    zzwWrapDimension.line.name = "dimension-zzw-timber-wrap";
+    zzwWrapDimension.sprite.name = "dimension-zzw-timber-wrap-label";
 
     const geometryChecks = {
       minimum: platformRearEdgeLength,
@@ -1637,7 +1703,17 @@
         wallSegments: 2,
         timberCladdingBoardCount: storageEndTimberCladding.children.length,
         timberCladdingContinuousWithDeck: storageEndTimberCladding.parent === studio
-          && integratedDeck.material === woodMaterial
+          && integratedDeck.material === woodMaterial,
+        dimensionOverlay: {
+          facade: 4,
+          timber: 4 - storageDoorWidth,
+          door: storageDoorWidth,
+          height: 2.82,
+          poolWrap: coping,
+          lineCount: dimensions.children.filter(child => child.isLineSegments
+            && (child.name.startsWith("dimension-storage-")
+              || child.name === "dimension-zzw-timber-wrap")).length
+        }
       },
       furniture: {
         loungeSofaAxis: loungeSofaLength > loungeSofaWidth ? "studio-long-axis" : "cross-axis",
@@ -1697,6 +1773,15 @@
     console.assert(geometryChecks.storageDoor.ral === "RAL 9005" && geometryChecks.storageDoor.material === "aluminium" && geometryChecks.storageDoor.swing === "outward", "Storage exterior door must be outward-opening RAL 9005 aluminium");
     console.assert(geometryChecks.storageDoor.timberCladdingBoardCount > 20, "Storage-end facade must use vertical timber cladding around the door");
     console.assert(geometryChecks.storageDoor.timberCladdingContinuousWithDeck, "Storage-end timber cladding and deck must read as one structure");
+    console.assert(geometryChecks.storageDoor.dimensionOverlay.facade === 4
+      && geometryChecks.storageDoor.dimensionOverlay.timber === 3.1
+      && geometryChecks.storageDoor.dimensionOverlay.door === 0.9
+      && geometryChecks.storageDoor.dimensionOverlay.height === 2.82,
+    "Maten overlay must include the storage-end timber cladding and door dimensions");
+    console.assert(geometryChecks.storageDoor.dimensionOverlay.poolWrap === 0.2,
+      "Maten overlay must include the 0.20 m ZZW timber return");
+    console.assert(geometryChecks.storageDoor.dimensionOverlay.lineCount === 4,
+      "Maten overlay must contain four cladding-related dimension lines");
     console.assert(Object.values(geometryChecks.furniture).slice(0, 4).every(axis => axis === "studio-long-axis"), "Sofa, tables and desk must follow the studio long axis");
     console.assert(geometryChecks.furniture.sliderEntryClearance > 2.2, "Furniture must preserve a clear route from the pool-side slider");
     console.assert(geometryChecks.furniture.deskToBathroomClearance > 0.5, "Desk must clear the bathroom zone");
