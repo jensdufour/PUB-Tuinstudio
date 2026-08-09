@@ -12,6 +12,7 @@
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:,">
   <title>Render zwembadpad en tuinstudio</title>
   <style>
     :root {
@@ -317,8 +318,8 @@
   <script type="importmap">
     {
       "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
-        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+        "three": "./vendor/three/three.module.js",
+        "three/addons/": "./vendor/three/addons/"
       }
     }
   </script>
@@ -1633,11 +1634,9 @@
     };
 
     render();
-    requestAnimationFrame(() => {
-      loading.classList.add("ready");
-      window.__renderReady = true;
-      document.documentElement.dataset.geometry = "verified";
-    });
+    loading.classList.add("ready");
+    window.__renderReady = true;
+    document.documentElement.dataset.geometry = "verified";
   </script>
 </body>
 
