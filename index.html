@@ -238,20 +238,20 @@
     </div>
 
     <nav role="tablist" aria-label="Plannen">
-      <a class="tab" href="grondplan.html" target="plan-viewer" role="tab" aria-selected="true"
+      <a class="tab" href="grondplan.html" target="plan-viewer" role="tab" aria-selected="false"
         data-page="grondplan.html">Tuinplan</a>
       <a class="tab" href="tuinstudio.html" target="plan-viewer" role="tab" aria-selected="false"
         data-page="tuinstudio.html">Tuinstudio</a>
-      <a class="tab" href="render.html" target="plan-viewer" role="tab" aria-selected="false"
+      <a class="tab" href="render.html" target="plan-viewer" role="tab" aria-selected="true"
         data-page="render.html">3D render</a>
     </nav>
 
-    <a class="open-current" href="grondplan.html" target="_blank" rel="noopener">
+    <a class="open-current" href="render.html" target="_blank" rel="noopener">
       Open apart <span class="open-icon" aria-hidden="true">&nearr;</span>
     </a>
   </header>
 
-  <iframe name="plan-viewer" src="grondplan.html" title="Tuinplan Lot 24B"></iframe>
+  <iframe name="plan-viewer" src="render.html" title="3D-render Lot 24B"></iframe>
 
   <script>
     const tabs = [...document.querySelectorAll("[data-page]")];
