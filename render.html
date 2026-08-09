@@ -334,15 +334,15 @@
       <h1>Tuinplan Lot 24B</h1>
       <p class="subtitle">Woning · terras · LPW City+ · tuinstudio · voortuin</p>
       <div class="metrics" aria-label="Belangrijkste doorgangen">
-        <span class="metric">bovenvoeg 0,16 m</span>
-        <span class="metric">glasvoeg 0,50 m</span>
+        <span class="metric">open pergola 4,36 m</span>
+        <span class="metric">glaslijn 0,70 m</span>
         <span class="metric">houtdek 37,86 m²</span>
         <span class="metric">raming 78,23 / 80 m²</span>
       </div>
     </header>
 
     <div class="material-note">
-      Het zwembad schuift 0,20 m NNO zodat de ZZW-poolrand en het zonnedek exact op de 1,00 m grenslijn liggen. OZO en 0,20 m van ZZW blijven hout; WNW en de overige ZZW-rand blijven blauwe steen. De voegen van 0,16 en 0,50 m zijn constructievoegen, geen doorgangen.
+      Het zwembad schuift 0,20 m NNO zodat de ZZW-poolrand en het zonnedek exact op de 1,00 m grenslijn liggen. OZO en 0,20 m van ZZW blijven hout; WNW en de overige ZZW-rand blijven blauwe steen. Maten toont alleen de volledige vrije breedtes van de knelpunten, gemeten vanaf de waterzijde van de 0,20 m houten poolrand: 4,36 m door de open pergola en 0,70 m aan de glaslijn.
     </div>
 
     <div class="control-dock" aria-label="Renderinstellingen">
@@ -1555,73 +1555,43 @@
       return { line, sprite };
     }
 
-    function addVerticalDimension(position, startY, endY, label, tick = { x: 0.1, z: 0 }) {
-      const material = new THREE.LineBasicMaterial({ color: 0x5f3927, depthTest: false });
-      const points = [
-        new THREE.Vector3(position.x, startY, position.z), new THREE.Vector3(position.x, endY, position.z),
-        new THREE.Vector3(position.x - tick.x, startY, position.z - tick.z), new THREE.Vector3(position.x + tick.x, startY, position.z + tick.z),
-        new THREE.Vector3(position.x - tick.x, endY, position.z - tick.z), new THREE.Vector3(position.x + tick.x, endY, position.z + tick.z)
-      ];
-      const line = new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(points), material);
-      line.renderOrder = 15;
-      dimensions.add(line);
-      const sprite = makeTextSprite(label);
-      sprite.position.set(position.x, (startY + endY) / 2, position.z);
-      dimensions.add(sprite);
-      return { line, sprite };
-    }
-
-    const upperJointDimension = addDimensionBetween(
-      { x: poolNnoShift, z: poolRearZ },
-      { x: studioPathStartX, z: 0 },
-      "0,16 m",
+    const openPergolaStart = { x: poolNnoShift - coping, z: poolRearZ };
+    const openPergolaEndPoint = studioWorldPoint(4, 0);
+    const openPergolaEnd = { x: openPergolaEndPoint[0], z: openPergolaEndPoint[1] };
+    const openPergolaWidth = Math.hypot(
+      openPergolaEnd.x - openPergolaStart.x,
+      openPergolaEnd.z - openPergolaStart.z
+    );
+    const openPergolaDimension = addDimensionBetween(
+      openPergolaStart,
+      openPergolaEnd,
+      "4,36 m",
       0.2
     );
-    upperJointDimension.line.name = "dimension-upper-construction-joint";
-    const glassJointDimension = addDimensionBetween(platformPoolEdge, platformStudioEdge, "0,50 m", 0.24);
-    glassJointDimension.line.name = "dimension-glass-construction-joint";
+    openPergolaDimension.line.name = "dimension-open-pergola-width";
+    openPergolaDimension.sprite.name = "dimension-open-pergola-width-label";
 
-    const claddingFacadeStart = studioWorldPoint(0, 10.38);
-    const claddingFacadeEnd = studioWorldPoint(4, 10.38);
-    const claddingFacadeDimension = addDimensionBetween(
-      { x: claddingFacadeStart[0], z: claddingFacadeStart[1] },
-      { x: claddingFacadeEnd[0], z: claddingFacadeEnd[1] },
-      "hout 3,10 m + deur 0,90 m",
-      0.3
+    const glassLineInnerLocalX = (
+      poolNnoShift - coping - platformStudioEdge.x
+    ) / Math.cos(studioAngle);
+    const glassLineStart = {
+      x: poolNnoShift - coping,
+      z: Math.sin(studioAngle) * glassLineInnerLocalX
+        - Math.cos(studioAngle) * pergolaGlassLocalZ
+    };
+    const glassLineEnd = { x: platformStudioEdge.x, z: platformStudioEdge.z };
+    const glassLineWidth = Math.hypot(
+      glassLineEnd.x - glassLineStart.x,
+      glassLineEnd.z - glassLineStart.z
     );
-    claddingFacadeDimension.line.name = "dimension-storage-end-cladding-width";
-    claddingFacadeDimension.sprite.name = "dimension-storage-end-cladding-width-label";
-
-    const claddingDoorStart = studioWorldPoint(storageDoorStart, 10.7);
-    const claddingDoorEnd = studioWorldPoint(storageDoorEnd, 10.7);
-    const claddingDoorDimension = addDimensionBetween(
-      { x: claddingDoorStart[0], z: claddingDoorStart[1] },
-      { x: claddingDoorEnd[0], z: claddingDoorEnd[1] },
-      "deur 0,90 m",
-      0.34
-    );
-    claddingDoorDimension.line.name = "dimension-storage-door-width";
-    claddingDoorDimension.sprite.name = "dimension-storage-door-width-label";
-
-    const claddingHeightAnchor = studioWorldPoint(4.28, 10.38);
-    const claddingHeightDimension = addVerticalDimension(
-      { x: claddingHeightAnchor[0], z: claddingHeightAnchor[1] },
-      0.08,
-      2.9,
-      "hout h 2,82 m",
-      { x: Math.cos(studioAngle) * 0.1, z: Math.sin(studioAngle) * 0.1 }
-    );
-    claddingHeightDimension.line.name = "dimension-storage-end-cladding-height";
-    claddingHeightDimension.sprite.name = "dimension-storage-end-cladding-height-label";
-
-    const zzwWrapDimension = addDimensionBetween(
-      { x: poolNnoShift - poolOuterWidth, z: poolHouseEdgeZ },
-      { x: poolNnoShift - poolOuterWidth, z: poolHouseEdgeZ + coping },
-      "houtretour 0,20 m",
+    const glassLineDimension = addDimensionBetween(
+      glassLineStart,
+      glassLineEnd,
+      "0,70 m",
       0.26
     );
-    zzwWrapDimension.line.name = "dimension-zzw-timber-wrap";
-    zzwWrapDimension.sprite.name = "dimension-zzw-timber-wrap-label";
+    glassLineDimension.line.name = "dimension-glass-line-width";
+    glassLineDimension.sprite.name = "dimension-glass-line-width-label";
 
     const geometryChecks = {
       minimum: platformRearEdgeLength,
@@ -1652,6 +1622,12 @@
         startClearance: platformRearEdgeLength,
         endClearance: pergolaEdgeLength
       },
+      chokePoints: {
+        openPergolaWidth,
+        glassLineWidth,
+        copingIncluded: coping,
+        dimensionLineCount: dimensions.children.filter(child => child.isLineSegments).length
+      },
       integratedDeck: {
         area: integratedDeckArea,
         sideRun: 10,
@@ -1664,6 +1640,7 @@
           && Math.abs(poolSideTimberCoping.position.y + 0.045 - deckTop) < 1e-9,
         poolTimberWidth: coping,
         poolTimberExtensionLength: Math.abs(poolTimberInnerEnd[1] - poolTimberInnerStart[1]),
+        poolTimberEndsAtTerrace: Math.abs(poolTimberInnerEnd[1] - terraceLineZ) < 1e-9,
         deckTop,
         poolSideTimberCoping: poolSideTimberCoping.material === woodMaterial,
         poolRearBlueStoneCoping: poolRearBlueStoneCoping.material === materials.stone,
@@ -1703,17 +1680,7 @@
         wallSegments: 2,
         timberCladdingBoardCount: storageEndTimberCladding.children.length,
         timberCladdingContinuousWithDeck: storageEndTimberCladding.parent === studio
-          && integratedDeck.material === woodMaterial,
-        dimensionOverlay: {
-          facade: 4,
-          timber: 4 - storageDoorWidth,
-          door: storageDoorWidth,
-          height: 2.82,
-          poolWrap: coping,
-          lineCount: dimensions.children.filter(child => child.isLineSegments
-            && (child.name.startsWith("dimension-storage-")
-              || child.name === "dimension-zzw-timber-wrap")).length
-        }
+          && integratedDeck.material === woodMaterial
       },
       furniture: {
         loungeSofaAxis: loungeSofaLength > loungeSofaWidth ? "studio-long-axis" : "cross-axis",
@@ -1748,6 +1715,14 @@
     console.assert(Math.abs(geometryChecks.timberPlatform.skewAtPool - 0.067992) < 0.002, "Timber platform must meet the shifted pool diagonally");
     console.assert(geometryChecks.timberPlatform.glassLineDeviation < 1e-9, "Platform edge and pergola glass must be collinear");
     console.assert(Math.abs(geometryChecks.timberPlatform.rearLineDeviation - 0.027126) < 0.002, "Lateral pool shift must create the expected 27 mm rear-line offset");
+    console.assert(Math.abs(geometryChecks.chokePoints.openPergolaWidth - 4.357936) < 0.002,
+      "Open-pergola chokepoint must be about 4.36 m including the timber coping");
+    console.assert(Math.abs(geometryChecks.chokePoints.glassLineWidth - 0.703179) < 0.002,
+      "Glass-line chokepoint must be about 0.70 m including the timber coping");
+    console.assert(geometryChecks.chokePoints.copingIncluded === 0.2,
+      "Chokepoint dimensions must include the 0.20 m timber pool coping");
+    console.assert(geometryChecks.chokePoints.dimensionLineCount === 2,
+      "Maten overlay must show only the two full chokepoint widths");
     console.assert(Math.abs(geometryChecks.integratedDeck.area - 37.856235) < 0.001, "Merged pool-edge deck must be 37.86 m² after moving the pool NNO");
     console.assert(geometryChecks.integratedDeck.sideRun === 10, "Deck must run along the complete studio side");
     console.assert(geometryChecks.integratedDeck.innerReturnDepth > 1 && geometryChecks.integratedDeck.innerReturnDepth < 1.1, "Pool-side return must fill the studio-to-terrace gap");
@@ -1756,7 +1731,9 @@
     console.assert(geometryChecks.integratedDeck.pointCount === 17, "Merged deck must align the shifted pool and 1.00 m boundary without duplicate corners");
     console.assert(geometryChecks.integratedDeck.straightPoolLine, "Pool-side deck edge must stay on one straight line to the terrace");
     console.assert(geometryChecks.integratedDeck.unifiedWoodSurface, "Timber coping and deck must share one flush, texture-aligned surface");
-    console.assert(Math.abs(geometryChecks.integratedDeck.poolTimberWidth - 0.2) < 1e-9 && geometryChecks.integratedDeck.poolTimberExtensionLength > 10.8, "The 20 cm timber strip must continue from the pool to the terrace");
+    console.assert(Math.abs(geometryChecks.integratedDeck.poolTimberWidth - 0.2) < 1e-9
+      && geometryChecks.integratedDeck.poolTimberEndsAtTerrace,
+    "The 20 cm timber strip must continue from the pool to the terrace");
     console.assert(geometryChecks.integratedDeck.poolSideTimberCoping, "Pool border beside the studio must use the deck timber material");
     console.assert(geometryChecks.integratedDeck.poolRearBlueStoneCoping, "WNW pool border must remain blue stone");
     console.assert(geometryChecks.integratedDeck.poolOzoTimberCoping, "OZO pool border must continue in timber to the water");
@@ -1773,15 +1750,6 @@
     console.assert(geometryChecks.storageDoor.ral === "RAL 9005" && geometryChecks.storageDoor.material === "aluminium" && geometryChecks.storageDoor.swing === "outward", "Storage exterior door must be outward-opening RAL 9005 aluminium");
     console.assert(geometryChecks.storageDoor.timberCladdingBoardCount > 20, "Storage-end facade must use vertical timber cladding around the door");
     console.assert(geometryChecks.storageDoor.timberCladdingContinuousWithDeck, "Storage-end timber cladding and deck must read as one structure");
-    console.assert(geometryChecks.storageDoor.dimensionOverlay.facade === 4
-      && geometryChecks.storageDoor.dimensionOverlay.timber === 3.1
-      && geometryChecks.storageDoor.dimensionOverlay.door === 0.9
-      && geometryChecks.storageDoor.dimensionOverlay.height === 2.82,
-    "Maten overlay must include the storage-end timber cladding and door dimensions");
-    console.assert(geometryChecks.storageDoor.dimensionOverlay.poolWrap === 0.2,
-      "Maten overlay must include the 0.20 m ZZW timber return");
-    console.assert(geometryChecks.storageDoor.dimensionOverlay.lineCount === 4,
-      "Maten overlay must contain four cladding-related dimension lines");
     console.assert(Object.values(geometryChecks.furniture).slice(0, 4).every(axis => axis === "studio-long-axis"), "Sofa, tables and desk must follow the studio long axis");
     console.assert(geometryChecks.furniture.sliderEntryClearance > 2.2, "Furniture must preserve a clear route from the pool-side slider");
     console.assert(geometryChecks.furniture.deskToBathroomClearance > 0.5, "Desk must clear the bathroom zone");
