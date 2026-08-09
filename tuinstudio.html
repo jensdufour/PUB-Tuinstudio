@@ -155,7 +155,7 @@
       Plan-top:    NNO (ramen badkamer, kantoor, lounge)
       Plan-bottom: ZZW (ingang via schuifraam)
       Plan-left:   WNW (pergola open side)
-      Plan-right:  OZO (berging/badkamer deuren)
+      Plan-right:  OZO (doorlopende berging/badkamergevel)
 
     ROOM SCHEDULE (rotated coords, WNW→OZO left→right, NNO→ZZW top→bottom):
       PERGOLA:  x=108..278, y=93..357   (170x264px = 2,27 x 3,52 m =  7,98 m²)
@@ -164,13 +164,14 @@
       BERGING:  x=687..822, y=244.5..357  (135x112.5px = 1,80 x 1,50 m = 2,70 m²)
       BADKAMER: x=687..822, y=93..236.5   (135x143.5px = 1,80 x 1,91 m = 3,44 m²)
 
-    ZZW (BOTTOM) WALL — one economical two-panel pool-side slider, y=357..375:
+    ZZW (BOTTOM) WALL — pool-side slider plus centered storage door, y=357..375:
       Pergola open 2,51 m:    x=90..278  (188px)  — open (WNW side)
       RAL 9005 post 0,20 m: x=278..293 (15px)   — connects both sliding windows
       Schuifraam 5,15 m:     x=293..679 (386px)  — 2 panels, one continuous opening
-      Bath south solid:       x=679..840 (161px = 2,15 m)
+      Berging ZZW-wand:       x=679..840 (2,15 m), deur 0,90 m gecentreerd
+      Deurwangen:             0,62 m aan schuifraam- en OZO-zijde
 
-      Sequence (right to left): bath solid → 5,15m two-panel slider → RAL9005 post 20x20 → pergola.
+      Sequence (right to left): bergingsdeur met 0,62m wangen → 5,15m two-panel slider → RAL9005 post 20x20 → pergola.
 
     NNO (TOP) WALL, y=75..93:
       Pergola north solid:       x=90..278  (188px)
@@ -181,11 +182,7 @@
       Pier W:                    x=808..840 (32px = 0,43 m)
 
     OZO (RIGHT) WALL, x=822..840:
-      NE corner: y=75..93 (18px)
-      Badkamer buitenwand:       y=93..289 (geen buitendeur)
-      Solid: y=153..289 (136px = 1,81 m)
-      Berging deur 0,90 m: y=289..357 (68px)
-      SE corner: y=357..375 (18px)
+      Doorlopende buitenwand: y=93..357 (geen buitendeur)
 
     WNW (LEFT) WALL (pergola/lounge): schuifraam 3,52 m full height, 2 panels, x=278..296
 
@@ -273,10 +270,11 @@
         </g>
 
         <!-- ══════════════════════════════════════════════════════
-             ZZW (BOTTOM) WALL — one 5,01m two-panel slider (open corner)
+             ZZW (BOTTOM) WALL — 5,15 m two-panel slider plus storage door
              ══════════════════════════════════════════════════════ -->
-        <!-- Bath south solid masonry: x=679..840 (2,15 m) -->
-        <rect x="679" y="357" width="161" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <!-- ZZW storage wall with centered 0,90 m exterior door and 0,62 m jambs. -->
+        <rect x="679" y="357" width="46.75" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <rect x="793.25" y="357" width="46.75" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
 
         <!-- One 5,15 m sliding window, split into two economical panels. -->
         <rect id="pool-side-slider" x="293" y="357" width="386" height="18"
@@ -290,10 +288,11 @@
           fill="#0a0a0d" stroke="#000000" stroke-width="1.2">
           <title>Verbindingspost 20 × 20 cm, RAL 9005</title>
         </rect>
-        <line id="pool-side-blue-stone-plinth" x1="679" y1="373" x2="840" y2="373"
-          stroke="#788890" stroke-width="4" stroke-linecap="round">
-          <title>Crepiwand met blauwe-steenplint aan de zwembadzijde</title>
-        </line>
+        <g id="pool-side-blue-stone-plinth" stroke="#788890" stroke-width="4" stroke-linecap="round">
+          <title>ZZW-crepiwand met blauwe-steenplint rondom de bergingsdeur</title>
+          <line x1="679" y1="373" x2="725.75" y2="373" />
+          <line x1="793.25" y1="373" x2="840" y2="373" />
+        </g>
 
         <!-- INGANG arrow (centered on schuifraam) -->
         <line x1="486" y1="455" x2="486" y2="366" stroke="#4A7C59" stroke-width="2" marker-end="url(#arrG)" />
@@ -307,13 +306,7 @@
         <!-- ══════════════════════════════════════════════════════
              OZO (RIGHT) WALL
              ══════════════════════════════════════════════════════ -->
-        <rect x="822" y="357" width="18" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
-        <!-- Berging door opening 0,90 m: y=289..357 (68px) -->
-        <rect x="822" y="289" width="18" height="68" fill="#faf8f4" stroke="none" />
-        <line x1="840" y1="357" x2="822" y2="357" stroke="#2E4057" stroke-width="1.2" />
-        <line x1="840" y1="289" x2="822" y2="289" stroke="#2E4057" stroke-width="1.2" />
-        <!-- Solid bathroom exterior wall: y=93..289; redundant outside door removed. -->
-        <rect x="822" y="93" width="18" height="196" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <rect x="822" y="93" width="18" height="282" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
         <!-- SW corner -->
         <rect x="822" y="75" width="18" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
 
@@ -382,14 +375,13 @@
              <rect x="687" y="244.5" width="135" height="112.5" fill="url(#cupboardFill)" />
         <!-- Berging/badkamer partition (0,10 m) -->
              <rect x="687" y="236.5" width="135" height="8" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
-        <!-- Standard aluminium RAL 9005 exterior door, opening outward to OZO. -->
+        <!-- Standard aluminium RAL 9005 exterior door, opening outward on ZZW. -->
         <g id="storage-exterior-door-ral9005" fill="none" stroke="#0a0a0d">
-          <title>Standaard aluminium buitendeur berging, 0,90 m, RAL 9005, naar buiten draaiend</title>
-          <line x1="840" y1="357" x2="840" y2="289" stroke-width="1.2" />
-          <line x1="840" y1="357" x2="908" y2="357" stroke-width="2" />
-          <path d="M840,289 A68 68 0 0 1 908,357" stroke="#8a9aaa" stroke-width="0.9" stroke-dasharray="4,3" />
+          <title>Standaard aluminium buitendeur berging, 0,90 m, RAL 9005, op de ZZW-zijde en naar buiten draaiend</title>
+          <line x1="793.25" y1="375" x2="793.25" y2="442.5" stroke-width="2" />
+          <path d="M725.75,375 A67.5 67.5 0 0 0 793.25,442.5" stroke="#8a9aaa" stroke-width="0.9" stroke-dasharray="4,3" />
         </g>
-        <text x="874" y="350" font-size="4.5" fill="#0a0a0d" text-anchor="middle" font-weight="700">ALU RAL9005</text>
+        <text x="805" y="410" font-size="4.5" fill="#0a0a0d" text-anchor="start" font-weight="700">ALU RAL9005</text>
         <!-- Label -->
            <text x="754" y="267" font-size="8" fill="#2E4057" text-anchor="middle" font-weight="700">BERGING</text>
            <text x="754" y="256" font-size="6" fill="#7a8a9a" text-anchor="middle">1,80 x 1,50 m (2,70 m&#178;)</text>
@@ -738,7 +730,7 @@
         <text x="470" y="-60" font-size="9" fill="#7a8a9a" text-anchor="middle" font-style="italic">NNO-zijde &mdash;
           ramen badkamer, kantoor &amp; lounge</text>
         <text x="470" y="542" font-size="9" fill="#4A7C59" text-anchor="middle" font-style="italic">ZZW-zijde &mdash;
-          ingang via schuifraam</text>
+          schuifraam + bergingsdeur</text>
         <text x="928" y="225" font-size="9" fill="#7a8a9a" text-anchor="middle" transform="rotate(90,928,225)"
           font-style="italic">OZO-zijde</text>
         <text x="-30" y="225" font-size="9" fill="#4A7C59" text-anchor="middle" transform="rotate(-90,-30,225)"
@@ -750,15 +742,21 @@
 
         <!-- ─── BOTTOM: ZZW FACE BREAKDOWN at y≈515 ─── -->
         <line x1="840" y1="522" x2="840" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="793.25" y1="522" x2="793.25" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="725.75" y1="522" x2="725.75" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="679" y1="522" x2="679" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="293" y1="522" x2="293" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="278" y1="522" x2="278" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="90" y1="522" x2="90" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
 
-        <!-- Solid bath wall 2,15 m -->
-        <line x1="840" y1="515" x2="679" y2="515" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
-        <rect x="741" y="512" width="46" height="11" fill="#faf8f4" />
-        <text x="764" y="515" font-size="6" fill="#7a8a9a" text-anchor="middle">wand 2,15</text>
+        <!-- Centered storage door: 0,62 + 0,90 + 0,62 m. -->
+        <line x1="840" y1="515" x2="793.25" y2="515" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="816.625" y="515" font-size="5" fill="#7a8a9a" text-anchor="middle">0,62</text>
+        <line x1="793.25" y1="515" x2="725.75" y2="515" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <rect x="738" y="512" width="43" height="11" fill="#faf8f4" />
+        <text x="759.5" y="515" font-size="5" fill="#4A7C59" text-anchor="middle" font-weight="700">deur 0,90</text>
+        <line x1="725.75" y1="515" x2="679" y2="515" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="702.375" y="515" font-size="5" fill="#7a8a9a" text-anchor="middle">0,62</text>
 
         <!-- One full-width, two-panel slider 5,15 m. -->
         <line x1="679" y1="515" x2="293" y2="515" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
@@ -894,17 +892,11 @@
         <line x1="855" y1="236.5" x2="855" y2="93" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
         <text x="867" y="165" font-size="6" fill="#7a8a9a" text-anchor="middle">1,91</text>
 
-        <!-- ─── RIGHT LVL 2: OZO WALL OPENINGS at x≈888 ─── -->
+        <!-- ─── RIGHT LVL 2: continuous OZO wall at x≈888 ─── -->
         <line x1="893" y1="357" x2="883" y2="357" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="893" y1="289" x2="883" y2="289" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="893" y1="93" x2="883" y2="93" stroke="#8a9aaa" stroke-width="0.5" />
-        <!-- Berging deur 0,90 -->
-        <line x1="888" y1="357" x2="888" y2="289" stroke="#4A7C59" stroke-width="0.6" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
-        <text x="900" y="328" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">0,90</text>
-        <text x="900" y="320" font-size="4.5" fill="#4A7C59" text-anchor="middle">deur</text>
-        <!-- Gesloten badkamergevel 2,61 m. -->
-        <line x1="888" y1="289" x2="888" y2="93" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
-        <text x="900" y="194" font-size="6" fill="#7a8a9a" text-anchor="middle">2,61</text>
+        <line x1="888" y1="357" x2="888" y2="93" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="900" y="225" font-size="6" fill="#7a8a9a" text-anchor="middle">wand 3,52</text>
 
         <!-- ─── INTERNAL: Badkamer/kantoor deur dim ─── -->
         <line x1="700" y1="236.5" x2="693" y2="236.5" stroke="#4A7C59" stroke-width="0.5" />
@@ -931,7 +923,7 @@
         <text x="514" y="132" font-size="5.5" fill="#4A7C59" text-anchor="middle">1,10</text>
 
         <!-- ─── IN-PLAN WALL THICKNESS NOTES ─── -->
-        <text x="760" y="363" font-size="4.5" fill="#2E4057" text-anchor="middle" opacity="0.55">wand 0,24</text>
+        <text x="816.625" y="363" font-size="3.8" fill="#2E4057" text-anchor="middle" opacity="0.55">wand 0,24</text>
         <text x="677" y="81" font-size="4.5" fill="#2E4057" text-anchor="middle" opacity="0.55">wand 0,24</text>
         <text x="184" y="81" font-size="4.5" fill="#2E4057" text-anchor="middle" opacity="0.55">wand 0,24</text>
         <text x="831" y="215" font-size="4.5" fill="#2E4057" text-anchor="middle" transform="rotate(90,831,215)" opacity="0.55">wand 0,24</text>
