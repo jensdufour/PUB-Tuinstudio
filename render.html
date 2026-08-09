@@ -342,7 +342,7 @@
     </header>
 
     <div class="material-note">
-      Het zwembad schuift 0,20 m NNO zodat de ZZW-poolrand en het zonnedek exact op de 1,00 m grenslijn liggen. OZO en 0,20 m van ZZW blijven hout; WNW en de overige ZZW-rand blijven blauwe steen. Maten toont alleen de volledige vrije breedtes van de knelpunten, gemeten vanaf de waterzijde van de 0,20 m houten poolrand: 4,36 m door de open pergola en 0,70 m aan de glaslijn.
+      Het zwembad schuift 0,20 m NNO zodat de ZZW-poolrand en het zonnedek exact op de 1,00 m grenslijn liggen. OZO en 0,20 m van ZZW blijven hout; WNW en de overige ZZW-rand blijven blauwe steen. De vaste maatvoering toont alleen de volledige vrije breedtes van de knelpunten, gemeten vanaf de waterzijde van de 0,20 m houten poolrand: 4,36 m door de open pergola en 0,70 m aan de glaslijn.
     </div>
 
     <div class="control-dock" aria-label="Renderinstellingen">
@@ -352,8 +352,6 @@
         <button class="mode-button" type="button" data-view="plan" aria-pressed="false">Plan</button>
       </div>
       <div class="tool-switch" role="group" aria-label="Weergavehulpmiddelen">
-        <button id="toggle-dimensions" type="button" aria-pressed="false" title="Toon of verberg maatvoering">Maten</button>
-        <button id="toggle-passage" type="button" aria-pressed="true" title="Toon of verberg het doorlopende houten dek">Houtdek</button>
         <button id="reset-camera" type="button" title="Herstel de huidige camerastand">Herstel</button>
       </div>
     </div>
@@ -368,8 +366,6 @@
     const sceneHost = document.querySelector("#scene");
     const mainHost = document.querySelector("main");
     const loading = document.querySelector("#loading");
-    const dimensionsButton = document.querySelector("#toggle-dimensions");
-    const passageButton = document.querySelector("#toggle-passage");
     const viewButtons = [...document.querySelectorAll("[data-view]")];
     const resetButton = document.querySelector("#reset-camera");
 
@@ -842,6 +838,7 @@
 
     const poolStudioPassage = new THREE.Group();
     poolStudioPassage.name = "integrated-studio-deck";
+    poolStudioPassage.visible = true;
     world.add(poolStudioPassage);
 
     const studioWorldPoint = (localX, localZ) => [
@@ -1444,7 +1441,7 @@
     scene.add(sun);
 
     const dimensions = new THREE.Group();
-    dimensions.visible = false;
+    dimensions.visible = true;
     world.add(dimensions);
 
     function makeTextSprite(text) {
@@ -1763,18 +1760,9 @@
     console.assert(geometryChecks.furniture.sunbedHatchClearance >= 1, "Sunbeds must leave the rainwater-tank hatch accessible");
     console.assert(geometryChecks.furniture.tankHatchAccessible, "Rainwater tank must retain a removable timber inspection hatch");
     console.assert(geometryChecks.canonicalWorldScaleX === -1, "All views must retain the Plan orientation");
+    console.assert(dimensions.visible && poolStudioPassage.visible,
+      "Dimensions and timber deck must always remain visible");
     window.__renderMetrics = geometryChecks;
-
-    dimensionsButton.addEventListener("click", () => {
-      dimensions.visible = !dimensions.visible;
-      dimensionsButton.setAttribute("aria-pressed", String(dimensions.visible));
-    });
-
-    passageButton.addEventListener("click", () => {
-      poolStudioPassage.visible = !poolStudioPassage.visible;
-      passageButton.setAttribute("aria-pressed", String(poolStudioPassage.visible));
-      document.documentElement.dataset.passage = poolStudioPassage.visible ? "integrated" : "lawn";
-    });
 
     document.querySelector(".control-dock").addEventListener("pointerdown", event => event.stopPropagation());
 
