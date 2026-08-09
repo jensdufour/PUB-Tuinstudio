@@ -901,6 +901,7 @@
 
     const sunbedLength = 1.8;
     const sunbedWidth = 0.52;
+    const sunbedRotationY = -Math.PI / 2;
     const sunbedXPositions = [-2.82, -2.18];
     const sunbedCenterZ = (poolHouseEdgeZ + poolTerraceDeckTerraceZ) / 2;
     const sunbeds = new THREE.Group();
@@ -911,7 +912,7 @@
       const sunbed = new THREE.Group();
       sunbed.name = `pool-terrace-sunbed-${index + 1}`;
       sunbed.position.set(x, 0, sunbedCenterZ);
-      sunbed.rotation.y = Math.PI / 2;
+      sunbed.rotation.y = sunbedRotationY;
       sunbeds.add(sunbed);
       addBox(sunbed, sunbedLength, 0.07, sunbedWidth, materials.white, 0, 0.13, 0);
       addBox(sunbed, 1.15, 0.08, sunbedWidth - 0.06, materials.cushion, 0.325, 0.2, 0);
@@ -1669,6 +1670,8 @@
         sunbedPoolClearance,
         sunbedTerraceClearance,
         sunbedHatchClearance,
+        sunbedsFacePool: sunbeds.children.every(child => child.rotation.y === sunbedRotationY)
+          && sunbedRotationY === -Math.PI / 2,
         tankHatchAccessible: tankHatch.name === "rainwater-tank-removable-timber-hatch",
         poolTerraceDeckArea
       },
@@ -1732,6 +1735,7 @@
     console.assert(geometryChecks.furniture.sunbedBoundaryClearance >= 0.1, "Sunbeds must remain inside the 1.00 m boundary strip");
     console.assert(geometryChecks.furniture.sunbedRowGap >= 0.1, "Sunbeds must retain at least 0.10 m between rows");
     console.assert(geometryChecks.furniture.sunbedPoolClearance >= 0.6 && geometryChecks.furniture.sunbedTerraceClearance >= 0.6, "Sunbeds must clear both pool and terrace by at least 0.60 m");
+    console.assert(geometryChecks.furniture.sunbedsFacePool, "Sunbeds must face the pool with their raised backs toward the terrace");
     console.assert(geometryChecks.furniture.sunbedHatchClearance >= 1, "Sunbeds must leave the rainwater-tank hatch accessible");
     console.assert(geometryChecks.furniture.tankHatchAccessible, "Rainwater tank must retain a removable timber inspection hatch");
     console.assert(geometryChecks.canonicalWorldScaleX === -1, "All views must retain the Plan orientation");
