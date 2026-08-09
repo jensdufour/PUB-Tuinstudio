@@ -336,13 +336,13 @@
       <div class="metrics" aria-label="Belangrijkste doorgangen">
         <span class="metric">open pergola 4,36 m</span>
         <span class="metric">glaslijn 0,70 m</span>
-        <span class="metric">houtdek 37,86 m²</span>
-        <span class="metric">raming 78,23 / 80 m²</span>
+        <span class="metric">houtdek 38,18 m²</span>
+        <span class="metric">raming 78,55 / 80 m²</span>
       </div>
     </header>
 
     <div class="material-note">
-      Het zwembad schuift 0,20 m NNO zodat de ZZW-poolrand en het zonnedek exact op de 1,00 m grenslijn liggen. OZO en 0,20 m van ZZW blijven hout; WNW en de overige ZZW-rand blijven blauwe steen. De vaste maatvoering toont alleen de volledige vrije breedtes van de knelpunten, gemeten vanaf de waterzijde van de 0,20 m houten poolrand: 4,36 m door de open pergola en 0,70 m aan de glaslijn.
+      Het zwembad schuift 0,20 m NNO zodat de ZZW-poolrand en het zonnedek exact op de 1,00 m grenslijn liggen. Het houtdek sluit zonder grasstrook aan op het terras; de studiokop blijft witte crepi met blauwe-steenplint. De vaste maatvoering toont 4,36 m door de open pergola en 0,70 m aan de glaslijn.
     </div>
 
     <div class="control-dock" aria-label="Renderinstellingen">
@@ -631,24 +631,6 @@
       }
     }
 
-    function addVerticalCladdingAlongX(parent, z, spans, height = 2.82, outward = 1) {
-      const cladding = new THREE.Group();
-      const boardWidth = 0.135;
-      const colors = [palette.timber, palette.timberLight, 0x8b5d35, 0xa87849];
-      parent.add(cladding);
-      for (const [xStart, xEnd] of spans) {
-        const boardCount = Math.ceil((xEnd - xStart) / boardWidth);
-        for (let index = 0; index < boardCount; index += 1) {
-          const start = xStart + index * boardWidth;
-          const width = Math.min(boardWidth - 0.012, xEnd - start);
-          if (width <= 0) continue;
-          const material = standard(colors[index % colors.length], 0.78);
-          addBox(cladding, width, height, 0.045, material, start + width / 2, height / 2 + 0.08, z + outward * 0.025);
-        }
-      }
-      return cladding;
-    }
-
     function addPlanSurface(parent, points, material, y = 0) {
       const shape = new THREE.Shape();
       points.forEach(([planX, planY], index) => {
@@ -852,8 +834,7 @@
     const poolTerraceDeckBoundaryX = siteX(18);
     const poolTerraceDeckRightX = poolNnoShift - coping;
     const poolHouseEdgeZ = poolRearZ - poolOuterLength;
-    const infiltrationJointWidth = 0.1;
-    const poolTerraceDeckTerraceZ = terraceLineZ + infiltrationJointWidth;
+    const poolTerraceDeckTerraceZ = terraceLineZ;
     const poolTerraceDeckArea = (poolTerraceDeckRightX - poolTerraceDeckBoundaryX)
       * (poolHouseEdgeZ - poolTerraceDeckTerraceZ);
     const poolDeckOverlapArea = coping * poolOuterLength
@@ -984,20 +965,17 @@
     const wallTop = 3;
     const doorBottom = 0.08;
     const doorTop = doorBottom + storageDoorHeight;
-    addBox(studio, storageDoorStart, wallTop - wallBottom, 0.24, materials.wall, storageDoorStart / 2, (wallTop + wallBottom) / 2, 9.88);
-    addBox(studio, 4 - storageDoorEnd, wallTop - wallBottom, 0.24, materials.wall, storageDoorEnd + (4 - storageDoorEnd) / 2, (wallTop + wallBottom) / 2, 9.88);
-    addBox(studio, storageDoorWidth, wallTop - doorTop, 0.24, materials.wall, (storageDoorStart + storageDoorEnd) / 2, (wallTop + doorTop) / 2, 9.88);
+    const storageEndCrepiSegments = [
+      addBox(studio, storageDoorStart, wallTop - wallBottom, 0.24, materials.wall, storageDoorStart / 2, (wallTop + wallBottom) / 2, 9.88),
+      addBox(studio, 4 - storageDoorEnd, wallTop - wallBottom, 0.24, materials.wall, storageDoorEnd + (4 - storageDoorEnd) / 2, (wallTop + wallBottom) / 2, 9.88),
+      addBox(studio, storageDoorWidth, wallTop - doorTop, 0.24, materials.wall, (storageDoorStart + storageDoorEnd) / 2, (wallTop + doorTop) / 2, 9.88)
+    ];
 
     addBox(studio, 0.045, 0.3, shellLength, materials.stone, 4.0225, 0.15, pergolaLength + shellLength / 2);
-    addBox(studio, storageDoorStart, 0.3, 0.045, materials.stone, storageDoorStart / 2, 0.15, 10.0225);
-    addBox(studio, 4 - storageDoorEnd, 0.3, 0.045, materials.stone, storageDoorEnd + (4 - storageDoorEnd) / 2, 0.15, 10.0225);
-
-    const storageEndTimberCladding = addVerticalCladdingAlongX(
-      studio,
-      10,
-      [[0, storageDoorStart], [storageDoorEnd, 4]]
-    );
-    storageEndTimberCladding.name = "storage-end-timber-cladding";
+    const storageEndBlueStonePlinthSegments = [
+      addBox(studio, storageDoorStart, 0.3, 0.045, materials.stone, storageDoorStart / 2, 0.15, 10.0225),
+      addBox(studio, 4 - storageDoorEnd, 0.3, 0.045, materials.stone, storageDoorEnd + (4 - storageDoorEnd) / 2, 0.15, 10.0225)
+    ];
 
     const storageDoor = addBox(studio, storageDoorWidth, storageDoorHeight, 0.06, materials.charcoal, (storageDoorStart + storageDoorEnd) / 2, (doorBottom + doorTop) / 2, 10.03);
     storageDoor.name = "storage-exterior-door-ral9005";
@@ -1664,7 +1642,6 @@
           - poolDeckOverlapArea,
         limit: 80,
         boundaryStrip: poolTerraceDeckBoundaryX - siteX(0),
-        infiltrationJointWidth,
         assumesExistingPoolIsLawful: true
       },
       storageDoor: {
@@ -1674,10 +1651,9 @@
         ral: storageDoor.material === materials.charcoal ? "RAL 9005" : "unknown",
         material: "aluminium",
         swing: "outward",
-        wallSegments: 2,
-        timberCladdingBoardCount: storageEndTimberCladding.children.length,
-        timberCladdingContinuousWithDeck: storageEndTimberCladding.parent === studio
-          && integratedDeck.material === woodMaterial
+        wallSegments: storageEndCrepiSegments.length,
+        crepiWall: storageEndCrepiSegments.every(segment => segment.material === materials.wall),
+        blueStonePlinth: storageEndBlueStonePlinthSegments.every(segment => segment.material === materials.stone)
       },
       furniture: {
         loungeSofaAxis: loungeSofaLength > loungeSofaWidth ? "studio-long-axis" : "cross-axis",
@@ -1720,7 +1696,7 @@
       "Chokepoint dimensions must include the 0.20 m timber pool coping");
     console.assert(geometryChecks.chokePoints.dimensionLineCount === 2,
       "Maten overlay must show only the two full chokepoint widths");
-    console.assert(Math.abs(geometryChecks.integratedDeck.area - 37.856235) < 0.001, "Merged pool-edge deck must be 37.86 m² after moving the pool NNO");
+    console.assert(Math.abs(geometryChecks.integratedDeck.area - 38.176235) < 0.001, "Merged pool-edge deck must be 38.18 m² after closing the terrace strip");
     console.assert(geometryChecks.integratedDeck.sideRun === 10, "Deck must run along the complete studio side");
     console.assert(geometryChecks.integratedDeck.innerReturnDepth > 1 && geometryChecks.integratedDeck.innerReturnDepth < 1.1, "Pool-side return must fill the studio-to-terrace gap");
     console.assert(geometryChecks.integratedDeck.outerReturnDepth > 1.5 && geometryChecks.integratedDeck.outerReturnDepth < 1.6, "Outer return must extend to the terrace line");
@@ -1742,17 +1718,16 @@
     console.assert(geometryChecks.integratedDeck.poolSideSliderCount === 1 && Math.abs(geometryChecks.integratedDeck.poolSideSliderWidth - 386 / 75) < 1e-9, "Pool-facing façade must use one full-width 5.15 m slider");
     console.assert(geometryChecks.integratedDeck.poolSideSliderPanels === 2, "Pool-facing slider must have two panels");
     console.assert(Math.abs(geometryChecks.integratedDeck.pergolaSliderWidth - 3.52) < 1e-9 && geometryChecks.integratedDeck.pergolaSliderPanels === 2, "Pergola slider must be 3.52 m with two panels");
-    console.assert(geometryChecks.storageDoor.count === 1 && geometryChecks.storageDoor.wallSegments === 2, "Storage end wall must contain one real door opening");
+    console.assert(geometryChecks.storageDoor.count === 1 && geometryChecks.storageDoor.wallSegments === 3, "Storage end wall must contain one real door opening");
     console.assert(Math.abs(geometryChecks.storageDoor.width - 0.9) < 1e-9 && Math.abs(geometryChecks.storageDoor.height - 2.44) < 1e-9, "Storage exterior door must be 0.90 x 2.44 m");
     console.assert(geometryChecks.storageDoor.ral === "RAL 9005" && geometryChecks.storageDoor.material === "aluminium" && geometryChecks.storageDoor.swing === "outward", "Storage exterior door must be outward-opening RAL 9005 aluminium");
-    console.assert(geometryChecks.storageDoor.timberCladdingBoardCount > 20, "Storage-end facade must use vertical timber cladding around the door");
-    console.assert(geometryChecks.storageDoor.timberCladdingContinuousWithDeck, "Storage-end timber cladding and deck must read as one structure");
+    console.assert(geometryChecks.storageDoor.crepiWall, "Storage-end facade must remain white crepi around the door");
+    console.assert(geometryChecks.storageDoor.blueStonePlinth, "Storage-end facade must retain its blue-stone plinth");
     console.assert(Object.values(geometryChecks.furniture).slice(0, 4).every(axis => axis === "studio-long-axis"), "Sofa, tables and desk must follow the studio long axis");
     console.assert(geometryChecks.furniture.sliderEntryClearance > 2.2, "Furniture must preserve a clear route from the pool-side slider");
     console.assert(geometryChecks.furniture.deskToBathroomClearance > 0.5, "Desk must clear the bathroom zone");
     console.assert(geometryChecks.permitFree.uncoveredUnionArea <= geometryChecks.permitFree.limit, "Uncovered structures must remain within the 80 m² exemption limit");
     console.assert(Math.abs(geometryChecks.permitFree.boundaryStrip - 1) < 1e-9, "Sunbed deck must preserve the 1.00 m boundary strip");
-    console.assert(geometryChecks.permitFree.infiltrationJointWidth === 0.1, "A 0.10 m open infiltration joint must remain before the terrace");
     console.assert(geometryChecks.furniture.sunbedCount === 2 && geometryChecks.furniture.sunbedSize[0] === 1.8 && geometryChecks.furniture.sunbedSize[1] === 0.52, "Pool-terrace platform must contain two 1.80 x 0.52 m sunbeds");
     console.assert(geometryChecks.furniture.sunbedBoundaryClearance >= 0.1, "Sunbeds must remain inside the 1.00 m boundary strip");
     console.assert(geometryChecks.furniture.sunbedRowGap >= 0.1, "Sunbeds must retain at least 0.10 m between rows");
