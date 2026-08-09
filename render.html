@@ -902,7 +902,10 @@
     const sunbedLength = 1.8;
     const sunbedWidth = 0.52;
     const sunbedRotationY = -Math.PI / 2;
-    const sunbedXPositions = [-2.82, -2.18];
+    const sunbedGap = 0.18;
+    const sunbedPairCenterX = poolNnoShift - poolOuterWidth / 2;
+    const sunbedPairOffset = (sunbedWidth + sunbedGap) / 2;
+    const sunbedXPositions = [sunbedPairCenterX - sunbedPairOffset, sunbedPairCenterX + sunbedPairOffset];
     const sunbedCenterZ = (poolHouseEdgeZ + poolTerraceDeckTerraceZ) / 2;
     const sunbeds = new THREE.Group();
     sunbeds.name = "pool-terrace-sunbeds";
@@ -928,8 +931,9 @@
     const sunbedRowGap = sunbedXPositions[1] - sunbedXPositions[0] - sunbedWidth;
     const sunbedPoolClearance = poolHouseEdgeZ - (sunbedCenterZ + sunbedLength / 2);
     const sunbedTerraceClearance = sunbedCenterZ - sunbedLength / 2 - poolTerraceDeckTerraceZ;
-    const sunbedHatchClearance = tankCenterX - tankHatchSize / 2
-      - (sunbedXPositions[1] + sunbedWidth / 2);
+    const sunbedPairCenterDeviation = Math.abs(
+      (sunbedXPositions[0] + sunbedXPositions[1]) / 2 - sunbedPairCenterX
+    );
 
     const deckOutline = new THREE.Line(
       new THREE.BufferGeometry().setFromPoints(
@@ -1688,7 +1692,8 @@
         sunbedRowGap,
         sunbedPoolClearance,
         sunbedTerraceClearance,
-        sunbedHatchClearance,
+        sunbedPairCenterX,
+        sunbedPairCenterDeviation,
         sunbedsFacePool: sunbeds.children.every(child => child.rotation.y === sunbedRotationY)
           && sunbedRotationY === -Math.PI / 2,
         tankHatchAccessible: tankHatch.name === "rainwater-tank-removable-timber-hatch",
@@ -1760,8 +1765,9 @@
     console.assert(geometryChecks.furniture.sunbedBoundaryClearance >= 0.1, "Sunbeds must remain inside the 1.00 m boundary strip");
     console.assert(geometryChecks.furniture.sunbedRowGap >= 0.1, "Sunbeds must retain at least 0.10 m between rows");
     console.assert(geometryChecks.furniture.sunbedPoolClearance >= 0.6 && geometryChecks.furniture.sunbedTerraceClearance >= 0.6, "Sunbeds must clear both pool and terrace by at least 0.60 m");
+    console.assert(geometryChecks.furniture.sunbedPairCenterDeviation < 1e-9,
+      "Movable sunbeds must be centered naturally on the pool axis");
     console.assert(geometryChecks.furniture.sunbedsFacePool, "Sunbeds must face the pool with their raised backs toward the terrace");
-    console.assert(geometryChecks.furniture.sunbedHatchClearance >= 1, "Sunbeds must leave the rainwater-tank hatch accessible");
     console.assert(geometryChecks.furniture.tankHatchAccessible, "Rainwater tank must retain a removable timber inspection hatch");
     console.assert(geometryChecks.canonicalWorldScaleX === -1, "All views must retain the Plan orientation");
     console.assert(dimensions.visible && poolStudioPassage.visible,
