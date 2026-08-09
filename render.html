@@ -334,15 +334,15 @@
       <h1>Tuinplan Lot 24B</h1>
       <p class="subtitle">Woning · terras · LPW City+ · tuinstudio · voortuin</p>
       <div class="metrics" aria-label="Belangrijkste doorgangen">
-        <span class="metric">bovenrand 0,36 m</span>
-        <span class="metric">glaslijn 0,70 m</span>
-        <span class="metric">houtdek 39,42 m²</span>
-        <span class="metric">raming 79,79 / 80 m²</span>
+        <span class="metric">bovenvoeg 0,16 m</span>
+        <span class="metric">glasvoeg 0,50 m</span>
+        <span class="metric">houtdek 37,86 m²</span>
+        <span class="metric">raming 78,23 / 80 m²</span>
       </div>
     </header>
 
     <div class="material-note">
-      WNW en het grootste deel van ZZW blijven blauwe steen. Aan OZO loopt het zonnedek door tot tegen het zwembad en draait het 0,20 m om de ZZW-hoek; samen met de houten studiokop leest het geheel als één dekstructuur.
+      Het zwembad schuift 0,20 m NNO zodat de ZZW-poolrand en het zonnedek exact op de 1,00 m grenslijn liggen. OZO en 0,20 m van ZZW blijven hout; WNW en de overige ZZW-rand blijven blauwe steen. De voegen van 0,16 en 0,50 m zijn constructievoegen, geen doorgangen.
     </div>
 
     <div class="control-dock" aria-label="Renderinstellingen">
@@ -740,10 +740,11 @@
     const studioRearPlanX = 81.98330690803415;
     const studioPathStartX = siteX(studioRearPlanX);
     const poolShiftMeters = Math.tan(studioAngle) * studioPathStartX;
+    const poolNnoShift = 0.2;
     const poolRearZ = -poolShiftMeters;
 
     const pool = new THREE.Group();
-    pool.position.z = poolRearZ;
+    pool.position.set(poolNnoShift, 0, poolRearZ);
     world.add(pool);
     const poolOuterWidth = 3.4;
     const poolOuterLength = 7.7;
@@ -822,9 +823,9 @@
       x: studioPathStartX + Math.sin(studioAngle) * pergolaGlassLocalZ,
       z: -Math.cos(studioAngle) * pergolaGlassLocalZ
     };
-    const platformPoolLocalX = -platformStudioEdge.x / Math.cos(studioAngle);
+    const platformPoolLocalX = (poolNnoShift - platformStudioEdge.x) / Math.cos(studioAngle);
     const platformPoolEdge = {
-      x: 0,
+      x: poolNnoShift,
       z: Math.sin(studioAngle) * platformPoolLocalX - Math.cos(studioAngle) * pergolaGlassLocalZ
     };
     const platformPoolLocalZ = Math.sin(studioAngle) * (platformPoolEdge.x - studioPathStartX)
@@ -836,7 +837,7 @@
       platformStudioEdge.z - platformPoolEdge.z
     );
     const clearancePergolaEndZ = -Math.cos(studioAngle) * pergolaLength;
-    const platformRearPoolLocalZ = Math.sin(studioAngle) * -studioPathStartX
+    const platformRearPoolLocalZ = Math.sin(studioAngle) * (poolNnoShift - studioPathStartX)
       - Math.cos(studioAngle) * poolRearZ;
 
     const poolStudioPassage = new THREE.Group();
@@ -850,9 +851,9 @@
     const terraceLineZ = siteZ(464.05);
     const terraceDeckInnerEndLocalZ = -terraceLineZ / Math.cos(studioAngle);
     const terraceDeckEndLocalZ = (Math.sin(studioAngle) * 4 - terraceLineZ) / Math.cos(studioAngle);
-    const terracePoolLineEnd = [0, terraceLineZ];
+    const terracePoolLineEnd = [poolNnoShift, terraceLineZ];
     const poolTerraceDeckBoundaryX = siteX(18);
-    const poolTerraceDeckRightX = -coping;
+    const poolTerraceDeckRightX = poolNnoShift - coping;
     const poolHouseEdgeZ = poolRearZ - poolOuterLength;
     const infiltrationJointWidth = 0.1;
     const poolTerraceDeckTerraceZ = terraceLineZ + infiltrationJointWidth;
@@ -863,15 +864,15 @@
     const tankCenterX = siteX(68.4);
     const tankCenterZ = siteZ(438.13);
     const tankHatchSize = 0.6;
-    const poolSideTimberOuterStart = [-coping, poolRearZ];
-    const poolOzoZzwOuterCorner = [-poolOuterWidth, poolHouseEdgeZ];
-    const poolOzoZzwInnerCorner = [-poolOuterWidth, poolHouseEdgeZ + coping];
+    const poolSideTimberOuterStart = [poolNnoShift - coping, poolRearZ];
+    const poolOzoZzwOuterCorner = [poolNnoShift - poolOuterWidth, poolHouseEdgeZ];
+    const poolOzoZzwInnerCorner = [poolNnoShift - poolOuterWidth, poolHouseEdgeZ + coping];
     const poolOzoInnerCorner = [poolTerraceDeckRightX, poolHouseEdgeZ + coping];
-    const poolTimberInnerStart = [-coping, poolRearZ - coping];
-    const poolTimberInnerEnd = [-coping, terraceLineZ];
+    const poolTimberInnerStart = [poolNnoShift - coping, poolRearZ - coping];
+    const poolTimberInnerEnd = [poolNnoShift - coping, terraceLineZ];
     const integratedDeckPoints = [
       poolSideTimberOuterStart,
-      [0, poolRearZ],
+      [poolNnoShift, poolRearZ],
       studioWorldPoint(0, 0),
       studioWorldPoint(4, 0),
       studioWorldPoint(4, pergolaLength),
@@ -883,7 +884,6 @@
       poolTimberInnerEnd,
       [poolTerraceDeckRightX, poolTerraceDeckTerraceZ],
       [poolTerraceDeckBoundaryX, poolTerraceDeckTerraceZ],
-      [poolTerraceDeckBoundaryX, poolHouseEdgeZ],
       poolOzoZzwOuterCorner,
       poolOzoZzwInnerCorner,
       poolOzoInnerCorner,
@@ -961,7 +961,7 @@
     deckOutline.name = "integrated-deck-perimeter";
     poolStudioPassage.add(deckOutline);
 
-    const platformRearEdgeLength = Math.hypot(studioPathStartX, -poolRearZ);
+    const platformRearEdgeLength = Math.hypot(studioPathStartX - poolNnoShift, -poolRearZ);
 
     const deckBuildingJoint = new THREE.Line(
       new THREE.BufferGeometry().setFromPoints(
@@ -1522,7 +1522,7 @@
     studio.updateMatrixWorld(true);
     const studioLabelPosition = studio.localToWorld(new THREE.Vector3(2, 0, 5));
     addPlanLabel("TUINSTUDIO", studioLabelPosition.x, studioLabelPosition.z, 4.2);
-    addPlanLabel("LPW CITY+", -1.7, poolRearZ - 3.85, 3.2);
+    addPlanLabel("LPW CITY+", -1.7 + poolNnoShift, poolRearZ - 3.85, 3.2);
     addPlanLabel("RW 7500 L", tankCenterX, tankCenterZ, 2.8);
     addPlanLabel("TERRAS", (houseLeftX + houseRearRightX) / 2, (terraceGardenZ + houseRearZ) / 2, 2.5);
     addPlanLabel("WONING", siteX(60), siteZ(671.05), 3.2);
@@ -1554,14 +1554,15 @@
       dimensions.add(sprite);
     }
 
-    addDimensionBetween({ x: 0, z: poolRearZ }, { x: studioPathStartX, z: 0 }, "0,36 m", 0.2);
-    addDimensionBetween(platformPoolEdge, platformStudioEdge, "0,70 m", 0.24);
+    addDimensionBetween({ x: poolNnoShift, z: poolRearZ }, { x: studioPathStartX, z: 0 }, "0,16 m", 0.2);
+    addDimensionBetween(platformPoolEdge, platformStudioEdge, "0,50 m", 0.24);
 
     const geometryChecks = {
       minimum: platformRearEdgeLength,
       pergolaEnd: pergolaEdgeLength,
       poolOuter: [poolOuterLength, poolOuterWidth],
       poolShift: poolShiftMeters,
+      poolNnoShift,
       studioOuter: [10, 4],
       terrace: [terraceWidth, terraceDepth],
       rainwaterTank: {
@@ -1570,7 +1571,7 @@
       },
       siteDepth: Math.abs(siteZ(1166) - siteZ(14.918)),
       layout: {
-        poolPlanX: [14.4, 75.6],
+        poolPlanX: [18, 79.2],
         studioPlanX: [81.983, 177.733],
         housePlanX: [0, 126],
         drivewayPlanX: [126, 240.137]
@@ -1658,24 +1659,25 @@
       sourcePlan: "grondplan.html",
       canonicalWorldScaleX: world.scale.x
     };
-    console.assert(Math.abs(geometryChecks.minimum - 0.358) < 0.002, "Upper platform edge must be about 0.36 m");
-    console.assert(Math.abs(geometryChecks.pergolaEnd - 0.703) < 0.002, "Glass-line platform edge must be about 0.70 m");
+    console.assert(Math.abs(geometryChecks.minimum - 0.16207) < 0.002, "Upper construction joint must be about 0.16 m after the NNO pool shift");
+    console.assert(Math.abs(geometryChecks.pergolaEnd - 0.501314) < 0.002, "Glass-line construction joint must be about 0.50 m after the NNO pool shift");
     console.assert(Math.abs(geometryChecks.poolShift - 0.048546) < 0.00001, "Pool must move 4.85 cm toward the house");
+    console.assert(geometryChecks.poolNnoShift === 0.2, "Pool must move exactly 0.20 m NNO");
     console.assert(poolOuterLength === 7.7 && poolOuterWidth === 3.4, "City+ outer dimensions must be 7.70 x 3.40 m");
     console.assert(Math.abs(terraceWidth - 6.6) < 0.001 && Math.abs(terraceDepth - 4) < 0.001, "Terrace must be 6.60 x 4.00 m");
     console.assert(Math.abs(geometryChecks.rainwaterTank.poolClearance - 0.399) < 0.005, "Tank clearance must be about 0.40 m");
     console.assert(geometryChecks.layout.poolPlanX[1] < geometryChecks.layout.studioPlanX[0], "Pool must remain left of the studio");
     console.assert(geometryChecks.layout.housePlanX[1] <= geometryChecks.layout.drivewayPlanX[0], "House must remain left of the driveway");
     console.assert(Math.abs(geometryChecks.timberPlatform.studioEdgeLength - 2.522) < 0.001, "Timber platform must follow the pergola glass line");
-    console.assert(Math.abs(geometryChecks.timberPlatform.skewAtPool - 0.095) < 0.002, "Timber platform must meet the pool diagonally");
+    console.assert(Math.abs(geometryChecks.timberPlatform.skewAtPool - 0.067992) < 0.002, "Timber platform must meet the shifted pool diagonally");
     console.assert(geometryChecks.timberPlatform.glassLineDeviation < 1e-9, "Platform edge and pergola glass must be collinear");
-    console.assert(geometryChecks.timberPlatform.rearLineDeviation < 1e-9, "Upper platform edge and pergola rear must be collinear");
-    console.assert(Math.abs(geometryChecks.integratedDeck.area - 39.42109) < 0.001, "Merged pool-edge deck must be 39.42 m² with the OZO and ZZW timber wrap");
+    console.assert(Math.abs(geometryChecks.timberPlatform.rearLineDeviation - 0.027126) < 0.002, "Lateral pool shift must create the expected 27 mm rear-line offset");
+    console.assert(Math.abs(geometryChecks.integratedDeck.area - 37.856235) < 0.001, "Merged pool-edge deck must be 37.86 m² after moving the pool NNO");
     console.assert(geometryChecks.integratedDeck.sideRun === 10, "Deck must run along the complete studio side");
     console.assert(geometryChecks.integratedDeck.innerReturnDepth > 1 && geometryChecks.integratedDeck.innerReturnDepth < 1.1, "Pool-side return must fill the studio-to-terrace gap");
     console.assert(geometryChecks.integratedDeck.outerReturnDepth > 1.5 && geometryChecks.integratedDeck.outerReturnDepth < 1.6, "Outer return must extend to the terrace line");
     console.assert(geometryChecks.integratedDeck.terraceLineDeviation < 1e-9, "Studio-end timber edge must follow the terrace line");
-    console.assert(geometryChecks.integratedDeck.pointCount === 18, "Merged deck must include the OZO coping and 20 cm ZZW timber return");
+    console.assert(geometryChecks.integratedDeck.pointCount === 17, "Merged deck must align the shifted pool and 1.00 m boundary without duplicate corners");
     console.assert(geometryChecks.integratedDeck.straightPoolLine, "Pool-side deck edge must stay on one straight line to the terrace");
     console.assert(geometryChecks.integratedDeck.unifiedWoodSurface, "Timber coping and deck must share one flush, texture-aligned surface");
     console.assert(Math.abs(geometryChecks.integratedDeck.poolTimberWidth - 0.2) < 1e-9 && geometryChecks.integratedDeck.poolTimberExtensionLength > 10.8, "The 20 cm timber strip must continue from the pool to the terrace");
