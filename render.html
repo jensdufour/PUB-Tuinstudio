@@ -337,6 +337,7 @@
         <span class="metric">open pergola 4,36 m</span>
         <span class="metric">glaslijn 0,70 m</span>
         <span class="metric">houtdek 38,18 m²</span>
+        <span class="metric">zwembad &amp; houtdek 0,00 m</span>
         <span class="metric">terras +0,30 m</span>
         <span class="metric">achtergrens -0,64 m</span>
         <span class="metric">raming 78,55 / 80 m²</span>
@@ -344,7 +345,7 @@
     </header>
 
     <div class="material-note">
-      Het zwembad schuift 0,20 m NNO zodat de ZZW-poolrand en het zonnedek exact op de 1,00 m grenslijn liggen. De bergingsdeur zit gecentreerd in de ZZW-wand en opent naar buiten; de OZO-studiokop blijft doorlopende witte crepi met blauwe-steenplint. De vaste maatvoering toont 4,36 m door de open pergola en 0,70 m aan de glaslijn. Het huisterras ligt 0,30 m boven het tuinniveau, vlak met de blauwe hardstenen plint; het terrein daalt tot circa 0,64 m aan de achtergrens.
+      Het zwembad schuift 0,20 m NNO zodat de ZZW-poolrand en het zonnedek exact op de 1,00 m grenslijn liggen. De bergingsdeur zit gecentreerd in de ZZW-wand en opent naar buiten; de OZO-studiokop blijft doorlopende witte crepi met blauwe-steenplint. De vaste maatvoering toont 4,36 m door de open pergola en 0,70 m aan de glaslijn. Zwembadboord en houtdek vormen peil 0,00; het bestaande huisterras ligt 0,30 m hoger, vlak met de blauwe hardstenen plint. Het terrein daalt tot circa -0,64 m aan de achtergrens.
     </div>
 
     <div class="control-dock" aria-label="Renderinstellingen">
@@ -395,13 +396,14 @@
     const planOriginY = 267.181;
     const siteX = value => (value - planOriginX) / planScale;
     const siteZ = value => -(value - planOriginY) / planScale;
-    const gardenLevel = -0.08;
+    const frontGroundY = -0.08;
+    const deckTop = 0.061;
     const terraceRise = 0.3;
-    const terraceSurfaceY = gardenLevel + terraceRise;
+    const terraceSurfaceY = deckTop + terraceRise;
     const terrainBreakPlanY = 464.05;
     const rearBoundaryPlanY = 14.918;
     const rearGardenDrop = 0.64;
-    const terrainLevelAtPlanY = planY => gardenLevel - rearGardenDrop * THREE.MathUtils.clamp(
+    const terrainLevelAtPlanY = planY => deckTop - rearGardenDrop * THREE.MathUtils.clamp(
       (terrainBreakPlanY - planY) / (terrainBreakPlanY - rearBoundaryPlanY),
       0,
       1
@@ -733,7 +735,7 @@
       terrainBreakLeft
     ];
     addPlanTerrain(world, rearTerrainRing, materials.lawn);
-    addPlanSurface(world, frontTerrainRing, materials.lawn, gardenLevel);
+    addPlanSurface(world, frontTerrainRing, materials.lawn, frontGroundY);
 
     addPlanSurface(world, [[0, 968], [239.45, 968], [238.798, 1040.061], [0, 1040]], materials.paving, -0.015);
 
@@ -782,7 +784,6 @@
     const poolOuterWidth = 3.4;
     const poolOuterLength = 7.7;
     const coping = 0.2;
-    const deckTop = 0.061;
 
     addBox(pool, 3.4, 1.38, 7.7, materials.stoneEdge, -1.7, -0.73, -3.85);
     addBox(pool, 3.0, 1.27, 7.3, standard(0xb8d8df, 0.48), -1.7, -0.72, -3.85);
@@ -1167,7 +1168,7 @@
       terraceDepth,
       pavingMaterial,
       (houseLeftX + houseRearRightX) / 2,
-      gardenLevel + terraceRise / 2,
+      deckTop + terraceRise / 2,
       (terraceGardenZ + houseRearZ) / 2,
       { castShadow: false }
     );
@@ -1198,7 +1199,7 @@
       0.06,
       materials.stone,
       (houseLeftX + houseRearRightX) / 2,
-      gardenLevel + terraceRise / 2,
+      deckTop + terraceRise / 2,
       houseRearZ + 0.03
     );
     addBox(
@@ -1669,10 +1670,10 @@
       studioOuter: [10, 4],
       terrace: [terraceWidth, terraceDepth],
       siteLevels: {
-        garden: gardenLevel,
-        terrace: terraceSurfaceY,
-        terraceRise,
-        rearBoundaryDrop: rearGardenDrop
+        poolAndDeck: 0,
+        terrace: terraceSurfaceY - deckTop,
+        rearBoundary: terrainLevelAtPlanY(rearBoundaryPlanY) - deckTop,
+        worldDatum: deckTop
       },
       terrain: {
         address: "Geraardsbergsesteenweg 371, 9404 Aspelare",
@@ -1794,8 +1795,9 @@
     console.assert(geometryChecks.poolNnoShift === 0.2, "Pool must move exactly 0.20 m NNO");
     console.assert(poolOuterLength === 7.7 && poolOuterWidth === 3.4, "City+ outer dimensions must be 7.70 x 3.40 m");
     console.assert(Math.abs(terraceWidth - 6.6) < 0.001 && Math.abs(terraceDepth - 4) < 0.001, "Terrace must be 6.60 x 4.00 m");
-    console.assert(Math.abs(geometryChecks.siteLevels.terrace - geometryChecks.siteLevels.garden - 0.3) < 1e-9, "Terrace must be 0.30 m above garden level");
-    console.assert(Math.abs(geometryChecks.siteLevels.rearBoundaryDrop - 0.64) < 1e-9, "Rear terrain must finish 0.64 m below the upper garden datum");
+    console.assert(geometryChecks.siteLevels.poolAndDeck === 0, "Pool coping and timber deck must define level 0.00");
+    console.assert(Math.abs(geometryChecks.siteLevels.terrace - 0.3) < 1e-9, "Existing terrace must be 0.30 m above pool and deck level");
+    console.assert(Math.abs(geometryChecks.siteLevels.rearBoundary + 0.64) < 1e-9, "Rear terrain must finish at -0.64 m relative to pool and deck level");
     console.assert(Math.abs(geometryChecks.rainwaterTank.poolClearance - 0.399) < 0.005, "Tank clearance must be about 0.40 m");
     console.assert(geometryChecks.layout.poolPlanX[1] < geometryChecks.layout.studioPlanX[0], "Pool must remain left of the studio");
     console.assert(geometryChecks.layout.housePlanX[1] <= geometryChecks.layout.drivewayPlanX[0], "House must remain left of the driveway");
