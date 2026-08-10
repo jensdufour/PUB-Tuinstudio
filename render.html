@@ -337,12 +337,14 @@
         <span class="metric">open pergola 4,36 m</span>
         <span class="metric">glaslijn 0,70 m</span>
         <span class="metric">houtdek 38,18 m²</span>
+        <span class="metric">terras +0,30 m</span>
+        <span class="metric">achtergrens -0,64 m</span>
         <span class="metric">raming 78,55 / 80 m²</span>
       </div>
     </header>
 
     <div class="material-note">
-      Het zwembad schuift 0,20 m NNO zodat de ZZW-poolrand en het zonnedek exact op de 1,00 m grenslijn liggen. De bergingsdeur zit gecentreerd in de ZZW-wand en opent naar buiten; de OZO-studiokop blijft doorlopende witte crepi met blauwe-steenplint. De vaste maatvoering toont 4,36 m door de open pergola en 0,70 m aan de glaslijn.
+      Het zwembad schuift 0,20 m NNO zodat de ZZW-poolrand en het zonnedek exact op de 1,00 m grenslijn liggen. De bergingsdeur zit gecentreerd in de ZZW-wand en opent naar buiten; de OZO-studiokop blijft doorlopende witte crepi met blauwe-steenplint. De vaste maatvoering toont 4,36 m door de open pergola en 0,70 m aan de glaslijn. Het huisterras ligt 0,30 m boven het tuinniveau, vlak met de blauwe hardstenen plint; het terrein daalt tot circa 0,64 m aan de achtergrens.
     </div>
 
     <div class="control-dock" aria-label="Renderinstellingen">
@@ -393,6 +395,18 @@
     const planOriginY = 267.181;
     const siteX = value => (value - planOriginX) / planScale;
     const siteZ = value => -(value - planOriginY) / planScale;
+    const gardenLevel = -0.08;
+    const terraceRise = 0.3;
+    const terraceSurfaceY = gardenLevel + terraceRise;
+    const terrainBreakPlanY = 464.05;
+    const rearBoundaryPlanY = 14.918;
+    const rearGardenDrop = 0.64;
+    const terrainLevelAtPlanY = planY => gardenLevel - rearGardenDrop * THREE.MathUtils.clamp(
+      (terrainBreakPlanY - planY) / (terrainBreakPlanY - rearBoundaryPlanY),
+      0,
+      1
+    );
+    const terrainLevelAtWorldZ = z => terrainLevelAtPlanY(planOriginY - z * planScale);
 
     const camera = new THREE.PerspectiveCamera(54, window.innerWidth / window.innerHeight, 0.05, 220);
     const initialCameraZ = -4.65;
@@ -648,6 +662,30 @@
       return mesh;
     }
 
+    function addPlanTerrain(parent, points, material) {
+      const shape = new THREE.Shape();
+      points.forEach(([planX, planY], index) => {
+        const x = siteX(planX);
+        const shapeY = -siteZ(planY);
+        if (index === 0) shape.moveTo(x, shapeY);
+        else shape.lineTo(x, shapeY);
+      });
+      shape.closePath();
+      const geometry = new THREE.ShapeGeometry(shape);
+      const positions = geometry.getAttribute("position");
+      for (let index = 0; index < positions.count; index += 1) {
+        const planY = positions.getY(index) * planScale + planOriginY;
+        positions.setZ(index, terrainLevelAtPlanY(planY));
+      }
+      positions.needsUpdate = true;
+      geometry.computeVertexNormals();
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.rotation.x = -Math.PI / 2;
+      mesh.receiveShadow = true;
+      parent.add(mesh);
+      return mesh;
+    }
+
     function addPlanOutline(parent, points, color, y) {
       const vertices = points.map(([planX, planY]) => new THREE.Vector3(siteX(planX), y, siteZ(planY)));
       const outline = new THREE.LineLoop(
@@ -678,7 +716,24 @@
       [115.604, 1040.03], [114.605, 1040.029], [0, 1040],
       [-0.03, 904.941], [-0.214, 198.773], [-0.225, 159.546]
     ];
-    addPlanSurface(world, parcelOuterRing, materials.lawn, -0.08);
+    const pointAtPlanY = (start, end, planY) => {
+      const ratio = (planY - start[1]) / (end[1] - start[1]);
+      return [THREE.MathUtils.lerp(start[0], end[0], ratio), planY];
+    };
+    const terrainBreakLeft = pointAtPlanY([-0.214, 198.773], [-0.03, 904.941], terrainBreakPlanY);
+    const terrainBreakRight = pointAtPlanY([140.665, 161.659], [240.137, 892.098], terrainBreakPlanY);
+    const rearTerrainRing = [
+      terrainBreakLeft, [-0.214, 198.773], [-0.225, 159.546], [-0.262, 14.918],
+      [120.998, 17.261], [140.665, 161.659], terrainBreakRight
+    ];
+    const frontTerrainRing = [
+      terrainBreakRight, [240.137, 892.098], [239.769, 945.156], [239.664, 944.428],
+      [238.798, 1040.061], [159.889, 1040.041], [147.154, 1040.038],
+      [115.604, 1040.03], [114.605, 1040.029], [0, 1040], [-0.03, 904.941],
+      terrainBreakLeft
+    ];
+    addPlanTerrain(world, rearTerrainRing, materials.lawn);
+    addPlanSurface(world, frontTerrainRing, materials.lawn, gardenLevel);
 
     addPlanSurface(world, [[0, 968], [239.45, 968], [238.798, 1040.061], [0, 1040]], materials.paving, -0.015);
 
@@ -1108,21 +1163,21 @@
     addBox(
       world,
       terraceWidth,
-      0.1,
+      terraceRise,
       terraceDepth,
       pavingMaterial,
       (houseLeftX + houseRearRightX) / 2,
-      0.02,
+      gardenLevel + terraceRise / 2,
       (terraceGardenZ + houseRearZ) / 2,
       { castShadow: false }
     );
 
     const terraceJointPoints = [];
     for (let x = houseLeftX; x <= houseRearRightX + 0.01; x += 0.6) {
-      terraceJointPoints.push(new THREE.Vector3(x, 0.075, terraceGardenZ), new THREE.Vector3(x, 0.075, houseRearZ));
+      terraceJointPoints.push(new THREE.Vector3(x, terraceSurfaceY + 0.005, terraceGardenZ), new THREE.Vector3(x, terraceSurfaceY + 0.005, houseRearZ));
     }
     for (let z = houseRearZ; z <= terraceGardenZ + 0.01; z += 0.6) {
-      terraceJointPoints.push(new THREE.Vector3(houseLeftX, 0.075, z), new THREE.Vector3(houseRearRightX, 0.075, z));
+      terraceJointPoints.push(new THREE.Vector3(houseLeftX, terraceSurfaceY + 0.005, z), new THREE.Vector3(houseRearRightX, terraceSurfaceY + 0.005, z));
     }
     world.add(new THREE.LineSegments(
       new THREE.BufferGeometry().setFromPoints(terraceJointPoints),
@@ -1136,6 +1191,16 @@
     const houseStepRearZ = siteZ(591.05);
     const houseStepFrontZ = siteZ(778.05);
     const houseNotchX = siteX(91);
+    addBox(
+      world,
+      houseRearRightX - houseLeftX,
+      terraceRise,
+      0.06,
+      materials.stone,
+      (houseLeftX + houseRearRightX) / 2,
+      gardenLevel + terraceRise / 2,
+      houseRearZ + 0.03
+    );
     addBox(
       world,
       houseRearRightX - houseLeftX,
@@ -1190,6 +1255,7 @@
     const houseSliderLeftX = siteX(18);
     const houseSliderRightX = siteX(108);
     const houseSliderWidth = houseSliderRightX - houseSliderLeftX;
+    const houseThresholdLift = terraceSurfaceY - 0.07;
     addBox(
       world,
       houseSliderWidth,
@@ -1197,15 +1263,15 @@
       0.05,
       glassMaterial,
       (houseSliderLeftX + houseSliderRightX) / 2,
-      1.32,
+      1.32 + houseThresholdLift,
       houseRearZ + 0.035,
       { castShadow: false }
     );
     for (const x of [houseSliderLeftX, siteX(48), siteX(78), houseSliderRightX]) {
-      addBox(world, 0.065, 2.52, 0.075, materials.charcoal, x, 1.32, houseRearZ + 0.07);
+      addBox(world, 0.065, 2.52, 0.075, materials.charcoal, x, 1.32 + houseThresholdLift, houseRearZ + 0.07);
     }
-    addBox(world, houseSliderWidth, 0.07, 0.075, materials.charcoal, (houseSliderLeftX + houseSliderRightX) / 2, 0.095, houseRearZ + 0.07);
-    addBox(world, houseSliderWidth, 0.07, 0.075, materials.charcoal, (houseSliderLeftX + houseSliderRightX) / 2, 2.545, houseRearZ + 0.07);
+    addBox(world, houseSliderWidth, 0.07, 0.075, materials.charcoal, (houseSliderLeftX + houseSliderRightX) / 2, 0.095 + houseThresholdLift, houseRearZ + 0.07);
+    addBox(world, houseSliderWidth, 0.07, 0.075, materials.charcoal, (houseSliderLeftX + houseSliderRightX) / 2, 2.545 + houseThresholdLift, houseRearZ + 0.07);
 
     const houseOutline = [
       [0, 806.05], [91, 806.05], [91, 778.05], [126, 778.05],
@@ -1337,6 +1403,10 @@
       const fenceMaterial = standard(0x293630, 0.62, 0.35);
       const wireMaterial = new THREE.LineBasicMaterial({ color: 0x3b4a42, transparent: true, opacity: 0.78 });
       const random = seededRandom(seed);
+      const startLevel = terrainLevelAtWorldZ(zStart);
+      const endLevel = terrainLevelAtWorldZ(zEnd);
+      const levelAtDistance = distance => THREE.MathUtils.lerp(startLevel, endLevel, distance / length);
+      const slopeAngle = Math.atan2(endLevel - startLevel, length);
 
       fence.position.set(xStart, 0, zStart);
       fence.rotation.y = -Math.atan2(deltaZ, deltaX);
@@ -1344,18 +1414,21 @@
 
       const postCount = Math.ceil(length / 2);
       for (let index = 0; index <= postCount; index += 1) {
-        addBox(fence, 0.07, 1.92, 0.07, fenceMaterial, length * index / postCount, 0.96, 0);
+        const distance = length * index / postCount;
+        addBox(fence, 0.07, 1.92, 0.07, fenceMaterial, distance, levelAtDistance(distance) + 0.96, 0);
       }
       for (const railHeight of [0.22, 0.9, 1.62]) {
-        addBox(fence, length, 0.035, 0.045, fenceMaterial, length / 2, railHeight, 0);
+        const rail = addBox(fence, length, 0.035, 0.045, fenceMaterial, length / 2, (startLevel + endLevel) / 2 + railHeight, 0);
+        rail.rotation.z = slopeAngle;
       }
 
       const wirePoints = [];
       for (let x = 0; x <= length; x += 0.2) {
-        wirePoints.push(new THREE.Vector3(x, 0.12, 0), new THREE.Vector3(x, height, 0));
+        const level = levelAtDistance(x);
+        wirePoints.push(new THREE.Vector3(x, level + 0.12, 0), new THREE.Vector3(x, level + height, 0));
       }
       for (let y = 0.12; y <= height; y += 0.2) {
-        wirePoints.push(new THREE.Vector3(0, y, 0), new THREE.Vector3(length, y, 0));
+        wirePoints.push(new THREE.Vector3(0, startLevel + y, 0), new THREE.Vector3(length, endLevel + y, 0));
       }
       fence.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(wirePoints), wireMaterial));
 
@@ -1370,7 +1443,8 @@
 
       for (let index = 0; index < Math.ceil(length * 7); index += 1) {
         const leaf = new THREE.Mesh(leafGeometry, leafMaterials[index % leafMaterials.length]);
-        leaf.position.set(random() * length, 0.18 + random() * 1.55, 0.035 + random() * 0.08);
+        const distance = random() * length;
+        leaf.position.set(distance, levelAtDistance(distance) + 0.18 + random() * 1.55, 0.035 + random() * 0.08);
         leaf.scale.set(0.65 + random() * 0.8, 0.8 + random() * 1.15, 0.42 + random() * 0.45);
         leaf.rotation.set(random() * 0.5, random() * Math.PI, random() * 0.45);
         leaf.castShadow = true;
@@ -1379,7 +1453,8 @@
 
       for (let index = 0; index < Math.ceil(length * 2.4); index += 1) {
         const flower = new THREE.Mesh(flowerGeometry, flowerMaterial);
-        flower.position.set(random() * length, 0.35 + random() * 1.35, 0.16);
+        const distance = random() * length;
+        flower.position.set(distance, levelAtDistance(distance) + 0.35 + random() * 1.35, 0.16);
         flower.castShadow = true;
         fence.add(flower);
       }
@@ -1593,6 +1668,17 @@
       poolNnoShift,
       studioOuter: [10, 4],
       terrace: [terraceWidth, terraceDepth],
+      siteLevels: {
+        garden: gardenLevel,
+        terrace: terraceSurfaceY,
+        terraceRise,
+        rearBoundaryDrop: rearGardenDrop
+      },
+      terrain: {
+        address: "Geraardsbergsesteenweg 371, 9404 Aspelare",
+        source: "DHMVII_DTM_1m and BA_2021/08 elevations",
+        breakPlanY: terrainBreakPlanY
+      },
       rainwaterTank: {
         diameter: 2.7,
         poolClearance: Math.abs(poolRearZ - poolOuterLength - (tankCenterZ + 1.35))
@@ -1708,6 +1794,8 @@
     console.assert(geometryChecks.poolNnoShift === 0.2, "Pool must move exactly 0.20 m NNO");
     console.assert(poolOuterLength === 7.7 && poolOuterWidth === 3.4, "City+ outer dimensions must be 7.70 x 3.40 m");
     console.assert(Math.abs(terraceWidth - 6.6) < 0.001 && Math.abs(terraceDepth - 4) < 0.001, "Terrace must be 6.60 x 4.00 m");
+    console.assert(Math.abs(geometryChecks.siteLevels.terrace - geometryChecks.siteLevels.garden - 0.3) < 1e-9, "Terrace must be 0.30 m above garden level");
+    console.assert(Math.abs(geometryChecks.siteLevels.rearBoundaryDrop - 0.64) < 1e-9, "Rear terrain must finish 0.64 m below the upper garden datum");
     console.assert(Math.abs(geometryChecks.rainwaterTank.poolClearance - 0.399) < 0.005, "Tank clearance must be about 0.40 m");
     console.assert(geometryChecks.layout.poolPlanX[1] < geometryChecks.layout.studioPlanX[0], "Pool must remain left of the studio");
     console.assert(geometryChecks.layout.housePlanX[1] <= geometryChecks.layout.drivewayPlanX[0], "House must remain left of the driveway");
