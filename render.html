@@ -396,8 +396,11 @@
     const planOriginY = 267.181;
     const siteX = value => (value - planOriginX) / planScale;
     const siteZ = value => -(value - planOriginY) / planScale;
+    const planXFromSite = value => value * planScale + planOriginX;
+    const planYFromSiteZ = value => planOriginY - value * planScale;
     const frontGroundY = -0.08;
     const deckTop = 0.061;
+    const terrainSurfaceClearance = 0.01;
     const terraceRise = 0.3;
     const terraceSurfaceY = deckTop + terraceRise;
     const rearGardenFrontPlanY = 536.05;
@@ -651,7 +654,7 @@
       }
     }
 
-    function addPlanSurface(parent, points, material, y = 0) {
+    function addPlanSurface(parent, points, material, y = 0, holes = []) {
       const shape = new THREE.Shape();
       points.forEach(([planX, planY], index) => {
         const x = siteX(planX);
@@ -660,15 +663,27 @@
         else shape.lineTo(x, shapeY);
       });
       shape.closePath();
+      holes.forEach(holePoints => {
+        const hole = new THREE.Path();
+        holePoints.forEach(([planX, planY], index) => {
+          const x = siteX(planX);
+          const shapeY = -siteZ(planY);
+          if (index === 0) hole.moveTo(x, shapeY);
+          else hole.lineTo(x, shapeY);
+        });
+        hole.closePath();
+        shape.holes.push(hole);
+      });
       const mesh = new THREE.Mesh(new THREE.ShapeGeometry(shape), material);
       mesh.rotation.x = -Math.PI / 2;
       mesh.position.y = y;
       mesh.receiveShadow = true;
+      mesh.userData.holeCount = holes.length;
       parent.add(mesh);
       return mesh;
     }
 
-    function addPlanTerrain(parent, points, material) {
+    function addPlanTerrain(parent, points, material, surfaceOffset = 0) {
       const shape = new THREE.Shape();
       points.forEach(([planX, planY], index) => {
         const x = siteX(planX);
@@ -681,7 +696,7 @@
       const positions = geometry.getAttribute("position");
       for (let index = 0; index < positions.count; index += 1) {
         const planY = positions.getY(index) * planScale + planOriginY;
-        positions.setZ(index, terrainLevelAtPlanY(planY));
+        positions.setZ(index, terrainLevelAtPlanY(planY) + surfaceOffset);
       }
       positions.needsUpdate = true;
       geometry.computeVertexNormals();
@@ -706,6 +721,15 @@
     function planRect(x1, y1, x2, y2) {
       return [[x1, y1], [x2, y1], [x2, y2], [x1, y2]];
     }
+
+    const studioAngle = THREE.MathUtils.degToRad(7.794923);
+    const studioRearPlanX = 81.98330690803415;
+    const studioPathStartX = siteX(studioRearPlanX);
+    const poolShiftMeters = Math.tan(studioAngle) * studioPathStartX;
+    const poolNnoShift = 0.2;
+    const poolRearZ = -poolShiftMeters;
+    const poolOuterWidth = 3.4;
+    const poolOuterLength = 7.7;
 
     const world = new THREE.Group();
     // Plan mode is the canonical orientation: house/pool left, driveway/studio right.
@@ -737,14 +761,29 @@
     const flatRearTerrainRing = [
       rearGardenFrontLeft, rearGardenFrontRight, terrainSlopeStartRight, terrainSlopeStartLeft
     ];
+    const poolTerrainPadding = 0.03;
+    const poolTerrainOpening = [
+      [planXFromSite(poolNnoShift - poolOuterWidth - poolTerrainPadding), planYFromSiteZ(poolRearZ + poolTerrainPadding)],
+      [planXFromSite(poolNnoShift + poolTerrainPadding), planYFromSiteZ(poolRearZ + poolTerrainPadding)],
+      [planXFromSite(poolNnoShift + poolTerrainPadding), planYFromSiteZ(poolRearZ - poolOuterLength - poolTerrainPadding)],
+      [planXFromSite(poolNnoShift - poolOuterWidth - poolTerrainPadding), planYFromSiteZ(poolRearZ - poolOuterLength - poolTerrainPadding)]
+    ];
     const frontTerrainRing = [
       rearGardenFrontRight, [240.137, 892.098], [239.769, 945.156], [239.664, 944.428],
       [238.798, 1040.061], [159.889, 1040.041], [147.154, 1040.038],
       [115.604, 1040.03], [114.605, 1040.029], [0, 1040], [-0.03, 904.941],
       rearGardenFrontLeft
     ];
-    addPlanTerrain(world, slopedRearTerrainRing, materials.lawn);
-    addPlanSurface(world, flatRearTerrainRing, materials.lawn, deckTop);
+    const slopedRearTerrain = addPlanTerrain(world, slopedRearTerrainRing, materials.lawn, -terrainSurfaceClearance);
+    slopedRearTerrain.name = "sloped-rear-terrain";
+    const flatRearTerrain = addPlanSurface(
+      world,
+      flatRearTerrainRing,
+      materials.lawn,
+      deckTop - terrainSurfaceClearance,
+      [poolTerrainOpening]
+    );
+    flatRearTerrain.name = "flat-rear-terrain-with-pool-opening";
     addPlanSurface(world, frontTerrainRing, materials.lawn, frontGroundY);
 
     addPlanSurface(world, [[0, 968], [239.45, 968], [238.798, 1040.061], [0, 1040]], materials.paving, -0.015);
@@ -781,18 +820,9 @@
       );
     }
 
-    const studioAngle = THREE.MathUtils.degToRad(7.794923);
-    const studioRearPlanX = 81.98330690803415;
-    const studioPathStartX = siteX(studioRearPlanX);
-    const poolShiftMeters = Math.tan(studioAngle) * studioPathStartX;
-    const poolNnoShift = 0.2;
-    const poolRearZ = -poolShiftMeters;
-
     const pool = new THREE.Group();
     pool.position.set(poolNnoShift, 0, poolRearZ);
     world.add(pool);
-    const poolOuterWidth = 3.4;
-    const poolOuterLength = 7.7;
     const coping = 0.2;
 
     addBox(pool, 3.4, 1.38, 7.7, materials.stoneEdge, -1.7, -0.73, -3.85);
@@ -1689,7 +1719,9 @@
         address: "Geraardsbergsesteenweg 371, 9404 Aspelare",
         source: "DHMVII_DTM_1m and BA_2021/08 elevations",
         flatRearGardenFrontPlanY: rearGardenFrontPlanY,
-        slopeStartPlanY: terrainSlopeStartPlanY
+        slopeStartPlanY: terrainSlopeStartPlanY,
+        surfaceClearance: terrainSurfaceClearance,
+        poolOpeningCount: flatRearTerrain.userData.holeCount
       },
       rainwaterTank: {
         diameter: 2.7,
@@ -1811,6 +1843,8 @@
     console.assert(Math.abs(geometryChecks.siteLevels.rearBoundary + 0.64) < 1e-9, "Rear terrain must finish at -0.64 m relative to pool and deck level");
     console.assert(Math.abs(terrainLevelAtPlanY(rearGardenFrontPlanY) - deckTop) < 1e-9, "Rear garden must remain at level 0.00 from the house");
     console.assert(Math.abs(terrainLevelAtPlanY(terrainSlopeStartPlanY) - deckTop) < 1e-9, "Terrain slope must start only at the garden end of the studio");
+    console.assert(geometryChecks.terrain.surfaceClearance >= 0.01, "Terrain render surface must remain below the timber deck to prevent z-fighting");
+    console.assert(geometryChecks.terrain.poolOpeningCount === 1, "Flat terrain must contain one opening for the pool");
     console.assert(Math.abs(geometryChecks.rainwaterTank.poolClearance - 0.399) < 0.005, "Tank clearance must be about 0.40 m");
     console.assert(geometryChecks.layout.poolPlanX[1] < geometryChecks.layout.studioPlanX[0], "Pool must remain left of the studio");
     console.assert(geometryChecks.layout.housePlanX[1] <= geometryChecks.layout.drivewayPlanX[0], "House must remain left of the driveway");
