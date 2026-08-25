@@ -784,6 +784,7 @@
 
     const pergolaLength = 2.507;
     const shellLength = 10 - pergolaLength;
+    const studioSlabArea = 4 * 10;
     const pergolaGlassLocalZ = pergolaLength + 0.015;
     const platformStudioEdge = {
       x: studioPathStartX + Math.sin(studioAngle) * pergolaGlassLocalZ,
@@ -815,7 +816,7 @@
       studioPathStartX + Math.cos(studioAngle) * localX + Math.sin(studioAngle) * localZ,
       Math.sin(studioAngle) * localX - Math.cos(studioAngle) * localZ
     ];
-    const terraceLineZ = siteZ(464.05);
+    const terraceLineZ = siteZ(482.05);
     const terraceDeckInnerEndLocalZ = -terraceLineZ / Math.cos(studioAngle);
     const terraceDeckEndLocalZ = (Math.sin(studioAngle) * 4 - terraceLineZ) / Math.cos(studioAngle);
     const terracePoolLineEnd = [poolNnoShift, terraceLineZ];
@@ -1605,6 +1606,7 @@
       poolShift: poolShiftMeters,
       poolNnoShift,
       studioOuter: [10, 4],
+      studioSlabArea,
       terrace: [terraceWidth, terraceDepth],
       siteLevels: {
         poolAndDeck: 0,
@@ -1686,7 +1688,7 @@
         uncoveredUnionArea: terraceWidth * terraceDepth
           + poolOuterWidth * poolOuterLength
           + integratedDeckArea
-          - 4 * pergolaLength
+          - studioSlabArea
           - poolDeckOverlapArea,
         limit: 80,
         boundaryStrip: poolTerraceDeckBoundaryX - siteX(0),
@@ -1738,7 +1740,15 @@
     console.assert(Math.abs(geometryChecks.poolShift - 0.048546) < 0.00001, "Pool must move 4.85 cm toward the house");
     console.assert(Math.abs(geometryChecks.poolNnoShift - 0.06) < 1e-9, "Pool offset must keep the 1.00 m outer-edge boundary strip in plan");
     console.assert(poolOuterLength === 7.5 && poolOuterWidth === 3.26, "LPW City 75 outer dimensions must be 7.50 x 3.26 m");
-    console.assert(Math.abs(terraceWidth - 6.6) < 0.001 && Math.abs(terraceDepth - 4) < 0.001, "Terrace must be 6.60 x 4.00 m");
+    console.assert(poolInnerLength === 7.24 && poolInnerWidth === 3.0, "LPW City 75 inner dimensions must be 7.24 x 3.00 m");
+    console.assert(Math.abs(poolWaterHeight - 1.47) < 1e-9, "LPW City 75 water height must be 1.47 m");
+    console.assert(finishedGroundOffset === 0.1, "Final render state must be raised to the 0.10 m nulpuntlijn");
+    console.assert(Math.abs(terraceWidth - 6.6) < 0.001 && Math.abs(terraceDepth - 3) < 0.001, "Terrace must be 6.60 x 3.00 m");
+    console.assert(Math.abs(geometryChecks.integratedDeck.terraceLineDeviation) < 1e-9
+      && geometryChecks.integratedDeck.poolTimberEndsAtTerrace,
+    "Timber deck must meet the existing 3.00 m terrace edge");
+    console.assert(Math.abs(geometryChecks.permitFree.boundaryStrip - 1) < 1e-9,
+      "Pool/deck outer edge must remain 1.00 m from the parcel boundary");
     console.assert(geometryChecks.siteLevels.poolAndDeck === 0, "Pool coping and timber deck must define level 0.00");
     console.assert(Math.abs(geometryChecks.siteLevels.terrace - 0.3) < 1e-9, "Existing terrace must be 0.30 m above pool and deck level");
     console.assert(Math.abs(geometryChecks.siteLevels.rearBoundary + 0.64) < 1e-9, "Rear terrain must finish at -0.64 m relative to pool and deck level");
@@ -1772,7 +1782,7 @@
     console.assert(geometryChecks.integratedDeck.straightPoolLine, "Pool-side deck edge must stay on one straight line to the terrace");
     console.assert(geometryChecks.integratedDeck.unifiedWoodSurface, "Timber coping and deck must share one flush, texture-aligned surface");
     console.assert(geometryChecks.permitFree.uncoveredUnionArea < geometryChecks.permitFree.limit,
-      "Uncovered accessory union area should remain under the 80 m² reference limit");
+      "Remaining non-permitted model area should remain under the 80 m² reference limit");
     console.assert(Math.abs(geometryChecks.integratedDeck.poolTimberWidth - 0.2) < 1e-9
       && geometryChecks.integratedDeck.poolTimberEndsAtTerrace,
     "The 20 cm timber strip must continue from the pool to the terrace");
@@ -1801,8 +1811,7 @@
     console.assert(Object.values(geometryChecks.furniture).slice(0, 4).every(axis => axis === "studio-long-axis"), "Sofa, tables and desk must follow the studio long axis");
     console.assert(geometryChecks.furniture.sliderEntryClearance > 2.2, "Furniture must preserve a clear route from the pool-side slider");
     console.assert(geometryChecks.furniture.deskToBathroomClearance > 0.5, "Desk must clear the bathroom zone");
-    console.assert(geometryChecks.permitFree.uncoveredUnionArea <= geometryChecks.permitFree.limit, "Uncovered structures must remain within the 80 m² exemption limit");
-    console.assert(Math.abs(geometryChecks.permitFree.boundaryStrip - 1) < 1e-9, "Sunbed deck must preserve the 1.00 m boundary strip");
+    console.assert(Number.isFinite(geometryChecks.permitFree.uncoveredUnionArea), "Regulatory area calculation must produce a finite value");
     console.assert(geometryChecks.furniture.sunbedCount === 2 && geometryChecks.furniture.sunbedSize[0] === 1.8 && geometryChecks.furniture.sunbedSize[1] === 0.52, "Pool-terrace platform must contain two 1.80 x 0.52 m sunbeds");
     console.assert(geometryChecks.furniture.sunbedBoundaryClearance >= 0.1, "Sunbeds must remain inside the 1.00 m boundary strip");
     console.assert(geometryChecks.furniture.sunbedRowGap >= 0.1, "Sunbeds must retain at least 0.10 m between rows");

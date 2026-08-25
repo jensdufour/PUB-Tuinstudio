@@ -237,8 +237,8 @@
 
         <g aria-label="Bronvermelding" display="none">
           <rect x="-95" y="-85" width="440" height="25" rx="2" fill="#faf8f4" stroke="#c8d0dc" stroke-width="0.8" />
-          <text x="-87" y="-75" font-size="5" fill="#4A7C59" font-weight="700">CADGIS · B862b / B499k · WFS EPSG:3812 · 05-08-2026</text>
-          <text x="-87" y="-66" font-size="4.2" fill="#7a8a9a">woningpositie CadGIS · orthogonale huisvorm PID · studiofundering Google aerial</text>
+          <text x="-87" y="-75" font-size="5" fill="#4A7C59" font-weight="700">CADGIS · Paperless bron 156 · B862b / B499k</text>
+          <text x="-87" y="-66" font-size="4.2" fill="#7a8a9a">woningpositie Paperless grondplan/PID · Geopunt/CadGIS referentie · aerial visual only</text>
         </g>
 
         <!-- True north from CadGIS frontage frame: 59,04° clockwise from SVG-up. -->
@@ -338,7 +338,7 @@
         <text x="120" y="1118" font-size="6" fill="#888" text-anchor="middle">gewestweg (N408)</text>
 
         <!-- ══════════════════════════════════════════════════════
-             CADGIS CURRENT SITUATION — WFS EPSG:3812, 05-08-2026
+             CADGIS CURRENT SITUATION — Paperless source document 156
              B862b: 41004B0862/00B000 · SuVaCn 556 m² · shape 539,35 m²
              SVG origin = CadGIS front-left; 18 px/m; full 13-vertex ring.
              ══════════════════════════════════════════════════════ -->
@@ -1198,16 +1198,16 @@
 
         <!-- ══════════════════════════════════════════════════════
              TERRAS — behind house achtergevel (left side only)
-             4,00 m deep: y=542 to y=614
+             3,00 m deep: y=560 to y=614
              ══════════════════════════════════════════════════════ -->
         <g id="cadgis-terrace" transform="translate(0 -77.95)">
-        <rect x="0" y="542" width="118.8" height="72" fill="url(#pavingFill)" stroke="#c8c0b4" stroke-width="1" />
-        <text x="60" y="581" font-size="8" fill="#2E4057" text-anchor="middle" font-weight="700">TERRAS</text>
-        <!-- Dimension: terras diepte 4,00 m (achtergevel → ZZW-kant, PID 400) -->
-        <line x1="119" y1="542" x2="132" y2="542" stroke="#8a9aaa" stroke-width="0.5" />
+        <rect x="0" y="560" width="118.8" height="54" fill="url(#pavingFill)" stroke="#c8c0b4" stroke-width="1" />
+        <text x="60" y="589" font-size="8" fill="#2E4057" text-anchor="middle" font-weight="700">TERRAS</text>
+        <!-- Dimension: terras diepte 3,00 m (achtergevel → ZZW-kant, source plan) -->
+        <line x1="119" y1="560" x2="132" y2="560" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="119" y1="614" x2="132" y2="614" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="126" y1="542" x2="126" y2="614" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
-        <text x="133" y="578" font-size="5" fill="#7a8a9a" text-anchor="start">4,00 m</text>
+        <line x1="126" y1="560" x2="126" y2="614" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="133" y="590" font-size="5" fill="#7a8a9a" text-anchor="start">3,00 m</text>
         <!-- Dimension: terras breedte 6,60 m -->
         <line x1="0" y1="542" x2="0" y2="556" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="119" y1="542" x2="119" y2="556" stroke="#8a9aaa" stroke-width="0.5" />
@@ -1221,13 +1221,13 @@
         <g id="integrated-studio-deck" aria-label="Doorlopend houten dek rond de tuinstudio">
           <title>Doorlopend houten dek rond de LPW City 75, aansluitend op het terras en met 1,00 m groene grensstrook tot buitenrand</title>
           <polygon
-            points="73.080000,268.054828 76.680000,268.054828 81.983307,267.181000 153.318017,257.415800 159.438356,302.124829 88.103646,311.890030 106.396308,445.517775 177.731018,435.752575 181.604728,464.050000 76.680000,464.050000 73.080000,464.050000 18.000000,464.050000 18.000000,399.454828 73.080000,399.454828 73.080000,271.654828"
+            points="73.080000,268.054828 76.680000,268.054828 81.983307,267.181000 153.318017,257.415800 159.438356,302.124829 88.103646,311.890030 106.396308,445.517775 177.731018,435.752575 181.604728,482.050000 76.680000,482.050000 73.080000,482.050000 18.000000,482.050000 18.000000,399.454828 73.080000,399.454828 73.080000,271.654828"
             fill="url(#deckFill)" />
           <polyline points="73.080000,268.054828 76.680000,268.054828 81.983307,267.181000"
             fill="none" stroke="#6f4729" stroke-width="0.9" stroke-linecap="round" />
-          <polyline points="76.680000,464.050000 181.604728,464.050000 177.731018,435.752575"
+          <polyline points="76.680000,482.050000 181.604728,482.050000 177.731018,435.752575"
             fill="none" stroke="#6f4729" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" />
-          <polyline points="18.000000,399.454828 18.000000,464.050000 73.080000,464.050000"
+          <polyline points="18.000000,399.454828 18.000000,482.050000 73.080000,482.050000"
             fill="none" stroke="#6f4729" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" />
           <polyline points="88.103646,311.890030 106.396308,445.517775 177.731018,435.752575"
             fill="none" stroke="#262d30" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
@@ -2230,7 +2230,9 @@
         <div class="permit-panel-title">Vergunningscheck (Vlaanderen) - Werknota</div>
         <div>[MODEL] Afstand perceelsgrens: 1,00 m tot buitenrand zwembad/dek</div>
         <div>[FICHE] LPW City 75: buiten 7,50 x 3,26 m; binnen 7,24 x 3,00 m; waterhoogte 1,47 m</div>
-        <div>[CHECK] Totale niet-overdekte constructies: referentie onder 80 m2 aangehouden in model</div>
+        <div>[CHECK] 4 x 10 m bijgebouwplaat uitgesloten uit de regeltoets; resterende modeloppervlakte en 80 m2-referentie door Ninove bevestigen</div>
+        <div>[BRON 2021] Bestaand terras licht naar de tuin laten afwateren; niet naar de DWA-controlekamer</div>
+        <div>[BRON 2026] Hemelwaterafkoppeling en gescheiden riolering uitvoeren volgens de GSV 2023</div>
         <div>[CHECK] Lokale/stedelijke voorschriften en procedure bij gemeente Ninove bevestigen</div>
       </div>
       <div class="scale-note">
