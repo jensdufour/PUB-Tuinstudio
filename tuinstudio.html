@@ -97,6 +97,24 @@
       text-align: right;
     }
 
+    .quote-specs {
+      margin-top: 12px;
+      border: 1px solid var(--light-line);
+      background: #f7f6f2;
+      padding: 10px 12px;
+      font-family: 'Space Mono', monospace;
+      font-size: 8px;
+      color: var(--dim);
+      line-height: 1.45;
+    }
+
+    .quote-specs-title {
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
     .doc-footer {
       border-top: 1px solid var(--light-line);
       padding-top: 14px;
@@ -167,24 +185,23 @@
     ZZW (BOTTOM) WALL — pool-side slider plus centered storage door, y=357..375:
       Pergola open 2,51 m:    x=90..278  (188px)  — open (WNW side)
       RAL 9005 post 0,20 m: x=278..293 (15px)   — connects both sliding windows
-      Schuifraam 5,15 m:     x=293..679 (386px)  — 2 panels, one continuous opening
-      Berging ZZW-wand:       x=679..840 (2,15 m), deur 0,90 m gecentreerd
-      Deurwangen:             0,62 m aan schuifraam- en OZO-zijde
+      Schuifraam 5,20 m:     x=293..683 (390px)  — 2 panels, one continuous opening
+      Berging ZZW-wand:       x=683..840 (2,09 m), deur 1,00 m gecentreerd
+      Deurwangen:             0,58 m aan schuifraam- en OZO-zijde
 
-      Sequence (right to left): bergingsdeur met 0,62m wangen → 5,15m two-panel slider → RAL9005 post 20x20 → pergola.
+      Sequence (right to left): bergingsdeur met 0,58m wangen → 5,20m two-panel slider → RAL9005 post 20x20 → pergola.
 
     NNO (TOP) WALL, y=75..93:
       Pergola north solid:       x=90..278  (188px)
       Pier E:                    x=278..337 (59px = 0,79 m)
-      Kantoor+lounge raam 4,00m: x=337..637 (300px)
+      Kantoor+lounge schuifraam 4,00m: x=337..637 (300px)
       Pier:                      x=637..718 (81px = 1,08 m)
-      Bath kipraam 1,20m:        x=718..808 (90px), h=0,30m, dorpel +2,00m
       Pier W:                    x=808..840 (32px = 0,43 m)
 
     OZO (RIGHT) WALL, x=822..840:
       Doorlopende buitenwand: y=93..357 (geen buitendeur)
 
-    WNW (LEFT) WALL (pergola/lounge): schuifraam 3,52 m full height, 2 panels, x=278..296
+    WNW (LEFT) WALL (pergola/lounge): vaste beglazing 3,52 m full height, x=278..296
 
     HAARD (Element4 Sky L Tunnel):
       x=499..529 (30px = 0,40 m)
@@ -269,19 +286,19 @@
           <text x="12" y="27" font-size="10" fill="#2E4057" text-anchor="middle" font-weight="700">N</text>
         </g>
 
-        <!-- ══════════════════════════════════════════════════════
-             ZZW (BOTTOM) WALL — 5,15 m two-panel slider plus storage door
+           <!-- ══════════════════════════════════════════════════════
+             ZZW (BOTTOM) WALL — 5,20 m two-panel slider plus storage door
              ══════════════════════════════════════════════════════ -->
-        <!-- ZZW storage wall with centered 0,90 m exterior door and 0,62 m jambs. -->
-        <rect x="679" y="357" width="46.75" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
-        <rect x="793.25" y="357" width="46.75" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+           <!-- ZZW storage wall with centered 1,00 m exterior door and 0,58 m jambs. -->
+           <rect x="683" y="357" width="43.5" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+           <rect x="796.25" y="357" width="43.75" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
 
-        <!-- One 5,15 m sliding window, split into two economical panels. -->
-        <rect id="pool-side-slider" x="293" y="357" width="386" height="18"
+        <!-- One 5,20 m sliding window, split into two economical panels. -->
+        <rect id="pool-side-slider" x="293" y="357" width="390" height="18"
           fill="#a8c5d8" stroke="#2E4057" stroke-width="2">
-          <title>Zwembadzijde: één schuifraam 5,15 m, tweedelig</title>
+          <title>Zwembadzijde: één schuifraam 5,20 m, tweedelig</title>
         </rect>
-        <line x1="486" y1="375" x2="486" y2="357" stroke="white" stroke-width="1.5" />
+        <line x1="488" y1="375" x2="488" y2="357" stroke="white" stroke-width="1.5" />
 
         <!-- Exact 20x20 cm post connecting both sliders. -->
         <rect id="slider-corner-post-ral9005" x="278" y="357" width="15" height="15"
@@ -290,14 +307,14 @@
         </rect>
         <g id="pool-side-blue-stone-plinth" stroke="#788890" stroke-width="4" stroke-linecap="round">
           <title>ZZW-crepiwand met blauwe-steenplint rondom de bergingsdeur</title>
-          <line x1="679" y1="373" x2="725.75" y2="373" />
-          <line x1="793.25" y1="373" x2="840" y2="373" />
+          <line x1="683" y1="373" x2="726.5" y2="373" />
+          <line x1="796.25" y1="373" x2="840" y2="373" />
         </g>
 
         <!-- INGANG arrow (centered on schuifraam) -->
-        <line x1="486" y1="455" x2="486" y2="366" stroke="#4A7C59" stroke-width="2" marker-end="url(#arrG)" />
-        <text x="486" y="472" font-size="8" fill="#4A7C59" text-anchor="middle" font-weight="700">INGANG</text>
-        <text x="486" y="462" font-size="7" fill="#4A7C59" text-anchor="middle">schuifraam 5,15 m · 2 delen</text>
+        <line x1="488" y1="455" x2="488" y2="366" stroke="#4A7C59" stroke-width="2" marker-end="url(#arrG)" />
+        <text x="488" y="472" font-size="8" fill="#4A7C59" text-anchor="middle" font-weight="700">INGANG</text>
+        <text x="488" y="462" font-size="7" fill="#4A7C59" text-anchor="middle">schuifraam 5,20 m · 2 delen</text>
 
         <!-- Pergola south — open (dashed, WNW side) -->
         <line x1="278" y1="366" x2="90" y2="366" stroke="#4A7C59" stroke-width="1.2" stroke-dasharray="6,4" />
@@ -315,13 +332,11 @@
              ══════════════════════════════════════════════════════ -->
         <!-- Pier W: x=90..122 (0,43 m) -->
         <rect x="808" y="75" width="32" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
-        <!-- Hoog bath kipraam 1,20 x 0,30 m: x=718..808, dorpel +2,00 m. -->
-        <rect x="718" y="75" width="90" height="18" fill="#a8c5d8" stroke="#2E4057" stroke-width="1.5" />
-        <line x1="778" y1="93" x2="778" y2="75" stroke="white" stroke-width="1" />
-        <line x1="748" y1="93" x2="748" y2="75" stroke="white" stroke-width="1" />
+        <!-- Solid wall: the former unquoted bathroom window is removed. -->
+        <rect x="718" y="75" width="90" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
         <!-- Pier: x=637..718 (1,08 m) -->
         <rect x="637" y="75" width="81" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
-        <!-- Kantoor+lounge raam 4,00 m: x=337..637 (300px) -->
+        <!-- Kantoor+lounge schuifraam 4,00 m: x=337..637 (300px) -->
         <rect x="337" y="75" width="300" height="18" fill="#a8c5d8" stroke="#2E4057" stroke-width="1.5" />
         <line x1="562" y1="93" x2="562" y2="75" stroke="white" stroke-width="1" />
         <line x1="487" y1="93" x2="487" y2="75" stroke="white" stroke-width="1" />
@@ -332,12 +347,9 @@
         <rect x="90" y="75" width="188" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
 
         <!-- ══════════════════════════════════════════════════════
-             LOUNGE/PERGOLA WEST WALL (WNW) — schuifraam 3,52 m, two panels
+               LOUNGE/PERGOLA WEST WALL (WNW) — closed wall
              ══════════════════════════════════════════════════════ -->
-        <rect x="278" y="93" width="18" height="264" fill="#a8c5d8" stroke="#2E4057" stroke-width="2" />
-        <line x1="296" y1="225" x2="278" y2="225" stroke="white" stroke-width="1.5" />
-        <text x="287" y="223" font-size="6" fill="#2E4057" text-anchor="middle"
-          transform="rotate(-90,287,223)">schuifraam 3,52 m · 2 delen</text>
+             <rect x="278" y="93" width="18" height="264" fill="url(#wallFill)" stroke="#2E4057" stroke-width="2" />
 
         <!-- Pergola east — open (dashed) -->
         <line x1="99" y1="357" x2="99" y2="93" stroke="#4A7C59" stroke-width="1.2" stroke-dasharray="6,4" />
@@ -377,9 +389,9 @@
              <rect x="687" y="236.5" width="135" height="8" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
         <!-- Standard aluminium RAL 9005 exterior door, opening outward on ZZW. -->
         <g id="storage-exterior-door-ral9005" fill="none" stroke="#0a0a0d">
-          <title>Standaard aluminium buitendeur berging, 0,90 m, RAL 9005, op de ZZW-zijde en naar buiten draaiend</title>
-          <line x1="793.25" y1="375" x2="793.25" y2="442.5" stroke-width="2" />
-          <path d="M725.75,375 A67.5 67.5 0 0 0 793.25,442.5" stroke="#8a9aaa" stroke-width="0.9" stroke-dasharray="4,3" />
+          <title>Standaard aluminium buitendeur berging, 1,00 m x 2,20 m, RAL 9005, op de ZZW-zijde en naar buiten draaiend</title>
+          <line x1="796.25" y1="375" x2="796.25" y2="450" stroke-width="2" />
+          <path d="M721.25,375 A75 75 0 0 0 796.25,450" stroke="#8a9aaa" stroke-width="0.9" stroke-dasharray="4,3" />
         </g>
         <text x="805" y="410" font-size="4.5" fill="#0a0a0d" text-anchor="start" font-weight="700">ALU RAL9005</text>
         <!-- Label -->
@@ -742,26 +754,26 @@
 
         <!-- ─── BOTTOM: ZZW FACE BREAKDOWN at y≈515 ─── -->
         <line x1="840" y1="522" x2="840" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="793.25" y1="522" x2="793.25" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="725.75" y1="522" x2="725.75" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="679" y1="522" x2="679" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="796.25" y1="522" x2="796.25" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="721.25" y1="522" x2="721.25" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
+        <line x1="683" y1="522" x2="683" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="293" y1="522" x2="293" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="278" y1="522" x2="278" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="90" y1="522" x2="90" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
 
-        <!-- Centered storage door: 0,62 + 0,90 + 0,62 m. -->
-        <line x1="840" y1="515" x2="793.25" y2="515" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
-        <text x="816.625" y="515" font-size="5" fill="#7a8a9a" text-anchor="middle">0,62</text>
-        <line x1="793.25" y1="515" x2="725.75" y2="515" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
-        <rect x="738" y="512" width="43" height="11" fill="#faf8f4" />
-        <text x="759.5" y="515" font-size="5" fill="#4A7C59" text-anchor="middle" font-weight="700">deur 0,90</text>
-        <line x1="725.75" y1="515" x2="679" y2="515" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
-        <text x="702.375" y="515" font-size="5" fill="#7a8a9a" text-anchor="middle">0,62</text>
+        <!-- Centered storage door: 0,58 + 1,00 + 0,58 m. -->
+        <line x1="840" y1="515" x2="796.25" y2="515" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="818.125" y="515" font-size="5" fill="#7a8a9a" text-anchor="middle">0,58</text>
+        <line x1="796.25" y1="515" x2="721.25" y2="515" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <rect x="737" y="512" width="44" height="11" fill="#faf8f4" />
+        <text x="759" y="515" font-size="5" fill="#4A7C59" text-anchor="middle" font-weight="700">deur 1,00</text>
+        <line x1="721.25" y1="515" x2="683" y2="515" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="702.125" y="515" font-size="5" fill="#7a8a9a" text-anchor="middle">0,58</text>
 
-        <!-- One full-width, two-panel slider 5,15 m. -->
-        <line x1="679" y1="515" x2="293" y2="515" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <!-- One full-width, two-panel slider 5,20 m. -->
+        <line x1="683" y1="515" x2="293" y2="515" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
         <rect x="442" y="512" width="88" height="11" fill="#faf8f4" />
-        <text x="486" y="515" font-size="6" fill="#4A7C59" text-anchor="middle" font-weight="700">schuif 5,15 · 2-delig</text>
+        <text x="488" y="515" font-size="6" fill="#4A7C59" text-anchor="middle" font-weight="700">schuif 5,20 · 2-delig</text>
 
         <!-- RAL 9005 connection post 0,20 m. -->
         <line x1="293" y1="515" x2="278" y2="515" stroke="#0a0a0d" stroke-width="0.8" />
@@ -835,17 +847,15 @@
         <!-- Pier W 0,43 -->
         <line x1="840" y1="5" x2="808" y2="5" stroke="#8a9aaa" stroke-width="0.6" />
         <text x="824" y="8" font-size="5" fill="#7a8a9a" text-anchor="middle">0,43</text>
-        <!-- Kipraam 1,20 -->
-        <line x1="808" y1="5" x2="718" y2="5" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
-        <rect x="743" y="2" width="46" height="10" fill="#faf8f4" />
-        <text x="766" y="4" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">raam 1,20</text>
+        <!-- Solid wall 1,20 -->
+        <line x1="808" y1="5" x2="718" y2="5" stroke="#8a9aaa" stroke-width="0.6" />
         <!-- Pier midden 1,08 -->
         <line x1="718" y1="5" x2="637" y2="5" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
         <text x="678" y="8" font-size="5" fill="#7a8a9a" text-anchor="middle">1,08</text>
-        <!-- Raam 4,00 -->
+        <!-- Schuifraam 4,00 -->
         <line x1="637" y1="5" x2="337" y2="5" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
         <rect x="464" y="2" width="46" height="10" fill="#faf8f4" />
-        <text x="487" y="4" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">raam 4,00</text>
+        <text x="487" y="4" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">schuifraam 4,00</text>
         <!-- Pier E 0,79 -->
         <line x1="337" y1="5" x2="278" y2="5" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
         <text x="308" y="8" font-size="5" fill="#7a8a9a" text-anchor="middle">0,79</text>
@@ -923,10 +933,10 @@
         <text x="514" y="132" font-size="5.5" fill="#4A7C59" text-anchor="middle">1,10</text>
 
         <!-- ─── IN-PLAN WALL THICKNESS NOTES ─── -->
-        <text x="816.625" y="363" font-size="3.8" fill="#2E4057" text-anchor="middle" opacity="0.55">wand 0,24</text>
-        <text x="677" y="81" font-size="4.5" fill="#2E4057" text-anchor="middle" opacity="0.55">wand 0,24</text>
-        <text x="184" y="81" font-size="4.5" fill="#2E4057" text-anchor="middle" opacity="0.55">wand 0,24</text>
-        <text x="831" y="215" font-size="4.5" fill="#2E4057" text-anchor="middle" transform="rotate(90,831,215)" opacity="0.55">wand 0,24</text>
+        <text x="816.625" y="363" font-size="3.8" fill="#2E4057" text-anchor="middle" opacity="0.55">wandopb. 0,24</text>
+        <text x="677" y="81" font-size="4.5" fill="#2E4057" text-anchor="middle" opacity="0.55">wandopb. 0,24</text>
+        <text x="184" y="81" font-size="4.5" fill="#2E4057" text-anchor="middle" opacity="0.55">wandopb. 0,24</text>
+        <text x="831" y="215" font-size="4.5" fill="#2E4057" text-anchor="middle" transform="rotate(90,831,215)" opacity="0.55">wandopb. 0,24</text>
         <!-- ZZW kolom label -->
         <text x="573" y="363" font-size="4.5" fill="#2E4057" text-anchor="middle" opacity="0.7">kolom</text>
 
@@ -937,7 +947,11 @@
           <div class="legend-swatch"
             style="background:repeating-linear-gradient(45deg,#dce3ea,#dce3ea 2px,#faf8f4 2px,#faf8f4 5px); border-color:#2E4057;">
           </div>
-          Dragend metselwerk (0,24 m)
+          Buitenwandopbouw: 14 cm snelbouw + 10 cm isolatie/crepi (tot. ca. 0,24 m)
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background:#faf8f4; border-color:#2E4057; border-width:1px;"></div>
+          Binnenmuren snelbouw 10 cm
         </div>
         <div class="legend-item">
           <div class="legend-swatch" style="background:#a8c5d8; border-color:#2E4057; border-width:2px;"></div>
@@ -1043,6 +1057,20 @@
           </svg>
           Lichtpunt (plafond)
         </div>
+      </div>
+      <div class="quote-specs" aria-label="Offerte-uitvoering tuinstudio">
+        <div class="quote-specs-title">Offerte-uitvoering tuinstudio (samenvatting)</div>
+        <div>Buitenmuur: snelbouw 14 cm + gevelisolatie 10 cm + crepi.</div>
+        <div>Binnenmuren: snelbouw 10 cm.</div>
+        <div>Blauwe steen: plaatsen 15/5 + plint 20 cm hoog.</div>
+        <div>Isolatie: vloer 8 cm Recticel, dak 14 cm Recticel.</div>
+        <div>Dak/plafond: plat dak EPDM + plafond in gyproc.</div>
+        <div>Haard: dakdoorlaat voorzien voor Element4 Sky L Tunnel.</div>
+        <div>Schrijnwerk Nr.1: schuifraam links 4000 x 2650 mm, alu RAL, Uw 0,82 W/m2K, type 801.</div>
+        <div>Schrijnwerk Nr.2: schuifraam rechts 5200 x 2650 mm, alu RAL, Uw 0,83 W/m2K, type 802.</div>
+        <div>Schrijnwerk Nr.5: deur links 1000 x 2200 mm, alu RAL, paneel 1x planchet/iso/wbp, type 707.</div>
+        <div>Afwerking: chapewerken + vloerafwerking + binnendeur tubespan + plaatsing tuinkantoor.</div>
+        <div>Nota: maatvoering hierboven volgt offertefiches; plan blijft schematisch tot finale uitvoeringsafstemming.</div>
       </div>
       <div class="scale-note">
         Schaal 1:50 &nbsp;|&nbsp; 1 cm = 0,50 m &nbsp;|&nbsp; Schematisch &mdash; niet vergunningsgeldig &nbsp;|&nbsp;

@@ -102,83 +102,26 @@
       pointer-events: none;
     }
 
-    .title-block {
+    .deck-area-badge {
       position: absolute;
       z-index: 2;
-      top: 28px;
-      left: 32px;
-      max-width: min(460px, calc(100vw - 64px));
-      padding: 0 0 2px 16px;
-      border-left: 3px solid var(--cp-accent);
-      color: var(--cp-text);
-      text-shadow: 0 1px 12px var(--cp-sheen);
-      pointer-events: none;
-    }
-
-    .eyebrow {
-      margin: 0 0 7px;
-      color: var(--cp-accent);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(23px, 3vw, 38px);
-      font-weight: 650;
-      line-height: 1.05;
-      letter-spacing: 0;
-    }
-
-    .subtitle {
-      margin: 9px 0 0;
-      color: var(--cp-text-muted);
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    html[data-theme="dark"] .title-block {
-      color: var(--cp-bg);
-    }
-
-    html[data-theme="dark"] .title-block .subtitle {
-      color: var(--cp-bg-elevated);
-    }
-
-    .metrics {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 12px;
-    }
-
-    .metric {
-      padding: 5px 8px;
+      top: 24px;
+      left: 24px;
+      padding: 10px 12px;
       border: 1px solid var(--cp-border);
-      border-radius: 6px;
-      background: var(--cp-panel);
-      color: var(--cp-text);
-      font-family: Consolas, "Courier New", Courier, monospace;
-      font-size: 11px;
-      box-shadow: 0 0 2px var(--cp-border);
-    }
-
-    .material-note {
-      position: absolute;
-      z-index: 2;
-      left: 32px;
-      bottom: 28px;
-      max-width: min(520px, calc(100vw - 64px));
-      padding: 8px 10px;
-      border-radius: 6px;
-      background: var(--cp-panel);
+      border-radius: 8px;
+      background: var(--cp-panel-strong);
       color: var(--cp-text-muted);
-      font-size: 11px;
-      line-height: 1.35;
+      font-size: 12px;
+      line-height: 1.2;
       box-shadow: 0 0 2px var(--cp-border);
       pointer-events: none;
+    }
+
+    .deck-area-value {
+      color: var(--cp-accent);
+      font-weight: 700;
+      font-family: Consolas, "Courier New", Courier, monospace;
     }
 
     .control-dock {
@@ -197,20 +140,10 @@
       max-width: calc(100vw - 36px);
     }
 
-    .mode-switch,
     .tool-switch {
       display: flex;
       align-items: center;
       gap: 2px;
-    }
-
-    .mode-switch {
-      padding: 2px;
-      border-radius: 6px;
-      background: var(--cp-surface-soft);
-    }
-
-    .tool-switch {
       padding-left: 6px;
       border-left: 1px solid var(--cp-border);
     }
@@ -256,38 +189,11 @@
       pointer-events: none;
     }
 
-    main.plan-view .title-block,
-    main.plan-view .material-note {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    main.overview-view .material-note {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    main.plan-view .control-dock {
-      top: 18px;
-      bottom: auto;
-    }
-
     @media (max-width: 720px) {
-      .title-block {
+      .deck-area-badge {
         top: 18px;
         left: 18px;
-        max-width: calc(100vw - 36px);
-      }
-
-      .subtitle {
-        font-size: 12px;
-      }
-
-      .material-note {
-        left: 18px;
-        right: 18px;
-        bottom: 80px;
-        max-width: none;
+        font-size: 11px;
       }
 
       .control-dock {
@@ -295,12 +201,6 @@
         right: 18px;
         bottom: 18px;
         align-items: center;
-      }
-
-      .mode-switch {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        flex: 1;
       }
 
       .control-dock button {
@@ -329,33 +229,17 @@
   <main aria-label="3D visualisatie van tuinplan Lot 24B">
     <div id="scene"></div>
 
-    <header class="title-block">
-      <p class="eyebrow">3D visualisatie · planbasis 05-08-2026</p>
-      <h1>Tuinplan Lot 24B</h1>
-      <p class="subtitle">Woning · terras · LPW City+ · tuinstudio · voortuin</p>
-      <div class="metrics" aria-label="Belangrijkste doorgangen">
-        <span class="metric">open pergola 4,36 m</span>
-        <span class="metric">glaslijn 0,70 m</span>
-        <span class="metric">houtdek 38,18 m²</span>
-        <span class="metric">zwembad &amp; houtdek 0,00 m</span>
-        <span class="metric">terras +0,30 m</span>
-        <span class="metric">achtergrens -0,64 m</span>
-        <span class="metric">raming 78,55 / 80 m²</span>
-      </div>
-    </header>
-
-    <div class="material-note">
-      Het zwembad schuift 0,20 m NNO zodat de ZZW-poolrand en het zonnedek exact op de 1,00 m grenslijn liggen. De bergingsdeur zit gecentreerd in de ZZW-wand en opent naar buiten; de OZO-studiokop blijft doorlopende witte crepi met blauwe-steenplint. De vaste maatvoering toont 4,36 m door de open pergola en 0,70 m aan de glaslijn. Zwembadboord, houtdek en terrein blijven tot het tuineinde van de studio op peil 0,00; pas daarachter daalt het terrein tot circa -0,64 m aan de achtergrens. Het bestaande huisterras ligt 0,30 m hoger, vlak met de blauwe hardstenen plint.
+    <div class="deck-area-badge" aria-label="Nieuwe verharding">
+      Nieuwe verharding: <span id="deck-area-value" class="deck-area-value">--,-- m²</span>
+      <br>
+      Oude verharding: <span id="old-area-value" class="deck-area-value">--,-- m²</span>
+      <br>
+      Totaal verharding: <span id="total-area-value" class="deck-area-value">--,-- m²</span>
     </div>
 
     <div class="control-dock" aria-label="Renderinstellingen">
-      <div class="mode-switch" role="group" aria-label="Camerastand">
-        <button class="mode-button" type="button" data-view="passage" aria-pressed="true">Passage</button>
-        <button class="mode-button" type="button" data-view="overview" aria-pressed="false">Overzicht</button>
-        <button class="mode-button" type="button" data-view="plan" aria-pressed="false">Plan</button>
-      </div>
       <div class="tool-switch" role="group" aria-label="Weergavehulpmiddelen">
-        <button id="reset-camera" type="button" title="Herstel de huidige camerastand">Herstel</button>
+        <button id="reset-camera" type="button" title="Herstel Passage-camera">Passage</button>
       </div>
     </div>
 
@@ -369,7 +253,9 @@
     const sceneHost = document.querySelector("#scene");
     const mainHost = document.querySelector("main");
     const loading = document.querySelector("#loading");
-    const viewButtons = [...document.querySelectorAll("[data-view]")];
+    const deckAreaValue = document.querySelector("#deck-area-value");
+    const oldAreaValue = document.querySelector("#old-area-value");
+    const totalAreaValue = document.querySelector("#total-area-value");
     const resetButton = document.querySelector("#reset-camera");
 
     const renderer = new THREE.WebGLRenderer({
@@ -398,6 +284,7 @@
     const siteZ = value => -(value - planOriginY) / planScale;
     const planXFromSite = value => value * planScale + planOriginX;
     const planYFromSiteZ = value => planOriginY - value * planScale;
+    const finishedGroundOffset = 0.1;
     const frontGroundY = -0.08;
     const deckTop = 0.061;
     const terrainSurfaceClearance = 0.01;
@@ -726,10 +613,13 @@
     const studioRearPlanX = 81.98330690803415;
     const studioPathStartX = siteX(studioRearPlanX);
     const poolShiftMeters = Math.tan(studioAngle) * studioPathStartX;
-    const poolNnoShift = 0.2;
+    const poolNnoShift = 0.06;
     const poolRearZ = -poolShiftMeters;
-    const poolOuterWidth = 3.4;
-    const poolOuterLength = 7.7;
+    const poolOuterWidth = 3.26;
+    const poolOuterLength = 7.5;
+    const poolInnerWidth = 3.0;
+    const poolInnerLength = 7.24;
+    const poolWaterHeight = 1.47;
 
     const world = new THREE.Group();
     // Plan mode is the canonical orientation: house/pool left, driveway/studio right.
@@ -824,10 +714,12 @@
     pool.position.set(poolNnoShift, 0, poolRearZ);
     world.add(pool);
     const coping = 0.2;
+    const poolCenterX = -poolOuterWidth / 2;
+    const poolCenterZ = -poolOuterLength / 2;
 
-    addBox(pool, 3.4, 1.38, 7.7, materials.stoneEdge, -1.7, -0.73, -3.85);
-    addBox(pool, 3.0, 1.27, 7.3, standard(0xb8d8df, 0.48), -1.7, -0.72, -3.85);
-    const poolSideTimberCoping = addBox(pool, coping, 0.09, poolOuterLength, woodMaterial, -0.1, deckTop - 0.045, -3.85);
+    addBox(pool, poolOuterWidth, 1.5, poolOuterLength, materials.stoneEdge, poolCenterX, -0.75, poolCenterZ);
+    addBox(pool, poolInnerWidth, 1.39, poolInnerLength, standard(0xb8d8df, 0.48), poolCenterX, -0.72, poolCenterZ);
+    const poolSideTimberCoping = addBox(pool, coping, 0.09, poolOuterLength, woodMaterial, -coping / 2, deckTop - 0.045, poolCenterZ);
     poolSideTimberCoping.name = "pool-side-timber-coping";
     const poolZzwBlueStoneLength = poolOuterLength - coping;
     const poolZzwBlueStoneCoping = addBox(
@@ -836,16 +728,16 @@
       0.09,
       poolZzwBlueStoneLength,
       materials.stone,
-      -3.3,
+      -poolOuterWidth + coping / 2,
       0.015,
       -poolZzwBlueStoneLength / 2
     );
     poolZzwBlueStoneCoping.name = "pool-zzw-blue-stone-coping";
-    const poolZzwTimberReturn = addBox(pool, coping, 0.09, coping, woodMaterial, -3.3, deckTop - 0.045, -7.6);
+    const poolZzwTimberReturn = addBox(pool, coping, 0.09, coping, woodMaterial, -poolOuterWidth + coping / 2, deckTop - 0.045, -poolOuterLength + coping / 2);
     poolZzwTimberReturn.name = "pool-zzw-timber-return-20cm";
-    const poolRearBlueStoneCoping = addBox(pool, 3.0, 0.09, coping, materials.stone, -1.7, 0.015, -0.1);
+    const poolRearBlueStoneCoping = addBox(pool, poolInnerWidth, 0.09, coping, materials.stone, poolCenterX, 0.015, -coping / 2);
     poolRearBlueStoneCoping.name = "pool-wnw-blue-stone-coping";
-    const poolOzoTimberCoping = addBox(pool, 3.0, 0.09, coping, woodMaterial, -1.7, deckTop - 0.045, -7.6);
+    const poolOzoTimberCoping = addBox(pool, poolInnerWidth, 0.09, coping, woodMaterial, poolCenterX, deckTop - 0.045, -poolOuterLength + coping / 2);
     poolOzoTimberCoping.name = "pool-ozo-timber-coping";
 
     const waterUniforms = { time: { value: 0 } };
@@ -874,13 +766,13 @@
         }
       `
     });
-    const water = new THREE.Mesh(new THREE.PlaneGeometry(3.0, 7.3, 1, 1), waterMaterial);
+    const water = new THREE.Mesh(new THREE.PlaneGeometry(poolInnerWidth, poolInnerLength, 1, 1), waterMaterial);
     water.rotation.x = -Math.PI / 2;
-    water.position.set(-1.7, -0.035, -3.85);
+    water.position.set(poolCenterX, -(1.5 - poolWaterHeight), poolCenterZ);
     pool.add(water);
 
     for (let index = 0; index < 4; index += 1) {
-      addBox(pool, 2.4 - index * 0.22, 0.11, 0.38, materials.white, -1.7, -0.17 - index * 0.18, -7.08 + index * 0.32, { castShadow: false });
+      addBox(pool, 2.4 - index * 0.22, 0.11, 0.38, materials.white, poolCenterX, -0.17 - index * 0.18, -poolOuterLength + 0.62 + index * 0.32, { castShadow: false });
     }
 
     const studioPathXAtZ = z => studioPathStartX - Math.tan(studioAngle) * z;
@@ -969,6 +861,19 @@
       const [nextX, nextZ] = integratedDeckPoints[(index + 1) % integratedDeckPoints.length];
       return area + x * nextZ - nextX * z;
     }, 0)) / 2;
+    const deckAreaOutsidePergola = integratedDeckArea - 4 * pergolaLength;
+    const newPavedArea = deckAreaOutsidePergola + poolOuterWidth * poolOuterLength;
+    const oldPavedArea = 6.6 * 3;
+    const totalPavedArea = newPavedArea + oldPavedArea;
+    if (deckAreaValue) {
+      deckAreaValue.textContent = `${newPavedArea.toFixed(2).replace('.', ',')} m²`;
+    }
+    if (oldAreaValue) {
+      oldAreaValue.textContent = `${oldPavedArea.toFixed(2).replace('.', ',')} m²`;
+    }
+    if (totalAreaValue) {
+      totalAreaValue.textContent = `${totalPavedArea.toFixed(2).replace('.', ',')} m²`;
+    }
 
     const tankHatchFrame = addBox(
       poolStudioPassage,
@@ -1054,12 +959,13 @@
     document.documentElement.dataset.passage = "integrated";
 
     addBox(studio, 4, 0.14, shellLength, materials.interiorFloor, 2, 0.01, pergolaLength + shellLength / 2, { castShadow: false });
-    addBox(studio, 4, 0.24, shellLength, materials.charcoalSoft, 2, 3.02, pergolaLength + shellLength / 2);
+    const studioRoof = addBox(studio, 4, 0.24, 10, materials.charcoalSoft, 2, 3.02, 5);
+    studioRoof.name = "bijgebouw-continuous-flat-roof";
     const studioCeiling = addBox(studio, 3.52, 0.04, shellLength - 0.48, materials.ceiling, 2, 2.88, pergolaLength + shellLength / 2, { castShadow: false });
     studioCeiling.name = "studio-white-interior-ceiling";
     addBox(studio, 0.24, 2.96, shellLength, materials.wall, 3.88, 1.52, pergolaLength + shellLength / 2);
-    const storageDoorWidth = 0.9;
-    const storageDoorHeight = 2.44;
+    const storageDoorWidth = 1.0;
+    const storageDoorHeight = 2.2;
     const wallBottom = 0.04;
     const wallTop = 3;
     const doorBottom = 0.08;
@@ -1091,8 +997,9 @@
       cornerPostStart + cornerPostSize / 2
     );
     cornerPost.name = "slider-corner-post-ral9005";
-    const poolSideOpaqueWallLength = 161 / 75;
     const poolSideSliderStart = cornerPostStart + cornerPostSize;
+    const poolSideSliderWidthTarget = 5.2;
+    const poolSideOpaqueWallLength = 10 - (poolSideSliderStart + poolSideSliderWidthTarget);
     const poolSideSliderEnd = 10 - poolSideOpaqueWallLength;
     const poolSideSliderPanels = 2;
     addGlassWallAlongZ(studio, poolSideSliderStart, poolSideSliderEnd, 0.015, poolSideSliderPanels);
@@ -1123,12 +1030,11 @@
       - (tankCenterX + (tankHatchSize + 0.08) / 2);
 
     addBox(studio, 0.18, 0.25, poolSideSliderEnd - poolSideSliderStart, materials.wall, 0.1, 2.925, (poolSideSliderStart + poolSideSliderEnd) / 2);
-    const pergolaSliderStart = 0.24;
-    const pergolaSliderEnd = 3.76;
+    const pergolaSliderStart = 0;
+    const pergolaSliderEnd = 4;
     const pergolaSliderPanels = 2;
     addGlassWallAlongX(studio, pergolaSliderStart, pergolaSliderEnd, pergolaLength + 0.015, pergolaSliderPanels);
 
-    addBox(studio, 4, 0.2, pergolaLength, materials.charcoalSoft, 2, 3.02, pergolaLength / 2);
     const soffit = new THREE.Mesh(new THREE.PlaneGeometry(4, pergolaLength), woodMaterial);
     soffit.rotation.x = Math.PI / 2;
     soffit.position.set(2, 2.91, pergolaLength / 2);
@@ -1225,13 +1131,16 @@
       new THREE.LineBasicMaterial({ color: 0x958d82, transparent: true, opacity: 0.52 })
     ));
 
-    const houseHeight = 5.8;
+    const groundFloorHeight = 3.1;
+    const upperFloorHeight = 2.7;
+    const houseHeight = groundFloorHeight + upperFloorHeight;
     const houseMaterial = standard(0xe7e3db, 0.94);
     const houseStepLeftX = siteX(118.8);
     const houseStepRightX = siteX(126);
     const houseStepRearZ = siteZ(591.05);
     const houseStepFrontZ = siteZ(778.05);
     const houseNotchX = siteX(91);
+    const upperFloorRearZ = siteZ(590.05);
     addBox(
       world,
       houseRearRightX - houseLeftX,
@@ -1242,72 +1151,55 @@
       deckTop + terraceRise / 2,
       houseRearZ + 0.03
     );
-    addBox(
-      world,
-      houseRearRightX - houseLeftX,
-      houseHeight,
-      houseRearZ - houseStepRearZ,
-      houseMaterial,
-      (houseLeftX + houseRearRightX) / 2,
-      houseHeight / 2,
-      (houseRearZ + houseStepRearZ) / 2
-    );
+    addBox(world, houseRearRightX - houseLeftX, groundFloorHeight, houseRearZ - houseStepRearZ, houseMaterial, (houseLeftX + houseRearRightX) / 2, groundFloorHeight / 2, (houseRearZ + houseStepRearZ) / 2);
     addBox(
       world,
       houseStepRightX - houseStepLeftX,
-      houseHeight,
+      groundFloorHeight,
       houseStepRearZ - houseStepFrontZ,
       houseMaterial,
       (houseStepLeftX + houseStepRightX) / 2,
-      houseHeight / 2,
+      groundFloorHeight / 2,
       (houseStepRearZ + houseStepFrontZ) / 2
     );
     addBox(
       world,
       houseStepLeftX - houseLeftX,
-      houseHeight,
+      groundFloorHeight,
       houseStepRearZ - houseStepFrontZ,
       houseMaterial,
       (houseLeftX + houseStepLeftX) / 2,
-      houseHeight / 2,
+      groundFloorHeight / 2,
       (houseStepRearZ + houseStepFrontZ) / 2
     );
     addBox(
       world,
       houseNotchX - houseLeftX,
-      houseHeight,
+      groundFloorHeight,
       houseStepFrontZ - houseFrontZ,
       houseMaterial,
       (houseLeftX + houseNotchX) / 2,
-      houseHeight / 2,
+      groundFloorHeight / 2,
       (houseStepFrontZ + houseFrontZ) / 2
     );
-    addBox(
+    addBox(world, houseRearRightX - houseLeftX, upperFloorHeight, upperFloorRearZ - houseFrontZ, houseMaterial, (houseLeftX + houseRearRightX) / 2, groundFloorHeight + upperFloorHeight / 2, (upperFloorRearZ + houseFrontZ) / 2);
+    const flatRoof = addBox(
       world,
       terraceWidth + 0.18,
       0.18,
-      houseRearZ - houseStepRearZ + 0.18,
+      upperFloorRearZ - houseRearZ + 0.18,
       materials.charcoalSoft,
       (houseLeftX + houseRearRightX) / 2,
-      houseHeight + 0.09,
-      (houseRearZ + houseStepRearZ) / 2
+      groundFloorHeight + 0.09,
+      (houseRearZ + upperFloorRearZ) / 2
     );
+    flatRoof.name = "house-flat-roof-rear-3m";
 
     const houseSliderLeftX = siteX(18);
     const houseSliderRightX = siteX(108);
     const houseSliderWidth = houseSliderRightX - houseSliderLeftX;
     const houseThresholdLift = terraceSurfaceY - 0.07;
-    addBox(
-      world,
-      houseSliderWidth,
-      2.45,
-      0.05,
-      glassMaterial,
-      (houseSliderLeftX + houseSliderRightX) / 2,
-      1.32 + houseThresholdLift,
-      houseRearZ + 0.035,
-      { castShadow: false }
-    );
+    addBox(world, houseSliderWidth, 2.45, 0.05, glassMaterial, (houseLeftX + houseRearRightX) / 2, 1.32 + houseThresholdLift, houseRearZ + 0.035, { castShadow: false });
     for (const x of [houseSliderLeftX, siteX(48), siteX(78), houseSliderRightX]) {
       addBox(world, 0.065, 2.52, 0.075, materials.charcoal, x, 1.32 + houseThresholdLift, houseRearZ + 0.07);
     }
@@ -1330,7 +1222,6 @@
     addPlanOutline(planOnly, houseOutline, 0x2e4057, houseHeight + 0.285);
     addPlanSurface(planOnly, studioPlanOutline, standard(0xe4e0d8, 0.97), 3.24);
     addPlanOutline(planOnly, studioPlanOutline, 0xc0392b, 3.265);
-
     function addHouseSideWindow(startPlanY, endPlanY, height, sill) {
       const startZ = siteZ(startPlanY);
       const endZ = siteZ(endPlanY);
@@ -1363,6 +1254,8 @@
     }
     addHouseFrontWindow(16, 32.2);
     addHouseFrontWindow(71, 80);
+
+    world.position.y = finishedGroundOffset;
 
     // Visible front-garden design, transferred directly from grondplan.html.
     addPlanSurface(world, [
@@ -1630,7 +1523,7 @@
     studio.updateMatrixWorld(true);
     const studioLabelPosition = studio.localToWorld(new THREE.Vector3(2, 0, 5));
     addPlanLabel("TUINSTUDIO", studioLabelPosition.x, studioLabelPosition.z, 4.2);
-    addPlanLabel("LPW CITY+", -1.7 + poolNnoShift, poolRearZ - 3.85, 3.2);
+    addPlanLabel("LPW CITY 75", poolCenterX + poolNnoShift, poolRearZ + poolCenterZ, 3.2);
     addPlanLabel("RW 7500 L", tankCenterX, tankCenterZ, 2.8);
     addPlanLabel("TERRAS", (houseLeftX + houseRearRightX) / 2, (terraceGardenZ + houseRearZ) / 2, 2.5);
     addPlanLabel("WONING", siteX(60), siteZ(671.05), 3.2);
@@ -1663,6 +1556,10 @@
       return { line, sprite };
     }
 
+    function formatMetersLabel(value) {
+      return `${value.toFixed(2).replace('.', ',')} m`;
+    }
+
     const openPergolaStart = { x: poolNnoShift - coping, z: poolRearZ };
     const openPergolaEndPoint = studioWorldPoint(4, 0);
     const openPergolaEnd = { x: openPergolaEndPoint[0], z: openPergolaEndPoint[1] };
@@ -1673,7 +1570,7 @@
     const openPergolaDimension = addDimensionBetween(
       openPergolaStart,
       openPergolaEnd,
-      "4,36 m",
+      formatMetersLabel(openPergolaWidth),
       0.2
     );
     openPergolaDimension.line.name = "dimension-open-pergola-width";
@@ -1695,7 +1592,7 @@
     const glassLineDimension = addDimensionBetween(
       glassLineStart,
       glassLineEnd,
-      "0,70 m",
+      formatMetersLabel(glassLineWidth),
       0.26
     );
     glassLineDimension.line.name = "dimension-glass-line-width";
@@ -1729,7 +1626,7 @@
       },
       siteDepth: Math.abs(siteZ(1166) - siteZ(14.918)),
       layout: {
-        poolPlanX: [18, 79.2],
+        poolPlanX: [planXFromSite(poolNnoShift - poolOuterWidth), planXFromSite(poolNnoShift)],
         studioPlanX: [81.983, 177.733],
         housePlanX: [0, 126],
         drivewayPlanX: [126, 240.137]
@@ -1752,6 +1649,10 @@
       },
       integratedDeck: {
         area: integratedDeckArea,
+        areaOutsidePergola: deckAreaOutsidePergola,
+        newPavedArea,
+        oldPavedArea,
+        totalPavedArea,
         sideRun: 10,
         innerReturnDepth: terraceDeckInnerEndLocalZ - 10,
         outerReturnDepth: terraceDeckEndLocalZ - 10,
@@ -1835,8 +1736,8 @@
     console.assert(Math.abs(geometryChecks.minimum - 0.16207) < 0.002, "Upper construction joint must be about 0.16 m after the NNO pool shift");
     console.assert(Math.abs(geometryChecks.pergolaEnd - 0.501314) < 0.002, "Glass-line construction joint must be about 0.50 m after the NNO pool shift");
     console.assert(Math.abs(geometryChecks.poolShift - 0.048546) < 0.00001, "Pool must move 4.85 cm toward the house");
-    console.assert(geometryChecks.poolNnoShift === 0.2, "Pool must move exactly 0.20 m NNO");
-    console.assert(poolOuterLength === 7.7 && poolOuterWidth === 3.4, "City+ outer dimensions must be 7.70 x 3.40 m");
+    console.assert(Math.abs(geometryChecks.poolNnoShift - 0.06) < 1e-9, "Pool offset must keep the 1.00 m outer-edge boundary strip in plan");
+    console.assert(poolOuterLength === 7.5 && poolOuterWidth === 3.26, "LPW City 75 outer dimensions must be 7.50 x 3.26 m");
     console.assert(Math.abs(terraceWidth - 6.6) < 0.001 && Math.abs(terraceDepth - 4) < 0.001, "Terrace must be 6.60 x 4.00 m");
     console.assert(geometryChecks.siteLevels.poolAndDeck === 0, "Pool coping and timber deck must define level 0.00");
     console.assert(Math.abs(geometryChecks.siteLevels.terrace - 0.3) < 1e-9, "Existing terrace must be 0.30 m above pool and deck level");
@@ -1845,22 +1746,24 @@
     console.assert(Math.abs(terrainLevelAtPlanY(terrainSlopeStartPlanY) - deckTop) < 1e-9, "Terrain slope must start only at the garden end of the studio");
     console.assert(geometryChecks.terrain.surfaceClearance >= 0.01, "Terrain render surface must remain below the timber deck to prevent z-fighting");
     console.assert(geometryChecks.terrain.poolOpeningCount === 1, "Flat terrain must contain one opening for the pool");
-    console.assert(Math.abs(geometryChecks.rainwaterTank.poolClearance - 0.399) < 0.005, "Tank clearance must be about 0.40 m");
+    console.assert(geometryChecks.rainwaterTank.poolClearance > 0.58 && geometryChecks.rainwaterTank.poolClearance < 0.62,
+      "Tank clearance must remain around 0.60 m with LPW City 75 length");
     console.assert(geometryChecks.layout.poolPlanX[1] < geometryChecks.layout.studioPlanX[0], "Pool must remain left of the studio");
     console.assert(geometryChecks.layout.housePlanX[1] <= geometryChecks.layout.drivewayPlanX[0], "House must remain left of the driveway");
     console.assert(Math.abs(geometryChecks.timberPlatform.studioEdgeLength - 2.522) < 0.001, "Timber platform must follow the pergola glass line");
     console.assert(Math.abs(geometryChecks.timberPlatform.skewAtPool - 0.067992) < 0.002, "Timber platform must meet the shifted pool diagonally");
     console.assert(geometryChecks.timberPlatform.glassLineDeviation < 1e-9, "Platform edge and pergola glass must be collinear");
     console.assert(Math.abs(geometryChecks.timberPlatform.rearLineDeviation - 0.027126) < 0.002, "Lateral pool shift must create the expected 27 mm rear-line offset");
-    console.assert(Math.abs(geometryChecks.chokePoints.openPergolaWidth - 4.357936) < 0.002,
-      "Open-pergola chokepoint must be about 4.36 m including the timber coping");
-    console.assert(Math.abs(geometryChecks.chokePoints.glassLineWidth - 0.703179) < 0.002,
-      "Glass-line chokepoint must be about 0.70 m including the timber coping");
+    console.assert(Math.abs(geometryChecks.chokePoints.openPergolaWidth - 4.497936) < 0.002,
+      "Open-pergola chokepoint must be about 4.50 m including the timber coping");
+    console.assert(Math.abs(geometryChecks.chokePoints.glassLineWidth - 0.843179) < 0.002,
+      "Glass-line chokepoint must be about 0.84 m including the timber coping");
     console.assert(geometryChecks.chokePoints.copingIncluded === 0.2,
       "Chokepoint dimensions must include the 0.20 m timber pool coping");
     console.assert(geometryChecks.chokePoints.dimensionLineCount === 2,
       "Maten overlay must show only the two full chokepoint widths");
-    console.assert(Math.abs(geometryChecks.integratedDeck.area - 38.176235) < 0.001, "Merged pool-edge deck must be 38.18 m² after closing the terrace strip");
+    console.assert(geometryChecks.integratedDeck.area > 36.8 && geometryChecks.integratedDeck.area < 37.4,
+      "Merged pool-edge deck area must stay around 37.10 m² with LPW City 75 alignment");
     console.assert(geometryChecks.integratedDeck.sideRun === 10, "Deck must run along the complete studio side");
     console.assert(geometryChecks.integratedDeck.innerReturnDepth > 1 && geometryChecks.integratedDeck.innerReturnDepth < 1.1, "Pool-side return must fill the studio-to-terrace gap");
     console.assert(geometryChecks.integratedDeck.outerReturnDepth > 1.5 && geometryChecks.integratedDeck.outerReturnDepth < 1.6, "Outer return must extend to the terrace line");
@@ -1868,6 +1771,8 @@
     console.assert(geometryChecks.integratedDeck.pointCount === 17, "Merged deck must align the shifted pool and 1.00 m boundary without duplicate corners");
     console.assert(geometryChecks.integratedDeck.straightPoolLine, "Pool-side deck edge must stay on one straight line to the terrace");
     console.assert(geometryChecks.integratedDeck.unifiedWoodSurface, "Timber coping and deck must share one flush, texture-aligned surface");
+    console.assert(geometryChecks.permitFree.uncoveredUnionArea < geometryChecks.permitFree.limit,
+      "Uncovered accessory union area should remain under the 80 m² reference limit");
     console.assert(Math.abs(geometryChecks.integratedDeck.poolTimberWidth - 0.2) < 1e-9
       && geometryChecks.integratedDeck.poolTimberEndsAtTerrace,
     "The 20 cm timber strip must continue from the pool to the terrace");
@@ -1879,11 +1784,11 @@
     console.assert(geometryChecks.integratedDeck.poolSideCrepiWall, "Opaque pool-facing wall must remain crepi");
     console.assert(geometryChecks.integratedDeck.poolSideBlueStonePlinth, "Opaque pool-facing wall must retain its blue-stone plinth");
     console.assert(geometryChecks.integratedDeck.cornerPostSize.every(value => Math.abs(value - 0.2) < 1e-9) && geometryChecks.integratedDeck.cornerPostRal === "RAL 9005", "Slider corner post must be 20 x 20 cm in RAL 9005");
-    console.assert(geometryChecks.integratedDeck.poolSideSliderCount === 1 && Math.abs(geometryChecks.integratedDeck.poolSideSliderWidth - 386 / 75) < 1e-9, "Pool-facing façade must use one full-width 5.15 m slider");
+    console.assert(geometryChecks.integratedDeck.poolSideSliderCount === 1 && Math.abs(geometryChecks.integratedDeck.poolSideSliderWidth - 5.2) < 1e-9, "Pool-facing façade must use one full-width 5.20 m slider");
     console.assert(geometryChecks.integratedDeck.poolSideSliderPanels === 2, "Pool-facing slider must have two panels");
-    console.assert(Math.abs(geometryChecks.integratedDeck.pergolaSliderWidth - 3.52) < 1e-9 && geometryChecks.integratedDeck.pergolaSliderPanels === 2, "Pergola slider must be 3.52 m with two panels");
+    console.assert(Math.abs(geometryChecks.integratedDeck.pergolaSliderWidth - 4) < 1e-9 && geometryChecks.integratedDeck.pergolaSliderPanels === 2, "Second slider must be 4.00 m with two panels");
     console.assert(geometryChecks.storageDoor.count === 1 && geometryChecks.storageDoor.wallSegments === 3, "ZZW storage wall must contain one real door opening");
-    console.assert(Math.abs(geometryChecks.storageDoor.width - 0.9) < 1e-9 && Math.abs(geometryChecks.storageDoor.height - 2.44) < 1e-9, "Storage exterior door must be 0.90 x 2.44 m");
+    console.assert(Math.abs(geometryChecks.storageDoor.width - 1.0) < 1e-9 && Math.abs(geometryChecks.storageDoor.height - 2.2) < 1e-9, "Storage exterior door must be 1.00 x 2.20 m");
     console.assert(geometryChecks.storageDoor.ral === "RAL 9005" && geometryChecks.storageDoor.material === "aluminium" && geometryChecks.storageDoor.swing === "outward", "Storage exterior door must be outward-opening RAL 9005 aluminium");
     console.assert(geometryChecks.storageDoor.side === "ZZW"
       && geometryChecks.storageDoor.sliderClearance >= 0.6
@@ -1913,45 +1818,22 @@
 
     document.querySelector(".control-dock").addEventListener("pointerdown", event => event.stopPropagation());
 
-    let currentView = "passage";
-
-    function setView(view) {
-      currentView = view;
+    function setPassageView() {
       console.assert(world.scale.x === -1, "Camera changes must not mirror the site");
-      window.__renderView = view;
-      mainHost.classList.toggle("plan-view", view === "plan");
-      mainHost.classList.toggle("overview-view", view === "overview");
-      viewButtons.forEach(button => button.setAttribute("aria-pressed", String(button.dataset.view === view)));
-
-      if (view === "plan") {
-        mainHost.classList.add("plan-view");
-        planOnly.visible = true;
-        scene.fog = null;
-        camera.up.set(0, 0, 1);
-        camera.position.set(-2.4, 82, -18);
-        controls.target.set(-2.4, 0, -18);
-      } else if (view === "overview") {
-        planOnly.visible = false;
-        scene.fog = null;
-        camera.up.set(0, 1, 0);
-        const overviewDistance = camera.aspect < 0.75 ? 92 : 58;
-        camera.position.set(11, overviewDistance * 0.72, -overviewDistance);
-        controls.target.set(-2.4, 0, -17);
-      } else {
-        planOnly.visible = false;
-        scene.fog = perspectiveFog;
-        camera.up.set(0, 1, 0);
-        camera.position.copy(initialCamera);
-        controls.target.copy(initialTarget);
-      }
+      window.__renderView = "passage";
+      planOnly.visible = false;
+      scene.fog = perspectiveFog;
+      camera.up.set(0, 1, 0);
+      camera.position.copy(initialCamera);
+      controls.target.copy(initialTarget);
       controls.update();
     }
 
-    viewButtons.forEach(button => button.addEventListener("click", () => setView(button.dataset.view)));
-
     resetButton.addEventListener("click", () => {
-      setView(currentView);
+      setPassageView();
     });
+
+    setPassageView();
 
     window.addEventListener("resize", () => {
       camera.aspect = window.innerWidth / window.innerHeight;
@@ -1960,12 +1842,21 @@
     });
 
     const clock = new THREE.Clock();
+    let animationFrame;
     function render() {
       waterUniforms.time.value = clock.getElapsedTime();
       controls.update();
       renderer.render(scene, camera);
-      requestAnimationFrame(render);
+      animationFrame = requestAnimationFrame(render);
     }
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        cancelAnimationFrame(animationFrame);
+      } else {
+        render();
+      }
+    });
 
     window.__captureRender = (width, height) => {
       const previousSize = renderer.getSize(new THREE.Vector2());
