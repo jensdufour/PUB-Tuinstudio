@@ -144,7 +144,7 @@
     OUTER FOOTPRINT: 4,00 m x 10,00 m = 300px x 750px
     Exterior wall thickness: 0,24 m = 18px
     Interior partition: 0,10 m = 8px
-    Haard schouw: 0,40 m = 30px
+    Haard totale inbouwconstructie: 0,524 m, afgerond op 0,53 m = 39,3px
     Structural column (ZZW): 0,20 m = 15px
 
     X coordinates (outer faces, left to right — WNW to OZO):
@@ -153,10 +153,10 @@
       Pergola E inner:           x=278    (170px = 2,27 m interior)
       Enclosed west wall:        x=278..296 (18px = 0,24 m)
       Lounge inner W:            x=296
-      Lounge inner E / Haard W:  x=499    (203px = 2,70 m interior)
-      Haard wall:                x=499..529 (30px = 0,40 m)
-      Kantoor inner W:           x=529
-      Kantoor inner E:           x=679    (150px = 2,00 m interior)
+      Lounge inner E / Haard W:  x=494.35 (198,35px = 2,64 m interior)
+      Haard wall:                x=494.35..533.65 (39,3px = 0,524 m; uitvoering 0,53 m)
+      Kantoor inner W:           x=533.65
+      Kantoor inner E:           x=679    (145,35px = 1,94 m interior)
       Bath/Kant partition:       x=679..687 (8px = 0,10 m)
       Bath/Berging inner:        x=687
       East inner (OZO):          x=822    (135px = 1,80 m interior)
@@ -177,8 +177,8 @@
 
     ROOM SCHEDULE (rotated coords, WNW→OZO left→right, NNO→ZZW top→bottom):
       PERGOLA:  x=108..278, y=93..357   (170x264px = 2,27 x 3,52 m =  7,98 m²)
-      LOUNGE/KANTOOR: x=296..679, y=93..357, exclusief haard
-              2,70 + 2,00 = 4,70 x 3,52 m netto = 16,54 m²
+            LOUNGE/KANTOOR: x=296..679, y=93..357, exclusief haard
+              2,64 + 1,94 = 4,58 x 3,52 m netto = 16,13 m²
       BERGING:  x=687..822, y=244.5..357  (135x112.5px = 1,80 x 1,50 m = 2,70 m²)
       BADKAMER: x=687..822, y=93..236.5   (135x143.5px = 1,80 x 1,91 m = 3,44 m²)
 
@@ -206,11 +206,10 @@
 
     WNW (LEFT) WALL (pergola/lounge): vaste beglazing 3,52 m full height, x=278..296
 
-    HAARD (Element4 Sky L Tunnel):
-      x=499..529 (30px = 0,40 m)
-      South opening (ZZW): y=274..357 (1,10 m)
-      South cap: y=263..274, Unit: y=187..263 (1,01 m), North cap: y=176..187
-      North opening (NNO): y=93..176 (1,10 m)
+    HAARD (M-Design True Vision 550DV tunnel):
+      Totale constructiediepte x=494.35..533.65 (0,524 m; uitgevoerd als 0,53 m)
+      Toestelbreedte langs wand: y=207..243 (0,479 m); glas: 0,450 m
+      Openingen NNO en ZZW: 1,37 m; aansluiting Ø200/130
 
     PERGOLA COLUMN: inward-diagonal from SW corner toward foundation
       Position: approx x=800, y=100 (inset ~0,53m from E, ~0,33m from N)
@@ -364,21 +363,20 @@
              <rect x="679" y="147.75" width="8" height="154.5" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
 
         <!-- ══════════════════════════════════════════════════════
-             HAARD — Element4 Sky L Tunnel (0,40 m schouw)
+               HAARD — M-Design True Vision 550DV (min. 0,524 m inbouwdiepte)
              ══════════════════════════════════════════════════════ -->
         <!-- North cap masonry -->
-        <rect x="499" y="263" width="30" height="11" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+             <rect x="494.35" y="243" width="39.3" height="11" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
         <!-- Haard unit housing -->
-        <rect x="498" y="187" width="32" height="76" fill="#fff0ee" stroke="#c0392b" stroke-width="2" />
+             <rect x="493.35" y="207" width="41.3" height="36" fill="#fff0ee" stroke="#c0392b" stroke-width="2" />
         <!-- Firebox opening -->
-        <rect x="499" y="198" width="30" height="54" fill="#ffe8e4" stroke="#c0392b" stroke-width="1" />
-        <text x="514" y="237" font-size="7" fill="#c0392b" text-anchor="middle">HAARD</text>
-        <text x="514" y="227" font-size="5.5" fill="#c0392b" text-anchor="middle">Element4</text>
-        <text x="514" y="218" font-size="5.5" fill="#c0392b" text-anchor="middle">Sky L-T</text>
-        <path d="M514,201 Q518,207 514,213 Q512,207 509,213 Q506,207 508,203 Q511,207 514,201Z" fill="#c0392b"
+             <rect x="494.35" y="208.125" width="39.3" height="33.75" fill="#ffe8e4" stroke="#c0392b" stroke-width="1" />
+             <text x="514" y="239" font-size="4.5" fill="#c0392b" text-anchor="middle">550DV</text>
+             <text x="514" y="215" font-size="4.5" fill="#c0392b" text-anchor="middle">M-DESIGN</text>
+             <path d="M514,219 Q518,225 514,231 Q512,225 509,231 Q506,225 508,221 Q511,225 514,219Z" fill="#c0392b"
           opacity="0.55" />
         <!-- South cap masonry -->
-        <rect x="499" y="176" width="30" height="11" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+             <rect x="494.35" y="196" width="39.3" height="11" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
 
         <!-- ══════════════════════════════════════════════════════
                BERGING INTERIOR  (1,80 x 1,50 m = 2,70 m²)
@@ -472,9 +470,9 @@
 
 
         <!-- ══════════════════════════════════════════════════════
-             KANTOOR INTERIOR  (2,00 x 3,52 m = 7,04 m²)
+               KANTOOR INTERIOR  (1,94 x 3,52 m = 6,82 m²)
              ══════════════════════════════════════════════════════ -->
-        <rect x="529" y="93" width="150" height="264" fill="#f8f7f3" />
+             <rect x="533.65" y="93" width="145.35" height="264" fill="#f8f7f3" />
 
         <!-- Flush Xinnix X40 doors: both open outward into the office. -->
         <g id="office-side-xinnix-doors" fill="none" stroke="#2E4057" stroke-width="1.2">
@@ -510,9 +508,9 @@
         <text x="666" y="270" font-size="4.5" fill="#e67e22" text-anchor="end">S14</text>
 
         <!-- ══════════════════════════════════════════════════════
-             LOUNGE INTERIOR  (2,70 x 3,52 m = 9,50 m²)
+               LOUNGE INTERIOR  (2,64 x 3,52 m = 9,31 m²)
              ══════════════════════════════════════════════════════ -->
-        <rect x="296" y="93" width="203" height="264" fill="#f7f5f0" />
+             <rect x="296" y="93" width="198.35" height="264" fill="#f7f5f0" />
 
         <!-- Sofa aligned with the studio long axis, keeping the slider route open. -->
         <rect id="lounge-sofa" x="309" y="106" width="178" height="52" rx="5" fill="none" stroke="#8a9aaa" stroke-width="1.2" />
@@ -525,7 +523,7 @@
 
         <!-- Combined open room label. -->
         <text x="487.5" y="295" font-size="9" fill="#2E4057" text-anchor="middle" font-weight="700">LOUNGE / KANTOOR</text>
-        <text x="487.5" y="283" font-size="6" fill="#7a8a9a" text-anchor="middle">4,70 x 3,52 m netto (16,54 m&#178;)</text>
+        <text x="487.5" y="283" font-size="6" fill="#7a8a9a" text-anchor="middle">4,58 x 3,52 m netto (16,13 m&#178;)</text>
 
         <!-- ══════════════════════════════════════════════════════
              PERGOLA INTERIOR  (2,27 x 3,50 m = 7,95 m²)
@@ -644,18 +642,18 @@
         <text x="555" y="96" font-size="4.5" fill="#e67e22" text-anchor="middle">S09</text>
 
         <!-- === S10: Enkel stopcontact haard ZZW-zijde (south cap, near lounge) === -->
-        <g transform="translate(514,277)">
+        <g transform="translate(514,257)">
           <rect x="-4" y="0" width="8" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
           <circle cx="0" cy="4" r="1.5" fill="#e67e22" />
         </g>
-        <text x="500" y="280" font-size="4.5" fill="#e67e22" text-anchor="end">S10</text>
+        <text x="490" y="260" font-size="4.5" fill="#e67e22" text-anchor="end">S10</text>
 
         <!-- === S11: Enkel stopcontact haard NNO-zijde (north cap, near kantoor) === -->
-        <g transform="translate(514,173)">
+        <g transform="translate(514,193)">
           <rect x="-4" y="-8" width="8" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
           <circle cx="0" cy="-4" r="1.5" fill="#e67e22" />
         </g>
-        <text x="500" y="166" font-size="4.5" fill="#e67e22" text-anchor="end">S11</text>
+        <text x="490" y="186" font-size="4.5" fill="#e67e22" text-anchor="end">S11</text>
 
         <!-- === S04: Stopcontact lounge pier E (near schuifraam) === -->
         <g transform="translate(300,88)">
@@ -797,17 +795,17 @@
         <!-- Partition 0,10 -->
         <line x1="687" y1="54" x2="679" y2="54" stroke="#2E4057" stroke-width="0.7" />
         <text x="683" y="58" font-size="4.5" fill="#2E4057" text-anchor="middle" font-weight="700">0,10</text>
-        <!-- Kantoor 2,00 -->
-        <line x1="679" y1="54" x2="529" y2="54" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <!-- Kantoor 1,94 -->
+        <line x1="679" y1="54" x2="533.65" y2="54" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
         <rect x="592" y="50" width="32" height="10" fill="#faf8f4" />
-        <text x="608" y="52" font-size="6" fill="#7a8a9a" text-anchor="middle">2,00</text>
-        <!-- Haard 0,40 -->
-        <line x1="529" y1="54" x2="499" y2="54" stroke="#c0392b" stroke-width="0.7" marker-start="url(#arrRedR)" marker-end="url(#arrRed)" />
-        <text x="514" y="58" font-size="5" fill="#c0392b" text-anchor="middle" font-weight="700">0,40</text>
-        <!-- Lounge 2,70 -->
-        <line x1="499" y1="54" x2="296" y2="54" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="608" y="52" font-size="6" fill="#7a8a9a" text-anchor="middle">1,94</text>
+        <!-- Haardconstructie 0,53 -->
+        <line x1="533.65" y1="54" x2="494.35" y2="54" stroke="#c0392b" stroke-width="0.7" marker-start="url(#arrRedR)" marker-end="url(#arrRed)" />
+        <text x="514" y="58" font-size="5" fill="#c0392b" text-anchor="middle" font-weight="700">0,53</text>
+        <!-- Lounge 2,64 -->
+        <line x1="494.35" y1="54" x2="296" y2="54" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
         <rect x="386" y="50" width="32" height="10" fill="#faf8f4" />
-        <text x="402" y="52" font-size="6" fill="#7a8a9a" text-anchor="middle">2,70</text>
+        <text x="402" y="52" font-size="6" fill="#7a8a9a" text-anchor="middle">2,64</text>
         <!-- East wall 0,24 -->
         <line x1="296" y1="54" x2="278" y2="54" stroke="#2E4057" stroke-width="0.7" />
         <text x="287" y="58" font-size="5" fill="#2E4057" text-anchor="middle" font-weight="700">0,24</text>
@@ -900,21 +898,21 @@
         <text x="900" y="225" font-size="6" fill="#7a8a9a" text-anchor="middle">wand 3,52</text>
 
         <!-- ─── INTERNAL: Haard opening dimensions ─── -->
-        <!-- North opening 1,10 m -->
-        <line x1="492" y1="357" x2="492" y2="274" stroke="#4A7C59" stroke-width="0.5" />
+        <!-- ZZW opening 1,37 m -->
+        <line x1="487" y1="357" x2="487" y2="254" stroke="#4A7C59" stroke-width="0.5" />
         <line x1="496" y1="357" x2="488" y2="357" stroke="#4A7C59" stroke-width="0.5" />
-        <line x1="496" y1="274" x2="488" y2="274" stroke="#4A7C59" stroke-width="0.5" />
-        <text x="514" y="314" font-size="5.5" fill="#4A7C59" text-anchor="middle">1,10</text>
-        <!-- Haard unit 1,01 m -->
-        <line x1="492" y1="263" x2="492" y2="187" stroke="#c0392b" stroke-width="0.5" />
-        <line x1="496" y1="263" x2="488" y2="263" stroke="#c0392b" stroke-width="0.5" />
-        <line x1="496" y1="187" x2="488" y2="187" stroke="#c0392b" stroke-width="0.5" />
-        <text x="480" y="222" font-size="5" fill="#c0392b" text-anchor="end">1,01</text>
-        <!-- South opening 1,10 m -->
-        <line x1="492" y1="176" x2="492" y2="93" stroke="#4A7C59" stroke-width="0.5" />
-        <line x1="496" y1="176" x2="488" y2="176" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="491" y1="254" x2="483" y2="254" stroke="#4A7C59" stroke-width="0.5" />
+        <text x="514" y="306" font-size="5.5" fill="#4A7C59" text-anchor="middle">1,37</text>
+        <!-- Haardtoestel 0,48 m -->
+        <line x1="487" y1="243" x2="487" y2="207" stroke="#c0392b" stroke-width="0.5" />
+        <line x1="491" y1="243" x2="483" y2="243" stroke="#c0392b" stroke-width="0.5" />
+        <line x1="491" y1="207" x2="483" y2="207" stroke="#c0392b" stroke-width="0.5" />
+        <text x="480" y="227" font-size="5" fill="#c0392b" text-anchor="end">0,48</text>
+        <!-- NNO opening 1,37 m -->
+        <line x1="487" y1="196" x2="487" y2="93" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="491" y1="196" x2="483" y2="196" stroke="#4A7C59" stroke-width="0.5" />
         <line x1="496" y1="93" x2="488" y2="93" stroke="#4A7C59" stroke-width="0.5" />
-        <text x="514" y="132" font-size="5.5" fill="#4A7C59" text-anchor="middle">1,10</text>
+        <text x="514" y="146" font-size="5.5" fill="#4A7C59" text-anchor="middle">1,37</text>
 
         <!-- ─── IN-PLAN WALL THICKNESS NOTES ─── -->
         <text x="816.625" y="363" font-size="3.8" fill="#2E4057" text-anchor="middle" opacity="0.55">wandopb. 0,24</text>
@@ -949,7 +947,7 @@
         </div>
         <div class="legend-item">
           <div class="legend-swatch" style="background:#ffe8e4; border-color:#c0392b;"></div>
-          Haard Element4 Sky L Tunnel
+          Haard M-Design True Vision 550DV
         </div>
         <div class="legend-item">
           <div class="legend-swatch" style="background:#eeece8; border-color:#d4d0c8;"></div>
@@ -1049,7 +1047,7 @@
         <div>Blauwe steen: plaatsen 15/5 + plint 20 cm hoog.</div>
         <div>Isolatie: vloer 8 cm Recticel, dak 14 cm Recticel.</div>
         <div>Dak/plafond: plat dak EPDM + plafond in gyproc.</div>
-        <div>Haard: dakdoorlaat voorzien voor Element4 Sky L Tunnel.</div>
+        <div>Haard: M-Design True Vision 550DV tunnel; toestel 479 mm, glas 450 mm, totale inbouwdiepte min. 524 mm (plan 0,53 m), rookgas Ø200/130.</div>
         <div>Schrijnwerk Nr.1: schuifraam links 4000 x 2650 mm, alu RAL, Uw 0,82 W/m2K, type 801.</div>
         <div>Schrijnwerk Nr.2: schuifraam rechts 5200 x 2650 mm, alu RAL, Uw 0,83 W/m2K, type 802.</div>
         <div>Schrijnwerk Nr.5: deur links 1000 x 2200 mm, alu RAL, paneel 1x planchet/iso/wbp, type 707.</div>
