@@ -1073,33 +1073,34 @@
     const toilet = addBox(interior, 0.5, 0.38, 0.4, materials.white, 3.43, 0.3, (792 - 90) / 75);
     toilet.name = "bathroom-wall-hung-toilet-nno";
 
-    const fireplaceEnvelopeDepth = 0.524;
-    const fireplaceBodyWidth = 0.479;
-    const fireplaceCasingDepth = 0.55;
+    const fireplacePillarSize = 0.524;
+    const fireplaceFinishWidth = 0.481;
+    const fireplaceFinishHeight = 0.897;
+    const fireplaceInsertDepth = 0.484;
     const fireplaceZ = (514 - 90) / 75;
     const fireplace = new THREE.Group();
     fireplace.name = "m-design-true-vision-550dv-rotated-see-through";
     fireplace.position.set(2, 0, fireplaceZ);
     interior.add(fireplace);
     const fireplaceOpeningBottom = 0.48;
-    const fireplaceOpeningHeight = 0.45;
+    const fireplaceOpeningHeight = fireplaceFinishHeight;
     const fireplaceOpeningTop = fireplaceOpeningBottom + fireplaceOpeningHeight;
     const fireplaceTop = 2.88;
-    addBox(fireplace, fireplaceCasingDepth, fireplaceOpeningBottom, fireplaceBodyWidth, materials.wallWarm, 0, fireplaceOpeningBottom / 2, 0);
-    addBox(fireplace, fireplaceCasingDepth, fireplaceTop - fireplaceOpeningTop, fireplaceBodyWidth, materials.wallWarm, 0, (fireplaceOpeningTop + fireplaceTop) / 2, 0);
+    addBox(fireplace, fireplacePillarSize, fireplaceOpeningBottom, fireplacePillarSize, materials.wallWarm, 0, fireplaceOpeningBottom / 2, 0);
+    addBox(fireplace, fireplacePillarSize, fireplaceTop - fireplaceOpeningTop, fireplacePillarSize, materials.wallWarm, 0, (fireplaceOpeningTop + fireplaceTop) / 2, 0);
     const fireplaceFrameMaterial = materials.charcoal;
     const fireplaceGlassFaces = [-1, 1].map(side => {
-      const faceX = side * (fireplaceCasingDepth / 2 + 0.01);
-      const glass = addBox(fireplace, 0.02, fireplaceOpeningHeight, 0.45, glassMaterial, faceX, fireplaceOpeningBottom + fireplaceOpeningHeight / 2, 0, { castShadow: false });
+      const faceX = side * (fireplaceInsertDepth / 2 + 0.01);
+      const glass = addBox(fireplace, 0.02, fireplaceFinishHeight - 0.05, fireplaceFinishWidth - 0.05, glassMaterial, faceX, fireplaceOpeningBottom + fireplaceOpeningHeight / 2, 0, { castShadow: false });
       glass.name = `true-vision-550dv-see-through-glass-${side < 0 ? "nno" : "zzw"}`;
-      addBox(fireplace, 0.05, 0.05, fireplaceBodyWidth, fireplaceFrameMaterial, faceX, fireplaceOpeningBottom, 0);
-      addBox(fireplace, 0.05, 0.05, fireplaceBodyWidth, fireplaceFrameMaterial, faceX, fireplaceOpeningTop, 0);
-      for (const z of [-fireplaceBodyWidth / 2, fireplaceBodyWidth / 2]) {
+      addBox(fireplace, 0.05, 0.05, fireplaceFinishWidth, fireplaceFrameMaterial, faceX, fireplaceOpeningBottom, 0);
+      addBox(fireplace, 0.05, 0.05, fireplaceFinishWidth, fireplaceFrameMaterial, faceX, fireplaceOpeningTop, 0);
+      for (const z of [-fireplaceFinishWidth / 2, fireplaceFinishWidth / 2]) {
         addBox(fireplace, 0.05, fireplaceOpeningHeight, 0.05, fireplaceFrameMaterial, faceX, fireplaceOpeningBottom + fireplaceOpeningHeight / 2, z);
       }
       return glass;
     });
-    const fireBed = addBox(fireplace, fireplaceCasingDepth - 0.08, 0.055, fireplaceBodyWidth - 0.06, materials.charcoal, 0, fireplaceOpeningBottom + 0.03, 0);
+    const fireBed = addBox(fireplace, fireplaceInsertDepth - 0.06, 0.055, fireplaceFinishWidth - 0.06, materials.charcoal, 0, fireplaceOpeningBottom + 0.03, 0);
     fireBed.name = "true-vision-550dv-fire-bed";
     const flameMaterial = new THREE.MeshStandardMaterial({ color: 0xff8a24, emissive: 0xff4b12, emissiveIntensity: 2.2, roughness: 0.5 });
     for (const [z, height] of [[-0.12, 0.17], [0, 0.26], [0.12, 0.19]]) {
@@ -1779,8 +1780,10 @@
         boiler: boiler.name === "bulex-sdc-150-2v-tri",
         technicalZone: [technicalZone.geometry.parameters.depth, technicalZone.geometry.parameters.width],
         fireplace: fireplace.name === "m-design-true-vision-550dv-rotated-see-through",
-        fireplaceEnvelopeDepth,
-        fireplaceBodyWidth,
+        fireplacePillarSize,
+        fireplaceFinishWidth,
+        fireplaceFinishHeight,
+        fireplaceInsertDepth,
         fireplacePillarHeight: fireplaceTop,
         fireplaceGlassFaceCount: fireplaceGlassFaces.length,
         airco: airco.name === "office-airco-on-storage-partition"
@@ -1878,11 +1881,13 @@
     console.assert(geometryChecks.studioDesign.showerSize[0] === 1 && geometryChecks.studioDesign.showerSize[1] === 0.8 && geometryChecks.studioDesign.showerHalfWall && geometryChecks.studioDesign.showerGlass, "Bathroom must contain the 80 x 100 cm shower with half-height wall and fixed glass");
     console.assert(geometryChecks.studioDesign.boiler && geometryChecks.studioDesign.technicalZone[0] === 1 && geometryChecks.studioDesign.technicalZone[1] === 1.5, "Storage must contain the Bulex boiler left of the 1.00 x 1.50 m pool-equipment zone");
     console.assert(geometryChecks.studioDesign.fireplace
-      && Math.abs(geometryChecks.studioDesign.fireplaceEnvelopeDepth - 0.524) < 1e-9
-      && Math.abs(geometryChecks.studioDesign.fireplaceBodyWidth - 0.479) < 1e-9
+      && Math.abs(geometryChecks.studioDesign.fireplacePillarSize - 0.524) < 1e-9
+      && Math.abs(geometryChecks.studioDesign.fireplaceFinishWidth - 0.481) < 1e-9
+      && Math.abs(geometryChecks.studioDesign.fireplaceFinishHeight - 0.897) < 1e-9
+      && Math.abs(geometryChecks.studioDesign.fireplaceInsertDepth - 0.484) < 1e-9
       && Math.abs(geometryChecks.studioDesign.fireplacePillarHeight - 2.88) < 1e-9
       && geometryChecks.studioDesign.fireplaceGlassFaceCount === 2,
-    "Fireplace must be a floor-to-ceiling rotated True Vision 550DV pillar with two NNO-ZZW glass faces");
+    "Fireplace must match the official True Vision Gas 550 DV dimensions inside the NNO-ZZW see-through pillar");
     console.assert(geometryChecks.studioDesign.airco, "Air-conditioning unit must remain on the office side of the storage partition");
     console.assert(Object.values(geometryChecks.furniture).slice(0, 4).every(axis => axis === "studio-long-axis"), "Sofa, tables and desk must follow the studio long axis");
     console.assert(geometryChecks.furniture.sliderEntryClearance > 2.2, "Furniture must preserve a clear route from the pool-side slider");
