@@ -528,19 +528,6 @@
       }
     }
 
-    function addVerticalCladding(parent, x, zStart, zEnd, height = 2.82, outward = -1) {
-      const boardWidth = 0.135;
-      const boardCount = Math.ceil((zEnd - zStart) / boardWidth);
-      const colors = [palette.timber, palette.timberLight, 0x8b5d35, 0xa87849];
-      for (let index = 0; index < boardCount; index += 1) {
-        const start = zStart + index * boardWidth;
-        const width = Math.min(boardWidth - 0.012, zEnd - start);
-        if (width <= 0) continue;
-        const material = standard(colors[index % colors.length], 0.78);
-        addBox(parent, 0.045, height, width, material, x + outward * 0.025, height / 2 + 0.08, start + width / 2);
-      }
-    }
-
     function addPlanSurface(parent, points, material, y = 0, holes = []) {
       const shape = new THREE.Shape();
       points.forEach(([planX, planY], index) => {
@@ -960,7 +947,7 @@
     document.documentElement.dataset.passage = "integrated";
 
     addBox(studio, 4, 0.14, shellLength, materials.interiorFloor, 2, 0.01, pergolaLength + shellLength / 2, { castShadow: false });
-    const studioRoof = addBox(studio, 4, 0.24, 10, materials.ceiling, 2, 3.02, 5);
+    const studioRoof = addBox(studio, 4, 0.24, 10, materials.charcoalSoft, 2, 3.02, 5);
     studioRoof.name = "bijgebouw-continuous-flat-roof";
     const studioCeiling = addBox(studio, 3.52, 0.04, shellLength - 0.48, materials.ceiling, 2, 2.88, pergolaLength + shellLength / 2, { castShadow: false });
     studioCeiling.name = "studio-white-interior-ceiling";
@@ -1014,15 +1001,16 @@
     const pergolaSliderPanels = 2;
     addGlassWallAlongX(studio, pergolaSliderStart, pergolaSliderEnd, pergolaLength + 0.015, pergolaSliderPanels);
 
-    const soffit = new THREE.Mesh(new THREE.PlaneGeometry(4, pergolaLength), woodMaterial);
+    const soffit = new THREE.Mesh(new THREE.PlaneGeometry(4, pergolaLength), materials.ceiling);
     soffit.rotation.x = Math.PI / 2;
     soffit.position.set(2, 2.91, pergolaLength / 2);
     soffit.receiveShadow = true;
+    soffit.name = "pergola-white-ceiling";
     studio.add(soffit);
 
-    addBox(studio, 0.24, 2.96, pergolaLength, materials.wallWarm, 3.88, 1.52, pergolaLength / 2);
+    const pergolaNnoWall = addBox(studio, 0.24, 2.96, pergolaLength, materials.ceiling, 3.88, 1.52, pergolaLength / 2);
+    pergolaNnoWall.name = "pergola-nno-white-wall";
     addBox(studio, 0.045, 0.3, pergolaLength, materials.stone, 4.0225, 0.15, pergolaLength / 2);
-    addVerticalCladding(studio, 3.755, 0, pergolaLength, 2.82, 1);
     addBox(studio, 4, 0.16, 0.18, materials.charcoal, 2, 2.94, 0.09);
     addBox(studio, 0.18, 0.16, pergolaLength, materials.charcoal, 0.09, 2.94, pergolaLength / 2);
 
@@ -1776,8 +1764,11 @@
       },
       studioDesign: {
         nnoWindowCount: 0,
-        nnoPrivacyWall: nnoPrivacyWall.material === materials.ceiling,
-        whiteRoof: studioRoof.material === materials.ceiling,
+        nnoPrivacyWall: nnoPrivacyWall.material === materials.ceiling
+          && pergolaNnoWall.material === materials.ceiling,
+        epdmRoof: studioRoof.material === materials.charcoalSoft,
+        whiteCeiling: studioCeiling.material === materials.ceiling
+          && soffit.material === materials.ceiling,
         xinnixDoorCount: interior.children.filter(child => child.name.startsWith("xinnix-x40-")).length,
         xinnixDoorWidth,
         xinnixDoorHeight,
@@ -1885,7 +1876,11 @@
     console.assert(geometryChecks.closedStorageFacade.exteriorDoorCount === 0 && geometryChecks.closedStorageFacade.wallSegments === 1, "ZZW storage façade must be continuous and have no exterior door");
     console.assert(geometryChecks.closedStorageFacade.crepiWall, "Closed storage exterior walls must remain white crepi");
     console.assert(geometryChecks.closedStorageFacade.blueStonePlinth, "Closed storage exterior walls must retain its blue-stone plinth");
-    console.assert(geometryChecks.studioDesign.nnoWindowCount === 0 && geometryChecks.studioDesign.nnoPrivacyWall && geometryChecks.studioDesign.whiteRoof, "NNO façade and studio roof must be fully white");
+    console.assert(geometryChecks.studioDesign.nnoWindowCount === 0
+      && geometryChecks.studioDesign.nnoPrivacyWall
+      && geometryChecks.studioDesign.epdmRoof
+      && geometryChecks.studioDesign.whiteCeiling,
+    "NNO façade and ceiling must be white while the roof remains EPDM");
     console.assert(geometryChecks.studioDesign.xinnixDoorCount === 2 && Math.abs(geometryChecks.studioDesign.xinnixDoorWidth - 0.73) < 1e-9, "Bathroom and storage must use two 73 cm Xinnix X40 doors opening into the office");
     console.assert(geometryChecks.studioDesign.showerSize[0] === 1 && geometryChecks.studioDesign.showerSize[1] === 0.8 && geometryChecks.studioDesign.showerHalfWall && geometryChecks.studioDesign.showerGlass, "Bathroom must contain the 80 x 100 cm shower with half-height wall and fixed glass");
     console.assert(geometryChecks.studioDesign.boiler && geometryChecks.studioDesign.technicalZone[0] === 1 && geometryChecks.studioDesign.technicalZone[1] === 1.5, "Storage must contain the Bulex boiler left of the 1.00 x 1.50 m pool-equipment zone");
