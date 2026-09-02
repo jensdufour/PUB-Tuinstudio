@@ -182,14 +182,13 @@
       BERGING:  x=687..822, y=244.5..357  (135x112.5px = 1,80 x 1,50 m = 2,70 m²)
       BADKAMER: x=687..822, y=93..236.5   (135x143.5px = 1,80 x 1,91 m = 3,44 m²)
 
-    ZZW (BOTTOM) WALL — pool-side slider plus centered storage door, y=357..375:
+    ZZW (BOTTOM) WALL — pool-side slider and solid storage wall, y=357..375:
       Pergola open 2,51 m:    x=90..278  (188px)  — open (WNW side)
       RAL 9005 post 0,20 m: x=278..293 (15px)   — connects both sliding windows
       Schuifraam 5,20 m:     x=293..683 (390px)  — 2 panels, one continuous opening
-      Berging ZZW-wand:       x=683..840 (2,09 m), deur 1,00 m gecentreerd
-      Deurwangen:             0,58 m aan schuifraam- en OZO-zijde
+      Berging ZZW-wand:       x=683..840 (2,09 m), gesloten
 
-      Sequence (right to left): bergingsdeur met 0,58m wangen → 5,20m two-panel slider → RAL9005 post 20x20 → pergola.
+      Sequence (right to left): gesloten bergingswand → 5,20m two-panel slider → RAL9005 post 20x20 → pergola.
 
     NNO (TOP) WALL, y=75..93:
       Pergola north solid:       x=90..278  (188px)
@@ -200,6 +199,10 @@
 
     OZO (RIGHT) WALL, x=822..840:
       Doorlopende buitenwand: y=93..357 (geen buitendeur)
+
+    XINNIX DEUREN (kantoorzijde, in bath/kantoor partition x=679..687):
+      Badkamer: y=93..147,5 (0,73 m), aan NNO-buitenpunt
+      Berging:  y=302,25..357 (0,73 m), aan ZZW-buitenpunt
 
     WNW (LEFT) WALL (pergola/lounge): vaste beglazing 3,52 m full height, x=278..296
 
@@ -289,9 +292,8 @@
            <!-- ══════════════════════════════════════════════════════
              ZZW (BOTTOM) WALL — 5,20 m two-panel slider plus storage door
              ══════════════════════════════════════════════════════ -->
-           <!-- ZZW storage wall with centered 1,00 m exterior door and 0,58 m jambs. -->
-           <rect x="683" y="357" width="43.5" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
-           <rect x="796.25" y="357" width="43.75" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+           <!-- Solid storage wall: access is through the concealed office-side door. -->
+           <rect x="683" y="357" width="157" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
 
         <!-- One 5,20 m sliding window, split into two economical panels. -->
         <rect id="pool-side-slider" x="293" y="357" width="390" height="18"
@@ -306,9 +308,8 @@
           <title>Verbindingspost 20 × 20 cm, RAL 9005</title>
         </rect>
         <g id="pool-side-blue-stone-plinth" stroke="#788890" stroke-width="4" stroke-linecap="round">
-          <title>ZZW-crepiwand met blauwe-steenplint rondom de bergingsdeur</title>
-          <line x1="683" y1="373" x2="726.5" y2="373" />
-          <line x1="796.25" y1="373" x2="840" y2="373" />
+          <title>ZZW-crepiwand met blauwe-steenplint langs de gesloten bergingswand</title>
+          <line x1="683" y1="373" x2="840" y2="373" />
         </g>
 
         <!-- INGANG arrow (centered on schuifraam) -->
@@ -358,10 +359,9 @@
 
         <!-- ══════════════════════════════════════════════════════
                BATH / KANTOOR PARTITION  (0,10 m)
-               Door gap y=176.5..236.5 (0,80 m)
+               Concealed Xinnix doors: bathroom at NNO end, storage at ZZW end
              ══════════════════════════════════════════════════════ -->
-             <rect x="679" y="236.5" width="8" height="138.5" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
-             <rect x="679" y="75" width="8" height="101.5" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
+             <rect x="679" y="147.75" width="8" height="154.5" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
 
         <!-- ══════════════════════════════════════════════════════
              HAARD — Element4 Sky L Tunnel (0,40 m schouw)
@@ -387,13 +387,6 @@
              <rect x="687" y="244.5" width="135" height="112.5" fill="url(#cupboardFill)" />
         <!-- Berging/badkamer partition (0,10 m) -->
              <rect x="687" y="236.5" width="135" height="8" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
-        <!-- Standard aluminium RAL 9005 exterior door, opening outward on ZZW. -->
-        <g id="storage-exterior-door-ral9005" fill="none" stroke="#0a0a0d">
-          <title>Standaard aluminium buitendeur berging, 1,00 m x 2,20 m, RAL 9005, op de ZZW-zijde en naar buiten draaiend</title>
-          <line x1="796.25" y1="375" x2="796.25" y2="450" stroke-width="2" />
-          <path d="M721.25,375 A75 75 0 0 0 796.25,450" stroke="#8a9aaa" stroke-width="0.9" stroke-dasharray="4,3" />
-        </g>
-        <text x="805" y="410" font-size="4.5" fill="#0a0a0d" text-anchor="start" font-weight="700">ALU RAL9005</text>
         <!-- Label -->
            <text x="754" y="267" font-size="8" fill="#2E4057" text-anchor="middle" font-weight="700">BERGING</text>
            <text x="754" y="256" font-size="6" fill="#7a8a9a" text-anchor="middle">1,80 x 1,50 m (2,70 m&#178;)</text>
@@ -405,20 +398,20 @@
            <rect x="687" y="93" width="135" height="143.5" fill="#f8f6f2" />
 
         <!-- Wall-hung vanity on NNO wall: 80x45cm. -->
-        <rect x="762" y="93" width="60" height="33.75" rx="2" fill="#e4ddd4" stroke="#8a9aaa" stroke-width="1.2" />
+        <rect x="687" y="93" width="60" height="33.75" rx="2" fill="#e4ddd4" stroke="#8a9aaa" stroke-width="1.2" />
         <!-- Waskom -->
-        <ellipse cx="792" cy="109.875" rx="14" ry="10" fill="none" stroke="#8a7a6a" stroke-width="1.2" />
-        <circle cx="792" cy="109.875" r="3" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
+        <ellipse cx="717" cy="109.875" rx="14" ry="10" fill="none" stroke="#8a7a6a" stroke-width="1.2" />
+        <circle cx="717" cy="109.875" r="3" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
         <!-- Kraan -->
-        <circle cx="792" cy="99" r="2" fill="#c8b89a" stroke="#8a7a6a" stroke-width="0.6" />
+        <circle cx="717" cy="99" r="2" fill="#c8b89a" stroke="#8a7a6a" stroke-width="0.6" />
         <!-- Warm + koud water wastafel (NNO-wand). -->
-        <circle cx="800" cy="97" r="3" fill="none" stroke="#c0392b" stroke-width="0.8" />
-        <text x="800" y="96" font-size="3.5" fill="#c0392b" text-anchor="middle">W</text>
-        <circle cx="784" cy="97" r="3" fill="none" stroke="#2980b9" stroke-width="0.8" />
-        <text x="784" y="96" font-size="3.5" fill="#2980b9" text-anchor="middle">K</text>
+        <circle cx="725" cy="97" r="3" fill="none" stroke="#c0392b" stroke-width="0.8" />
+        <text x="725" y="96" font-size="3.5" fill="#c0392b" text-anchor="middle">W</text>
+        <circle cx="709" cy="97" r="3" fill="none" stroke="#2980b9" stroke-width="0.8" />
+        <text x="709" y="96" font-size="3.5" fill="#2980b9" text-anchor="middle">K</text>
         <!-- Afvoer wastafel (floor drain under cabinet) -->
-        <circle cx="792" cy="123" r="3.5" fill="none" stroke="#7a8a9a" stroke-width="0.8" />
-        <text x="792" y="121" font-size="4" fill="#7a8a9a" text-anchor="middle">↓</text>
+        <circle cx="717" cy="123" r="3.5" fill="none" stroke="#7a8a9a" stroke-width="0.8" />
+        <text x="717" y="121" font-size="4" fill="#7a8a9a" text-anchor="middle">↓</text>
 
         <!-- Compact wall-hung toilet: approximately 40x50cm. -->
         <rect x="776" y="236.5" width="32" height="8" fill="#e8e2d8" stroke="#8a9aaa" stroke-width="0.8" />
@@ -432,25 +425,25 @@
         <circle cx="785.5" cy="238.5" r="3.5" fill="none" stroke="#7a8a9a" stroke-width="0.8" />
         <text x="785.5" y="237" font-size="4" fill="#7a8a9a" text-anchor="middle">↓</text>
 
-        <!-- Douchebak: 80x100cm, -90 graden gedraaid. -->
-        <rect x="687" y="93" width="60" height="75" fill="url(#tileFill)" stroke="#2E4057" stroke-width="1.2" />
-        <!-- 20cm halfhoge wand tussen douche en wastafel, met vast glas erboven. -->
+        <!-- Douchebak: 80x100cm, shifted to the OZO side. -->
+        <rect x="762" y="93" width="60" height="75" fill="url(#tileFill)" stroke="#2E4057" stroke-width="1.2" />
+        <!-- 20cm halfhoge wand between shower and bathroom door, with fixed glass above. -->
         <rect x="747" y="93" width="15" height="75" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
         <line x1="754.5" y1="93" x2="754.5" y2="168" stroke="#4a8ab0" stroke-width="2" />
         <text x="754.5" y="132" font-size="4" fill="#4a8ab0" text-anchor="middle"
           transform="rotate(90,754.5,132)">glas op halfhoge wand</text>
         <!-- Hoofddouche Ø30cm -->
-        <circle cx="717" cy="130.5" r="11" fill="none" stroke="#c8b89a" stroke-width="1" stroke-dasharray="2,2" />
-        <circle cx="717" cy="130.5" r="2" fill="#c8b89a" />
-        <text x="717" y="160" font-size="5" fill="#7a8a9a" text-anchor="middle">douche 80x100</text>
+        <circle cx="792" cy="130.5" r="11" fill="none" stroke="#c8b89a" stroke-width="1" stroke-dasharray="2,2" />
+        <circle cx="792" cy="130.5" r="2" fill="#c8b89a" />
+        <text x="792" y="160" font-size="5" fill="#7a8a9a" text-anchor="middle">douche 80x100</text>
         <!-- Warm + koud water douche (partition wand) -->
-        <circle cx="689" cy="140" r="3" fill="none" stroke="#c0392b" stroke-width="0.8" />
-        <text x="689" y="139" font-size="3.5" fill="#c0392b" text-anchor="middle">W</text>
-        <circle cx="689" cy="128" r="3" fill="none" stroke="#2980b9" stroke-width="0.8" />
-        <text x="689" y="127" font-size="3.5" fill="#2980b9" text-anchor="middle">K</text>
+        <circle cx="820" cy="140" r="3" fill="none" stroke="#c0392b" stroke-width="0.8" />
+        <text x="820" y="139" font-size="3.5" fill="#c0392b" text-anchor="middle">W</text>
+        <circle cx="820" cy="128" r="3" fill="none" stroke="#2980b9" stroke-width="0.8" />
+        <text x="820" y="127" font-size="3.5" fill="#2980b9" text-anchor="middle">K</text>
         <!-- Afvoer douche (douchebak vloer) -->
-        <circle cx="717" cy="105" r="3.5" fill="none" stroke="#7a8a9a" stroke-width="0.8" />
-        <text x="717" y="102" font-size="4" fill="#7a8a9a" text-anchor="middle">↓</text>
+        <circle cx="792" cy="105" r="3.5" fill="none" stroke="#7a8a9a" stroke-width="0.8" />
+        <text x="792" y="102" font-size="4" fill="#7a8a9a" text-anchor="middle">↓</text>
 
         <!-- Room label -->
         <text x="790" y="180" font-size="8" fill="#2E4057" text-anchor="middle" font-weight="700">BADKAMER</text>
@@ -483,13 +476,14 @@
              ══════════════════════════════════════════════════════ -->
         <rect x="529" y="93" width="150" height="264" fill="#f8f7f3" />
 
-        <!-- Badkamer/kantoor door (0,80 m, swings east into kantoor) -->
-        <rect x="679" y="176.5" width="8" height="60" fill="#faf8f4" stroke="none" />
-        <line x1="687" y1="236.5" x2="679" y2="236.5" stroke="#2E4057" stroke-width="1.2" />
-        <line x1="687" y1="176.5" x2="679" y2="176.5" stroke="#2E4057" stroke-width="1.2" />
-        <line x1="679" y1="236.5" x2="619" y2="236.5" stroke="#2E4057" stroke-width="1.2" />
-        <path d="M679,176.5 A60 60 0 0 0 619,236.5" fill="none" stroke="#8a9aaa" stroke-width="0.9"
-          stroke-dasharray="4,3" />
+        <!-- Flush Xinnix doors: bathroom at NNO end, storage at ZZW end. -->
+        <g id="office-side-xinnix-doors" fill="none" stroke="#2E4057" stroke-width="1.2">
+          <title>Twee onzichtbare Xinnix binnendeuren van 73 cm aan de kantoorzijde</title>
+          <rect x="679" y="93" width="8" height="54.75" fill="#f8f7f3" stroke="none" />
+          <line x1="679" y1="93" x2="679" y2="147.75" stroke="#c8d0dc" stroke-width="0.8" />
+          <rect x="679" y="302.25" width="8" height="54.75" fill="#f8f7f3" stroke="none" />
+          <line x1="679" y1="302.25" x2="679" y2="357" stroke="#c8d0dc" stroke-width="0.8" />
+        </g>
 
         <!-- Bureau 120x60cm, long axis aligned with the studio. -->
         <rect id="office-desk" x="559" y="93" width="90" height="45" rx="1" fill="#e4ddd4" stroke="#8a9aaa" stroke-width="1.2" />
@@ -742,7 +736,7 @@
         <text x="470" y="-60" font-size="9" fill="#7a8a9a" text-anchor="middle" font-style="italic">NNO-zijde &mdash;
           ramen badkamer, kantoor &amp; lounge</text>
         <text x="470" y="542" font-size="9" fill="#4A7C59" text-anchor="middle" font-style="italic">ZZW-zijde &mdash;
-          schuifraam + bergingsdeur</text>
+          schuifraam + gesloten bergingswand</text>
         <text x="928" y="225" font-size="9" fill="#7a8a9a" text-anchor="middle" transform="rotate(90,928,225)"
           font-style="italic">OZO-zijde</text>
         <text x="-30" y="225" font-size="9" fill="#4A7C59" text-anchor="middle" transform="rotate(-90,-30,225)"
@@ -754,21 +748,14 @@
 
         <!-- ─── BOTTOM: ZZW FACE BREAKDOWN at y≈515 ─── -->
         <line x1="840" y1="522" x2="840" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="796.25" y1="522" x2="796.25" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="721.25" y1="522" x2="721.25" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="683" y1="522" x2="683" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="293" y1="522" x2="293" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="278" y1="522" x2="278" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="90" y1="522" x2="90" y2="508" stroke="#8a9aaa" stroke-width="0.5" />
 
-        <!-- Centered storage door: 0,58 + 1,00 + 0,58 m. -->
-        <line x1="840" y1="515" x2="796.25" y2="515" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
-        <text x="818.125" y="515" font-size="5" fill="#7a8a9a" text-anchor="middle">0,58</text>
-        <line x1="796.25" y1="515" x2="721.25" y2="515" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
-        <rect x="737" y="512" width="44" height="11" fill="#faf8f4" />
-        <text x="759" y="515" font-size="5" fill="#4A7C59" text-anchor="middle" font-weight="700">deur 1,00</text>
-        <line x1="721.25" y1="515" x2="683" y2="515" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
-        <text x="702.125" y="515" font-size="5" fill="#7a8a9a" text-anchor="middle">0,58</text>
+        <!-- Closed storage wall. -->
+        <line x1="840" y1="515" x2="683" y2="515" stroke="#2E4057" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="761.5" y="515" font-size="5" fill="#7a8a9a" text-anchor="middle">gesloten wand 2,09</text>
 
         <!-- One full-width, two-panel slider 5,20 m. -->
         <line x1="683" y1="515" x2="293" y2="515" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
