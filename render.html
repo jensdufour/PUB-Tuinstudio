@@ -1077,13 +1077,40 @@
     const fireplaceBodyWidth = 0.479;
     const fireplaceCasingDepth = 0.55;
     const fireplaceZ = (514 - 90) / 75;
-    const fireplace = addBox(interior, fireplaceCasingDepth, 2.35, fireplaceBodyWidth, materials.charcoalSoft, 2, 1.215, fireplaceZ);
-    fireplace.name = "m-design-true-vision-550dv-rotated-envelope";
+    const fireplace = new THREE.Group();
+    fireplace.name = "m-design-true-vision-550dv-rotated-see-through";
+    fireplace.position.set(2, 0, fireplaceZ);
+    interior.add(fireplace);
+    const fireplaceOpeningBottom = 0.48;
+    const fireplaceOpeningHeight = 0.45;
+    const fireplaceOpeningTop = fireplaceOpeningBottom + fireplaceOpeningHeight;
+    const fireplaceTop = 2.88;
+    addBox(fireplace, fireplaceCasingDepth, fireplaceOpeningBottom, fireplaceBodyWidth, materials.wallWarm, 0, fireplaceOpeningBottom / 2, 0);
+    addBox(fireplace, fireplaceCasingDepth, fireplaceTop - fireplaceOpeningTop, fireplaceBodyWidth, materials.wallWarm, 0, (fireplaceOpeningTop + fireplaceTop) / 2, 0);
+    const fireplaceFrameMaterial = materials.charcoal;
     const fireplaceGlassFaces = [-1, 1].map(side => {
-      const glass = addBox(interior, 0.02, 0.45, 0.45, glassMaterial, 2 + side * (fireplaceCasingDepth / 2 + 0.01), 0.72, fireplaceZ, { castShadow: false });
+      const faceX = side * (fireplaceCasingDepth / 2 + 0.01);
+      const glass = addBox(fireplace, 0.02, fireplaceOpeningHeight, 0.45, glassMaterial, faceX, fireplaceOpeningBottom + fireplaceOpeningHeight / 2, 0, { castShadow: false });
       glass.name = `true-vision-550dv-see-through-glass-${side < 0 ? "nno" : "zzw"}`;
+      addBox(fireplace, 0.05, 0.05, fireplaceBodyWidth, fireplaceFrameMaterial, faceX, fireplaceOpeningBottom, 0);
+      addBox(fireplace, 0.05, 0.05, fireplaceBodyWidth, fireplaceFrameMaterial, faceX, fireplaceOpeningTop, 0);
+      for (const z of [-fireplaceBodyWidth / 2, fireplaceBodyWidth / 2]) {
+        addBox(fireplace, 0.05, fireplaceOpeningHeight, 0.05, fireplaceFrameMaterial, faceX, fireplaceOpeningBottom + fireplaceOpeningHeight / 2, z);
+      }
       return glass;
     });
+    const fireBed = addBox(fireplace, fireplaceCasingDepth - 0.08, 0.055, fireplaceBodyWidth - 0.06, materials.charcoal, 0, fireplaceOpeningBottom + 0.03, 0);
+    fireBed.name = "true-vision-550dv-fire-bed";
+    const flameMaterial = new THREE.MeshStandardMaterial({ color: 0xff8a24, emissive: 0xff4b12, emissiveIntensity: 2.2, roughness: 0.5 });
+    for (const [z, height] of [[-0.12, 0.17], [0, 0.26], [0.12, 0.19]]) {
+      const flame = new THREE.Mesh(new THREE.ConeGeometry(0.055, height, 10), flameMaterial);
+      flame.position.set(0, fireplaceOpeningBottom + 0.07 + height / 2, z);
+      flame.name = "true-vision-550dv-flame";
+      fireplace.add(flame);
+    }
+    const fireplaceGlow = new THREE.PointLight(0xff6a24, 3.5, 2.2, 2);
+    fireplaceGlow.position.set(0, fireplaceOpeningBottom + fireplaceOpeningHeight / 2, 0);
+    fireplace.add(fireplaceGlow);
 
     const airco = addBox(interior, 0.67, 0.28, 0.12, materials.white, 1.8, 2.45, bathStoragePartitionZ - 0.11);
     airco.name = "office-airco-on-storage-partition";
@@ -1751,9 +1778,10 @@
         showerGlass: showerGlass.material === glassMaterial,
         boiler: boiler.name === "bulex-sdc-150-2v-tri",
         technicalZone: [technicalZone.geometry.parameters.depth, technicalZone.geometry.parameters.width],
-        fireplace: fireplace.name === "m-design-true-vision-550dv-rotated-envelope",
+        fireplace: fireplace.name === "m-design-true-vision-550dv-rotated-see-through",
         fireplaceEnvelopeDepth,
         fireplaceBodyWidth,
+        fireplacePillarHeight: fireplaceTop,
         fireplaceGlassFaceCount: fireplaceGlassFaces.length,
         airco: airco.name === "office-airco-on-storage-partition"
       },
@@ -1852,8 +1880,9 @@
     console.assert(geometryChecks.studioDesign.fireplace
       && Math.abs(geometryChecks.studioDesign.fireplaceEnvelopeDepth - 0.524) < 1e-9
       && Math.abs(geometryChecks.studioDesign.fireplaceBodyWidth - 0.479) < 1e-9
+      && Math.abs(geometryChecks.studioDesign.fireplacePillarHeight - 2.88) < 1e-9
       && geometryChecks.studioDesign.fireplaceGlassFaceCount === 2,
-    "Fireplace must be the rotated True Vision 550DV see-through version with two glass faces");
+    "Fireplace must be a floor-to-ceiling rotated True Vision 550DV pillar with two NNO-ZZW glass faces");
     console.assert(geometryChecks.studioDesign.airco, "Air-conditioning unit must remain on the office side of the storage partition");
     console.assert(Object.values(geometryChecks.furniture).slice(0, 4).every(axis => axis === "studio-long-axis"), "Sofa, tables and desk must follow the studio long axis");
     console.assert(geometryChecks.furniture.sliderEntryClearance > 2.2, "Furniture must preserve a clear route from the pool-side slider");
