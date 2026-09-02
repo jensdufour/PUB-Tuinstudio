@@ -163,14 +163,14 @@
       East outer (OZO):          x=840    (18px = 0,24 m)
 
     Y coordinates (top to bottom — NNO to ZZW):
-      North outer (NNO):  y=75     (ramen side)
+      North outer (NNO):  y=75     (gesloten privacywand)
       North inner:        y=93     (18px = 0,24 m)
       South inner:        y=357
       South outer (ZZW):  y=375    (18px = 0,24 m, ingang side)
       Inner depth:        264px = 3,52 m
 
     ORIENTATION (now matches PID / tuinplan_v5):
-      Plan-top:    NNO (ramen badkamer, kantoor, lounge)
+      Plan-top:    NNO (gesloten privacywand)
       Plan-bottom: ZZW (ingang via schuifraam)
       Plan-left:   WNW (pergola open side)
       Plan-right:  OZO (doorlopende berging/badkamergevel)
@@ -192,10 +192,7 @@
 
     NNO (TOP) WALL, y=75..93:
       Pergola north solid:       x=90..278  (188px)
-      Pier E:                    x=278..337 (59px = 0,79 m)
-      Kantoor+lounge schuifraam 4,00m: x=337..637 (300px)
-      Pier:                      x=637..718 (81px = 1,08 m)
-      Pier W:                    x=808..840 (32px = 0,43 m)
+      Gesloten privacywand:      x=278..840 (562px = 7,49 m)
 
     OZO (RIGHT) WALL, x=822..840:
       Doorlopende buitenwand: y=93..357 (geen buitendeur)
@@ -330,19 +327,10 @@
         <!-- ══════════════════════════════════════════════════════
              NNO (TOP) WALL
              ══════════════════════════════════════════════════════ -->
-        <!-- Pier W: x=90..122 (0,43 m) -->
-        <rect x="808" y="75" width="32" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
-        <!-- Solid wall: the former unquoted bathroom window is removed. -->
-        <rect x="718" y="75" width="90" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
-        <!-- Pier: x=637..718 (1,08 m) -->
-        <rect x="637" y="75" width="81" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
-        <!-- Kantoor+lounge schuifraam 4,00 m: x=337..637 (300px) -->
-        <rect x="337" y="75" width="300" height="18" fill="#a8c5d8" stroke="#2E4057" stroke-width="1.5" />
-        <line x1="562" y1="93" x2="562" y2="75" stroke="white" stroke-width="1" />
-        <line x1="487" y1="93" x2="487" y2="75" stroke="white" stroke-width="1" />
-        <line x1="412" y1="93" x2="412" y2="75" stroke="white" stroke-width="1" />
-        <!-- Pier E (WNW side): x=278..337 (0,79 m) -->
-        <rect x="278" y="75" width="59" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <!-- Continuous enclosed-studio wall: no windows permitted for privacy. -->
+        <rect x="278" y="75" width="562" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5">
+          <title>NNO-gevel: volledig gesloten privacywand, 7,49 m</title>
+        </rect>
         <!-- Pergola north solid masonry: x=90..278 -->
         <rect x="90" y="75" width="188" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
 
@@ -753,7 +741,7 @@
              CARDINAL / ORIENTATION LABELS
              ══════════════════════════════════════════════════════ -->
         <text x="470" y="-60" font-size="9" fill="#7a8a9a" text-anchor="middle" font-style="italic">NNO-zijde &mdash;
-          ramen badkamer, kantoor &amp; lounge</text>
+          gesloten privacywand · geen ramen</text>
         <text x="470" y="542" font-size="9" fill="#4A7C59" text-anchor="middle" font-style="italic">ZZW-zijde &mdash;
           schuifraam + gesloten bergingswand</text>
         <text x="928" y="225" font-size="9" fill="#7a8a9a" text-anchor="middle" transform="rotate(90,928,225)"
@@ -843,28 +831,13 @@
 
         <!-- ─── TOP LVL 3: NNO WALL FACE DIMENSIONS at y≈5 ─── -->
         <line x1="840" y1="15" x2="840" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="808" y1="15" x2="808" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="718" y1="15" x2="718" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="637" y1="15" x2="637" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="337" y1="15" x2="337" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="278" y1="15" x2="278" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="90" y1="15" x2="90" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
 
-        <!-- Pier W 0,43 -->
-        <line x1="840" y1="5" x2="808" y2="5" stroke="#8a9aaa" stroke-width="0.6" />
-        <text x="824" y="8" font-size="5" fill="#7a8a9a" text-anchor="middle">0,43</text>
-        <!-- Solid wall 1,20 -->
-        <line x1="808" y1="5" x2="718" y2="5" stroke="#8a9aaa" stroke-width="0.6" />
-        <!-- Pier midden 1,08 -->
-        <line x1="718" y1="5" x2="637" y2="5" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
-        <text x="678" y="8" font-size="5" fill="#7a8a9a" text-anchor="middle">1,08</text>
-        <!-- Schuifraam 4,00 -->
-        <line x1="637" y1="5" x2="337" y2="5" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
-        <rect x="464" y="2" width="46" height="10" fill="#faf8f4" />
-        <text x="487" y="4" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">schuifraam 4,00</text>
-        <!-- Pier E 0,79 -->
-        <line x1="337" y1="5" x2="278" y2="5" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
-        <text x="308" y="8" font-size="5" fill="#7a8a9a" text-anchor="middle">0,79</text>
+        <!-- Continuous privacy wall 7,49 m -->
+        <line x1="840" y1="5" x2="278" y2="5" stroke="#2E4057" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="518" y="2" width="82" height="10" fill="#faf8f4" />
+        <text x="559" y="4" font-size="5.5" fill="#2E4057" text-anchor="middle" font-weight="700">privacywand 7,49</text>
         <!-- Pergola wand 2,51 -->
         <line x1="278" y1="5" x2="90" y2="5" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
         <rect x="176" y="2" width="30" height="10" fill="#faf8f4" />
@@ -1074,7 +1047,7 @@
         <div>Dak/plafond: plat dak EPDM + plafond in gyproc.</div>
         <div>Haard: M-Design True Vision 550DV tunnel; toestel 479 mm, glas 450 mm, totale inbouwdiepte min. 524 mm (plan 0,53 m), rookgas Ø200/130.</div>
         <div>Boiler berging: Bulex SDC 150/2V TRI, verticaal muurmodel 150 L, 1205 x 544 x 557 mm.</div>
-        <div>Schrijnwerk Nr.1: schuifraam links 4000 x 2650 mm, alu RAL, Uw 0,82 W/m2K, type 801.</div>
+        <div>NNO-gevel: volledig gesloten privacywand zonder ramen; Schrijnwerk Nr.1 vervalt.</div>
         <div>Schrijnwerk Nr.2: schuifraam rechts 5200 x 2650 mm, alu RAL, Uw 0,83 W/m2K, type 802.</div>
         <div>Schrijnwerk Nr.5: deur links 1000 x 2200 mm, alu RAL, paneel 1x planchet/iso/wbp, type 707.</div>
         <div>Afwerking: chapewerken + vloerafwerking + binnendeur tubespan + plaatsing tuinkantoor.</div>
