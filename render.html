@@ -960,11 +960,11 @@
     document.documentElement.dataset.passage = "integrated";
 
     addBox(studio, 4, 0.14, shellLength, materials.interiorFloor, 2, 0.01, pergolaLength + shellLength / 2, { castShadow: false });
-    const studioRoof = addBox(studio, 4, 0.24, 10, materials.charcoalSoft, 2, 3.02, 5);
+    const studioRoof = addBox(studio, 4, 0.24, 10, materials.ceiling, 2, 3.02, 5);
     studioRoof.name = "bijgebouw-continuous-flat-roof";
     const studioCeiling = addBox(studio, 3.52, 0.04, shellLength - 0.48, materials.ceiling, 2, 2.88, pergolaLength + shellLength / 2, { castShadow: false });
     studioCeiling.name = "studio-white-interior-ceiling";
-    const nnoPrivacyWall = addBox(studio, 0.24, 2.96, shellLength, materials.wall, 3.88, 1.52, pergolaLength + shellLength / 2);
+    const nnoPrivacyWall = addBox(studio, 0.24, 2.96, shellLength, materials.ceiling, 3.88, 1.52, pergolaLength + shellLength / 2);
     nnoPrivacyWall.name = "nno-continuous-privacy-wall-no-windows";
     const wallBottom = 0.04;
     const wallTop = 3;
@@ -1776,7 +1776,8 @@
       },
       studioDesign: {
         nnoWindowCount: 0,
-        nnoPrivacyWall: nnoPrivacyWall.material === materials.wall,
+        nnoPrivacyWall: nnoPrivacyWall.material === materials.ceiling,
+        whiteRoof: studioRoof.material === materials.ceiling,
         xinnixDoorCount: interior.children.filter(child => child.name.startsWith("xinnix-x40-")).length,
         xinnixDoorWidth,
         xinnixDoorHeight,
@@ -1884,7 +1885,7 @@
     console.assert(geometryChecks.closedStorageFacade.exteriorDoorCount === 0 && geometryChecks.closedStorageFacade.wallSegments === 1, "ZZW storage façade must be continuous and have no exterior door");
     console.assert(geometryChecks.closedStorageFacade.crepiWall, "Closed storage exterior walls must remain white crepi");
     console.assert(geometryChecks.closedStorageFacade.blueStonePlinth, "Closed storage exterior walls must retain its blue-stone plinth");
-    console.assert(geometryChecks.studioDesign.nnoWindowCount === 0 && geometryChecks.studioDesign.nnoPrivacyWall, "NNO façade must be a continuous privacy wall without windows");
+    console.assert(geometryChecks.studioDesign.nnoWindowCount === 0 && geometryChecks.studioDesign.nnoPrivacyWall && geometryChecks.studioDesign.whiteRoof, "NNO façade and studio roof must be fully white");
     console.assert(geometryChecks.studioDesign.xinnixDoorCount === 2 && Math.abs(geometryChecks.studioDesign.xinnixDoorWidth - 0.73) < 1e-9, "Bathroom and storage must use two 73 cm Xinnix X40 doors opening into the office");
     console.assert(geometryChecks.studioDesign.showerSize[0] === 1 && geometryChecks.studioDesign.showerSize[1] === 0.8 && geometryChecks.studioDesign.showerHalfWall && geometryChecks.studioDesign.showerGlass, "Bathroom must contain the 80 x 100 cm shower with half-height wall and fixed glass");
     console.assert(geometryChecks.studioDesign.boiler && geometryChecks.studioDesign.technicalZone[0] === 1 && geometryChecks.studioDesign.technicalZone[1] === 1.5, "Storage must contain the Bulex boiler left of the 1.00 x 1.50 m pool-equipment zone");
