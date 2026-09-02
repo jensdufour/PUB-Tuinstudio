@@ -397,21 +397,21 @@
         <!-- Floor fill -->
            <rect x="687" y="93" width="135" height="143.5" fill="#f8f6f2" />
 
-        <!-- Wall-hung vanity on NNO wall: 80x45cm. -->
-        <rect x="687" y="93" width="60" height="33.75" rx="2" fill="#e4ddd4" stroke="#8a9aaa" stroke-width="1.2" />
+        <!-- Wall-hung vanity clear of the bathroom door opening circle. -->
+        <rect x="687" y="199" width="60" height="33.75" rx="2" fill="#e4ddd4" stroke="#8a9aaa" stroke-width="1.2" />
         <!-- Waskom -->
-        <ellipse cx="717" cy="109.875" rx="14" ry="10" fill="none" stroke="#8a7a6a" stroke-width="1.2" />
-        <circle cx="717" cy="109.875" r="3" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
+        <ellipse cx="717" cy="215.875" rx="14" ry="10" fill="none" stroke="#8a7a6a" stroke-width="1.2" />
+        <circle cx="717" cy="215.875" r="3" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
         <!-- Kraan -->
-        <circle cx="717" cy="99" r="2" fill="#c8b89a" stroke="#8a7a6a" stroke-width="0.6" />
-        <!-- Warm + koud water wastafel (NNO-wand). -->
-        <circle cx="725" cy="97" r="3" fill="none" stroke="#c0392b" stroke-width="0.8" />
-        <text x="725" y="96" font-size="3.5" fill="#c0392b" text-anchor="middle">W</text>
-        <circle cx="709" cy="97" r="3" fill="none" stroke="#2980b9" stroke-width="0.8" />
-        <text x="709" y="96" font-size="3.5" fill="#2980b9" text-anchor="middle">K</text>
+        <circle cx="717" cy="205" r="2" fill="#c8b89a" stroke="#8a7a6a" stroke-width="0.6" />
+        <!-- Warm + koud water wastafel (kantoorwand). -->
+        <circle cx="725" cy="203" r="3" fill="none" stroke="#c0392b" stroke-width="0.8" />
+        <text x="725" y="202" font-size="3.5" fill="#c0392b" text-anchor="middle">W</text>
+        <circle cx="709" cy="203" r="3" fill="none" stroke="#2980b9" stroke-width="0.8" />
+        <text x="709" y="202" font-size="3.5" fill="#2980b9" text-anchor="middle">K</text>
         <!-- Afvoer wastafel (floor drain under cabinet) -->
-        <circle cx="717" cy="123" r="3.5" fill="none" stroke="#7a8a9a" stroke-width="0.8" />
-        <text x="717" y="121" font-size="4" fill="#7a8a9a" text-anchor="middle">↓</text>
+        <circle cx="717" cy="229" r="3.5" fill="none" stroke="#7a8a9a" stroke-width="0.8" />
+        <text x="717" y="227" font-size="4" fill="#7a8a9a" text-anchor="middle">↓</text>
 
         <!-- Compact wall-hung toilet: approximately 40x50cm, on the NNO side. -->
         <rect x="776" y="93" width="32" height="8" fill="#e8e2d8" stroke="#8a9aaa" stroke-width="0.8" />
@@ -483,8 +483,10 @@
           <line x1="679" y1="93" x2="679" y2="147.75" stroke="#c8d0dc" stroke-width="0.8" />
           <rect x="679" y="302.25" width="8" height="54.75" fill="#f8f7f3" stroke="none" />
           <line x1="679" y1="302.25" x2="679" y2="357" stroke="#c8d0dc" stroke-width="0.8" />
-          <path d="M679,147.75 A54.75,54.75 0 0,0 624.25,93" stroke="#4A7C59" stroke-width="1.2" stroke-dasharray="4,3" />
-          <path d="M679,302.25 A54.75,54.75 0 0,1 624.25,357" stroke="#4A7C59" stroke-width="1.2" stroke-dasharray="4,3" />
+          <line x1="679" y1="147.75" x2="733.75" y2="147.75" />
+          <path d="M679,93 A54.75,54.75 0 0,1 733.75,147.75" stroke="#4A7C59" stroke-width="1.2" stroke-dasharray="4,3" />
+          <line x1="679" y1="302.25" x2="733.75" y2="302.25" />
+          <path d="M679,357 A54.75,54.75 0 0,0 733.75,302.25" stroke="#4A7C59" stroke-width="1.2" stroke-dasharray="4,3" />
         </g>
 
         <!-- Bureau 120x60cm, long axis aligned with the studio. -->
@@ -680,12 +682,12 @@
         <text x="800" y="136" font-size="4.5" fill="#e67e22" text-anchor="end">S05</text>
 
         <!-- === S06: Stopcontact berging (achterwand, partition east) === -->
-        <g transform="translate(692,330)">
+        <g transform="translate(808,330)">
           <rect x="0" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
           <circle cx="6.5" cy="0" r="1.5" fill="#e67e22" />
           <circle cx="2.5" cy="0" r="1.5" fill="#e67e22" />
         </g>
-        <text x="708" y="332" font-size="4.5" fill="#e67e22" text-anchor="start">S06</text>
+        <text x="804" y="343" font-size="4.5" fill="#e67e22" text-anchor="end">S06</text>
 
         <!-- === S08: Enkel stopcontact in ZZW kolom (facing inward/south into kantoor) === -->
         <g transform="translate(573,353)">
@@ -723,14 +725,14 @@
         <!-- ─── WATER ─── -->
 
         <!-- === W01: Kraantje tuinslang (berging, achterwand partition east) === -->
-        <g transform="translate(692,302)">
+        <g transform="translate(808,305)">
           <circle cx="0" cy="0" r="5" fill="none" stroke="#2980b9" stroke-width="1.2" />
           <line x1="3" y1="0" x2="-3" y2="0" stroke="#2980b9" stroke-width="1" />
           <line x1="0" y1="3" x2="0" y2="-3" stroke="#2980b9" stroke-width="1" />
         </g>
-        <text x="708" y="304" font-size="5" fill="#2980b9" text-anchor="start" font-weight="700">W01</text>
-        <text x="708" y="296" font-size="4.5" fill="#2980b9" text-anchor="start">kraantje</text>
-        <text x="708" y="289" font-size="4.5" fill="#2980b9" text-anchor="start">tuinslang</text>
+        <text x="804" y="307" font-size="5" fill="#2980b9" text-anchor="end" font-weight="700">W01</text>
+        <text x="804" y="299" font-size="4.5" fill="#2980b9" text-anchor="end">kraantje</text>
+        <text x="804" y="292" font-size="4.5" fill="#2980b9" text-anchor="end">tuinslang</text>
 
         <!-- ══════════════════════════════════════════════════════
              CARDINAL / ORIENTATION LABELS
@@ -896,13 +898,6 @@
         <line x1="893" y1="93" x2="883" y2="93" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="888" y1="357" x2="888" y2="93" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
         <text x="900" y="225" font-size="6" fill="#7a8a9a" text-anchor="middle">wand 3,52</text>
-
-        <!-- ─── INTERNAL: Badkamer/kantoor deur dim ─── -->
-        <line x1="700" y1="236.5" x2="693" y2="236.5" stroke="#4A7C59" stroke-width="0.5" />
-        <line x1="700" y1="176.5" x2="693" y2="176.5" stroke="#4A7C59" stroke-width="0.5" />
-        <line x1="697" y1="236.5" x2="697" y2="176.5" stroke="#4A7C59" stroke-width="0.6" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
-        <text x="709" y="210" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">0,80</text>
-        <text x="709" y="201" font-size="4.5" fill="#4A7C59" text-anchor="middle">deur</text>
 
         <!-- ─── INTERNAL: Haard opening dimensions ─── -->
         <!-- North opening 1,10 m -->
