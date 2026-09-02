@@ -1100,6 +1100,11 @@
       }
       return glass;
     });
+    const fireplaceClosedSides = [-1, 1].map(side => {
+      const panel = addBox(fireplace, fireplaceInsertDepth, fireplaceOpeningHeight, 0.05, fireplaceFrameMaterial, 0, fireplaceOpeningBottom + fireplaceOpeningHeight / 2, side * fireplaceFinishWidth / 2);
+      panel.name = `true-vision-550dv-closed-side-${side < 0 ? "wnw" : "ozo"}`;
+      return panel;
+    });
     const fireBed = addBox(fireplace, fireplaceInsertDepth - 0.06, 0.055, fireplaceFinishWidth - 0.06, materials.charcoal, 0, fireplaceOpeningBottom + 0.03, 0);
     fireBed.name = "true-vision-550dv-fire-bed";
     const flameMaterial = new THREE.MeshStandardMaterial({ color: 0xff8a24, emissive: 0xff4b12, emissiveIntensity: 2.2, roughness: 0.5 });
@@ -1786,6 +1791,7 @@
         fireplaceInsertDepth,
         fireplacePillarHeight: fireplaceTop,
         fireplaceGlassFaceCount: fireplaceGlassFaces.length,
+        fireplaceClosedSideCount: fireplaceClosedSides.length,
         airco: airco.name === "office-airco-on-storage-partition"
       },
       furniture: {
@@ -1886,7 +1892,8 @@
       && Math.abs(geometryChecks.studioDesign.fireplaceFinishHeight - 0.897) < 1e-9
       && Math.abs(geometryChecks.studioDesign.fireplaceInsertDepth - 0.484) < 1e-9
       && Math.abs(geometryChecks.studioDesign.fireplacePillarHeight - 2.88) < 1e-9
-      && geometryChecks.studioDesign.fireplaceGlassFaceCount === 2,
+      && geometryChecks.studioDesign.fireplaceGlassFaceCount === 2
+      && geometryChecks.studioDesign.fireplaceClosedSideCount === 2,
     "Fireplace must match the official True Vision Gas 550 DV dimensions inside the NNO-ZZW see-through pillar");
     console.assert(geometryChecks.studioDesign.airco, "Air-conditioning unit must remain on the office side of the storage partition");
     console.assert(Object.values(geometryChecks.furniture).slice(0, 4).every(axis => axis === "studio-long-axis"), "Sofa, tables and desk must follow the studio long axis");
