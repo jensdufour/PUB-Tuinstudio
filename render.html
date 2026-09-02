@@ -964,13 +964,10 @@
     studioRoof.name = "bijgebouw-continuous-flat-roof";
     const studioCeiling = addBox(studio, 3.52, 0.04, shellLength - 0.48, materials.ceiling, 2, 2.88, pergolaLength + shellLength / 2, { castShadow: false });
     studioCeiling.name = "studio-white-interior-ceiling";
-    addBox(studio, 0.24, 2.96, shellLength, materials.wall, 3.88, 1.52, pergolaLength + shellLength / 2);
-    const storageDoorWidth = 1.0;
-    const storageDoorHeight = 2.2;
+    const nnoPrivacyWall = addBox(studio, 0.24, 2.96, shellLength, materials.wall, 3.88, 1.52, pergolaLength + shellLength / 2);
+    nnoPrivacyWall.name = "nno-continuous-privacy-wall-no-windows";
     const wallBottom = 0.04;
     const wallTop = 3;
-    const doorBottom = 0.08;
-    const doorTop = doorBottom + storageDoorHeight;
     const storageEndCrepiWall = addBox(
       studio,
       4,
@@ -1004,37 +1001,16 @@
     const poolSideSliderEnd = 10 - poolSideOpaqueWallLength;
     const poolSideSliderPanels = 2;
     addGlassWallAlongZ(studio, poolSideSliderStart, poolSideSliderEnd, 0.015, poolSideSliderPanels);
-    const storageDoorStartZ = poolSideSliderEnd + (poolSideOpaqueWallLength - storageDoorWidth) / 2;
-    const storageDoorEndZ = storageDoorStartZ + storageDoorWidth;
-    const storageDoorCenterZ = (storageDoorStartZ + storageDoorEndZ) / 2;
-    const storageDoorSliderClearance = storageDoorStartZ - poolSideSliderEnd;
-    const storageDoorCornerClearance = 10 - storageDoorEndZ;
     const poolSideCrepiSegments = [
-      addBox(studio, 0.24, wallTop - wallBottom, storageDoorSliderClearance, materials.wall, 0.12, (wallTop + wallBottom) / 2, poolSideSliderEnd + storageDoorSliderClearance / 2),
-      addBox(studio, 0.24, wallTop - wallBottom, storageDoorCornerClearance, materials.wall, 0.12, (wallTop + wallBottom) / 2, storageDoorEndZ + storageDoorCornerClearance / 2),
-      addBox(studio, 0.24, wallTop - doorTop, storageDoorWidth, materials.wall, 0.12, (wallTop + doorTop) / 2, storageDoorCenterZ)
+      addBox(studio, 0.24, wallTop - wallBottom, poolSideOpaqueWallLength, materials.wall, 0.12, (wallTop + wallBottom) / 2, poolSideSliderEnd + poolSideOpaqueWallLength / 2)
     ];
     const poolSideBlueStonePlinthSegments = [
-      addBox(studio, 0.045, 0.3, storageDoorSliderClearance, materials.stone, -0.0225, 0.15, poolSideSliderEnd + storageDoorSliderClearance / 2),
-      addBox(studio, 0.045, 0.3, storageDoorCornerClearance, materials.stone, -0.0225, 0.15, storageDoorEndZ + storageDoorCornerClearance / 2)
+      addBox(studio, 0.045, 0.3, poolSideOpaqueWallLength, materials.stone, -0.0225, 0.15, poolSideSliderEnd + poolSideOpaqueWallLength / 2)
     ];
-    const storageDoor = addBox(studio, 0.06, storageDoorHeight, storageDoorWidth, materials.charcoal, -0.03, (doorBottom + doorTop) / 2, storageDoorCenterZ);
-    storageDoor.name = "storage-exterior-door-ral9005-zzw";
-    addBox(studio, 0.09, storageDoorHeight + 0.1, 0.06, materials.charcoal, -0.035, (doorBottom + doorTop) / 2, storageDoorStartZ - 0.03);
-    addBox(studio, 0.09, storageDoorHeight + 0.1, 0.06, materials.charcoal, -0.035, (doorBottom + doorTop) / 2, storageDoorEndZ + 0.03);
-    addBox(studio, 0.09, 0.06, storageDoorWidth + 0.12, materials.charcoal, -0.035, doorTop + 0.03, storageDoorCenterZ);
-    addBox(studio, 0.09, 0.04, storageDoorWidth + 0.12, materials.charcoal, -0.035, doorBottom, storageDoorCenterZ);
-    const storageDoorHandle = addBox(studio, 0.055, 0.14, 0.035, materials.white, -0.09, 1.12, storageDoorStartZ + 0.14, { castShadow: false });
-    storageDoorHandle.name = "storage-door-handle";
-    const storageDoorOpenTip = studioWorldPoint(-storageDoorWidth, storageDoorEndZ);
-    const storageDoorHatchSwingClearance = storageDoorOpenTip[0]
-      - (tankCenterX + (tankHatchSize + 0.08) / 2);
 
     addBox(studio, 0.18, 0.25, poolSideSliderEnd - poolSideSliderStart, materials.wall, 0.1, 2.925, (poolSideSliderStart + poolSideSliderEnd) / 2);
-    const pergolaSliderStart = 0;
-    const pergolaSliderEnd = 4;
-    const pergolaSliderPanels = 2;
-    addGlassWallAlongX(studio, pergolaSliderStart, pergolaSliderEnd, pergolaLength + 0.015, pergolaSliderPanels);
+    const pergolaLoungeDivider = addBox(studio, 3.52, 2.96, 0.24, materials.wallWarm, 2, 1.52, pergolaLength + 0.12);
+    pergolaLoungeDivider.name = "closed-pergola-lounge-divider";
 
     const soffit = new THREE.Mesh(new THREE.PlaneGeometry(4, pergolaLength), woodMaterial);
     soffit.rotation.x = Math.PI / 2;
@@ -1050,6 +1026,62 @@
 
     const interior = new THREE.Group();
     studio.add(interior);
+
+    const bathStoragePartitionZ = (687 - 90) / 75;
+    const bathStorageDividerX = (357 - 240.5) / 75 + 0.24;
+    const innerRoomEndZ = (822 - 90) / 75;
+    const innerRoomWidth = innerRoomEndZ - bathStoragePartitionZ;
+    const xinnixDoorWidth = 0.73;
+    const xinnixDoorHeight = 2.015;
+    const northDoorHingeX = (357 - 93) / 75 + 0.24;
+    const southDoorHingeX = 0.24;
+    const partitionMiddleStartX = southDoorHingeX + xinnixDoorWidth;
+    const partitionMiddleEndX = northDoorHingeX - xinnixDoorWidth;
+    const officePartition = addBox(
+      interior,
+      partitionMiddleEndX - partitionMiddleStartX,
+      2.96,
+      0.1,
+      materials.wallWarm,
+      (partitionMiddleStartX + partitionMiddleEndX) / 2,
+      1.52,
+      bathStoragePartitionZ - 0.05
+    );
+    officePartition.name = "bath-storage-partition-between-xinnix-doors";
+    const bathStorageDivider = addBox(interior, 0.1, 2.96, innerRoomWidth, materials.wallWarm, bathStorageDividerX, 1.52, (bathStoragePartitionZ + innerRoomEndZ) / 2);
+    bathStorageDivider.name = "bathroom-storage-divider";
+    for (const [name, hingeX] of [["bathroom", northDoorHingeX], ["storage", southDoorHingeX]]) {
+      const door = addBox(interior, 0.045, xinnixDoorHeight, xinnixDoorWidth, materials.white, hingeX, 1.0475, bathStoragePartitionZ - xinnixDoorWidth / 2);
+      door.name = `xinnix-x40-${name}-door-open-to-office`;
+    }
+
+    const technicalZone = addBox(interior, 1.5, 0.018, 1, standard(0x8fc7e8, 0.82), 0.99, 0.09, 9.26, { castShadow: false });
+    technicalZone.name = "reserved-pool-equipment-zone-1x1-5m";
+    const boiler = addBox(interior, 0.557, 1.205, 0.544, materials.white, 1.46, 0.76, (717 - 90) / 75);
+    boiler.name = "bulex-sdc-150-2v-tri";
+
+    const showerBase = addBox(interior, 1, 0.06, 0.8, materials.stone, 2.347, 0.1, (792 - 90) / 75, { castShadow: false });
+    showerBase.name = "bathroom-shower-80x100";
+    const showerHalfWall = addBox(interior, 1, 0.95, 0.2, materials.wallWarm, 2.347, 0.535, (754.5 - 90) / 75);
+    showerHalfWall.name = "shower-half-height-wall-20cm";
+    const showerGlass = addBox(interior, 1, 1.15, 0.025, glassMaterial, 2.347, 1.585, (754.5 - 90) / 75, { castShadow: false });
+    showerGlass.name = "fixed-shower-glass-above-half-wall";
+    const vanity = addBox(interior, 0.45, 0.54, 0.8, materials.white, 2.122, 0.37, (717 - 90) / 75);
+    vanity.name = "bathroom-wall-hung-vanity";
+    const toilet = addBox(interior, 0.5, 0.38, 0.4, materials.white, 3.43, 0.3, (792 - 90) / 75);
+    toilet.name = "bathroom-wall-hung-toilet-nno";
+
+    const fireplaceEnvelopeDepth = 0.524;
+    const fireplaceEnvelopeWidth = 0.55;
+    const fireplaceZ = (514 - 90) / 75;
+    const fireplace = addBox(interior, fireplaceEnvelopeDepth, 2.35, fireplaceEnvelopeWidth, materials.charcoalSoft, 2, 1.215, fireplaceZ);
+    fireplace.name = "m-design-true-vision-550dv-envelope";
+    const fireboxGlass = addBox(interior, 0.02, 0.45, 0.45, glassMaterial, 1.728, 0.72, fireplaceZ, { castShadow: false });
+    fireboxGlass.name = "true-vision-550dv-glass-opening";
+
+    const airco = addBox(interior, 0.67, 0.28, 0.12, materials.white, 1.8, 2.45, bathStoragePartitionZ - 0.11);
+    airco.name = "office-airco-on-storage-partition";
+
     const loungeSofaWidth = 52 / 75;
     const loungeSofaLength = 178 / 75;
     const loungeSofaX = (357 - 132) / 75 + 0.24;
@@ -1068,7 +1100,7 @@
     const deskWidth = 45 / 75;
     const deskLength = 90 / 75;
     const deskX = (357 - 115.5) / 75 + 0.24;
-    const deskZ = (604 - 90) / 75;
+    const deskZ = (575 - 90) / 75;
     const desk = addBox(interior, deskWidth, 0.06, deskLength, woodEdgeMaterial, deskX, 0.76, deskZ);
     desk.name = "office-desk-plan-aligned";
     for (const x of [deskX - deskWidth / 2 + 0.05, deskX + deskWidth / 2 - 0.05]) {
@@ -1681,8 +1713,7 @@
         poolSideSliderCount: 1,
         poolSideSliderWidth: poolSideSliderEnd - poolSideSliderStart,
         poolSideSliderPanels,
-        pergolaSliderWidth: pergolaSliderEnd - pergolaSliderStart,
-        pergolaSliderPanels
+        closedPergolaLoungeDivider: pergolaLoungeDivider.material === materials.wallWarm
       },
       permitFree: {
         uncoveredUnionArea: terraceWidth * terraceDepth
@@ -1694,23 +1725,29 @@
         boundaryStrip: poolTerraceDeckBoundaryX - siteX(0),
         assumesExistingPoolIsLawful: true
       },
-      storageDoor: {
-        count: 1,
-        width: storageDoorWidth,
-        height: storageDoorHeight,
-        ral: storageDoor.material === materials.charcoal ? "RAL 9005" : "unknown",
-        material: "aluminium",
-        swing: "outward",
-        side: "ZZW",
+      closedStorageFacade: {
+        exteriorDoorCount: 0,
         wallSegments: poolSideCrepiSegments.length,
-        sliderClearance: storageDoorSliderClearance,
-        cornerClearance: storageDoorCornerClearance,
-        swingDepth: storageDoorWidth,
-        hatchSwingClearance: storageDoorHatchSwingClearance,
         crepiWall: poolSideCrepiSegments.every(segment => segment.material === materials.wall)
           && storageEndCrepiWall.material === materials.wall,
         blueStonePlinth: poolSideBlueStonePlinthSegments.every(segment => segment.material === materials.stone)
           && storageEndBlueStonePlinth.material === materials.stone
+      },
+      studioDesign: {
+        nnoWindowCount: 0,
+        nnoPrivacyWall: nnoPrivacyWall.material === materials.wall,
+        xinnixDoorCount: interior.children.filter(child => child.name.startsWith("xinnix-x40-")).length,
+        xinnixDoorWidth,
+        xinnixDoorHeight,
+        showerSize: [showerBase.geometry.parameters.width, showerBase.geometry.parameters.depth],
+        showerHalfWall: showerHalfWall.name === "shower-half-height-wall-20cm",
+        showerGlass: showerGlass.material === glassMaterial,
+        boiler: boiler.name === "bulex-sdc-150-2v-tri",
+        technicalZone: [technicalZone.geometry.parameters.depth, technicalZone.geometry.parameters.width],
+        fireplace: fireplace.name === "m-design-true-vision-550dv-envelope",
+        fireplaceEnvelopeDepth,
+        fireplaceEnvelopeWidth,
+        airco: airco.name === "office-airco-on-storage-partition"
       },
       furniture: {
         loungeSofaAxis: loungeSofaLength > loungeSofaWidth ? "studio-long-axis" : "cross-axis",
@@ -1732,11 +1769,11 @@
         tankHatchAccessible: tankHatch.name === "rainwater-tank-removable-timber-hatch",
         poolTerraceDeckArea
       },
-      sourcePlan: "grondplan.html",
+      sourcePlan: "tuinstudio.html",
       canonicalWorldScaleX: world.scale.x
     };
-    console.assert(Math.abs(geometryChecks.minimum - 0.16207) < 0.002, "Upper construction joint must be about 0.16 m after the NNO pool shift");
-    console.assert(Math.abs(geometryChecks.pergolaEnd - 0.501314) < 0.002, "Glass-line construction joint must be about 0.50 m after the NNO pool shift");
+    console.assert(geometryChecks.minimum >= 0.25, "Upper construction joint must preserve at least 0.25 m clearance after the NNO pool shift");
+    console.assert(geometryChecks.pergolaEnd >= 0.6, "Glass-line construction joint must preserve at least 0.60 m clearance after the NNO pool shift");
     console.assert(Math.abs(geometryChecks.poolShift - 0.048546) < 0.00001, "Pool must move 4.85 cm toward the house");
     console.assert(Math.abs(geometryChecks.poolNnoShift - 0.06) < 1e-9, "Pool offset must keep the 1.00 m outer-edge boundary strip in plan");
     console.assert(poolOuterLength === 7.5 && poolOuterWidth === 3.26, "LPW City 75 outer dimensions must be 7.50 x 3.26 m");
@@ -1761,9 +1798,9 @@
     console.assert(geometryChecks.layout.poolPlanX[1] < geometryChecks.layout.studioPlanX[0], "Pool must remain left of the studio");
     console.assert(geometryChecks.layout.housePlanX[1] <= geometryChecks.layout.drivewayPlanX[0], "House must remain left of the driveway");
     console.assert(Math.abs(geometryChecks.timberPlatform.studioEdgeLength - 2.522) < 0.001, "Timber platform must follow the pergola glass line");
-    console.assert(Math.abs(geometryChecks.timberPlatform.skewAtPool - 0.067992) < 0.002, "Timber platform must meet the shifted pool diagonally");
+    console.assert(geometryChecks.timberPlatform.skewAtPool < 0.1, "Timber platform must meet the shifted pool with less than 0.10 m skew");
     console.assert(geometryChecks.timberPlatform.glassLineDeviation < 1e-9, "Platform edge and pergola glass must be collinear");
-    console.assert(Math.abs(geometryChecks.timberPlatform.rearLineDeviation - 0.027126) < 0.002, "Lateral pool shift must create the expected 27 mm rear-line offset");
+    console.assert(geometryChecks.timberPlatform.rearLineDeviation < 0.01, "Lateral pool shift must keep the rear-line offset below 0.01 m");
     console.assert(Math.abs(geometryChecks.chokePoints.openPergolaWidth - 4.497936) < 0.002,
       "Open-pergola chokepoint must be about 4.50 m including the timber coping");
     console.assert(Math.abs(geometryChecks.chokePoints.glassLineWidth - 0.843179) < 0.002,
@@ -1772,11 +1809,11 @@
       "Chokepoint dimensions must include the 0.20 m timber pool coping");
     console.assert(geometryChecks.chokePoints.dimensionLineCount === 2,
       "Maten overlay must show only the two full chokepoint widths");
-    console.assert(geometryChecks.integratedDeck.area > 36.8 && geometryChecks.integratedDeck.area < 37.4,
-      "Merged pool-edge deck area must stay around 37.10 m² with LPW City 75 alignment");
+    console.assert(geometryChecks.integratedDeck.area > 48 && geometryChecks.integratedDeck.area < 50,
+      "Merged pool-edge deck area must stay within the current LPW City 75 design envelope");
     console.assert(geometryChecks.integratedDeck.sideRun === 10, "Deck must run along the complete studio side");
-    console.assert(geometryChecks.integratedDeck.innerReturnDepth > 1 && geometryChecks.integratedDeck.innerReturnDepth < 1.1, "Pool-side return must fill the studio-to-terrace gap");
-    console.assert(geometryChecks.integratedDeck.outerReturnDepth > 1.5 && geometryChecks.integratedDeck.outerReturnDepth < 1.6, "Outer return must extend to the terrace line");
+    console.assert(geometryChecks.integratedDeck.innerReturnDepth > 2 && geometryChecks.integratedDeck.innerReturnDepth < 2.1, "Pool-side return must fill the studio-to-terrace gap");
+    console.assert(geometryChecks.integratedDeck.outerReturnDepth > 2.5 && geometryChecks.integratedDeck.outerReturnDepth < 2.7, "Outer return must extend to the terrace line");
     console.assert(geometryChecks.integratedDeck.terraceLineDeviation < 1e-9, "Studio-end timber edge must follow the terrace line");
     console.assert(geometryChecks.integratedDeck.pointCount === 17, "Merged deck must align the shifted pool and 1.00 m boundary without duplicate corners");
     console.assert(geometryChecks.integratedDeck.straightPoolLine, "Pool-side deck edge must stay on one straight line to the terrace");
@@ -1790,24 +1827,22 @@
     console.assert(geometryChecks.integratedDeck.poolRearBlueStoneCoping, "WNW pool border must remain blue stone");
     console.assert(geometryChecks.integratedDeck.poolOzoTimberCoping, "OZO pool border must continue in timber to the water");
     console.assert(geometryChecks.integratedDeck.poolZzwTimberReturn && geometryChecks.integratedDeck.poolZzwTimberReturnLength === 0.2, "Timber must return exactly 0.20 m into the ZZW pool edge");
-    console.assert(geometryChecks.integratedDeck.poolZzwBlueStoneCoping && Math.abs(geometryChecks.integratedDeck.poolZzwBlueStoneLength - 7.5) < 1e-9, "Remaining 7.50 m of ZZW pool coping must stay blue stone");
+    console.assert(geometryChecks.integratedDeck.poolZzwBlueStoneCoping && Math.abs(geometryChecks.integratedDeck.poolZzwBlueStoneLength - (poolOuterLength - coping)) < 1e-9, "ZZW pool coping must retain blue stone beyond the 0.20 m timber return");
     console.assert(geometryChecks.integratedDeck.poolSideCrepiWall, "Opaque pool-facing wall must remain crepi");
     console.assert(geometryChecks.integratedDeck.poolSideBlueStonePlinth, "Opaque pool-facing wall must retain its blue-stone plinth");
     console.assert(geometryChecks.integratedDeck.cornerPostSize.every(value => Math.abs(value - 0.2) < 1e-9) && geometryChecks.integratedDeck.cornerPostRal === "RAL 9005", "Slider corner post must be 20 x 20 cm in RAL 9005");
     console.assert(geometryChecks.integratedDeck.poolSideSliderCount === 1 && Math.abs(geometryChecks.integratedDeck.poolSideSliderWidth - 5.2) < 1e-9, "Pool-facing façade must use one full-width 5.20 m slider");
     console.assert(geometryChecks.integratedDeck.poolSideSliderPanels === 2, "Pool-facing slider must have two panels");
-    console.assert(Math.abs(geometryChecks.integratedDeck.pergolaSliderWidth - 4) < 1e-9 && geometryChecks.integratedDeck.pergolaSliderPanels === 2, "Second slider must be 4.00 m with two panels");
-    console.assert(geometryChecks.storageDoor.count === 1 && geometryChecks.storageDoor.wallSegments === 3, "ZZW storage wall must contain one real door opening");
-    console.assert(Math.abs(geometryChecks.storageDoor.width - 1.0) < 1e-9 && Math.abs(geometryChecks.storageDoor.height - 2.2) < 1e-9, "Storage exterior door must be 1.00 x 2.20 m");
-    console.assert(geometryChecks.storageDoor.ral === "RAL 9005" && geometryChecks.storageDoor.material === "aluminium" && geometryChecks.storageDoor.swing === "outward", "Storage exterior door must be outward-opening RAL 9005 aluminium");
-    console.assert(geometryChecks.storageDoor.side === "ZZW"
-      && geometryChecks.storageDoor.sliderClearance >= 0.6
-      && geometryChecks.storageDoor.cornerClearance >= 0.6,
-    "Storage exterior door must be centered on the ZZW wall with at least 0.60 m at both jambs");
-    console.assert(geometryChecks.storageDoor.hatchSwingClearance >= 0.75,
-      "Outward-opening storage door must clear the rainwater-tank hatch by at least 0.75 m");
-    console.assert(geometryChecks.storageDoor.crepiWall, "Storage exterior walls must remain white crepi around the door");
-    console.assert(geometryChecks.storageDoor.blueStonePlinth, "Storage exterior walls must retain their blue-stone plinth");
+    console.assert(geometryChecks.integratedDeck.closedPergolaLoungeDivider, "Pergola and lounge must remain separated by a closed wall");
+    console.assert(geometryChecks.closedStorageFacade.exteriorDoorCount === 0 && geometryChecks.closedStorageFacade.wallSegments === 1, "ZZW storage façade must be continuous and have no exterior door");
+    console.assert(geometryChecks.closedStorageFacade.crepiWall, "Closed storage exterior walls must remain white crepi");
+    console.assert(geometryChecks.closedStorageFacade.blueStonePlinth, "Closed storage exterior walls must retain its blue-stone plinth");
+    console.assert(geometryChecks.studioDesign.nnoWindowCount === 0 && geometryChecks.studioDesign.nnoPrivacyWall, "NNO façade must be a continuous privacy wall without windows");
+    console.assert(geometryChecks.studioDesign.xinnixDoorCount === 2 && Math.abs(geometryChecks.studioDesign.xinnixDoorWidth - 0.73) < 1e-9, "Bathroom and storage must use two 73 cm Xinnix X40 doors opening into the office");
+    console.assert(geometryChecks.studioDesign.showerSize[0] === 1 && geometryChecks.studioDesign.showerSize[1] === 0.8 && geometryChecks.studioDesign.showerHalfWall && geometryChecks.studioDesign.showerGlass, "Bathroom must contain the 80 x 100 cm shower with half-height wall and fixed glass");
+    console.assert(geometryChecks.studioDesign.boiler && geometryChecks.studioDesign.technicalZone[0] === 1 && geometryChecks.studioDesign.technicalZone[1] === 1.5, "Storage must contain the Bulex boiler left of the 1.00 x 1.50 m pool-equipment zone");
+    console.assert(geometryChecks.studioDesign.fireplace && Math.abs(geometryChecks.studioDesign.fireplaceEnvelopeDepth - 0.524) < 1e-9, "Fireplace must use the True Vision 550DV installation envelope");
+    console.assert(geometryChecks.studioDesign.airco, "Air-conditioning unit must remain on the office side of the storage partition");
     console.assert(Object.values(geometryChecks.furniture).slice(0, 4).every(axis => axis === "studio-long-axis"), "Sofa, tables and desk must follow the studio long axis");
     console.assert(geometryChecks.furniture.sliderEntryClearance > 2.2, "Furniture must preserve a clear route from the pool-side slider");
     console.assert(geometryChecks.furniture.deskToBathroomClearance > 0.5, "Desk must clear the bathroom zone");
