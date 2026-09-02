@@ -1009,8 +1009,10 @@
     ];
 
     addBox(studio, 0.18, 0.25, poolSideSliderEnd - poolSideSliderStart, materials.wall, 0.1, 2.925, (poolSideSliderStart + poolSideSliderEnd) / 2);
-    const pergolaLoungeDivider = addBox(studio, 3.52, 2.96, 0.24, materials.wallWarm, 2, 1.52, pergolaLength + 0.12);
-    pergolaLoungeDivider.name = "closed-pergola-lounge-divider";
+    const pergolaSliderStart = 0;
+    const pergolaSliderEnd = 4;
+    const pergolaSliderPanels = 2;
+    addGlassWallAlongX(studio, pergolaSliderStart, pergolaSliderEnd, pergolaLength + 0.015, pergolaSliderPanels);
 
     const soffit = new THREE.Mesh(new THREE.PlaneGeometry(4, pergolaLength), woodMaterial);
     soffit.rotation.x = Math.PI / 2;
@@ -1713,7 +1715,8 @@
         poolSideSliderCount: 1,
         poolSideSliderWidth: poolSideSliderEnd - poolSideSliderStart,
         poolSideSliderPanels,
-        closedPergolaLoungeDivider: pergolaLoungeDivider.material === materials.wallWarm
+        pergolaSliderWidth: pergolaSliderEnd - pergolaSliderStart,
+        pergolaSliderPanels
       },
       permitFree: {
         uncoveredUnionArea: terraceWidth * terraceDepth
@@ -1833,7 +1836,7 @@
     console.assert(geometryChecks.integratedDeck.cornerPostSize.every(value => Math.abs(value - 0.2) < 1e-9) && geometryChecks.integratedDeck.cornerPostRal === "RAL 9005", "Slider corner post must be 20 x 20 cm in RAL 9005");
     console.assert(geometryChecks.integratedDeck.poolSideSliderCount === 1 && Math.abs(geometryChecks.integratedDeck.poolSideSliderWidth - 5.2) < 1e-9, "Pool-facing façade must use one full-width 5.20 m slider");
     console.assert(geometryChecks.integratedDeck.poolSideSliderPanels === 2, "Pool-facing slider must have two panels");
-    console.assert(geometryChecks.integratedDeck.closedPergolaLoungeDivider, "Pergola and lounge must remain separated by a closed wall");
+    console.assert(Math.abs(geometryChecks.integratedDeck.pergolaSliderWidth - 4) < 1e-9 && geometryChecks.integratedDeck.pergolaSliderPanels === 2, "WNW façade must contain the 4.00 m two-panel slider");
     console.assert(geometryChecks.closedStorageFacade.exteriorDoorCount === 0 && geometryChecks.closedStorageFacade.wallSegments === 1, "ZZW storage façade must be continuous and have no exterior door");
     console.assert(geometryChecks.closedStorageFacade.crepiWall, "Closed storage exterior walls must remain white crepi");
     console.assert(geometryChecks.closedStorageFacade.blueStonePlinth, "Closed storage exterior walls must retain its blue-stone plinth");
