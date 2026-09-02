@@ -1074,12 +1074,16 @@
     toilet.name = "bathroom-wall-hung-toilet-nno";
 
     const fireplaceEnvelopeDepth = 0.524;
-    const fireplaceEnvelopeWidth = 0.55;
+    const fireplaceBodyWidth = 0.479;
+    const fireplaceCasingDepth = 0.55;
     const fireplaceZ = (514 - 90) / 75;
-    const fireplace = addBox(interior, fireplaceEnvelopeDepth, 2.35, fireplaceEnvelopeWidth, materials.charcoalSoft, 2, 1.215, fireplaceZ);
-    fireplace.name = "m-design-true-vision-550dv-envelope";
-    const fireboxGlass = addBox(interior, 0.02, 0.45, 0.45, glassMaterial, 1.728, 0.72, fireplaceZ, { castShadow: false });
-    fireboxGlass.name = "true-vision-550dv-glass-opening";
+    const fireplace = addBox(interior, fireplaceCasingDepth, 2.35, fireplaceBodyWidth, materials.charcoalSoft, 2, 1.215, fireplaceZ);
+    fireplace.name = "m-design-true-vision-550dv-rotated-envelope";
+    const fireplaceGlassFaces = [-1, 1].map(side => {
+      const glass = addBox(interior, 0.02, 0.45, 0.45, glassMaterial, 2 + side * (fireplaceCasingDepth / 2 + 0.01), 0.72, fireplaceZ, { castShadow: false });
+      glass.name = `true-vision-550dv-see-through-glass-${side < 0 ? "nno" : "zzw"}`;
+      return glass;
+    });
 
     const airco = addBox(interior, 0.67, 0.28, 0.12, materials.white, 1.8, 2.45, bathStoragePartitionZ - 0.11);
     airco.name = "office-airco-on-storage-partition";
@@ -1747,9 +1751,10 @@
         showerGlass: showerGlass.material === glassMaterial,
         boiler: boiler.name === "bulex-sdc-150-2v-tri",
         technicalZone: [technicalZone.geometry.parameters.depth, technicalZone.geometry.parameters.width],
-        fireplace: fireplace.name === "m-design-true-vision-550dv-envelope",
+        fireplace: fireplace.name === "m-design-true-vision-550dv-rotated-envelope",
         fireplaceEnvelopeDepth,
-        fireplaceEnvelopeWidth,
+        fireplaceBodyWidth,
+        fireplaceGlassFaceCount: fireplaceGlassFaces.length,
         airco: airco.name === "office-airco-on-storage-partition"
       },
       furniture: {
@@ -1844,7 +1849,11 @@
     console.assert(geometryChecks.studioDesign.xinnixDoorCount === 2 && Math.abs(geometryChecks.studioDesign.xinnixDoorWidth - 0.73) < 1e-9, "Bathroom and storage must use two 73 cm Xinnix X40 doors opening into the office");
     console.assert(geometryChecks.studioDesign.showerSize[0] === 1 && geometryChecks.studioDesign.showerSize[1] === 0.8 && geometryChecks.studioDesign.showerHalfWall && geometryChecks.studioDesign.showerGlass, "Bathroom must contain the 80 x 100 cm shower with half-height wall and fixed glass");
     console.assert(geometryChecks.studioDesign.boiler && geometryChecks.studioDesign.technicalZone[0] === 1 && geometryChecks.studioDesign.technicalZone[1] === 1.5, "Storage must contain the Bulex boiler left of the 1.00 x 1.50 m pool-equipment zone");
-    console.assert(geometryChecks.studioDesign.fireplace && Math.abs(geometryChecks.studioDesign.fireplaceEnvelopeDepth - 0.524) < 1e-9, "Fireplace must use the True Vision 550DV installation envelope");
+    console.assert(geometryChecks.studioDesign.fireplace
+      && Math.abs(geometryChecks.studioDesign.fireplaceEnvelopeDepth - 0.524) < 1e-9
+      && Math.abs(geometryChecks.studioDesign.fireplaceBodyWidth - 0.479) < 1e-9
+      && geometryChecks.studioDesign.fireplaceGlassFaceCount === 2,
+    "Fireplace must be the rotated True Vision 550DV see-through version with two glass faces");
     console.assert(geometryChecks.studioDesign.airco, "Air-conditioning unit must remain on the office side of the storage partition");
     console.assert(Object.values(geometryChecks.furniture).slice(0, 4).every(axis => axis === "studio-long-axis"), "Sofa, tables and desk must follow the studio long axis");
     console.assert(geometryChecks.furniture.sliderEntryClearance > 2.2, "Furniture must preserve a clear route from the pool-side slider");
