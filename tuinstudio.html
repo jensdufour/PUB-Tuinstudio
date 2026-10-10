@@ -110,6 +110,40 @@
     svg text {
       font-family: 'Space Mono', monospace;
     }
+    .review-section {
+      padding-top: 28px;
+      margin-top: 28px;
+      border-top: 1px solid var(--light-line);
+    }
+    .review-section h2 { font-size: 20px; margin-bottom: 12px; }
+    .review-section p { font-size: 14px; line-height: 1.6; margin-bottom: 12px; }
+    .review-section a { color: var(--accent); }
+    .table-scroll { overflow-x: auto; max-width: 100%; }
+    .review-table { border-collapse: collapse; width: 100%; min-width: 720px; font-size: 13px; line-height: 1.5; }
+    .review-table th, .review-table td { padding: 10px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--light-line); }
+    .review-table th { font-weight: 700; }
+    .review-table caption { text-align: left; font-weight: 700; padding-bottom: 12px; }
+    .review-table td:first-child { white-space: nowrap; }
+    @media (max-width: 600px) {
+      body { padding: 16px 10px; }
+      .drawing-block { padding: 16px 10px; }
+      .doc-footer { gap: 12px; flex-wrap: wrap; }
+      .review-table, .review-table tbody { display: block; min-width: 0; }
+      .review-table caption { display: block; }
+      .review-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+      .review-table tr { display: block; padding: 12px 0; border-bottom: 1px solid var(--light-line); }
+      .review-table th, .review-table td { display: block; padding: 4px 0; border: 0; white-space: normal; overflow-wrap: anywhere; }
+      #owner-check-table td:last-child::before { content: 'Bevestiging: '; font-weight: 700; }
+      #service-schedule td:nth-child(3)::before { content: 'Hoogte / uitvoering: '; font-weight: 700; }
+      #service-schedule td:last-child::before { content: 'Nog vast te leggen: '; font-weight: 700; }
+    }
+    @media print {
+      body { padding: 0; background: white; }
+      .table-scroll { overflow: visible; }
+      .review-table { min-width: 0; font-size: 10px; }
+      .review-table tr { break-inside: avoid; }
+      .review-table thead { display: table-header-group; }
+    }
   </style>
 </head>
 
@@ -125,7 +159,7 @@
     OUTER FOOTPRINT: 4,00 m x 10,00 m = 300px x 750px
     Exterior wall thickness: 0,24 m = 18px
     Interior partition: 0,10 m = 8px
-    Haard schouw: 0,40 m = 30px
+    Haard ombouw: 0,54 m diep x 1,25 m breed = 40,5 x 93,75px
     Structural column (ZZW): 0,20 m = 15px
 
     X coordinates (outer faces, left to right — WNW to OZO):
@@ -134,8 +168,8 @@
       Pergola E inner:           x=278    (170px = 2,27 m interior)
       Enclosed west wall:        x=278..296 (18px = 0,24 m)
       Lounge inner W:            x=296
-      Lounge inner E / Haard W:  x=499    (203px = 2,70 m interior)
-      Haard wall:                x=499..529 (30px = 0,40 m)
+      Lounge inner E / Haard W:  x=493.75
+      Haard ombouw:              x=493.75..534.25 (40,5px = 0,54 m)
       Kantoor inner W:           x=529
       Kantoor inner E:           x=679    (150px = 2,00 m interior)
       Bath/Kant partition:       x=679..687 (8px = 0,10 m)
@@ -144,24 +178,24 @@
       East outer (OZO):          x=840    (18px = 0,24 m)
 
     Y coordinates (top to bottom — NNO to ZZW):
-      North outer (NNO):  y=75     (ramen side)
+      North outer (NNO):  y=75     (gesloten wand)
       North inner:        y=93     (18px = 0,24 m)
       South inner:        y=357
       South outer (ZZW):  y=375    (18px = 0,24 m, ingang side)
       Inner depth:        264px = 3,52 m
 
     ORIENTATION (now matches PID / tuinplan_v5):
-      Plan-top:    NNO (ramen badkamer, kantoor, lounge)
+      Plan-top:    NNO (gesloten wand)
       Plan-bottom: ZZW (ingang via schuifraam)
       Plan-left:   WNW (pergola open side)
-      Plan-right:  OZO (berging/badkamer deuren)
+      Plan-right:  OZO (gesloten kopgevel)
 
     ROOM SCHEDULE (rotated coords, WNW→OZO left→right, NNO→ZZW top→bottom):
       PERGOLA:  x=108..278, y=93..357   (170x264px = 2,27 x 3,52 m =  7,98 m²)
       LOUNGE/KANTOOR: x=296..679, y=93..357, exclusief haard
               2,70 + 2,00 = 4,70 x 3,52 m netto = 16,54 m²
       BERGING:  x=687..822, y=244.5..357  (135x112.5px = 1,80 x 1,50 m = 2,70 m²)
-      BADKAMER: x=687..822, y=93..236.5   (135x143.5px = 1,80 x 1,91 m = 3,44 m²)
+      BADKAMER: x=687..822, y=93..236.5 (1,80 x 1,91 m = 3,44 m²); room size must remain unchanged.
 
     ZZW (BOTTOM) WALL — one economical two-panel pool-side slider, y=357..375:
       Pergola open 2,51 m:    x=90..278  (188px)  — open (WNW side)
@@ -172,27 +206,18 @@
       Sequence (right to left): bath solid → 5,15m two-panel slider → RAL9005 post 20x20 → pergola.
 
     NNO (TOP) WALL, y=75..93:
-      Pergola north solid:       x=90..278  (188px)
-      Pier E:                    x=278..337 (59px = 0,79 m)
-      Kantoor+lounge raam 4,00m: x=337..637 (300px)
-      Pier:                      x=637..718 (81px = 1,08 m)
-      Bath kipraam 1,20m:        x=718..808 (90px), h=0,30m, dorpel +2,00m
-      Pier W:                    x=808..840 (32px = 0,43 m)
+      Doorlopende gesloten wand: x=90..840 (10,00 m), geen ramen.
 
     OZO (RIGHT) WALL, x=822..840:
       NE corner: y=75..93 (18px)
-      Badkamer buitenwand:       y=93..289 (geen buitendeur)
-      Solid: y=153..289 (136px = 1,81 m)
-      Berging deur 0,90 m: y=289..357 (68px)
+      Buitenwand:               y=93..357 (geen buitendeur)
       SE corner: y=357..375 (18px)
 
     WNW (LEFT) WALL (pergola/lounge): schuifraam 3,52 m full height, 2 panels, x=278..296
 
-    HAARD (Element4 Sky L Tunnel):
-      x=499..529 (30px = 0,40 m)
-      South opening (ZZW): y=274..357 (1,10 m)
-      South cap: y=263..274, Unit: y=187..263 (1,01 m), North cap: y=176..187
-      North opening (NNO): y=93..176 (1,10 m)
+    HAARD (DRU Maestro Tall Tunnel, Promafour ombouw):
+      x=493.75..534.25, y=178.125..271.875 (0,54 x 1,25 m)
+      Center unchanged at (514,225); passages each 1,135 m.
 
     PERGOLA COLUMN: inward-diagonal from SW corner toward foundation
       Position: approx x=800, y=100 (inset ~0,53m from E, ~0,33m from N)
@@ -204,11 +229,11 @@
       E03: Dubbel ethernet bij bureau (kantoor, NNO-wand)
       E04: Stopcontact grasrobots (pergola, NNO+WNW hoek)
       E05: Aansluiting terrasverwarmer (pergola, bij schuifraam lounge/pergola)
-      W01: Kraantje tuinslang (berging, binnenzijde bij partition)
+      W01: Vorstbestendige buitenkraan aan berginggevel
 
     -->
 
-      <svg viewBox="-40 -75 1010 650" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="-40 -75 1050 900" width="100%" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <pattern id="wallFill" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
             <rect width="7" height="7" fill="#dce3ea" />
@@ -248,16 +273,15 @@
           </marker>
         </defs>
 
-        <!-- Pergola, full studio side and terrace-facing return as one timber structure. -->
         <path id="integrated-studio-deck"
-          d="M87.966,416.707 L90,401.845 L90,375 L90,75 L278.025,75 L278.025,375 L840,375 L840,75 L917.938,75 L899.101,512.605 L897.066,527.467 Z"
+          d="M87.966,416.707 L90.000,401.845 L90.000,375.000 L90.000,75.000 L278.025,75.000 L278.025,375.000 L840.000,375.000 L840.000,75.000 L959.006,75.000 L864.516,765.249 L612.717,730.780 L645.268,492.997 Z"
           fill="url(#deckFill)" stroke="#6f4729" stroke-width="1.2" stroke-linejoin="round">
-          <title>Doorlopend houten dek 27,92 m² inclusief pergola en 20 cm poolrand, op één hoogte tot het terras</title>
+          <title>MOSO Bamboo X 40,36 m² inclusief pergola; rechte aansluiting op het huisterras en 20 cm verder tot de buitenrand, blauwe steen boven en aan de buurzijde</title>
         </path>
         <polyline points="278.025,375 840,375 840,75" fill="none" stroke="#262d30" stroke-width="1.8"
           stroke-linecap="round" stroke-linejoin="round" />
-        <text x="500" y="420" font-size="7" fill="#5a3822" text-anchor="middle" font-weight="700">DOORLOPEND HOUTEN DEK</text>
-        <text x="500" y="431" font-size="5.5" fill="#6f4729" text-anchor="middle">27,92 m² incl. pergola + poolrand</text>
+        <text x="500" y="420" font-size="7" fill="#5a3822" text-anchor="middle" font-weight="700">MOSO BAMBOO X</text>
+        <text x="500" y="431" font-size="5.5" fill="#6f4729" text-anchor="middle">40,36 m² incl. pergola · blauwe steen boven + buurzijde</text>
 
         <!-- ══════════════════════════════════════════════════════
              COMPASS (true north, rotated 330° CW — matches PID orientation)
@@ -307,35 +331,14 @@
              OZO (RIGHT) WALL
              ══════════════════════════════════════════════════════ -->
         <rect x="822" y="357" width="18" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
-        <!-- Berging door opening 0,90 m: y=289..357 (68px) -->
-        <rect x="822" y="289" width="18" height="68" fill="#faf8f4" stroke="none" />
-        <line x1="840" y1="357" x2="822" y2="357" stroke="#2E4057" stroke-width="1.2" />
-        <line x1="840" y1="289" x2="822" y2="289" stroke="#2E4057" stroke-width="1.2" />
-        <!-- Solid bathroom exterior wall: y=93..289; redundant outside door removed. -->
-        <rect x="822" y="93" width="18" height="196" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <rect id="studio-closed-end-wall" x="822" y="93" width="18" height="264" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
         <!-- SW corner -->
         <rect x="822" y="75" width="18" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
 
         <!-- ══════════════════════════════════════════════════════
              NNO (TOP) WALL
              ══════════════════════════════════════════════════════ -->
-        <!-- Pier W: x=90..122 (0,43 m) -->
-        <rect x="808" y="75" width="32" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
-        <!-- Hoog bath kipraam 1,20 x 0,30 m: x=718..808, dorpel +2,00 m. -->
-        <rect x="718" y="75" width="90" height="18" fill="#a8c5d8" stroke="#2E4057" stroke-width="1.5" />
-        <line x1="778" y1="93" x2="778" y2="75" stroke="white" stroke-width="1" />
-        <line x1="748" y1="93" x2="748" y2="75" stroke="white" stroke-width="1" />
-        <!-- Pier: x=637..718 (1,08 m) -->
-        <rect x="637" y="75" width="81" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
-        <!-- Kantoor+lounge raam 4,00 m: x=337..637 (300px) -->
-        <rect x="337" y="75" width="300" height="18" fill="#a8c5d8" stroke="#2E4057" stroke-width="1.5" />
-        <line x1="562" y1="93" x2="562" y2="75" stroke="white" stroke-width="1" />
-        <line x1="487" y1="93" x2="487" y2="75" stroke="white" stroke-width="1" />
-        <line x1="412" y1="93" x2="412" y2="75" stroke="white" stroke-width="1" />
-        <!-- Pier E (WNW side): x=278..337 (0,79 m) -->
-        <rect x="278" y="75" width="59" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
-        <!-- Pergola north solid masonry: x=90..278 -->
-        <rect x="90" y="75" width="188" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+             <rect id="studio-nno-wall" x="90" y="75" width="750" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
 
         <!-- ══════════════════════════════════════════════════════
              LOUNGE/PERGOLA WEST WALL (WNW) — schuifraam 3,52 m, two panels
@@ -352,27 +355,25 @@
 
         <!-- ══════════════════════════════════════════════════════
                BATH / KANTOOR PARTITION  (0,10 m)
-               Door gap y=176.5..236.5 (0,80 m)
+               Door gap y=146.5..206.5 (0,80 m); bathroom setback 40 cm, storage setback 35 cm.
              ══════════════════════════════════════════════════════ -->
-             <rect x="679" y="236.5" width="8" height="138.5" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
-             <rect x="679" y="75" width="8" height="101.5" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
+             <rect x="679" y="206.5" width="8" height="64.25" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
+             <rect x="679" y="330.75" width="8" height="44.25" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
+             <rect x="679" y="75" width="8" height="71.5" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
 
         <!-- ══════════════════════════════════════════════════════
-             HAARD — Element4 Sky L Tunnel (0,40 m schouw)
+             HAARD — DRU Maestro Tall Tunnel (Promafour ombouw)
              ══════════════════════════════════════════════════════ -->
-        <!-- North cap masonry -->
-        <rect x="499" y="263" width="30" height="11" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
-        <!-- Haard unit housing -->
-        <rect x="498" y="187" width="32" height="76" fill="#fff0ee" stroke="#c0392b" stroke-width="2" />
-        <!-- Firebox opening -->
-        <rect x="499" y="198" width="30" height="54" fill="#ffe8e4" stroke="#c0392b" stroke-width="1" />
-        <text x="514" y="237" font-size="7" fill="#c0392b" text-anchor="middle">HAARD</text>
-        <text x="514" y="227" font-size="5.5" fill="#c0392b" text-anchor="middle">Element4</text>
-        <text x="514" y="218" font-size="5.5" fill="#c0392b" text-anchor="middle">Sky L-T</text>
-        <path d="M514,201 Q518,207 514,213 Q512,207 509,213 Q506,207 508,203 Q511,207 514,201Z" fill="#c0392b"
-          opacity="0.55" />
-        <!-- South cap masonry -->
-        <rect x="499" y="176" width="30" height="11" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <g id="dru-maestro-fireplace" aria-label="DRU Maestro Tall Tunnel, Promafour ombouw 125 bij 54 cm, plafondhoog">
+          <rect id="fireplace-enclosure" x="493.75" y="178.125" width="40.5" height="93.75"
+            fill="#fff0ee" stroke="#c0392b" stroke-width="1.5" />
+          <line x1="493.75" y1="185" x2="493.75" y2="265" stroke="#3a7ab0" stroke-width="2" />
+          <line x1="534.25" y1="185" x2="534.25" y2="265" stroke="#3a7ab0" stroke-width="2" />
+          <text x="514" y="212" font-size="6" fill="#c0392b" text-anchor="middle">DRU</text>
+          <text x="514" y="225" font-size="4.5" fill="#c0392b" text-anchor="middle">Maestro Tall</text>
+          <text x="514" y="237" font-size="4.5" fill="#c0392b" text-anchor="middle">Tunnel</text>
+          <text x="514" y="254" font-size="4" fill="#7a8a9a" text-anchor="middle">125 x 54 cm</text>
+        </g>
 
         <!-- ══════════════════════════════════════════════════════
                BERGING INTERIOR  (1,80 x 1,50 m = 2,70 m²)
@@ -381,75 +382,73 @@
              <rect x="687" y="244.5" width="135" height="112.5" fill="url(#cupboardFill)" />
         <!-- Berging/badkamer partition (0,10 m) -->
              <rect x="687" y="236.5" width="135" height="8" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
-        <!-- Standard aluminium RAL 9005 exterior door, opening outward to OZO. -->
-        <g id="storage-exterior-door-ral9005" fill="none" stroke="#0a0a0d">
-          <title>Standaard aluminium buitendeur berging, 0,90 m, RAL 9005, naar buiten draaiend</title>
-          <line x1="840" y1="357" x2="840" y2="289" stroke-width="1.2" />
-          <line x1="840" y1="357" x2="908" y2="357" stroke-width="2" />
-          <path d="M840,289 A68 68 0 0 1 908,357" stroke="#8a9aaa" stroke-width="0.9" stroke-dasharray="4,3" />
-        </g>
-        <text x="874" y="350" font-size="4.5" fill="#0a0a0d" text-anchor="middle" font-weight="700">ALU RAL9005</text>
         <!-- Label -->
-           <text x="754" y="267" font-size="8" fill="#2E4057" text-anchor="middle" font-weight="700">BERGING</text>
-           <text x="754" y="256" font-size="6" fill="#7a8a9a" text-anchor="middle">1,80 x 1,50 m (2,70 m&#178;)</text>
+           <text x="750" y="285" font-size="7" fill="#2E4057" text-anchor="middle" font-weight="700">BERGING</text>
+           <text x="750" y="276" font-size="4.5" fill="#7a8a9a" text-anchor="middle">1,80 x 1,50 m (2,70 m&#178;)</text>
+        <rect id="storage-shelves" x="799.5" y="265" width="22.5" height="82.5" fill="url(#cupboardFill)" stroke="#8a9aaa" stroke-width="0.8">
+          <title>Open rek 110 x 30 cm langs de kopgevel; vrije bergingbreedte 150 cm. Bevestiging volgens wandopbouw.</title>
+        </rect>
+        <text x="811" y="304" font-size="4" fill="#7a8a9a" text-anchor="middle" transform="rotate(90,811,304)">REK 110 x 30</text>
 
         <!-- ══════════════════════════════════════════════════════
              BADKAMER INTERIOR  (1,80 x 1,91 m = 3,44 m²)
              ══════════════════════════════════════════════════════ -->
         <!-- Floor fill -->
-           <rect x="687" y="93" width="135" height="143.5" fill="#f8f6f2" />
+           <rect id="bathroom-floor" x="687" y="93" width="135" height="143.5" fill="#f8f6f2" />
 
-        <!-- Wall-hung vanity on NNO wall: 80x45cm. -->
-        <rect x="762" y="93" width="60" height="33.75" rx="2" fill="#e4ddd4" stroke="#8a9aaa" stroke-width="1.2" />
-        <!-- Waskom -->
-        <ellipse cx="792" cy="109.875" rx="14" ry="10" fill="none" stroke="#8a7a6a" stroke-width="1.2" />
-        <circle cx="792" cy="109.875" r="3" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
-        <!-- Kraan -->
-        <circle cx="792" cy="99" r="2" fill="#c8b89a" stroke="#8a7a6a" stroke-width="0.6" />
-        <!-- Warm + koud water wastafel (NNO-wand). -->
-        <circle cx="800" cy="97" r="3" fill="none" stroke="#c0392b" stroke-width="0.8" />
-        <text x="800" y="96" font-size="3.5" fill="#c0392b" text-anchor="middle">W</text>
-        <circle cx="784" cy="97" r="3" fill="none" stroke="#2980b9" stroke-width="0.8" />
-        <text x="784" y="96" font-size="3.5" fill="#2980b9" text-anchor="middle">K</text>
-        <!-- Afvoer wastafel (floor drain under cabinet) -->
-        <circle cx="792" cy="123" r="3.5" fill="none" stroke="#7a8a9a" stroke-width="0.8" />
-        <text x="792" y="121" font-size="4" fill="#7a8a9a" text-anchor="middle">↓</text>
+        <g id="x2o-vanity" aria-label="Balmani Moon 202924 en tablet 201658, 100 x 55 cm, massieve notelaar; Still Dark Emperador waskom 84841">
+          <rect id="bathroom-vanity" x="702" y="195.25" width="75" height="41.25" rx="1" fill="#faf8f4" stroke="#755843" stroke-width="1.2" />
+          <line x1="702" y1="196.5" x2="777" y2="196.5" stroke="#755843" stroke-width="2" />
+          <circle id="bathroom-basin" cx="739.5" cy="214" r="14.25" fill="#59483d" stroke="#382d26" stroke-width="0.8" />
+          <circle cx="739.5" cy="214" r="2" fill="#59483d" stroke="#b68d79" stroke-width="0.7" />
+          <circle cx="739.5" cy="231.5" r="2" fill="#b68d79"><title>Blaufoss Pavilion Curve 86073, verhoogd, Brushed Rosegold</title></circle>
+          <line id="bathroom-mirror" x1="709.5" y1="239" x2="769.5" y2="239" stroke="#b68d79" stroke-width="2">
+            <title>Balmani Secret 203902: diameter 80 cm, rosegold, verlichting en anti-damp, op de bergingwand</title>
+          </line>
+          <text x="739.5" y="190" font-size="4.2" fill="#755843" text-anchor="middle">MOON 100 x 55</text>
+          <title>Douche rechts en toilet links: douche-meubel 56,3 cm; volledige lade-uittrek tot 55 cm heeft circa 1,3 cm marge. Douchetoegang, lade-uittrek en afgewerkte maten te controleren.</title>
+        </g>
+        <g id="vanity-side-clearances" fill="none" stroke="#88aa78" stroke-width="0.7" stroke-dasharray="2,2">
+          <rect x="687" y="195.25" width="15" height="41.25" />
+          <rect x="777" y="195.25" width="45" height="41.25" />
+          <g fill="#4A7C59" stroke="none" font-size="4" text-anchor="middle">
+            <text x="694.5" y="218" font-size="3.5">20 cm</text>
+            <text x="799.5" y="218">60 cm</text>
+          </g>
+        </g>
+        <g id="x2o-toilet" aria-label="Linie Waldo 202913, 36 x 51 cm, Geberit UP320 en Perola rosegold">
+          <rect id="bathroom-cistern" x="698.25" y="93" width="37.5" height="9" fill="#e8e2d8" stroke="#8a9aaa" stroke-width="0.8" />
+          <rect id="bathroom-toilet" x="703.5" y="102" width="27" height="38.25" rx="5" fill="#faf8f4" stroke="#8a9aaa" stroke-width="1" />
+          <ellipse cx="717" cy="122" rx="10" ry="13" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
+          <rect x="708" y="94" width="18" height="3" fill="#b68d79" />
+          <text x="717" y="147" font-size="4" fill="#7a8a9a" text-anchor="middle">WALDO</text>
+        </g>
 
-        <!-- Compact wall-hung toilet: approximately 40x50cm. -->
-        <rect x="776" y="236.5" width="32" height="8" fill="#e8e2d8" stroke="#8a9aaa" stroke-width="0.8" />
-        <rect x="778.5" y="199" width="27" height="37.5" rx="3" fill="none" stroke="#8a9aaa" stroke-width="1" />
-        <ellipse cx="792" cy="216" rx="11" ry="13" fill="none" stroke="#8a9aaa" stroke-width="1" />
-        <rect x="785" y="234" width="14" height="3" rx="1" fill="#c8b89a" stroke="#8a7a6a" stroke-width="0.5" />
-        <!-- Koud water toilet (achter inbouwreservoir, bergingwand) -->
-        <circle cx="801.5" cy="238.5" r="3" fill="none" stroke="#2980b9" stroke-width="0.8" />
-        <text x="801.5" y="237.5" font-size="3.5" fill="#2980b9" text-anchor="middle">K</text>
-        <!-- Afvoer toilet (hangtoilet, door bergingwand) -->
-        <circle cx="785.5" cy="238.5" r="3.5" fill="none" stroke="#7a8a9a" stroke-width="0.8" />
-        <text x="785.5" y="237" font-size="4" fill="#7a8a9a" text-anchor="middle">↓</text>
-
-        <!-- Douchebak: 80x100cm, -90 graden gedraaid. -->
-        <rect x="687" y="93" width="60" height="75" fill="url(#tileFill)" stroke="#2E4057" stroke-width="1.2" />
-        <!-- 20cm halfhoge wand tussen douche en wastafel, met vast glas erboven. -->
-        <rect x="747" y="93" width="15" height="75" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
-        <line x1="754.5" y1="93" x2="754.5" y2="168" stroke="#4a8ab0" stroke-width="2" />
-        <text x="754.5" y="132" font-size="4" fill="#4a8ab0" text-anchor="middle"
-          transform="rotate(90,754.5,132)">glas op halfhoge wand</text>
+        <g id="bathroom-shower-zone" transform="translate(75 0)">
+        <rect id="bathroom-shower" x="687" y="93" width="60" height="60" fill="#faf8f4" stroke="#2E4057" stroke-width="1.2">
+          <title>Luca Varess Classy 208333, 80 x 80 cm, composietmarmer mat wit rock structuur, 2,7 cm hoog; afvoer en scherm apart</title>
+        </rect>
+        <line id="bathroom-shower-glass" x1="687.4" y1="93" x2="687.4" y2="153" stroke="#4a8ab0" stroke-width="1.2" />
         <!-- Hoofddouche Ø30cm -->
-        <circle cx="717" cy="130.5" r="11" fill="none" stroke="#c8b89a" stroke-width="1" stroke-dasharray="2,2" />
-        <circle cx="717" cy="130.5" r="2" fill="#c8b89a" />
-        <text x="717" y="160" font-size="5" fill="#7a8a9a" text-anchor="middle">douche 80x100</text>
+        <circle cx="717" cy="123" r="11.25" fill="none" stroke="#b68d79" stroke-width="1" stroke-dasharray="2,2" />
+        <circle cx="717" cy="123" r="2" fill="#c8b89a" />
+        <text x="717" y="148" font-size="5" fill="#7a8a9a" text-anchor="middle">douche 80x80</text>
+        <path d="M745,118 V145 M743,120 H734 M743,142 H739" fill="none" stroke="#b68d79" stroke-width="1.4">
+          <title>Blaufoss Smartbox en Round handdouche/hoofddouche, Brushed Rosegold</title>
+        </path>
         <!-- Warm + koud water douche (partition wand) -->
-        <circle cx="689" cy="140" r="3" fill="none" stroke="#c0392b" stroke-width="0.8" />
-        <text x="689" y="139" font-size="3.5" fill="#c0392b" text-anchor="middle">W</text>
-        <circle cx="689" cy="128" r="3" fill="none" stroke="#2980b9" stroke-width="0.8" />
-        <text x="689" y="127" font-size="3.5" fill="#2980b9" text-anchor="middle">K</text>
+        <circle cx="745" cy="140" r="3" fill="none" stroke="#c0392b" stroke-width="0.8" />
+        <text x="745" y="139" font-size="3.5" fill="#c0392b" text-anchor="middle">W</text>
+        <circle cx="745" cy="128" r="3" fill="none" stroke="#2980b9" stroke-width="0.8" />
+        <text x="745" y="127" font-size="3.5" fill="#2980b9" text-anchor="middle">K</text>
         <!-- Afvoer douche (douchebak vloer) -->
         <circle cx="717" cy="105" r="3.5" fill="none" stroke="#7a8a9a" stroke-width="0.8" />
         <text x="717" y="102" font-size="4" fill="#7a8a9a" text-anchor="middle">↓</text>
+        </g>
 
         <!-- Room label -->
-        <text x="790" y="180" font-size="8" fill="#2E4057" text-anchor="middle" font-weight="700">BADKAMER</text>
-        <text x="790" y="189" font-size="5.5" fill="#7a8a9a" text-anchor="middle">1,80 x 1,91 m (3,44 m&#178;)</text>
+        <text x="739.5" y="178" font-size="5" fill="#2E4057" text-anchor="middle">BADKAMER</text>
+        <text x="792" y="169" font-size="3.5" fill="#7a8a9a" text-anchor="middle">douche-meubel 56 cm</text>
 
         <!-- ══════════════════════════════════════════════════════
              LIGHT FIXTURES
@@ -461,15 +460,16 @@
         <line x1="754" y1="319" x2="754" y2="311" stroke="#d4a017" stroke-width="0.6" />
         <text x="754" y="305" font-size="4" fill="#d4a017" text-anchor="middle">L01</text>
 
-        <!-- L02: Badkamer spot (center non-shower zone) -->
-        <circle cx="790" cy="140" r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
-        <line x1="794" y1="140" x2="786" y2="140" stroke="#d4a017" stroke-width="0.6" />
-        <line x1="790" y1="144" x2="790" y2="136" stroke="#d4a017" stroke-width="0.6" />
-
-        <!-- L03: Badkamer spot douche -->
-        <circle cx="724" cy="123" r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
-        <line x1="728" y1="123" x2="720" y2="123" stroke="#d4a017" stroke-width="0.6" />
-        <line x1="724" y1="127" x2="724" y2="119" stroke="#d4a017" stroke-width="0.6" />
+        <g id="bathroom-general-light" transform="translate(739.5,166)">
+          <title>L02 algemeen licht; apart van de verlichte Secret spiegel, armatuur volgens badkamerzonering.</title>
+          <circle r="4" fill="none" stroke="#d4a017" stroke-width="0.8" />
+          <path d="M-4,0 H4 M0,-4 V4" stroke="#d4a017" stroke-width="0.6" />
+        </g>
+        <g id="bathroom-shower-light" transform="translate(792,123)">
+          <title>L03 douchelicht; beschermingsgraad en montagehoogte door elektricien te bepalen.</title>
+          <circle r="5" fill="none" stroke="#d4a017" stroke-width="0.8" />
+          <path d="M-4,0 H4 M0,-4 V4" stroke="#d4a017" stroke-width="0.6" />
+        </g>
 
 
 
@@ -479,32 +479,39 @@
         <rect x="529" y="93" width="150" height="264" fill="#f8f7f3" />
 
         <!-- Badkamer/kantoor door (0,80 m, swings east into kantoor) -->
-        <rect x="679" y="176.5" width="8" height="60" fill="#faf8f4" stroke="none" />
-        <line x1="687" y1="236.5" x2="679" y2="236.5" stroke="#2E4057" stroke-width="1.2" />
-        <line x1="687" y1="176.5" x2="679" y2="176.5" stroke="#2E4057" stroke-width="1.2" />
-        <line x1="679" y1="236.5" x2="619" y2="236.5" stroke="#2E4057" stroke-width="1.2" />
-        <path d="M679,176.5 A60 60 0 0 0 619,236.5" fill="none" stroke="#8a9aaa" stroke-width="0.9"
+        <rect id="bathroom-internal-door-opening" x="679" y="146.5" width="8" height="60" fill="#faf8f4" stroke="none" />
+        <line x1="687" y1="206.5" x2="679" y2="206.5" stroke="#2E4057" stroke-width="1.2" />
+        <line x1="687" y1="146.5" x2="679" y2="146.5" stroke="#2E4057" stroke-width="1.2" />
+        <line x1="679" y1="206.5" x2="619" y2="206.5" stroke="#2E4057" stroke-width="1.2" />
+        <path d="M679,146.5 A60 60 0 0 0 619,206.5" fill="none" stroke="#8a9aaa" stroke-width="0.9"
           stroke-dasharray="4,3" />
+        <g id="storage-internal-xinix-door" aria-label="Xinix binnendeur berging, 0,80 m, scharnier aan badkamerzijde; deuren openen naar elkaar">
+          <rect x="679" y="270.75" width="8" height="60" fill="#faf8f4" stroke="none" />
+          <path d="M679,270.75 H687 M679,330.75 H687 M679,270.75 H619" fill="none" stroke="#2E4057" stroke-width="1.2" />
+          <path d="M679,330.75 A60,60 0 0,1 619,270.75" fill="none" stroke="#8a9aaa" stroke-width="0.9" stroke-dasharray="4,3" />
+          <text x="645" y="284.75" font-size="5" fill="#2E4057" text-anchor="middle">XINIX 0,80</text>
+        </g>
+        <g id="xinix-door-setbacks" fill="#4A7C59" font-size="4" text-anchor="middle">
+          <text x="649" y="226">40 cm</text>
+          <text x="649" y="260">35 cm</text>
+          <text x="649" y="346">35 cm</text>
+        </g>
 
-        <!-- Bureau 120x60cm, long axis aligned with the studio. -->
-        <rect id="office-desk" x="559" y="93" width="90" height="45" rx="1" fill="#e4ddd4" stroke="#8a9aaa" stroke-width="1.2" />
+        <!-- Bureau 120x80cm, long axis aligned with the studio. -->
+        <g id="office-desk-zone" transform="translate(-15 0)">
+        <rect id="office-desk" x="559" y="93" width="90" height="60" rx="1" fill="#e4ddd4" stroke="#8a9aaa" stroke-width="1.2" />
         <rect x="577" y="109" width="52" height="24" rx="2" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
         <line x1="603" y1="109" x2="603" y2="103" stroke="#8a9aaa" stroke-width="0.8" />
         <line x1="613" y1="103" x2="593" y2="103" stroke="#8a9aaa" stroke-width="0.8" />
         <!-- Bureaustoel -->
-        <circle id="office-chair" cx="604" cy="160" r="17" fill="none" stroke="#8a9aaa" stroke-width="1" stroke-dasharray="3,2" />
-
-
-        <!-- Airco binnenunit (achterwand berging, kantoor-zijde) -->
-        <rect x="670" y="290" width="6" height="50" rx="2" fill="#d5e8f0" stroke="#2980b9" stroke-width="1" />
-        <text x="666" y="320" font-size="4.5" fill="#2980b9" text-anchor="end">AIRCO</text>
-        <text x="666" y="312" font-size="4" fill="#2980b9" text-anchor="end">binnenunit</text>
-        <!-- Enkel stopcontact airco (links van unit) -->
-        <g transform="translate(676,345)">
-          <rect x="-4" y="-4" width="8" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
-          <circle cx="0" cy="0" r="1.5" fill="#e67e22" />
+        <circle id="office-chair" cx="604" cy="175" r="17" fill="none" stroke="#8a9aaa" stroke-width="1" stroke-dasharray="3,2" />
         </g>
-        <text x="666" y="345" font-size="4.5" fill="#e67e22" text-anchor="end">S14</text>
+
+
+        <rect id="office-airco" x="544" y="94" width="67.5" height="6" rx="1" fill="#d5e8f0" stroke="#2980b9" stroke-width="1">
+          <title>A01 voorlopige hoge binnenunit op gesloten NNO-wand; maat, capaciteit, condensafvoer en vaste voeding volgens gekozen toestel. Buitenunit niet vastgelegd.</title>
+        </rect>
+        <text x="577.75" y="107" font-size="4" fill="#2980b9" text-anchor="middle">A01 hoog / vaste voeding</text>
 
         <!-- ══════════════════════════════════════════════════════
              LOUNGE INTERIOR  (2,70 x 3,52 m = 9,50 m²)
@@ -512,17 +519,19 @@
         <rect x="296" y="93" width="203" height="264" fill="#f7f5f0" />
 
         <!-- Sofa aligned with the studio long axis, keeping the slider route open. -->
-        <rect id="lounge-sofa" x="309" y="106" width="178" height="52" rx="5" fill="none" stroke="#8a9aaa" stroke-width="1.2" />
-        <rect x="309" y="142" width="178" height="16" rx="3" fill="none" stroke="#bbb" stroke-width="0.7" />
-        <rect x="481" y="106" width="10" height="52" rx="3" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
+        <rect id="lounge-sofa" x="305" y="106" width="112.5" height="52" rx="5" fill="none" stroke="#8a9aaa" stroke-width="1.2">
+          <title>Compacte zitbank 150 x 69 cm als reservering; circa 102 cm horizontale ruimte tot haardvlak. Exacte brandafstand en meubelkeuze door Ooghe te bevestigen.</title>
+        </rect>
+        <rect x="305" y="142" width="112.5" height="16" rx="3" fill="none" stroke="#bbb" stroke-width="0.7" />
+        <rect x="407.5" y="106" width="10" height="52" rx="3" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
         <rect x="305" y="106" width="10" height="52" rx="3" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
         <!-- Coffee table -->
-        <rect id="lounge-coffee-table" x="345" y="166" width="118" height="38" rx="3" fill="none" stroke="#8a9aaa" stroke-width="0.8"
+        <rect id="lounge-coffee-table" x="327.5" y="188" width="67.5" height="37.5" rx="3" fill="none" stroke="#8a9aaa" stroke-width="0.8"
           stroke-dasharray="3,2" />
 
         <!-- Combined open room label. -->
         <text x="487.5" y="295" font-size="9" fill="#2E4057" text-anchor="middle" font-weight="700">LOUNGE / KANTOOR</text>
-        <text x="487.5" y="283" font-size="6" fill="#7a8a9a" text-anchor="middle">4,70 x 3,52 m netto (16,54 m&#178;)</text>
+        <text x="487.5" y="283" font-size="6" fill="#7a8a9a" text-anchor="middle">rechte wand · breedte 3,52 m</text>
 
         <!-- ══════════════════════════════════════════════════════
              PERGOLA INTERIOR  (2,27 x 3,50 m = 7,95 m²)
@@ -531,7 +540,7 @@
           <title>Pergolameubilair langs de gesloten zijde voor vrije doorgang aan de schuiframen</title>
           <rect id="pergola-sofa" x="119.25" y="99" width="129" height="54.75" rx="4" stroke-width="1.1" />
           <rect x="125" y="105" width="117.5" height="42.75" rx="3" stroke="#bbb5a8" stroke-width="0.7" />
-          <rect id="pergola-table" x="157.5" y="170.625" width="52.5" height="33.75" rx="3" stroke-width="0.8" stroke-dasharray="3,2" />
+          <rect id="pergola-table" x="157.5" y="183.75" width="52.5" height="33.75" rx="3" stroke-width="0.8" stroke-dasharray="3,2" />
         </g>
         <text x="183.75" y="164" font-size="4.5" fill="#7a8a9a" text-anchor="middle">lounge 1,72 × 0,73 m</text>
         <!-- Pergola column — INWARD-DIAGONAL from NE corner
@@ -604,99 +613,83 @@
         <text x="858" y="222" font-size="4.5" fill="#e67e22" text-anchor="start">POE CAM</text>
 
         <!-- === E02: POE Camera WNW-zijde (pergola, left open side) === -->
-        <g transform="translate(92,225)">
+        <g id="pergola-camera" transform="translate(130,345)">
           <circle cx="0" cy="0" r="5" fill="none" stroke="#e67e22" stroke-width="1.2" />
           <circle cx="0" cy="0" r="1.5" fill="#e67e22" />
           <line x1="-4" y1="3" x2="-4" y2="-3" stroke="#e67e22" stroke-width="0.7" />
         </g>
-        <text x="76" y="228" font-size="5" fill="#e67e22" text-anchor="end" font-weight="700">E02</text>
-        <text x="76" y="220" font-size="4.5" fill="#e67e22" text-anchor="end">POE CAM</text>
+        <text x="146" y="342" font-size="4" fill="#e67e22" text-anchor="start" font-weight="700">E02 PoE</text>
 
         <!-- ─── DATA ─── -->
 
         <!-- === E03: Dubbel Ethernet bij bureau (kantoor, NNO pier) === -->
-        <g transform="translate(662,88)">
+        <g id="office-data" transform="translate(615,88)">
           <rect x="-6" y="-4" width="12" height="8" rx="1" fill="none" stroke="#2980b9" stroke-width="1.2" />
           <rect x="0.5" y="-2" width="3.5" height="4" rx="0.5" fill="#2980b9" />
           <rect x="-4" y="-2" width="3.5" height="4" rx="0.5" fill="#2980b9" />
         </g>
-        <text x="662" y="96" font-size="5" fill="#2980b9" text-anchor="middle" font-weight="700">E03 2xETH</text>
+        <text x="615" y="82" font-size="4" fill="#2980b9" text-anchor="middle" font-weight="700">E03 2xETH</text>
 
         <!-- ─── STOPCONTACTEN ─── -->
 
         <!-- === S01: Stopcontact kantoor bij bureau (NNO pier, next to E03) === -->
-        <g transform="translate(645,88)">
+        <g id="office-socket-right" transform="translate(600,88)">
           <rect x="-5" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
           <circle cx="1.5" cy="0" r="1.5" fill="#e67e22" />
           <circle cx="-2.5" cy="0" r="1.5" fill="#e67e22" />
         </g>
-        <text x="645" y="96" font-size="4.5" fill="#e67e22" text-anchor="middle">S01</text>
+        <text x="600" y="82" font-size="4" fill="#e67e22" text-anchor="middle">S01</text>
 
         <!-- === S09: Dubbelstopcontact kantoor andere zijde bureau (NNO pier) === -->
-        <g transform="translate(555,88)">
+        <g id="office-socket-left" transform="translate(555,88)">
           <rect x="-5" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
           <circle cx="1.5" cy="0" r="1.5" fill="#e67e22" />
           <circle cx="-2.5" cy="0" r="1.5" fill="#e67e22" />
         </g>
-        <text x="555" y="96" font-size="4.5" fill="#e67e22" text-anchor="middle">S09</text>
+        <text x="555" y="82" font-size="4" fill="#e67e22" text-anchor="middle">S09</text>
 
-        <!-- === S10: Enkel stopcontact haard ZZW-zijde (south cap, near lounge) === -->
-        <g transform="translate(514,277)">
-          <rect x="-4" y="0" width="8" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
-          <circle cx="0" cy="4" r="1.5" fill="#e67e22" />
+        <g id="fireplace-power" transform="translate(530,88)">
+          <title>F01 een bereikbare voeding voor DRU; aansluiting en onderhoudstoegang volgens Ooghe/DRU, geen algemeen stopcontact in de hete ombouw.</title>
+          <rect x="-3" y="-3" width="6" height="6" fill="none" stroke="#e67e22" stroke-width="1" />
+          <path d="M-2,-2 L2,2 M2,-2 L-2,2" stroke="#e67e22" stroke-width="0.7" />
         </g>
-        <text x="500" y="280" font-size="4.5" fill="#e67e22" text-anchor="end">S10</text>
-
-        <!-- === S11: Enkel stopcontact haard NNO-zijde (north cap, near kantoor) === -->
-        <g transform="translate(514,173)">
-          <rect x="-4" y="-8" width="8" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
-          <circle cx="0" cy="-4" r="1.5" fill="#e67e22" />
-        </g>
-        <text x="500" y="166" font-size="4.5" fill="#e67e22" text-anchor="end">S11</text>
+        <text x="530" y="82" font-size="4" fill="#e67e22" text-anchor="middle">F01</text>
 
         <!-- === S04: Stopcontact lounge pier E (near schuifraam) === -->
-        <g transform="translate(300,88)">
+        <g id="lounge-socket" transform="translate(330,88)">
           <rect x="-5" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
           <circle cx="1.5" cy="0" r="1.5" fill="#e67e22" />
           <circle cx="-2.5" cy="0" r="1.5" fill="#e67e22" />
         </g>
-        <text x="300" y="96" font-size="4.5" fill="#e67e22" text-anchor="middle">S04</text>
+        <text x="330" y="82" font-size="4.5" fill="#e67e22" text-anchor="middle">S04</text>
 
         <!-- === S13: Stopcontact pergola NNO-wand (tegenover S04) === -->
-        <g transform="translate(268,88)">
+        <g id="pergola-socket" transform="translate(255,88)">
           <rect x="-5" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
           <circle cx="1.5" cy="0" r="1.5" fill="#e67e22" />
           <circle cx="-2.5" cy="0" r="1.5" fill="#e67e22" />
         </g>
-        <text x="268" y="96" font-size="4.5" fill="#e67e22" text-anchor="middle">S13</text>
+        <text x="255" y="82" font-size="4.5" fill="#e67e22" text-anchor="middle">S13 buiten</text>
 
-        <!-- === S05: Stopcontact badkamer bij wastafel (OZO-binnenwand) === -->
-        <g transform="translate(815,138)">
+        <g id="bathroom-vanity-socket" transform="translate(694.5,231.5)">
+          <title>S05 voorstel naast het meubel op de bergingwand; definitieve hoogte, AREI-zonering en spatbescherming door elektricien te controleren.</title>
           <rect x="-5" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
           <circle cx="1.5" cy="0" r="1.5" fill="#e67e22" />
           <circle cx="-2.5" cy="0" r="1.5" fill="#e67e22" />
         </g>
-        <text x="800" y="136" font-size="4.5" fill="#e67e22" text-anchor="end">S05</text>
+        <text x="694.5" y="225" font-size="3.5" fill="#e67e22" text-anchor="middle">S05</text>
 
-        <!-- === S06: Stopcontact berging (achterwand, partition east) === -->
-        <g transform="translate(692,330)">
+        <g id="storage-utility-socket" transform="translate(754,249.5)">
           <rect x="0" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
           <circle cx="6.5" cy="0" r="1.5" fill="#e67e22" />
           <circle cx="2.5" cy="0" r="1.5" fill="#e67e22" />
         </g>
-        <text x="708" y="332" font-size="4.5" fill="#e67e22" text-anchor="start">S06</text>
-
-        <!-- === S08: Enkel stopcontact in ZZW kolom (facing inward/south into kantoor) === -->
-        <g transform="translate(573,353)">
-          <rect x="-4" y="-8" width="8" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
-          <circle cx="0" cy="-4" r="1.5" fill="#e67e22" />
-        </g>
-        <text x="560" y="346" font-size="4.5" fill="#e67e22" text-anchor="end">S08</text>
+        <text x="760" y="262" font-size="4.5" fill="#e67e22" text-anchor="middle">S06</text>
 
         <!-- ─── PERGOLA ELECTRICAL ─── -->
 
         <!-- === E04: Enkel stopcontact grasrobot (NNO+WNW hoek, facing WNW) === -->
-        <g transform="translate(85,84)">
+        <g id="robot-socket" transform="translate(104,84)">
           <rect x="-4" y="-4" width="8" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
           <circle cx="0" cy="0" r="1.5" fill="#e67e22" />
         </g>
@@ -704,38 +697,59 @@
         <text x="72" y="80" font-size="4.5" fill="#e67e22" text-anchor="end">grasrobot</text>
 
         <!-- === E05: Terrasverwarmer (midden schuifraam lounge/pergola) === -->
-        <g transform="translate(270,225)">
+        <g id="pergola-heater-feed" transform="translate(225,88)">
+          <title>E05 een vaste buitenvoeding voor eventuele terrasverwarmer; toestel, belasting, montageafstand en extra kring nog te bepalen.</title>
           <polygon points="0,5 4,-3 -4,-3" fill="none" stroke="#c0392b" stroke-width="1.2" />
           <line x1="0" y1="2" x2="0" y2="-2" stroke="#c0392b" stroke-width="0.8" />
         </g>
-        <text x="255" y="228" font-size="4.5" fill="#c0392b" text-anchor="end" font-weight="700">E05 terras-</text>
-        <text x="255" y="220" font-size="4.5" fill="#c0392b" text-anchor="end">verwarmer</text>
-
-        <!-- === S07: Stopcontact terrasverwarmer (ZZW hoekkolom, facing WNW) === -->
-        <g transform="translate(278,366)">
-          <rect x="-10" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
-          <circle cx="-3.5" cy="0" r="1.5" fill="#e67e22" />
-          <circle cx="-7.5" cy="0" r="1.5" fill="#e67e22" />
-        </g>
-        <text x="265" y="373" font-size="4.5" fill="#e67e22" text-anchor="middle">S07</text>
+        <text x="225" y="82" font-size="4" fill="#c0392b" text-anchor="middle">E05 voeding hoog</text>
 
         <!-- ─── WATER ─── -->
 
-        <!-- === W01: Kraantje tuinslang (berging, achterwand partition east) === -->
-        <g transform="translate(692,302)">
+        <g id="outdoor-hose-tap" transform="translate(846,315)">
+          <title>W01 vorstbestendige buitenkraan aan berginggevel; bereikbare afsluiter, aftap en terugstroombeveiliging volgens installateur.</title>
           <circle cx="0" cy="0" r="5" fill="none" stroke="#2980b9" stroke-width="1.2" />
           <line x1="3" y1="0" x2="-3" y2="0" stroke="#2980b9" stroke-width="1" />
           <line x1="0" y1="3" x2="0" y2="-3" stroke="#2980b9" stroke-width="1" />
         </g>
-        <text x="708" y="304" font-size="5" fill="#2980b9" text-anchor="start" font-weight="700">W01</text>
-        <text x="708" y="296" font-size="4.5" fill="#2980b9" text-anchor="start">kraantje</text>
-        <text x="708" y="289" font-size="4.5" fill="#2980b9" text-anchor="start">tuinslang</text>
+        <text x="858" y="317" font-size="5" fill="#2980b9" text-anchor="start" font-weight="700">W01</text>
+        <text x="858" y="308" font-size="4" fill="#2980b9" text-anchor="start">buitenkraan</text>
+
+        <g id="design-service-controls" fill="none" stroke="#4A7C59" stroke-width="0.8">
+          <g id="main-light-controls" transform="translate(674,343)">
+            <title>C01 hoofdlicht lounge/kantoor en pergola, circa 110 cm boven afgewerkte vloer; vast wandstuk naast schuifraam.</title>
+            <rect x="-2.5" y="-4" width="5" height="8" />
+          </g>
+          <g id="bathroom-light-control" transform="translate(674,142)">
+            <title>C02 badkamerlicht/spiegel en ventilatieboost, circa 110 cm hoog aan droge kantoorzijde, buiten deurzwaai.</title>
+            <rect x="-2.5" y="-4" width="5" height="8" />
+          </g>
+          <g id="storage-light-control" transform="translate(692,342)">
+            <title>C03 berginglicht, circa 110 cm hoog op vast wandstuk naast deur.</title>
+            <rect x="-2.5" y="-4" width="5" height="8" />
+          </g>
+          <g id="bathroom-extract" transform="translate(750,110)">
+            <title>V01 plafondafzuiging badkamer/WC, kanaalroute en debiet door ventilatieontwerper. Luchttoevoer via deurtransfer, afvoer naar buiten; niet in dakholte.</title>
+            <circle r="4" /><path d="M-3,-3 L3,3 M3,-3 L-3,3" />
+          </g>
+          <g id="room-fresh-air" transform="translate(350,130)">
+            <title>V02 toevoerroute frisse lucht lounge/kantoor; rooster of mechanische toevoer volgens ventilatieconcept. Airco is geen ventilatie.</title>
+            <circle r="4" /><path d="M-3,0 H3 M0,-3 V3" />
+          </g>
+        </g>
+        <g fill="#4A7C59" font-size="3.5">
+          <text x="661" y="345" text-anchor="end">C01</text>
+          <text x="661" y="144" text-anchor="end">C02</text>
+          <text x="702" y="344">C03</text>
+          <text x="750" y="103" text-anchor="middle">V01 afzuiging</text>
+          <text x="350" y="124" text-anchor="middle">V02 toevoer</text>
+        </g>
 
         <!-- ══════════════════════════════════════════════════════
              CARDINAL / ORIENTATION LABELS
              ══════════════════════════════════════════════════════ -->
         <text x="470" y="-60" font-size="9" fill="#7a8a9a" text-anchor="middle" font-style="italic">NNO-zijde &mdash;
-          ramen badkamer, kantoor &amp; lounge</text>
+          gesloten wand, geen ramen</text>
         <text x="470" y="542" font-size="9" fill="#4A7C59" text-anchor="middle" font-style="italic">ZZW-zijde &mdash;
           ingang via schuifraam</text>
         <text x="928" y="225" font-size="9" fill="#7a8a9a" text-anchor="middle" transform="rotate(90,928,225)"
@@ -796,16 +810,16 @@
         <line x1="687" y1="54" x2="679" y2="54" stroke="#2E4057" stroke-width="0.7" />
         <text x="683" y="58" font-size="4.5" fill="#2E4057" text-anchor="middle" font-weight="700">0,10</text>
         <!-- Kantoor 2,00 -->
-        <line x1="679" y1="54" x2="529" y2="54" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <line x1="679" y1="54" x2="534.25" y2="54" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
         <rect x="592" y="50" width="32" height="10" fill="#faf8f4" />
-        <text x="608" y="52" font-size="6" fill="#7a8a9a" text-anchor="middle">2,00</text>
+        <text x="608" y="52" font-size="6" fill="#7a8a9a" text-anchor="middle">1,93</text>
         <!-- Haard 0,40 -->
-        <line x1="529" y1="54" x2="499" y2="54" stroke="#c0392b" stroke-width="0.7" marker-start="url(#arrRedR)" marker-end="url(#arrRed)" />
-        <text x="514" y="58" font-size="5" fill="#c0392b" text-anchor="middle" font-weight="700">0,40</text>
+        <line x1="534.25" y1="54" x2="493.75" y2="54" stroke="#c0392b" stroke-width="0.7" marker-start="url(#arrRedR)" marker-end="url(#arrRed)" />
+        <text x="514" y="58" font-size="5" fill="#c0392b" text-anchor="middle" font-weight="700">0,54</text>
         <!-- Lounge 2,70 -->
-        <line x1="499" y1="54" x2="296" y2="54" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <line x1="493.75" y1="54" x2="296" y2="54" stroke="#8a9aaa" stroke-width="0.7" marker-start="url(#arrR)" marker-end="url(#arr)" />
         <rect x="386" y="50" width="32" height="10" fill="#faf8f4" />
-        <text x="402" y="52" font-size="6" fill="#7a8a9a" text-anchor="middle">2,70</text>
+        <text x="402" y="52" font-size="6" fill="#7a8a9a" text-anchor="middle">2,64</text>
         <!-- East wall 0,24 -->
         <line x1="296" y1="54" x2="278" y2="54" stroke="#2E4057" stroke-width="0.7" />
         <text x="287" y="58" font-size="5" fill="#2E4057" text-anchor="middle" font-weight="700">0,24</text>
@@ -826,34 +840,10 @@
 
         <!-- ─── TOP LVL 3: NNO WALL FACE DIMENSIONS at y≈5 ─── -->
         <line x1="840" y1="15" x2="840" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="808" y1="15" x2="808" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="718" y1="15" x2="718" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="637" y1="15" x2="637" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="337" y1="15" x2="337" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="278" y1="15" x2="278" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="90" y1="15" x2="90" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
-
-        <!-- Pier W 0,43 -->
-        <line x1="840" y1="5" x2="808" y2="5" stroke="#8a9aaa" stroke-width="0.6" />
-        <text x="824" y="8" font-size="5" fill="#7a8a9a" text-anchor="middle">0,43</text>
-        <!-- Kipraam 1,20 -->
-        <line x1="808" y1="5" x2="718" y2="5" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
-        <rect x="743" y="2" width="46" height="10" fill="#faf8f4" />
-        <text x="766" y="4" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">raam 1,20</text>
-        <!-- Pier midden 1,08 -->
-        <line x1="718" y1="5" x2="637" y2="5" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
-        <text x="678" y="8" font-size="5" fill="#7a8a9a" text-anchor="middle">1,08</text>
-        <!-- Raam 4,00 -->
-        <line x1="637" y1="5" x2="337" y2="5" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
-        <rect x="464" y="2" width="46" height="10" fill="#faf8f4" />
-        <text x="487" y="4" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">raam 4,00</text>
-        <!-- Pier E 0,79 -->
-        <line x1="337" y1="5" x2="278" y2="5" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
-        <text x="308" y="8" font-size="5" fill="#7a8a9a" text-anchor="middle">0,79</text>
-        <!-- Pergola wand 2,51 -->
-        <line x1="278" y1="5" x2="90" y2="5" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
-        <rect x="176" y="2" width="30" height="10" fill="#faf8f4" />
-        <text x="191" y="4" font-size="5.5" fill="#7a8a9a" text-anchor="middle">2,51</text>
+        <line x1="840" y1="5" x2="90" y2="5" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="385" y="-1" width="160" height="12" fill="#faf8f4" />
+        <text x="465" y="7" font-size="5.5" fill="#7a8a9a" text-anchor="middle">NNO gesloten wand 10,00 m</text>
 
         <!-- ─── LEFT LVL 1: OVERALL 4,00 m at x≈60 ─── -->
         <line x1="85" y1="375" x2="55" y2="375" stroke="#8a9aaa" stroke-width="0.5" />
@@ -895,39 +885,31 @@
 
         <!-- ─── RIGHT LVL 2: OZO WALL OPENINGS at x≈888 ─── -->
         <line x1="893" y1="357" x2="883" y2="357" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="893" y1="289" x2="883" y2="289" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="893" y1="93" x2="883" y2="93" stroke="#8a9aaa" stroke-width="0.5" />
-        <!-- Berging deur 0,90 -->
-        <line x1="888" y1="357" x2="888" y2="289" stroke="#4A7C59" stroke-width="0.6" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
-        <text x="900" y="328" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">0,90</text>
-        <text x="900" y="320" font-size="4.5" fill="#4A7C59" text-anchor="middle">deur</text>
-        <!-- Gesloten badkamergevel 2,61 m. -->
-        <line x1="888" y1="289" x2="888" y2="93" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
-        <text x="900" y="194" font-size="6" fill="#7a8a9a" text-anchor="middle">2,61</text>
+        <line x1="888" y1="357" x2="888" y2="93" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="900" y="225" font-size="6" fill="#7a8a9a" text-anchor="middle">3,52</text>
 
         <!-- ─── INTERNAL: Badkamer/kantoor deur dim ─── -->
-        <line x1="700" y1="236.5" x2="693" y2="236.5" stroke="#4A7C59" stroke-width="0.5" />
-        <line x1="700" y1="176.5" x2="693" y2="176.5" stroke="#4A7C59" stroke-width="0.5" />
-        <line x1="697" y1="236.5" x2="697" y2="176.5" stroke="#4A7C59" stroke-width="0.6" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
-        <text x="709" y="210" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">0,80</text>
-        <text x="709" y="201" font-size="4.5" fill="#4A7C59" text-anchor="middle">deur</text>
+        <line x1="700" y1="206.5" x2="693" y2="206.5" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="700" y1="146.5" x2="693" y2="146.5" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="697" y1="206.5" x2="697" y2="146.5" stroke="#4A7C59" stroke-width="0.6" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <text x="709" y="183.75" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">0,80</text>
+        <text x="709" y="174.75" font-size="4.5" fill="#4A7C59" text-anchor="middle">deur</text>
 
         <!-- ─── INTERNAL: Haard opening dimensions ─── -->
         <!-- North opening 1,10 m -->
-        <line x1="492" y1="357" x2="492" y2="274" stroke="#4A7C59" stroke-width="0.5" />
-        <line x1="496" y1="357" x2="488" y2="357" stroke="#4A7C59" stroke-width="0.5" />
-        <line x1="496" y1="274" x2="488" y2="274" stroke="#4A7C59" stroke-width="0.5" />
-        <text x="514" y="314" font-size="5.5" fill="#4A7C59" text-anchor="middle">1,10</text>
+        <line x1="480" y1="357" x2="480" y2="271.875" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="484" y1="357" x2="476" y2="357" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="484" y1="271.875" x2="476" y2="271.875" stroke="#4A7C59" stroke-width="0.5" />
+        <text x="514" y="314" font-size="5.5" fill="#4A7C59" text-anchor="middle">1,135</text>
         <!-- Haard unit 1,01 m -->
-        <line x1="492" y1="263" x2="492" y2="187" stroke="#c0392b" stroke-width="0.5" />
-        <line x1="496" y1="263" x2="488" y2="263" stroke="#c0392b" stroke-width="0.5" />
-        <line x1="496" y1="187" x2="488" y2="187" stroke="#c0392b" stroke-width="0.5" />
-        <text x="480" y="222" font-size="5" fill="#c0392b" text-anchor="end">1,01</text>
+        <line x1="480" y1="271.875" x2="480" y2="178.125" stroke="#c0392b" stroke-width="0.5" />
+        <text x="475" y="225" font-size="5" fill="#c0392b" text-anchor="end">1,25</text>
         <!-- South opening 1,10 m -->
-        <line x1="492" y1="176" x2="492" y2="93" stroke="#4A7C59" stroke-width="0.5" />
-        <line x1="496" y1="176" x2="488" y2="176" stroke="#4A7C59" stroke-width="0.5" />
-        <line x1="496" y1="93" x2="488" y2="93" stroke="#4A7C59" stroke-width="0.5" />
-        <text x="514" y="132" font-size="5.5" fill="#4A7C59" text-anchor="middle">1,10</text>
+        <line x1="480" y1="178.125" x2="480" y2="93" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="484" y1="178.125" x2="476" y2="178.125" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="484" y1="93" x2="476" y2="93" stroke="#4A7C59" stroke-width="0.5" />
+        <text x="514" y="132" font-size="5.5" fill="#4A7C59" text-anchor="middle">1,135</text>
 
         <!-- ─── IN-PLAN WALL THICKNESS NOTES ─── -->
         <text x="760" y="363" font-size="4.5" fill="#2E4057" text-anchor="middle" opacity="0.55">wand 0,24</text>
@@ -958,11 +940,11 @@
         </div>
         <div class="legend-item">
           <div class="legend-swatch" style="background:#ffe8e4; border-color:#c0392b;"></div>
-          Haard Element4 Sky L Tunnel
+          Haard DRU Maestro Tall Tunnel
         </div>
         <div class="legend-item">
           <div class="legend-swatch" style="background:#eeece8; border-color:#d4d0c8;"></div>
-          Douchebak (100 x 80 cm)
+          Douchebak (80 x 80 cm)
         </div>
         <div class="legend-item">
           <div class="legend-swatch" style="background:#eae6de; border-color:#bbb5a8;"></div>
@@ -970,7 +952,7 @@
         </div>
         <div class="legend-item">
           <div class="legend-swatch" style="background:none; border-color:#2E4057; border-style:dashed;"></div>
-          Halve-hoogte wand + vast glas
+          Glazen douchescherm
         </div>
         <div class="legend-item">
           <div class="legend-swatch" style="background:#b98250; border-color:#6f4729;"></div>
@@ -1053,9 +1035,78 @@
       </div>
       <div class="scale-note">
         Schaal 1:50 &nbsp;|&nbsp; 1 cm = 0,50 m &nbsp;|&nbsp; Schematisch &mdash; niet vergunningsgeldig &nbsp;|&nbsp;
-        Tek. 01-G, v8.1, April 2026
+        Ontwerpreview 10 oktober 2026 &nbsp;|&nbsp; <a href="#owner-checks">Zelf controleren</a>
       </div>
     </div>
+
+    <section class="review-section" id="service-plan" aria-labelledby="service-title">
+      <h2 id="service-title">Aansluitingen en inrichting</h2>
+      <p>Ontwerpvoorstel, geen uitvoerings- of keuringsplan. Kamermaten, rechte scheidingswand en deurposities zijn behouden; NNO blijft gesloten. Maten hieronder zijn ontwerpwaarden vanaf de afgewerkte vloer. Elektricien en installateurs bepalen de definitieve aansluitingen, bescherming, leidingroutes en hoogtes.</p>
+      <p>Behoud: DRU Maestro Tall Tunnel met Promafour 125 x 54 cm; Moon 100 x 55 cm, Still marmeren waskom, Pavilion Curve en Secret spiegel; Waldo met UP320. De Classy 80 x 80 cm douchebak is een voorstel ter vervanging van de geoffreerde Rumba 100 x 80 cm, geen reeds bevestigde bestelling.</p>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Aansluitschema">
+        <table class="review-table" id="service-schedule">
+          <caption>Voorgestelde servicepunten</caption>
+          <thead><tr><th scope="col">Punt</th><th scope="col">Plaats en functie</th><th scope="col">Hoogte / uitvoering</th><th scope="col">Nog vast te leggen</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">S01 + S09</th><td>Twee dubbele stopcontactpunten achter bureau, NNO-wand; laptop, schermen en bureaugebruik.</td><td>Circa 30 cm; vier contactdozen totaal, kabels achter bureau.</td><td>Eigen toestellen tellen; geen verlengkabel door deurroute.</td></tr>
+            <tr><th scope="row">E03</th><td>Twee ethernetpoorten naast bureauvoeding, zelfde wand.</td><td>Circa 30 cm; data en netspanning correct gescheiden.</td><td>Cat6-traject, PoE-budget en aansluiting naar woning.</td></tr>
+            <tr><th scope="row">S04</th><td>Dubbel loungepunt op NNO-wand achter sofa voor lamp/lader.</td><td>Circa 30 cm; bereikbaar zonder vaste betimmering.</td><td>Bediening en toegang met echte sofa testen.</td></tr>
+            <tr><th scope="row">S05</th><td>Dubbel badkamerpunt links naast Moon op bergingwand, niet in douche.</td><td>Circa 110 cm, voorlopig; niet boven kraan of waskom.</td><td>AREI-badkamerzones, beschermingsgraad, bescherming en afgewerkte afstand.</td></tr>
+            <tr><th scope="row">S06</th><td>Dubbel bergingpunt op badkamer/bergingwand, vrij van deur en rek.</td><td>Circa 110 cm; algemeen laden/onderhoud.</td><td>Niet automatisch geschikt als boiler- of zwaarverbruikerkring.</td></tr>
+            <tr><th scope="row">S13</th><td>Dubbel buitenpunt op gesloten pergola-NNO-wand.</td><td>Circa 40 cm; weerbestendige afdekking ook bij gebruik.</td><td>Buitenkring, vochtbelasting en gewenste gebruiker.</td></tr>
+            <tr><th scope="row">E04</th><td>Eenvoudig buitenpunt voor grasrobot, bij pergola-NNO-hoek.</td><td>Circa 40 cm; kabel bij rand, niet over looproute.</td><td>Dockpositie en toegelaten laadkabellengte; geen extra robotkast.</td></tr>
+            <tr><th scope="row">F01</th><td>Eén bereikbare DRU-voeding op NNO-wand bij haardzone; geen contactdoos in hete ombouw getekend.</td><td>Voorlopig 30 cm; kabelroute en eindpunt door Ooghe.</td><td>DRU-aansluitvoorschrift, onderhoudsluik en warmtevrije routing.</td></tr>
+            <tr><th scope="row">E05</th><td>Eén hoge voedingsreserve voor eventuele pergolaverwarmer; dubbele S07 vervalt.</td><td>Voorlopig 220 cm; geen gemonteerd verwarmingstoestel.</td><td>Toestelkeuze, vermogen, eigen beveiliging en afstand tot hout/sofa.</td></tr>
+            <tr><th scope="row">A01</th><td>Voorlopige hoge airco-binnenunit op solide NNO-wand; S14 vervalt als algemeen stopcontact.</td><td>Schematisch 90 cm breed; vaste toestelvoeding volgens fabrikant.</td><td>Warmte-/koellast, buitenunit, condensafvoer en luchtworp weg van zitplek.</td></tr>
+            <tr><th scope="row">C01</th><td>Hoofdbediening lounge/kantoor en aparte pergolalichtgroep op vast jambstuk naast schuifraam.</td><td>Circa 110 cm; geen bediening op glas of hoekpost.</td><td>Echte schuifrichting, bereikbaarheid en dimbare armaturen.</td></tr>
+            <tr><th scope="row">C02 + C03</th><td>Badkamerbediening aan droge kantoorzijde; bergingbediening binnen naast deur.</td><td>Circa 110 cm; naast, niet achter open deurblad.</td><td>Badkamerlicht, spiegel en ventilatieboost afstemmen.</td></tr>
+            <tr><th scope="row">L01-L09 + spiegel</th><td>Berginglicht; algemeen badkamerlicht; douchelicht nu boven rechter douche; bestaande twee lichtpunten per kantoor, lounge en pergola behouden.</td><td>Plafond volgens werkelijke hoogte; Secret heeft eigen voeding achter spiegel.</td><td>Lichtberekening, glare op scherm, natte-zone-armaturen, buiten-IP en onderhoud.</td></tr>
+            <tr><th scope="row">V01 + V02</th><td>Afzuiging badkamer/WC en toevoerroute in lounge/kantoor; transfer via binnendeur.</td><td>Plafondposities zijn reserveringen, geen vastgesteld systeem.</td><td>Debieten, kanaaldoorsnede, geluidsniveau, transferopening en buitenuitmonding.</td></tr>
+            <tr><th scope="row">W01</th><td>Vorstbestendige buitenkraan op berging-kopgevel, niet meer in deuropening.</td><td>Voorlopig circa 60 cm; binnen bereikbare afsluiter/aftap.</td><td>Terugstroombeveiliging, vorstbescherming en afwatering onder kraan.</td></tr>
+            <tr><th scope="row">E01 + E02</th><td>Twee PoE-camera's bij gesloten kopgevel en pergola; geen extra 230 V-punten.</td><td>Onder dakrand / circa 250 cm, door zichtveld te bevestigen.</td><td>Montageondergrond, privacy, verblinding en PoE-bekabeling.</td></tr>
+            <tr><th scope="row">Sanitair</th><td>Koud/warm en afvoer bij Moon en rechter douche; WC-aansluiting bij linker UP320; spiegelvoeding achter Secret.</td><td>Alle ruwbouwmaten uit producttekeningen, niet uit SVG afleiden.</td><td>Warmwaterbron, sifons, leidingisolatie, afsluiters, vloeropbouw en afvoerverhang.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Vervallen: S08 op schuifraam, twee algemene contactdozen op haardkap (S10/S11, vervangen door F01), dubbele verwarmeraansluiting S07, algemeen aircostopcontact S14. Geen extra TV-aansluiting, boiler, buitenunit of automatisering zonder concrete behoefte.</p>
+      <p>Meubilair: compacte zitbank 150 x 69 cm als reservering met circa 102 cm horizontaal tot het haardvlak; salontafel 90 x 50 cm met 40 cm tot sofa; pergolatafel 70 x 45 cm met 40 cm tot sofa; bureau 120 x 80 cm met circa 13 cm tot badkamerdeurzwaai; open bergingrek 110 x 30 cm met 150 cm vrije breedte. Dit zijn gebruiksdoelen, geen toegankelijkheids- of brandveiligheidscertificering; Ooghe bepaalt de vereiste afstanden.</p>
+    </section>
+
+    <section class="review-section" id="owner-checks" aria-labelledby="checks-title">
+      <h2 id="checks-title">Zelf controleren voor bestelling en uitvoering</h2>
+      <p>Alle onderstaande punten zijn open tot opmeting of schriftelijke bevestiging. Eerste prioriteit: afgewerkte wandopbouw, schuiframen en badkamer 1:1 uitzetten. De oorspronkelijke offertebestanden ontbreken hier; vergelijking gebruikt de eerder besproken Lovilen 2026/1073, Ooghe en X2O-productgegevens.</p>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Zelf te controleren ontwerpkeuzes">
+        <table class="review-table" id="owner-check-table">
+          <caption>Controlelijst studio en tuin - 10 oktober 2026</caption>
+          <thead><tr><th scope="col">Prioriteit / onderdeel</th><th scope="col">Wat je zelf controleert of opvraagt</th><th scope="col">Wie bevestigt</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">1. Afgewerkte maat</th><td>Meet badkamer 180 x 191,3 cm, berging 180 x 150 cm en vrije hoofdbreedte 352 cm na tegels/afwerking. Offerte noemt houtskelet 140 mm; tekening toont buitenwand 240 mm. Vraag een doorsnede die deze vaste netto maten behoudt; niet blind wanddikte wijzigen.</td><td>Jij + Lovilen / architect</td></tr>
+            <tr><th scope="row">1. Deuren en ramen</th><td>Beide Xinix-openingen 80 cm; badkamer 5 cm omhoog verplaatst, nu 40 cm tot gedeelde wand, berging behoudt 35 cm. Toilet eindigt circa 8 cm voor badkameropening. Bevestig echte vrije doorgang, volledige hoogte, scharnierhand en afwerking. Sliders in offerte 350 x 230 en 500 x 230 cm versus plan 352/515 cm en hogere 3D-beglazing; vraag productie-/dagmaten. NNO-ramen schriftelijk schrappen.</td><td>Lovilen</td></tr>
+            <tr><th scope="row">1. Badkamer 1:1</th><td>Plak toilet links, douche rechts, Moon en geopende deur/lades op de vloer af. Moon zijruimte 20/60 cm, WC-front circa 73 cm. Douche-meubel slechts 56,3 cm; nominale lade-uittrek 55 cm laat slechts 1,3 cm. Ga niet bestellen op die tolerantie zonder echte lade- en tegelmaten.</td><td>Jij + X2O / sanitairinstallateur</td></tr>
+            <tr><th scope="row">1. Douchebak</th><td>Bevestig bewuste vervanging Rumba 100 x 80 acryl door Classy 208333 80 x 80 composietmarmer, 27 mm rand. Vraag passend 90 mm afvoerproduct, sifonhoogte, debiet en vloeruitsparing. Bestaande Unishower is niet automatisch compatibel.</td><td>X2O + installateur</td></tr>
+            <tr><th scope="row">1. Scherm en waterdichting</th><td>Linker vast scherm en open zuidelijke douche-ingang zijn een ontwerpvoorstel, geen geoffreerde complete cabine. Test de instap vanuit de 56 cm ruimte; vraag spatproef, juiste glasmaat, afdichting, afschot, kimbanden en deur/vanitybescherming. Indien onvoldoende: eerst compromis kiezen, niet kamer vergroten.</td><td>Sanitairinstallateur</td></tr>
+            <tr><th scope="row">1. Elektrische veiligheid</th><td>Laat S05, spiegel, douchelicht en alle buitenpunten zoneren volgens geldend AREI. Vraag eendraads-/situatieschema, aarding/vereffening, differentieelbeveiliging, kringen, kabelsecties en keuring voor ingebruikname. Hoogtes in deze tabel zijn voorstellen, geen wettelijke minima.</td><td>Elektricien + erkend keuringsorganisme</td></tr>
+            <tr><th scope="row">1. DRU-haard</th><td>Controleer Maestro Tall Tunnel, Promafour 125 x 54 cm, vier roosters, matte zijbeglazing en LED-keuze tegen Ooghe. Vraag fabrikantafstanden tot tafel/sofa/hout, gasleiding, één voeding, onderhoudsopening en goedgekeurd 130/200 mm rookgastraject door plat dak.</td><td>Ooghe / DRU-installateur</td></tr>
+            <tr><th scope="row">1. Dak en draagstructuur</th><td>Vraag constructieberekening van lange sliderliggers, hoekpost, pergolakolom, dakbelasting en flue-doorvoer. Bevestig val naar hemelwaterafvoer, noodoverloop, EPDM-aansluitingen en doorvoerafstanden. Geen dak-/balkdoorboring op basis van deze schets.</td><td>Lovilen + stabiliteitsingenieur</td></tr>
+            <tr><th scope="row">1. EPB en vergunning</th><td>Bevestig toegelaten gebruik als kantoor/lounge met sanitair, perceelgrens, hoogte, afstanden en EPB-plicht. Vraag prestatieberekening voor geoffreerde 80 mm PUR, vloerisolatie, glas en koudebruggen; geen isolatiepakket op dikte alleen goedkeuren.</td><td>Architect / gemeente / EPB-verslaggever</td></tr>
+            <tr><th scope="row">2. Ventilatie</th><td>Nu NNO-ramen wegvallen: vraag compleet toevoer-transfer-afvoerconcept voor kantoor/lounge en badkamer/WC, meetbare debieten, vochtsturing en onderhoud. Afzuiging naar buiten, niet dakholte. Airco recirculeert en vervangt geen frisse lucht; sliders openen is geen vastgesteld basisventilatiesysteem.</td><td>Ventilatieontwerper + EPB-verslaggever</td></tr>
+            <tr><th scope="row">2. Warm water en afvoer</th><td>Vraag warmwaterbron, wachttijd, druk/debiet bij 30 cm douchekop, afsluiters en bereikbare sifons. UP320 50 x 12 x 112 cm is framemaat, niet volledige tegelboxing. Laat leidingdieptes, afvoerverhang en aansluiting op riolering vóór chape vastleggen.</td><td>Sanitairinstallateur</td></tr>
+            <tr><th scope="row">2. Waskom en ergonomie</th><td>Controleer echte bovenrandhoogte van kast + tablet + Still kom (illustratie circa 89 cm boven vloer) met jouw lengte, kraanspatten en spiegelzicht. Vraag boorposities voor verhoogde Pavilion en ophangversterking in houtskelet. Geen extra opbouwhoogte gokken.</td><td>Jij + X2O / installateur</td></tr>
+            <tr><th scope="row">2. Bureau en verlichting</th><td>Bureau nu 120 x 80 cm; meet ook de echte breedte. Zet echte stoel en monitoren neer en test stoeluitschuif, beide open Xinix-deuren en passage langs haard. Circa 13 cm nominale marge tussen bureauhoek en badkamerdeurzwaai, nog zonder uitstekende deurklink. Vraag werkvlakverlichting en dimbare lounge/pergola apart; geen plafondsport direct boven monitorscherm.</td><td>Jij + elektricien</td></tr>
+            <tr><th scope="row">2. Airco en heater</th><td>Bevestig of beide echt nodig zijn naast gasvuur. Vraag warmte-/koellast, geluid, buitenunitlocatie buiten passages, condensafvoer en onderhoud. Eventuele pergolaheater alleen na controle van hout-, dak- en meubilairafstanden; voeding is nog geen toestelbestelling.</td><td>Jij + HVAC-installateur</td></tr>
+            <tr><th scope="row">2. Gebruik en onderhoud</th><td>Test rekkoffers, stekkerbereik achter sofa en bureau, raamreiniging, gordijnen/zonwering, opslag en uitweg naar sliders. Houd gemeenschappelijke looproute vrij, geen kabels over vloer. Rook-/CO-detectie en glasveiligheid laten bepalen voor het echte gebruik en de gasinstallatie.</td><td>Jij + architect / installateurs</td></tr>
+            <tr><th scope="row">2. Glas en afwerking</th><td>Vraag veiligheidsglas, zonwering/zomeroververhitting, bedieningskracht van tweedelige sliders en drempelprofielen. Canopysoffit wordt als hout getoond, offerte noemt crepi: schriftelijk kiezen. Afwerking mag netto ruimten niet verkleinen zonder hercontrole.</td><td>Lovilen</td></tr>
+            <tr><th scope="row">1. Deck en regenwaterput</th><td>MOSO-model 40,36 m2 inclusief pergola tegenover offerte-extra 28 m2: laat totale oppervlakte en aparte coping schriftelijk begroten. Vraag onderconstructie, ventilatie, stroefheid, afwatering en demontabel 60 x 60 cm putluik. Geen puntlasten op put zonder berekening; toegang voor pomp/ruiming behouden.</td><td>Deckbouwer + ingenieur</td></tr>
+            <tr><th scope="row">2. Zwembad en niveaus</th><td>Bevestig LPW City+ 730 x 300 cm, buitenrand 770 x 340 cm, blauwe steen boven/buurzijde en MOSO studio-/huiszijde. Meet werkelijke passage en drempels; smalste modelruimte circa 36 cm is geen looproute. Vraag kindveiligheidsconcept/afdekking en drainage weg van gebouw.</td><td>Jij + zwembadbouwer</td></tr>
+            <tr><th scope="row">2. Poort en EV</th><td>Meet volledige poortopbouw inclusief infill, gedeelde 15 cm paal, montagevoeten, scharnier-/slotspelingen en funderingen. Test volle draaicirkels zonder bloemen/chargerbotsing. 6 m kabelbereik is rechte straal, niet gegarandeerd bereik rond poort/auto; test beide laadpoorten met speling.</td><td>Jij + poort-/laadpaalinstallateur</td></tr>
+            <tr><th scope="row">2. Tuin en parkeren</th><td>Behoud P1/P2 minstens 290 x 540 cm en P3 300 x 540 cm; test portieren en manoeuvreerruimte. Vraag stabiele steenslagopbouw, 5 cm boordbreedte en lokale infiltratie. Laat afschot van woning/sliders weg lopen; geen water naar buur.</td><td>Jij + grondwerker</td></tr>
+            <tr><th scope="row">2. Licht, groen en privacy</th><td>Test zes spots in 15 cm lavastrook met echte behuizing, warme bundel, timer/dimmer en afscherming naar buren. Snoei-/onderhoudsruimte voor jasmijn, muurbeplanting en houthek behouden. Camera's uitsluitend eigen terrein; geen onnodige buitencontactdozen langs heel hek.</td><td>Jij + tuinbouwer / elektricien</td></tr>
+            <tr><th scope="row">1. Offerte en kosten</th><td>Laat Lovilen hoofdsom en optionele chape/crepi/deck afzonderlijk bevestigen; elektra, grondwerken, tegels, doucheglas, ventilatie en eventuele HVAC zijn niet automatisch inbegrepen. Vraag actuele schriftelijke postenlijst en levertermijnen; deze schets voegt geen bestelgoedkeuring toe.</td><td>Jij + alle leveranciers</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Regelgevingsbronnen: <a href="https://economie.fgov.be/nl/publicaties/algemeen-reglement-op-de">FOD Economie - AREI Boeken 1, 2 en 3</a> en <a href="https://www.vlaanderen.be/epb-pedia/technieken/ventilatie">VEKA - ventilatie</a>. Kies de editie en eisen die op uitvoeringsdatum en gebouwbestemming van toepassing zijn. Deze review is geen volledige toetsing aan normen, vergunning of fabrikantvoorschriften.</p>
+    </section>
 
     <div class="doc-footer">
       <span>Tuinstudio &mdash; Geraardsbergsesteenweg 371, 9404 Ninove &nbsp;|&nbsp; SA/2025/41 &nbsp;|&nbsp; Jens Du

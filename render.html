@@ -335,12 +335,12 @@
       <div class="metrics" aria-label="Belangrijkste doorgangen">
         <span class="metric">bovenrand 0,36 m</span>
         <span class="metric">glaslijn 0,70 m</span>
-        <span class="metric">houtdek 27,92 m²</span>
+        <span class="metric">MOSO Bamboo X</span>
       </div>
     </header>
 
     <div class="material-note">
-      Wit crepi met blauwe-steenplint · tweedelige schuiframen · aluminium bergingsdeur RAL 9005 · de 20 cm houten poolrand loopt op exact dezelfde hoogte en breedte naadloos door tot het terras als één dek.
+      MOSO Bamboo X uitgelijnd met het huisterras · blauwe steen aan de boven- en buurzijde · houten hoek aansluitend op de buitenrand · bereikbaar regenwaterluik.
     </div>
 
     <div class="control-dock" aria-label="Renderinstellingen">
@@ -362,6 +362,9 @@
   <script type="module">
     import * as THREE from "three";
     import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+    import { Line2 } from "three/addons/lines/Line2.js";
+    import { LineGeometry } from "three/addons/lines/LineGeometry.js";
+    import { LineMaterial } from "three/addons/lines/LineMaterial.js";
 
     const sceneHost = document.querySelector("#scene");
     const mainHost = document.querySelector("main");
@@ -732,11 +735,12 @@
 
     addBox(pool, 3.4, 1.38, 7.7, materials.stoneEdge, -1.7, -0.73, -3.85);
     addBox(pool, 3.0, 1.27, 7.3, standard(0xb8d8df, 0.48), -1.7, -0.72, -3.85);
-    const poolSideTimberCoping = addBox(pool, coping, 0.09, poolOuterLength, woodMaterial, -0.1, deckTop - 0.045, -3.85);
-    poolSideTimberCoping.name = "pool-side-timber-coping";
-    addBox(pool, coping, 0.09, poolOuterLength, materials.stone, -3.3, 0.015, -3.85);
-    addBox(pool, 3.0, 0.09, coping, materials.stone, -1.7, 0.015, -0.1);
-    addBox(pool, 3.0, 0.09, coping, materials.stone, -1.7, 0.015, -7.6);
+    const neighbourPoolCoping = addBox(pool, coping, 0.09, poolOuterLength - coping, materials.stone,
+      -3.3, 0.015, -(poolOuterLength - coping) / 2);
+    neighbourPoolCoping.name = "neighbour-blue-stone-coping";
+    const poolTopCoping = addBox(pool, poolOuterWidth - coping * 2, 0.09, coping, materials.stone,
+      -1.7, 0.015, -coping / 2);
+    poolTopCoping.name = "pool-top-blue-stone-coping";
 
     const waterUniforms = { time: { value: 0 } };
     const waterMaterial = new THREE.ShaderMaterial({
@@ -812,8 +816,8 @@
       studioPathStartX + Math.cos(studioAngle) * localX + Math.sin(studioAngle) * localZ,
       Math.sin(studioAngle) * localX - Math.cos(studioAngle) * localZ
     ];
-    const terraceDeckEndLocalZ = -siteZ(464.05) / Math.cos(studioAngle);
-    const terracePoolLineEnd = [0, siteZ(464.05)];
+    const terraceDeckEndLocalZ = (Math.sin(studioAngle) * 4 - siteZ(464.05)) / Math.cos(studioAngle);
+    const terracePoolLineEnd = [-poolOuterWidth, siteZ(464.05)];
     const poolTimberInnerStart = [-coping, poolRearZ];
     const poolTimberInnerEnd = [-coping, siteZ(464.05)];
     const integratedDeckPoints = [
@@ -827,7 +831,8 @@
       studioWorldPoint(4, 10),
       studioWorldPoint(4, terraceDeckEndLocalZ),
       terracePoolLineEnd,
-      poolTimberInnerEnd
+      [-poolOuterWidth, poolRearZ - poolOuterLength + coping],
+      [-coping, poolRearZ - poolOuterLength + coping]
     ];
     const integratedDeck = addDeck(poolStudioPassage, integratedDeckPoints, deckTop);
     integratedDeck.name = "single-integrated-deck-surface";
@@ -835,6 +840,7 @@
       const [nextX, nextZ] = integratedDeckPoints[(index + 1) % integratedDeckPoints.length];
       return area + x * nextZ - nextX * z;
     }, 0)) / 2;
+    document.querySelector(".metric:last-child").textContent = `MOSO Bamboo X ${integratedDeckArea.toLocaleString("nl-BE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} m²`;
 
     const deckOutline = new THREE.Line(
       new THREE.BufferGeometry().setFromPoints(
@@ -862,31 +868,14 @@
     addBox(studio, 4, 0.24, shellLength, materials.charcoalSoft, 2, 3.02, pergolaLength + shellLength / 2);
     const studioCeiling = addBox(studio, 3.52, 0.04, shellLength - 0.48, materials.ceiling, 2, 2.88, pergolaLength + shellLength / 2, { castShadow: false });
     studioCeiling.name = "studio-white-interior-ceiling";
-    addBox(studio, 0.24, 2.96, shellLength, materials.wall, 3.88, 1.52, pergolaLength + shellLength / 2);
-    const storageDoorWidth = 0.9;
-    const storageDoorHeight = 2.44;
-    const storageDoorStart = 0.24;
-    const storageDoorEnd = storageDoorStart + storageDoorWidth;
-    const wallBottom = 0.04;
-    const wallTop = 3;
-    const doorBottom = 0.08;
-    const doorTop = doorBottom + storageDoorHeight;
-    addBox(studio, storageDoorStart, wallTop - wallBottom, 0.24, materials.wall, storageDoorStart / 2, (wallTop + wallBottom) / 2, 9.88);
-    addBox(studio, 4 - storageDoorEnd, wallTop - wallBottom, 0.24, materials.wall, storageDoorEnd + (4 - storageDoorEnd) / 2, (wallTop + wallBottom) / 2, 9.88);
-    addBox(studio, storageDoorWidth, wallTop - doorTop, 0.24, materials.wall, (storageDoorStart + storageDoorEnd) / 2, (wallTop + doorTop) / 2, 9.88);
+    const studioNnoWall = addBox(studio, 0.24, 2.96, shellLength, materials.wall, 3.88, 1.52, pergolaLength + shellLength / 2);
+    studioNnoWall.name = "studio-closed-nno-wall";
+    const storageEndWall = addBox(studio, 4, 2.96, 0.24, materials.wall, 2, 1.52, 9.88);
+    storageEndWall.name = "studio-closed-end-wall";
 
     addBox(studio, 0.045, 0.3, shellLength, materials.stone, 4.0225, 0.15, pergolaLength + shellLength / 2);
-    addBox(studio, storageDoorStart, 0.3, 0.045, materials.stone, storageDoorStart / 2, 0.15, 10.0225);
-    addBox(studio, 4 - storageDoorEnd, 0.3, 0.045, materials.stone, storageDoorEnd + (4 - storageDoorEnd) / 2, 0.15, 10.0225);
-
-    const storageDoor = addBox(studio, storageDoorWidth, storageDoorHeight, 0.06, materials.charcoal, (storageDoorStart + storageDoorEnd) / 2, (doorBottom + doorTop) / 2, 10.03);
-    storageDoor.name = "storage-exterior-door-ral9005";
-    addBox(studio, 0.06, storageDoorHeight + 0.1, 0.09, materials.charcoal, storageDoorStart - 0.03, (doorBottom + doorTop) / 2, 10.035);
-    addBox(studio, 0.06, storageDoorHeight + 0.1, 0.09, materials.charcoal, storageDoorEnd + 0.03, (doorBottom + doorTop) / 2, 10.035);
-    addBox(studio, storageDoorWidth + 0.12, 0.06, 0.09, materials.charcoal, (storageDoorStart + storageDoorEnd) / 2, doorTop + 0.03, 10.035);
-    addBox(studio, storageDoorWidth + 0.12, 0.04, 0.09, materials.charcoal, (storageDoorStart + storageDoorEnd) / 2, doorBottom, 10.035);
-    const storageDoorHandle = addBox(studio, 0.035, 0.14, 0.055, materials.white, storageDoorEnd - 0.14, 1.12, 10.09, { castShadow: false });
-    storageDoorHandle.name = "storage-door-handle";
+    const storageEndPlinth = addBox(studio, 4, 0.3, 0.045, materials.stone, 2, 0.15, 10.0225);
+    storageEndPlinth.name = "studio-continuous-end-plinth";
 
     const cornerPostSize = 0.2;
     const cornerPostStart = 188 / 75;
@@ -924,7 +913,7 @@
     soffit.receiveShadow = true;
     studio.add(soffit);
 
-    addBox(studio, 0.24, 2.96, pergolaLength, materials.wallWarm, 3.88, 1.52, pergolaLength / 2);
+    const pergolaNnoWall = addBox(studio, 0.24, 2.96, pergolaLength, materials.wallWarm, 3.88, 1.52, pergolaLength / 2);
     addBox(studio, 0.045, 0.3, pergolaLength, materials.stone, 4.0225, 0.15, pergolaLength / 2);
     addVerticalCladding(studio, 3.755, 0, pergolaLength, 2.82, 1);
     addBox(studio, 4, 0.16, 0.18, materials.charcoal, 2, 2.94, 0.09);
@@ -932,25 +921,129 @@
 
     const interior = new THREE.Group();
     studio.add(interior);
+    const fireplaceWidth = 1.25;
+    const fireplaceDepth = 0.54;
+    const fireplaceHeight = 2.8;
+    const fireplaceCenterZ = (514 - 90) / 75;
+    const fireplace = new THREE.Group();
+    fireplace.name = "dru-maestro-tall-tunnel-promafour";
+    fireplace.position.set(2, 0.08, fireplaceCenterZ);
+    interior.add(fireplace);
+    const fireplaceFinish = standard(0xf4f1ea, 0.95);
+    addBox(fireplace, fireplaceWidth, 0.45, fireplaceDepth, fireplaceFinish, 0, 0.225, 0);
+    addBox(fireplace, fireplaceWidth, fireplaceHeight - 1.85, fireplaceDepth, fireplaceFinish,
+      0, (fireplaceHeight + 1.85) / 2, 0);
+    for (const side of [-1, 1]) {
+      addBox(fireplace, 0.15, 1.4, fireplaceDepth, fireplaceFinish,
+        side * (fireplaceWidth / 2 - 0.075), 1.15, 0);
+      addBox(fireplace, 0.95, 1.4, 0.025, glassMaterial, 0, 1.15, side * fireplaceDepth / 2);
+      for (const height of [0.25, 2.55]) {
+        addBox(fireplace, 0.38, 0.05, 0.01, materials.charcoalSoft,
+          0, height, side * (fireplaceDepth / 2 + 0.01));
+      }
+    }
+    const flameMaterial = new THREE.MeshStandardMaterial({ color: 0xffa13b,
+      emissive: 0xff6b19, emissiveIntensity: 0.6 });
+    addBox(fireplace, 0.65, 0.15, 0.16, flameMaterial, 0, 0.62, 0);
+    const internalDoorHeight = 2.8;
+    const internalPartitionZ = (683 - 90) / 75;
+    const bathroomPartitionZ = internalPartitionZ;
+    const internalDoorSpans = [
+      { room: "storage", start: (357 - 330.75) / 75 + 0.24, end: (357 - 270.75) / 75 + 0.24,
+        wallStart: 0.24, wallEnd: (357 - 244.5) / 75 + 0.24, wallZ: internalPartitionZ },
+      { room: "bathroom", start: (357 - 206.5) / 75 + 0.24, end: (357 - 146.5) / 75 + 0.24,
+        wallStart: (357 - 236.5) / 75 + 0.24, wallEnd: 3.76, wallZ: bathroomPartitionZ }
+    ];
+    const studioInternalDoors = internalDoorSpans.map(({ room, start, end, wallStart, wallEnd, wallZ }) => {
+      if (start > wallStart) addBox(interior, start - wallStart, internalDoorHeight, 0.1, materials.ceiling,
+        (start + wallStart) / 2, 0.08 + internalDoorHeight / 2, wallZ);
+      if (wallEnd > end) addBox(interior, wallEnd - end, internalDoorHeight, 0.1, materials.ceiling,
+        (wallEnd + end) / 2, 0.08 + internalDoorHeight / 2, wallZ);
+      const door = addBox(interior, end - start, internalDoorHeight, 0.04, materials.ceiling,
+        (start + end) / 2, 0.08 + internalDoorHeight / 2, wallZ - 0.055);
+      door.name = `xinix-internal-${room}-door`;
+      door.userData.hingeX = room === "storage" ? end : start;
+      addBox(interior, 0.025, 0.12, 0.04, materials.charcoalSoft,
+        room === "storage" ? start + 0.1 : end - 0.1, 1.05, wallZ - 0.09);
+      return door;
+    });
+    addBox(interior, 0.1, internalDoorHeight, 1.8, materials.ceiling,
+      (357 - 240.5) / 75 + 0.24, 0.08 + internalDoorHeight / 2, (754.5 - 90) / 75);
+    const bathroomFixtures = new THREE.Group();
+    bathroomFixtures.name = "x2o-bathroom-fixtures";
+    interior.add(bathroomFixtures);
+    const bathroomWalnut = standard(0x74513b, 0.85);
+    const bathroomRosegold = standard(0xb88d79, 0.38, 0.7);
+    const bathroomMarble = standard(0x59483d, 0.55);
+    function addBathroomBox(planX, planY, planWidth, planDepth, height, centerY, material, name) {
+      const mesh = addBox(bathroomFixtures, planDepth / 75, height, planWidth / 75, material,
+        (357 - planY - planDepth / 2) / 75 + 0.24, centerY,
+        (planX + planWidth / 2 - 90) / 75);
+      mesh.name = name;
+      return mesh;
+    }
+    const bathroomVanity = addBathroomBox(702, 195.25, 75, 41.25, 0.4, 0.6, bathroomWalnut, "balmani-moon-202924-100x55");
+    addBathroomBox(702, 195.25, 75, 41.25, 0.035, 0.8175, materials.white, "balmani-moon-201658-white-tablet");
+    for (let rib = 0; rib < 32; rib += 1) {
+      addBox(bathroomFixtures, 0.015, 0.5, 0.012, bathroomWalnut,
+        bathroomVanity.position.x + 0.278, 0.6, bathroomVanity.position.z - 0.485 + rib * 0.031);
+    }
+    const basin = new THREE.Mesh(new THREE.CylinderGeometry(0.19, 0.14, 0.13, 32, 1, true),
+      new THREE.MeshStandardMaterial({ color: 0x59483d, roughness: 0.55, side: THREE.DoubleSide }));
+    basin.position.set((357 - 214) / 75 + 0.24, 0.9, bathroomVanity.position.z);
+    basin.name = "balmani-still-84841-dark-emperador-38cm";
+    bathroomFixtures.add(basin);
+    addBox(bathroomFixtures, 0.025, 0.32, 0.025, bathroomRosegold,
+      (357 - 231.5) / 75 + 0.24, 0.995, bathroomVanity.position.z);
+    addBox(bathroomFixtures, 0.13, 0.025, 0.025, bathroomRosegold,
+      (357 - 227.5) / 75 + 0.24, 1.15, bathroomVanity.position.z);
+    const mirror = new THREE.Mesh(new THREE.CircleGeometry(0.4, 40),
+      new THREE.MeshStandardMaterial({ color: 0xc5c9c7, metalness: 0.9, roughness: 0.15, side: THREE.DoubleSide }));
+    mirror.rotation.y = Math.PI / 2;
+    mirror.position.set((357 - 236.5) / 75 + 0.26, 1.5, bathroomVanity.position.z);
+    mirror.name = "balmani-secret-80cm-mirror";
+    bathroomFixtures.add(mirror);
+    const mirrorFrame = new THREE.Mesh(new THREE.TorusGeometry(0.4, 0.012, 8, 40), bathroomRosegold);
+    mirrorFrame.rotation.y = Math.PI / 2;
+    mirrorFrame.position.copy(mirror.position);
+    bathroomFixtures.add(mirrorFrame);
+    const bathroomShower = addBathroomBox(762, 93, 60, 60, 0.027, 0.0665, materials.white, "luca-varess-classy-208333-80x80");
+    const showerScreen = addBox(bathroomFixtures, 0.8, 1.95, 0.01, glassMaterial,
+      bathroomShower.position.x, 1.055, (762.4 - 90) / 75);
+    showerScreen.name = "slim-shower-glass-screen";
+    const showerHead = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.02, 24), bathroomRosegold);
+    showerHead.position.set(bathroomShower.position.x, 2.2, bathroomShower.position.z);
+    bathroomFixtures.add(showerHead);
+    addBox(bathroomFixtures, 0.4, 0.025, 0.025, bathroomRosegold,
+      bathroomShower.position.x + 0.2, 2.22, bathroomShower.position.z);
+    addBox(bathroomFixtures, 0.02, 0.55, 0.02, bathroomRosegold,
+      bathroomShower.position.x, 1.25, (819 - 90) / 75);
+    addBox(bathroomFixtures, 0.08, 0.12, 0.025, bathroomRosegold,
+      bathroomShower.position.x, 1.02, (819 - 90) / 75);
+    const bathroomCistern = addBathroomBox(698.25, 93, 37.5, 9, 1.12, 0.64,
+      materials.white, "geberit-systemfix-sigma-up320");
+    const bathroomToilet = addBathroomBox(703.5, 102, 27, 38.25, 0.25, 0.4,
+      materials.white, "linie-waldo-202913-36x51cm");
+    addBathroomBox(708, 101.7, 18, 0.8, 0.15, 1.05, bathroomRosegold, "perola-rosegold-flush-plate");
     const loungeSofaWidth = 52 / 75;
-    const loungeSofaLength = 178 / 75;
+    const loungeSofaLength = 112.5 / 75;
     const loungeSofaX = (357 - 132) / 75 + 0.24;
-    const loungeSofaZ = (398 - 90) / 75;
+    const loungeSofaZ = (361.25 - 90) / 75;
     const loungeSofa = addBox(interior, loungeSofaWidth, 0.34, loungeSofaLength, materials.darkFabric, loungeSofaX, 0.31, loungeSofaZ);
     loungeSofa.name = "lounge-sofa-plan-aligned";
     addBox(interior, 0.2, 0.38, loungeSofaLength - 0.1, materials.cushion, loungeSofaX + loungeSofaWidth / 2 - 0.1, 0.68, loungeSofaZ);
 
-    const coffeeTableWidth = 38 / 75;
-    const coffeeTableLength = 118 / 75;
-    const coffeeTableX = (357 - 185) / 75 + 0.24;
-    const coffeeTableZ = (404 - 90) / 75;
+    const coffeeTableWidth = 37.5 / 75;
+    const coffeeTableLength = 67.5 / 75;
+    const coffeeTableX = (357 - 206.75) / 75 + 0.24;
+    const coffeeTableZ = (361.25 - 90) / 75;
     const coffeeTable = addBox(interior, coffeeTableWidth, 0.08, coffeeTableLength, woodEdgeMaterial, coffeeTableX, 0.32, coffeeTableZ);
     coffeeTable.name = "coffee-table-plan-aligned";
 
-    const deskWidth = 45 / 75;
+    const deskWidth = 60 / 75;
     const deskLength = 90 / 75;
-    const deskX = (357 - 115.5) / 75 + 0.24;
-    const deskZ = (604 - 90) / 75;
+    const deskX = (357 - 123) / 75 + 0.24;
+    const deskZ = (589 - 90) / 75;
     const desk = addBox(interior, deskWidth, 0.06, deskLength, woodEdgeMaterial, deskX, 0.76, deskZ);
     desk.name = "office-desk-plan-aligned";
     for (const x of [deskX - deskWidth / 2 + 0.05, deskX + deskWidth / 2 - 0.05]) {
@@ -960,18 +1053,66 @@
     }
     const monitor = addBox(interior, 0.05, 0.42, 0.65, materials.charcoal, deskX + deskWidth / 2 - 0.08, 1.06, deskZ, { castShadow: false });
     monitor.name = "office-monitor";
-    const deskChairX = (357 - 160) / 75 + 0.24;
+    const deskChairX = (357 - 175) / 75 + 0.24;
     const deskChair = addBox(interior, 0.46, 0.12, 0.46, materials.darkFabric, deskChairX, 0.48, deskZ);
     deskChair.name = "office-chair";
     addBox(interior, 0.12, 0.55, 0.42, materials.darkFabric, deskChairX + 0.2, 0.74, deskZ);
 
-    const pergolaSofa = addBox(studio, 0.73, 0.36, 1.72, materials.darkFabric, 3.4, 0.31, 1.25);
+    const pergolaSofa = addBox(studio, 0.73, 0.36, 1.72, materials.darkFabric, 3.315, 0.31, 1.25);
     pergolaSofa.name = "pergola-sofa-optimized";
-    addBox(studio, 0.18, 0.36, 1.62, materials.cushion, 3.68, 0.66, 1.25);
-    const pergolaTable = addBox(studio, 0.45, 0.06, 0.7, woodEdgeMaterial, 2.5, 0.34, 1.25);
+    addBox(studio, 0.18, 0.36, 1.62, materials.cushion, 3.595, 0.66, 1.25);
+    const pergolaTableX = (357 - 200.625) / 75 + 0.24;
+    const pergolaTable = addBox(studio, 0.45, 0.06, 0.7, woodEdgeMaterial, pergolaTableX, 0.34, 1.25);
     pergolaTable.name = "pergola-table-optimized";
     for (const z of [1.25 - 0.28, 1.25 + 0.28]) {
-      addBox(studio, 0.05, 0.31, 0.05, materials.charcoal, 2.5, 0.17, z);
+      addBox(studio, 0.05, 0.31, 0.05, materials.charcoal, pergolaTableX, 0.17, z);
+    }
+
+    const studioServices = [
+      { id: "S01", x: 600, y: 88, height: 0.3 },
+      { id: "S09", x: 555, y: 88, height: 0.3 },
+      { id: "E03", x: 615, y: 88, height: 0.3 },
+      { id: "F01", x: 530, y: 88, height: 0.3 },
+      { id: "S04", x: 330, y: 88, height: 0.3 },
+      { id: "S13", x: 255, y: 88, height: 0.4 },
+      { id: "E04", x: 104, y: 84, height: 0.4 },
+      { id: "E05", x: 225, y: 88, height: 2.2 },
+      { id: "S05", x: 694.5, y: 231.5, height: 1.1 },
+      { id: "S06", x: 759, y: 249.5, height: 1.1 },
+      { id: "C01", x: 674, y: 343, height: 1.1 },
+      { id: "C02", x: 674, y: 142, height: 1.1 },
+      { id: "C03", x: 692, y: 342, height: 1.1 },
+      { id: "W01", x: 846, y: 315, height: 0.6 },
+      { id: "E01", x: 846, y: 225, height: 2.5 },
+      { id: "E02", x: 130, y: 345, height: 2.5 }
+    ];
+    const serviceMaterial = standard(0xf5f3ed, 0.8);
+    studioServices.forEach(point => {
+      const northFace = point.y < 100 || point.id === "S05" || point.id === "S06";
+      const marker = addBox(studio, northFace ? 0.025 : 0.08, 0.08, northFace ? 0.08 : 0.025,
+        point.id === "W01" ? bathroomRosegold : serviceMaterial,
+        (357 - point.y) / 75 + 0.24, point.height + 0.08, (point.x - 90) / 75);
+      marker.name = `service-${point.id}`;
+    });
+    const aircoAllowance = addBox(studio, 0.16, 0.28, 0.9, materials.white,
+      (357 - 100) / 75 + 0.24, 2.45, (577.75 - 90) / 75);
+    aircoAllowance.name = "A01-provisional-hvac-indoor-unit";
+    const storageShelfGroup = new THREE.Group();
+    storageShelfGroup.name = "storage-open-shelves-110x30";
+    studio.add(storageShelfGroup);
+    for (const height of [0.25, 0.75, 1.25, 1.75]) {
+      addBox(storageShelfGroup, 1.1, 0.035, 0.3, woodEdgeMaterial,
+        (357 - 306.25) / 75 + 0.24, height, (810.75 - 90) / 75);
+    }
+    for (const planY of [266, 346.5]) {
+      addBox(storageShelfGroup, 0.025, 1.8, 0.3, woodEdgeMaterial,
+        (357 - planY) / 75 + 0.24, 0.9, (810.75 - 90) / 75);
+    }
+    for (const [name, planX, planY] of [["L01", 754, 315], ["L02", 739.5, 166], ["L03", 792, 123],
+      ["L04", 604, 269], ["L05", 604, 181], ["L06", 397, 269], ["L07", 397, 181],
+      ["L08", 193, 269], ["L09", 193, 181], ["V01", 750, 110], ["V02", 350, 130]]) {
+      addBox(studio, 0.12, 0.015, 0.12, serviceMaterial,
+        (357 - planY) / 75 + 0.24, 2.845, (planX - 90) / 75).name = `ceiling-${name}`;
     }
 
     const warmLight = new THREE.PointLight(0xffd7a0, 18, 7, 2);
@@ -1015,6 +1156,9 @@
     ));
 
     const houseHeight = 5.8;
+    const houseGroundFloorHeight = 2.9;
+    const houseUpperRearPlanY = 806.05 - 12 * planScale;
+    const houseUpperRearZ = siteZ(houseUpperRearPlanY);
     const houseMaterial = standard(0xe7e3db, 0.94);
     const houseStepLeftX = siteX(118.8);
     const houseStepRightX = siteX(126);
@@ -1024,53 +1168,81 @@
     addBox(
       world,
       houseRearRightX - houseLeftX,
-      houseHeight,
+      houseGroundFloorHeight,
       houseRearZ - houseStepRearZ,
       houseMaterial,
       (houseLeftX + houseRearRightX) / 2,
-      houseHeight / 2,
+      houseGroundFloorHeight / 2,
       (houseRearZ + houseStepRearZ) / 2
     );
     addBox(
       world,
       houseStepRightX - houseStepLeftX,
-      houseHeight,
+      houseGroundFloorHeight,
       houseStepRearZ - houseStepFrontZ,
       houseMaterial,
       (houseStepLeftX + houseStepRightX) / 2,
-      houseHeight / 2,
+      houseGroundFloorHeight / 2,
       (houseStepRearZ + houseStepFrontZ) / 2
     );
     addBox(
       world,
       houseStepLeftX - houseLeftX,
-      houseHeight,
+      houseGroundFloorHeight,
       houseStepRearZ - houseStepFrontZ,
       houseMaterial,
       (houseLeftX + houseStepLeftX) / 2,
-      houseHeight / 2,
+      houseGroundFloorHeight / 2,
       (houseStepRearZ + houseStepFrontZ) / 2
     );
     addBox(
       world,
-      houseNotchX - houseLeftX,
-      houseHeight,
+      houseNotchX - houseLeftX - 0.2,
+      houseGroundFloorHeight,
       houseStepFrontZ - houseFrontZ,
       houseMaterial,
-      (houseLeftX + houseNotchX) / 2,
-      houseHeight / 2,
+      (houseLeftX + houseNotchX - 0.2) / 2,
+      houseGroundFloorHeight / 2,
       (houseStepFrontZ + houseFrontZ) / 2
     );
-    addBox(
+    const houseUpperFloor = addBox(
       world,
-      terraceWidth + 0.18,
-      0.18,
-      houseRearZ - houseStepRearZ + 0.18,
-      materials.charcoalSoft,
-      (houseLeftX + houseRearRightX) / 2,
-      houseHeight + 0.09,
-      (houseRearZ + houseStepRearZ) / 2
+      houseStepRightX - houseLeftX,
+      houseHeight - houseGroundFloorHeight,
+      houseUpperRearZ - houseFrontZ,
+      houseMaterial,
+      (houseLeftX + houseStepRightX) / 2,
+      (houseHeight + houseGroundFloorHeight) / 2,
+      (houseUpperRearZ + houseFrontZ) / 2
     );
+    houseUpperFloor.name = "house-first-floor-7x12m";
+
+    const entranceProjection = new THREE.Group();
+    entranceProjection.name = "house-ground-floor-entrance-recess";
+    entranceProjection.position.set(houseNotchX, 0, (houseStepFrontZ + houseFrontZ) / 2);
+    entranceProjection.rotation.y = -Math.PI / 2;
+    world.add(entranceProjection);
+    const entranceDoorWidth = 1;
+    const entranceDoorHeight = 2.15;
+    const entranceWallDepth = 0.2;
+    const entranceWallHalfLength = (houseStepFrontZ - houseFrontZ) / 2;
+    for (const [left, right] of [[-entranceWallHalfLength, -entranceDoorWidth / 2], [entranceDoorWidth / 2, entranceWallHalfLength]]) {
+      addBox(entranceProjection, right - left, houseGroundFloorHeight, entranceWallDepth, houseMaterial,
+        (left + right) / 2, houseGroundFloorHeight / 2, entranceWallDepth / 2);
+    }
+    addBox(entranceProjection, entranceDoorWidth,
+      houseGroundFloorHeight - entranceDoorHeight, entranceWallDepth, houseMaterial,
+      0, (houseGroundFloorHeight + entranceDoorHeight) / 2, entranceWallDepth / 2);
+    const houseEntranceDoor = addBox(entranceProjection, entranceDoorWidth,
+      entranceDoorHeight, 0.055, materials.charcoal, 0, entranceDoorHeight / 2, -0.04);
+    houseEntranceDoor.name = "house-front-entrance-door";
+    for (const x of [-entranceDoorWidth / 2, entranceDoorWidth / 2]) {
+      addBox(entranceProjection, 0.05, entranceDoorHeight, 0.08, materials.charcoalSoft,
+        x, entranceDoorHeight / 2, -0.055);
+    }
+    addBox(entranceProjection, 0.025, 0.3, 0.04, materials.stone,
+      entranceDoorWidth / 2 - 0.12, 1.05, -0.09);
+    addBox(entranceProjection, entranceDoorWidth, 0.04, 0.3, materials.stone, 0, 0.02, -0.1);
 
     const houseSliderLeftX = siteX(18);
     const houseSliderRightX = siteX(108);
@@ -1096,7 +1268,10 @@
       [0, 806.05], [91, 806.05], [91, 778.05], [126, 778.05],
       [126, 591.05], [118.8, 591.05], [118.8, 536.05], [0, 536.05]
     ];
-    addPlanSurface(world, houseOutline, materials.charcoalSoft, houseHeight + 0.12);
+    const houseUpperOutline = planRect(0, houseUpperRearPlanY, 126, 806.05);
+    const houseRearExtensionOutline = planRect(0, 536.05, 118.8, houseUpperRearPlanY);
+    addPlanSurface(world, houseRearExtensionOutline, materials.charcoalSoft, houseGroundFloorHeight + 0.1);
+    addPlanSurface(world, houseUpperOutline, materials.charcoalSoft, houseHeight + 0.12);
 
     const studioPlanOutline = [
       [81.98330690803415, 267.1810652588368],
@@ -1104,8 +1279,10 @@
       [177.73101764709196, 435.75264022991456],
       [106.39630755512613, 445.51784048875135]
     ];
-    addPlanSurface(planOnly, houseOutline, standard(0xe7e3db, 0.97), houseHeight + 0.26);
-    addPlanOutline(planOnly, houseOutline, 0x2e4057, houseHeight + 0.285);
+    addPlanSurface(planOnly, houseRearExtensionOutline, standard(0xd6d1c7, 0.97), houseGroundFloorHeight + 0.16);
+    addPlanOutline(planOnly, houseRearExtensionOutline, 0x2e4057, houseGroundFloorHeight + 0.185);
+    addPlanSurface(planOnly, houseUpperOutline, standard(0xe7e3db, 0.97), houseHeight + 0.26);
+    addPlanOutline(planOnly, houseUpperOutline, 0x2e4057, houseHeight + 0.285);
     addPlanSurface(planOnly, studioPlanOutline, standard(0xe4e0d8, 0.97), 3.24);
     addPlanOutline(planOnly, studioPlanOutline, 0xc0392b, 3.265);
 
@@ -1155,24 +1332,109 @@
     addPlanSurface(world, planRect(11, 806.05, 126, 824.05), materials.gravel, 0.024);
     addPlanSurface(world, planRect(11, 921.25, 65, 968), materials.gravel, 0.02);
 
-    addPlanSurface(world, planRect(0, 806.05, 11, 921.25), materials.planting, 0.03);
-    addPlanSurface(world, planRect(65, 824.05, 91, 921.25), materials.flowerBed, 0.03);
-    addPlanSurface(world, [[126, 806.05], [228.2, 806.05], [230.4, 824.05], [126, 824.05]], materials.flowerBed, 0.03);
-    addPlanSurface(world, planRect(126, 767.25, 201.5, 778.05), materials.flowerBed, 0.032);
+    const mailboxGrassPoints = planRect(0, 806.05, 11, 921.25);
+    const frontFlowerBedPoints = [
+      planRect(65, 824.05, 91, 921.25),
+      [[126, 806.05], [228.2, 806.05], [230.4, 824.05], [126, 824.05]]
+    ];
+    addPlanSurface(world, mailboxGrassPoints, materials.planting, 0.03);
+    frontFlowerBedPoints.forEach(points => addPlanSurface(world, points, materials.flowerBed, 0.03));
 
-    addPlanSurface(world, planRect(11, 824.05, 65, 921.25), materials.grassPaver, 0.035);
-    addPlanSurface(world, planRect(126, 824.05, 178.2, 921.25), materials.grassPaver, 0.035);
-    addPlanSurface(world, [[178.2, 824.05], [230.4, 824.05], [239.7, 921.25], [178.2, 921.25]], materials.grassPaver, 0.035);
+    const parkingBayPoints = [
+      planRect(11, 824.05, 65, 921.25),
+      planRect(126, 824.05, 178.2, 921.25),
+      [[178.2, 824.05], [230.4, 824.05], [239.7, 921.25], [178.2, 921.25]]
+    ];
+    const parkingEdgingWidth = 0.05;
+    const concreteEdgingMaterial = standard(0x919191, 0.96);
+    const parkingBayMeshes = parkingBayPoints.map((points, index) => {
+      const bay = addPlanSurface(world, points, materials.gravel, 0.035);
+      bay.name = `gravel-parking-p${[3, 1, 2][index]}`;
+      points.forEach((start, edgeIndex) => {
+        if (index === 2 && edgeIndex === 3) return;
+        const end = points[(edgeIndex + 1) % points.length];
+        const curb = addPlanLinearBox(...start, ...end, 0.06, parkingEdgingWidth, concreteEdgingMaterial);
+        curb.name = `parking-concrete-edging-${index}-${edgeIndex}`;
+      });
+      return bay;
+    });
 
-    const parkingDividerMaterial = new THREE.LineBasicMaterial({ color: 0x526a4e, transparent: true, opacity: 0.9 });
-    const parkingDivider = new THREE.Line(
-      new THREE.BufferGeometry().setFromPoints([
-        new THREE.Vector3(siteX(178.2), 0.052, siteZ(824.05)),
-        new THREE.Vector3(siteX(178.2), 0.052, siteZ(921.25))
-      ]),
-      parkingDividerMaterial
-    );
-    world.add(parkingDivider);
+    const nnoGardenLawn = addPlanSurface(world, [[118.8, 536.05], [191.471, 536.05], [222.835, 765.05], [126, 765.05], [126, 591.05], [118.8, 591.05]], materials.lawn, 0.024);
+    nnoGardenLawn.name = "nno-garden-lawn";
+    const nnoWindowSpans = [[606.85, 639.25], [658.35, 690.75], [709.95, 735.15]];
+    const nnoWallBedPoints = [
+      planRect(118.8, 536.05, 129.6, 591.05),
+      planRect(126, 591.05, 136.8, 606.85),
+      planRect(126, 639.25, 136.8, 658.35),
+      [[126, 690.75], [136.8, 690.75], [136.8, 731.75], [134.1, 731.75], [134.1, 765.05], [126, 765.05]]
+    ];
+    nnoWallBedPoints.forEach((points, index) => {
+      addPlanSurface(world, points, materials.flowerBed, 0.038).name = `nno-wall-flower-bed-${index}`;
+    });
+
+    const wildflowerPetalGeometry = new THREE.SphereGeometry(1, 6, 4);
+    const wildflowerMaterial = standard(0xffffff, 0.92);
+    const wildflowerColors = [0xfaf5df, 0xe6bc39, 0xd77991, 0x6d9dcc];
+    const plantStemMaterial = new THREE.LineBasicMaterial({ color: 0x587a43 });
+    const duneGrassMaterial = new THREE.LineBasicMaterial({ color: 0x929d69 });
+
+    function addMockPlanting(points, seed, grassOnly = false) {
+      const planting = new THREE.Group();
+      planting.name = grassOnly ? "mailbox-dune-grasses" : `mock-wildflowers-${seed}`;
+      const area = Math.abs(points.reduce((sum, point, index) => {
+        const next = points[(index + 1) % points.length];
+        return sum + point[0] * next[1] - next[0] * point[1];
+      }, 0)) / (2 * planScale * planScale);
+      const count = Math.max(12, Math.ceil(area * (grassOnly ? 7 : 18)));
+      const random = seededRandom(seed);
+      const stems = [];
+      const petals = grassOnly ? null : new THREE.InstancedMesh(wildflowerPetalGeometry, wildflowerMaterial, count * 6);
+      const transform = new THREE.Object3D();
+      for (let index = 0; index < count; index += 1) {
+        const along = 0.035 + random() * 0.93;
+        const across = 0.18 + random() * 0.64;
+        const planPoint = points.length === 6
+          ? [126 + across * ((690.75 + along * 74.3) < 731.75 ? 10.8 : 8.1), 690.75 + along * 74.3]
+          : [0, 1].map(axis =>
+            (points[0][axis] * (1 - across) + points[1][axis] * across) * (1 - along)
+            + (points[3][axis] * (1 - across) + points[2][axis] * across) * along);
+        const x = siteX(planPoint[0]);
+        const z = siteZ(planPoint[1]);
+        const height = 0.25 + random() * 0.4;
+        if (grassOnly) {
+          for (let blade = 0; blade < 9; blade += 1) {
+            const angle = random() * Math.PI * 2;
+            const spread = 0.06 + random() * 0.1;
+            stems.push(new THREE.Vector3(x, 0.04, z), new THREE.Vector3(x + Math.cos(angle) * spread, height * (0.6 + random() * 0.4), z + Math.sin(angle) * spread));
+          }
+        } else {
+          stems.push(new THREE.Vector3(x, 0.04, z), new THREE.Vector3(x, height, z));
+          stems.push(new THREE.Vector3(x, height * 0.45, z), new THREE.Vector3(x + 0.08, height * 0.6, z + 0.035));
+          const color = new THREE.Color(wildflowerColors[index % wildflowerColors.length]);
+          for (let petal = 0; petal < 6; petal += 1) {
+            const angle = petal * Math.PI * 2 / 5;
+            transform.position.set(x + (petal < 5 ? Math.cos(angle) * 0.052 : 0), height, z + (petal < 5 ? Math.sin(angle) * 0.052 : 0));
+            transform.scale.setScalar(petal < 5 ? 0.045 : 0.023);
+            transform.scale.y *= 0.32;
+            transform.updateMatrix();
+            petals.setMatrixAt(index * 6 + petal, transform.matrix);
+            petals.setColorAt(index * 6 + petal, petal < 5 ? color : new THREE.Color(0xd1a43b));
+          }
+        }
+      }
+      planting.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(stems), grassOnly ? duneGrassMaterial : plantStemMaterial));
+      if (petals) {
+        petals.castShadow = true;
+        planting.add(petals);
+      }
+      planting.userData.flowerCount = grassOnly ? 0 : count;
+      world.add(planting);
+      return planting;
+    }
+
+    const wildflowerBeds = [...frontFlowerBedPoints, ...nnoWallBedPoints]
+      .map((points, index) => addMockPlanting(points, 3100 + index));
+    const mailboxDuneGrasses = addMockPlanting(planRect(0, 806.05, 11, 913.25), 3200, true);
 
     // Existing 7,500 L rainwater tank: projection plus visible inspection hatch.
     const tankCenterX = siteX(68.4);
@@ -1185,24 +1447,78 @@
     tankProjection.position.set(tankCenterX, 0.04, tankCenterZ);
     tankProjection.name = "rainwater-tank-7500l-projection";
     planOnly.add(tankProjection);
-    addBox(world, 0.6, 0.045, 0.6, materials.stone, tankCenterX, 0.04, tankCenterZ, { castShadow: false });
+    const rainwaterDeckHatch = addBox(world, 0.6, 0.02, 0.6, woodMaterial,
+      tankCenterX, deckTop - 0.009, tankCenterZ, { castShadow: false });
+    rainwaterDeckHatch.name = "removable-flush-rainwater-deck-hatch";
+    addPlanOutline(world, planRect(63, 432.73, 73.8, 443.53), 0x263238, deckTop + 0.004);
 
-    // Castello screen and 1.00 m pedestrian gate at the side-garden separation.
     const gateZ = siteZ(765.05);
-    const screenLeftX = siteX(127.8);
-    const screenPostX = siteX(204.5);
-    const gateRightX = siteX(222.5);
-    addBox(world, screenPostX - screenLeftX, 1.8, 0.075, woodMaterial, (screenLeftX + screenPostX) / 2, 0.9, gateZ);
-    addBox(world, gateRightX - screenPostX, 1.8, 0.075, woodMaterial, (screenPostX + gateRightX) / 2, 0.9, gateZ);
-    for (const x of [screenLeftX, screenPostX, gateRightX]) {
-      addBox(world, 0.1, 1.94, 0.1, materials.charcoal, x, 0.97, gateZ);
+    const gatePostSize = 0.15;
+    const gatePostHeight = 2.1;
+    const gateLeafHeight = 1.75;
+    const vehicleGateWidth = 3.5;
+    const pedestrianGateWidth = 1;
+    const hingeAllowance = 0.025;
+    const vehicleLatchAllowance = 0.01;
+    const pedestrianLatchAllowance = 0.015;
+    const gateAssemblyWidth = gatePostSize * 3 + vehicleGateWidth + pedestrianGateWidth
+      + hingeAllowance * 3 + vehicleLatchAllowance + pedestrianLatchAllowance;
+    const firstPostLeftPlanX = 222.835 - gateAssemblyWidth * planScale;
+    const middlePostLeftPlanX = firstPostLeftPlanX + (gatePostSize + vehicleGateWidth
+      + hingeAllowance * 2 + vehicleLatchAllowance) * planScale;
+    const lastPostLeftPlanX = 222.835 - gatePostSize * planScale;
+    const gatePostCenters = [firstPostLeftPlanX, middlePostLeftPlanX, lastPostLeftPlanX]
+      .map(left => left + gatePostSize * planScale / 2);
+    const gatePosts = gatePostCenters.map((planX, index) => {
+      const post = addBox(world, gatePostSize, gatePostHeight, gatePostSize, materials.charcoal,
+        siteX(planX), gatePostHeight / 2, gateZ);
+      post.name = `line-up-gate-post-${index + 1}`;
+      return post;
+    });
+    const gateAluminium = standard(0x151719, 0.5, 0.55);
+    function addLineUpGateLeaf(leftPlanX, width, name) {
+      const leftX = siteX(leftPlanX);
+      const leaf = addBox(world, width, gateLeafHeight, 0.06, gateAluminium,
+        leftX + width / 2, gateLeafHeight / 2 + 0.08, gateZ);
+      leaf.name = name;
+      for (let seam = 0.08; seam < width; seam += 0.08) {
+        addBox(world, 0.006, gateLeafHeight - 0.08, 0.064, materials.charcoalSoft,
+          leftX + seam, gateLeafHeight / 2 + 0.08, gateZ);
+      }
+      return leaf;
     }
-    addBox(world, gateRightX - screenLeftX, 0.07, 0.11, materials.charcoal, (screenLeftX + gateRightX) / 2, 0.08, gateZ);
-    addBox(world, gateRightX - screenLeftX, 0.07, 0.11, materials.charcoal, (screenLeftX + gateRightX) / 2, 1.76, gateZ);
+    const vehicleLeftLeafPlanX = firstPostLeftPlanX + (gatePostSize + hingeAllowance) * planScale;
+    const vehicleRightLeafPlanX = vehicleLeftLeafPlanX + (vehicleGateWidth / 2 + vehicleLatchAllowance) * planScale;
+    addLineUpGateLeaf(vehicleLeftLeafPlanX, vehicleGateWidth / 2, "vehicle-gate-leaf");
+    addLineUpGateLeaf(vehicleRightLeafPlanX, vehicleGateWidth / 2, "vehicle-gate-leaf");
+    const pedestrianLeafPlanX = middlePostLeftPlanX + (gatePostSize + hingeAllowance) * planScale;
+    addLineUpGateLeaf(pedestrianLeafPlanX, pedestrianGateWidth, "pedestrian-gate-left-hinged");
+    const gateInfillWidth = (firstPostLeftPlanX - 126) / planScale;
+    addLineUpGateLeaf(126, gateInfillWidth, "fixed-gate-wall-infill");
+    addBox(world, 0.03, 0.22, 0.07, materials.charcoalSoft,
+      siteX(pedestrianLeafPlanX) + pedestrianGateWidth - 0.09, 1.05, gateZ - 0.06);
 
-    const charger = addBox(world, 0.28, 0.42, 0.16, materials.charcoalSoft, screenPostX, 1.08, gateZ - 0.1);
+    const charger = addBox(world, 0.28, 0.42, 0.16, materials.charcoalSoft, gatePosts[1].position.x,
+      1.08, gateZ + gatePostSize / 2 + 0.08);
     charger.name = "ev-charger";
-    addBox(world, 0.2, 0.025, 0.17, standard(0xf0b400, 0.65), screenPostX, 1.12, gateZ - 0.185, { castShadow: false });
+    addBox(world, 0.2, 0.025, 0.01, standard(0xf0b400, 0.65), gatePosts[1].position.x,
+      1.12, charger.position.z + 0.085, { castShadow: false });
+
+    const cableReachRadius = 6;
+    const cableReachPoints = Array.from({ length: 181 }, (_, index) => {
+      const angle = index / 180 * Math.PI * 2;
+      return new THREE.Vector3(charger.position.x + Math.cos(angle) * cableReachRadius, 0.09,
+        charger.position.z + Math.sin(angle) * cableReachRadius);
+    });
+    const cableReachCircle = new Line2(
+      new LineGeometry().setPositions(cableReachPoints.flatMap(point => point.toArray())),
+      new LineMaterial({ color: 0x0078d4, linewidth: 3, dashed: true, dashSize: 0.07, gapSize: 0.13,
+        depthTest: false, depthWrite: false, side: THREE.DoubleSide })
+    );
+    cableReachCircle.name = "ev-cable-reach-radius-6m";
+    cableReachCircle.computeLineDistances();
+    cableReachCircle.renderOrder = 40;
+    world.add(cableReachCircle);
 
     const mailbox = addBox(
       world,
@@ -1216,8 +1532,9 @@
     );
     mailbox.name = "winnie-mailbox";
 
-    function addFenceWithJasmine(xStart, zStart, xEnd, zEnd, seed) {
+    function addFenceWithJasmine(xStart, zStart, xEnd, zEnd, seed, jasmine = true) {
       const fence = new THREE.Group();
+      fence.userData.jasmine = jasmine;
       const deltaX = xEnd - xStart;
       const deltaZ = zEnd - zStart;
       const length = Math.hypot(deltaX, deltaZ);
@@ -1247,6 +1564,8 @@
       }
       fence.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(wirePoints), wireMaterial));
 
+      if (!jasmine) return fence;
+
       const leafGeometry = new THREE.IcosahedronGeometry(0.17, 1);
       const flowerGeometry = new THREE.SphereGeometry(0.035, 6, 5);
       const leafMaterials = [
@@ -1271,26 +1590,114 @@
         flower.castShadow = true;
         fence.add(flower);
       }
+      return fence;
     }
 
-    function addPlanFence(startX, startY, endX, endY, seed) {
-      addFenceWithJasmine(siteX(startX), siteZ(startY), siteX(endX), siteZ(endY), seed);
+    function addPlanFence(startX, startY, endX, endY, seed, jasmine = true) {
+      const fence = addFenceWithJasmine(siteX(startX), siteZ(startY), siteX(endX), siteZ(endY), seed, jasmine);
+      fence.userData.planY = [startY, endY];
+      return fence;
     }
 
     const studioBoundaryNno = { x: 153.318017, y: 257.415865 };
     const studioBoundaryZzw = { x: 177.733, y: 435.752 };
 
     // Outer parcel only: B499k rear, WNW side to the house, and OZO side split around the studio wall.
-    addPlanFence(-0.262, 14.918, 120.998, 17.261, 2401);
-    addPlanFence(-0.262, 14.918, -0.225, 159.546, 2402);
-    addPlanFence(-0.225, 159.546, 0, 536.05, 2403);
-    addPlanFence(120.998, 17.261, 140.665, 161.659, 2404);
-    addPlanFence(140.665, 161.659, studioBoundaryNno.x, studioBoundaryNno.y, 2405);
-    addPlanFence(studioBoundaryZzw.x, studioBoundaryZzw.y, 240.137, 892.098, 2406);
-    addPlanFence(240.137, 892.098, 239.769, 945.156, 2407);
-    addPlanFence(239.769, 945.156, 239.45, 968, 2408);
-    addPlanFence(0, 806.05, -0.03, 904.941, 2409);
-    addPlanFence(-0.03, 904.941, 0, 968, 2410);
+    const bareRearFences = [
+      addPlanFence(-0.262, 14.918, 120.998, 17.261, 2401, false),
+      addPlanFence(-0.262, 14.918, -0.225, 159.546, 2402, false),
+      addPlanFence(-0.225, 159.546, -0.16, 268.055, 2403, false),
+      addPlanFence(120.998, 17.261, 140.665, 161.659, 2404, false),
+      addPlanFence(140.665, 161.659, studioBoundaryNno.x, studioBoundaryNno.y, 2405, false)
+    ];
+    const terraceFenceStartX = -0.16 * (536.05 - 464.05) / (536.05 - 268.055);
+    addPlanFence(-0.16, 268.055, terraceFenceStartX, 464.05, 2412);
+    const terraceTimberFence = new THREE.Group();
+    terraceTimberFence.name = "house-terrace-horizontal-timber-fence";
+    world.add(terraceTimberFence);
+    const terraceFenceLength = Math.hypot(terraceFenceStartX, 72) / planScale;
+    const terraceFenceBoardMaterial = standard(0xaa8051, 0.9);
+    for (let row = 0; row < 18; row += 1) {
+      const board = addPlanLinearBox(terraceFenceStartX, 464.05, 0, 536.05,
+        0.09, 0.035, terraceFenceBoardMaterial);
+      terraceTimberFence.attach(board);
+      board.position.y = 0.08 + row * 0.095 + 0.045;
+    }
+    const terraceFencePosts = [0, 0.5, 1].map(fraction => {
+      const post = addBox(terraceTimberFence, 0.08, 1.8, 0.08, materials.charcoal,
+        siteX(terraceFenceStartX * (1 - fraction)), 0.9, siteZ(464.05 + 72 * fraction));
+      post.name = "terrace-fence-post-ral9005";
+      return post;
+    });
+    const gateToStudioJasmine = addPlanFence(studioBoundaryZzw.x, studioBoundaryZzw.y, 222.835, 765.05, 2406);
+    gateToStudioJasmine.name = "gate-to-studio-tuscan-jasmine";
+
+    const spotFenceDeltaX = 222.835 - studioBoundaryZzw.x;
+    const spotFenceDeltaY = 765.05 - studioBoundaryZzw.y;
+    const spotFenceLength = Math.hypot(spotFenceDeltaX, spotFenceDeltaY);
+    const spotInset = 0.075 * planScale;
+    const lavaRockStripWidth = 0.15;
+    const lavaRockStripPlanWidth = lavaRockStripWidth * planScale * spotFenceLength / spotFenceDeltaY;
+    const fenceXAtY = planY => studioBoundaryZzw.x
+      + spotFenceDeltaX * (planY - studioBoundaryZzw.y) / spotFenceDeltaY;
+    const lavaRockMaterial = standard(0x50443e, 1);
+    for (const [startY, endY, level] of [[studioBoundaryZzw.y, 536.05, -0.07], [536.05, 765.05, 0.03]]) {
+      addPlanSurface(world, [
+        [fenceXAtY(startY), startY], [fenceXAtY(endY), endY],
+        [fenceXAtY(endY) - lavaRockStripPlanWidth, endY],
+        [fenceXAtY(startY) - lavaRockStripPlanWidth, startY]
+      ], lavaRockMaterial, level).name = "nno-lava-rock-strip";
+    }
+    const spotLensMaterial = new THREE.MeshStandardMaterial({ color: 0xfff2d9,
+      emissive: 0xffdf9e, emissiveIntensity: 0.8, roughness: 0.3 });
+    const nnoGroundSpots = Array.from({ length: 6 }, (_, index) => {
+      const fraction = (index + 0.5) / 6;
+      const fencePlanX = studioBoundaryZzw.x + spotFenceDeltaX * fraction;
+      const fencePlanY = studioBoundaryZzw.y + spotFenceDeltaY * fraction;
+      const planX = fencePlanX - spotInset * spotFenceDeltaY / spotFenceLength;
+      const planY = fencePlanY + spotInset * spotFenceDeltaX / spotFenceLength;
+      const spot = new THREE.Group();
+      spot.name = `nno-in-ground-spot-${index + 1}`;
+      spot.position.set(siteX(planX), planY < 536.05 ? -0.07 : 0.03, siteZ(planY));
+      spot.userData.planPoint = [planX, planY];
+      spot.userData.fenceFraction = fraction;
+      const trim = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.018, 20), materials.charcoalSoft);
+      trim.position.y = 0.009;
+      spot.add(trim);
+      const lens = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.006, 20), spotLensMaterial);
+      lens.position.y = 0.019;
+      spot.add(lens);
+      const light = new THREE.SpotLight(0xffdf9e, 5, 4, Math.PI / 7, 0.65, 2);
+      light.position.y = 0.03;
+      light.target.position.set(siteX(fencePlanX) - spot.position.x, 1.2,
+        siteZ(fencePlanY) - spot.position.z);
+      spot.add(light, light.target);
+      world.add(spot);
+      return spot;
+    });
+
+    const lavaRockCount = Math.ceil(spotFenceLength / planScale * lavaRockStripWidth * 600);
+    const lavaRocks = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 0), standard(0xffffff, 1), lavaRockCount);
+    lavaRocks.name = "nno-lava-rock-aggregate";
+    const rockRandom = seededRandom(3300);
+    const rockTransform = new THREE.Object3D();
+    const rockColors = [0x4b413b, 0x64514a, 0x786153, 0x504b47].map(color => new THREE.Color(color));
+    for (let index = 0; index < lavaRockCount; index += 1) {
+      const planY = studioBoundaryZzw.y + spotFenceDeltaY * (0.005 + rockRandom() * 0.99);
+      const planX = fenceXAtY(planY) - lavaRockStripPlanWidth * (0.2 + rockRandom() * 0.6);
+      const x = siteX(planX);
+      const z = siteZ(planY);
+      const size = nnoGroundSpots.some(spot => Math.hypot(spot.position.x - x, spot.position.z - z) < 0.065)
+        ? 0 : 0.012 + rockRandom() * 0.01;
+      rockTransform.position.set(x, (planY < 536.05 ? -0.07 : 0.03) + 0.014, z);
+      rockTransform.scale.set(size, size * 0.65, size * 0.85);
+      rockTransform.rotation.set(rockRandom() * Math.PI, rockRandom() * Math.PI, rockRandom() * Math.PI);
+      rockTransform.updateMatrix();
+      lavaRocks.setMatrixAt(index, rockTransform.matrix);
+      lavaRocks.setColorAt(index, rockColors[index % rockColors.length]);
+    }
+    lavaRocks.receiveShadow = true;
+    world.add(lavaRocks);
 
     function addPlanLinearBox(startPlanX, startPlanY, endPlanX, endPlanY, height, depth, material) {
       const startX = siteX(startPlanX);
@@ -1409,6 +1816,18 @@
     addPlanLabel("P3", siteX(38), siteZ(872.65), 1.3);
     addPlanLabel("P1", siteX(152.1), siteZ(872.65), 1.3);
     addPlanLabel("P2", siteX(204.3), siteZ(872.65), 1.3);
+    addPlanLabel("EV: bereik 6 m / diameter 12 m", charger.position.x, charger.position.z - 6.3, 3.8);
+    nnoGroundSpots.forEach((spot, index) => {
+      const marker = new THREE.Mesh(new THREE.CircleGeometry(0.14, 20), new THREE.MeshBasicMaterial({
+        color: 0xf5bd55, side: THREE.DoubleSide, depthTest: false }));
+      marker.rotation.x = -Math.PI / 2;
+      marker.position.set(spot.position.x, spot.position.y + 0.03, spot.position.z);
+      marker.renderOrder = 31;
+      planOnly.add(marker);
+      const label = makePlanLabel(`S${index + 1}`, 0.7);
+      label.position.set(spot.position.x - 0.35, spot.position.y + 0.07, spot.position.z);
+      planOnly.add(label);
+    });
     addPlanLabel("BEDIENINGSWEG", siteX(119), siteZ(1004), 4.1);
     addPlanLabel("BERM", siteX(120), siteZ(1058), 2.2);
     addPlanLabel("FIETSPAD", siteX(120), siteZ(1091), 2.9);
@@ -1469,14 +1888,22 @@
         area: integratedDeckArea,
         sideRun: 10,
         frontDepth: terraceDeckEndLocalZ - 10,
+        terraceFrontAligned: Math.abs(studioWorldPoint(4, terraceDeckEndLocalZ)[1] - terracePoolLineEnd[1]) < 1e-9,
+        bambooSides: 2,
+        topSideBlueStone: poolTopCoping.material === materials.stone,
+        neighbourSideBlueStone: neighbourPoolCoping.material === materials.stone,
+        neighbourStoneLength: neighbourPoolCoping.geometry.parameters.depth,
+        timberNeighbourCorner: integratedDeckPoints[10][0] === -poolOuterWidth
+          && integratedDeckPoints[10][1] === poolRearZ - poolOuterLength + coping,
+        removableRainwaterHatch: rainwaterDeckHatch.name === "removable-flush-rainwater-deck-hatch",
         pointCount: integratedDeckPoints.length,
         straightPoolLine: poolTimberInnerStart[0] === poolTimberInnerEnd[0],
         unifiedWoodSurface: integratedDeck.name === "single-integrated-deck-surface"
-          && Math.abs(poolSideTimberCoping.position.y + 0.045 - deckTop) < 1e-9,
+          && integratedDeck.material === woodMaterial,
         poolTimberWidth: coping,
         poolTimberExtensionLength: Math.abs(poolTimberInnerEnd[1] - poolTimberInnerStart[1]),
         deckTop,
-        poolSideTimberCoping: poolSideTimberCoping.material === woodMaterial,
+        poolSideTimberCoping: integratedDeck.material === woodMaterial,
         poolSideCrepiWall: poolSideCrepiWall.material === materials.wall,
         poolSideBlueStonePlinth: poolSideBlueStonePlinth.material === materials.stone,
         cornerPostSize: [cornerPostSize, cornerPostSize],
@@ -1488,13 +1915,10 @@
         pergolaSliderPanels
       },
       storageDoor: {
-        count: 1,
-        width: storageDoorWidth,
-        height: storageDoorHeight,
-        ral: storageDoor.material === materials.charcoal ? "RAL 9005" : "unknown",
-        material: "aluminium",
-        swing: "outward",
-        wallSegments: 2
+        count: studio.children.filter(child => child.name === "storage-exterior-door-ral9005").length,
+        wallSegments: 1,
+        closedWallWidth: storageEndWall.geometry.parameters.width,
+        continuousPlinth: storageEndPlinth.geometry.parameters.width === 4
       },
       furniture: {
         loungeSofaAxis: loungeSofaLength > loungeSofaWidth ? "studio-long-axis" : "cross-axis",
@@ -1504,9 +1928,205 @@
         sliderEntryClearance: coffeeTableX - coffeeTableWidth / 2,
         deskToBathroomClearance: (687 - 90) / 75 - (deskZ + deskLength / 2)
       },
+      services: {
+        points: studioServices,
+        count: studio.children.filter(child => child.name.startsWith("service-")).length,
+        storageClearWidth: 1.8 - 0.3,
+        loungeTableGap: loungeSofa.position.x - loungeSofaWidth / 2
+          - coffeeTable.position.x - coffeeTableWidth / 2,
+        pergolaTableGap: pergolaSofa.position.x - 0.73 / 2 - pergolaTable.position.x - 0.45 / 2,
+        deskChairClearOfDoorSwing: deskZ + 0.23 < (619 - 90) / 75,
+        deskDepth: deskWidth,
+        deskToDoorSwingClearance: Math.hypot(
+          Math.max(0, desk.position.x - deskWidth / 2 - internalDoorSpans[1].start),
+          Math.max(0, (679 - 90) / 75 - desk.position.z - deskLength / 2)
+        ) - 0.8,
+        hvacOnNnoWall: aircoAllowance.position.x > 3.5,
+        loungeToFireplacePlanningBuffer: fireplaceCenterZ - fireplaceDepth / 2
+          - loungeSofa.position.z - loungeSofaLength / 2
+      },
       sourcePlan: "grondplan.html",
+      nnoFacade: {
+        closedLength: studioNnoWall.geometry.parameters.depth + pergolaNnoWall.geometry.parameters.depth,
+        windowCount: studio.children.filter(child => child.material === glassMaterial && child.position.x > 3.76).length
+      },
+      bathroom: {
+        roomWidth: 1.8,
+        roomDepth: 143.5 / 75,
+        straightPartition: bathroomPartitionZ === internalPartitionZ,
+        vanitySideClearances: [
+          bathroomVanity.position.z - bathroomVanity.geometry.parameters.depth / 2
+            - (687 - 90) / 75,
+          (822 - 90) / 75 - bathroomVanity.position.z - bathroomVanity.geometry.parameters.depth / 2
+        ],
+        vanityWidth: bathroomVanity.geometry.parameters.depth,
+        vanityDepth: bathroomVanity.geometry.parameters.width,
+        basinType: "Balmani Still Dark Emperador 38 cm",
+        mirrorDiameter: 0.8,
+        mirrorOnBathroomWallFace: mirror.position.x > (357 - 236.5) / 75 + 0.24,
+        showerDimensions: [bathroomShower.geometry.parameters.depth, bathroomShower.geometry.parameters.width],
+        cisternDepth: bathroomCistern.geometry.parameters.width,
+        toiletProjection: bathroomToilet.geometry.parameters.width,
+        toiletWidth: bathroomToilet.geometry.parameters.depth,
+        toiletProjectionProvisional: false,
+        toiletClearOfDoor: bathroomToilet.position.x - bathroomToilet.geometry.parameters.width / 2
+          > internalDoorSpans[1].end,
+        toiletToDoorGap: bathroomToilet.position.x - bathroomToilet.geometry.parameters.width / 2
+          - internalDoorSpans[1].end,
+        showerRightOfToilet: bathroomShower.position.z > bathroomToilet.position.z,
+        showerScreenOnToiletSide: showerScreen.position.z < bathroomShower.position.z,
+        vanityStandingClearOfShower: bathroomVanity.position.z + 0.3
+          <= bathroomShower.position.z - bathroomShower.geometry.parameters.depth / 2 + 1e-9,
+        toiletFrontClearance: bathroomToilet.position.x - bathroomToilet.geometry.parameters.width / 2
+          - bathroomVanity.position.x - bathroomVanity.geometry.parameters.width / 2,
+        vanityToShowerDryGap: bathroomShower.position.x - bathroomShower.geometry.parameters.width / 2
+          - bathroomVanity.position.x - bathroomVanity.geometry.parameters.width / 2,
+        fullDrawerToShowerGap: bathroomShower.position.x - bathroomShower.geometry.parameters.width / 2
+          - bathroomVanity.position.x - bathroomVanity.geometry.parameters.width * 1.5,
+        showerEntryWidth: 0.8,
+        vanityTapPending: false,
+        squareShowerProduct: "Luca Varess Classy 208333"
+      },
+      fireplace: {
+        model: "DRU Maestro Tall Tunnel",
+        enclosureWidth: fireplaceWidth,
+        enclosureDepth: fireplaceDepth,
+        sidePassage: (3.52 - fireplaceWidth) / 2,
+        centerLocalZ: fireplaceCenterZ,
+        height: fireplaceHeight
+      },
+      internalDoors: {
+        count: studioInternalDoors.length,
+        rooms: studioInternalDoors.map(door => door.name),
+        width: studioInternalDoors.map(door => door.geometry.parameters.width),
+        hingesFacingEachOther: studioInternalDoors[0].userData.hingeX === internalDoorSpans[0].end
+          && studioInternalDoors[1].userData.hingeX === internalDoorSpans[1].start,
+        height: internalDoorHeight,
+        bathroomOpeningPlanY: [
+          357 - (internalDoorSpans[1].end - 0.24) * 75,
+          357 - (internalDoorSpans[1].start - 0.24) * 75
+        ],
+        storageOpeningPlanY: [
+          357 - (internalDoorSpans[0].end - 0.24) * 75,
+          357 - (internalDoorSpans[0].start - 0.24) * 75
+        ]
+      },
+      houseFloors: {
+        groundDepth: houseRearZ - houseFrontZ,
+        firstFloorWidth: houseUpperFloor.geometry.parameters.width,
+        firstFloorDepth: houseUpperFloor.geometry.parameters.depth,
+        rearExtensionDepth: houseRearZ - houseUpperRearZ,
+        entranceRecessWidth: houseStepRightX - houseNotchX,
+        entranceRecessDepth: houseStepFrontZ - houseFrontZ,
+        entranceDoorSetback: entranceProjection.position.z - houseFrontZ,
+        entranceDoorWall: entranceProjection.position.x === houseNotchX
+          && entranceProjection.rotation.y === -Math.PI / 2 ? "left-inlet-wall" : "other",
+        entranceDoorWidth: houseEntranceDoor.geometry.parameters.width
+      },
+      get navigation() {
+        return {
+          rotateEnabled: controls.enableRotate,
+          leftMouse: controls.mouseButtons.LEFT,
+          screenSpacePanning: controls.screenSpacePanning,
+          referencePoint: new THREE.Vector3(-2.4, 0, -18).project(camera).toArray()
+        };
+      },
+      frontGarden: {
+        terraceTimberFence: {
+          length: terraceFenceLength,
+          boardCount: terraceTimberFence.children.length - terraceFencePosts.length,
+          blackPostCount: terraceFencePosts.length,
+          postsRal9005: terraceFencePosts.every(post => post.material === materials.charcoal),
+          planSpan: [464.05, 536.05]
+        },
+        behindGateIsGrass: nnoGardenLawn.material === materials.lawn,
+        cableReachDiameter: cableReachRadius * 2,
+        cableReachLineWidth: cableReachCircle.material.linewidth,
+        cableReachCentered: cableReachPoints.every(point => Math.abs(
+          Math.hypot(point.x - charger.position.x, point.z - charger.position.z) - cableReachRadius) < 1e-9),
+        parkingBayCount: parkingBayMeshes.length,
+        allParkingGravel: parkingBayMeshes.every(bay => bay.material === materials.gravel),
+        concreteEdgingWidth: parkingEdgingWidth,
+        concreteEdgingCount: world.children.filter(child => child.name.startsWith("parking-concrete-edging-")).length,
+        gateFrontBedCount: world.children.filter(child => child.name === "screen-planting-bed").length,
+        wallBedCount: nnoWallBedPoints.length,
+        fenceBedCount: world.children.filter(child => child.name.startsWith("nno-fence-flower-bed-")).length,
+        lowWindowsClear: nnoWindowSpans.slice(0, 2).every(([start, end]) => nnoWallBedPoints.every(points => {
+          const ys = points.map(point => point[1]);
+          return Math.max(...ys) <= start || Math.min(...ys) >= end;
+        })),
+        gateBedUnderHighWindow: nnoWallBedPoints.some(points =>
+          Math.min(...points.map(point => point[1])) <= 709.95
+          && Math.max(...points.map(point => point[1])) === 765.05),
+        nnoSpotCount: nnoGroundSpots.length,
+        nnoSpotPositions: nnoGroundSpots.map(spot => spot.userData.planPoint),
+        nnoSpotSpacing: spotFenceLength / planScale / nnoGroundSpots.length,
+        lavaRockStripWidth,
+        spotsInsideLavaRock: nnoGroundSpots.every(spot => {
+          const [planX, planY] = spot.userData.planPoint;
+          const fenceX = fenceXAtY(planY);
+          return planX < fenceX && planX > fenceX - lavaRockStripPlanWidth;
+        }),
+        nnoSpotsAlongJasmineOnly: nnoGroundSpots.every(spot => spot.userData.fenceFraction > 0
+          && spot.userData.fenceFraction < 1),
+        jasmineFromGateToStudio: gateToStudioJasmine.userData.jasmine,
+        frontFenceCount: world.children.filter(child => child.userData.planY
+          && Math.max(...child.userData.planY) > 765.05).length,
+        wildflowerBedCount: wildflowerBeds.length,
+        wildflowerCount: wildflowerBeds.reduce((sum, bed) => sum + bed.userData.flowerCount, 0),
+        mailboxFlowerCount: mailboxDuneGrasses.userData.flowerCount,
+        rearFencesWithoutJasmine: bareRearFences.every(fence => !fence.userData.jasmine
+          && !fence.children.some(child => child.geometry?.type === "IcosahedronGeometry" || child.geometry?.type === "SphereGeometry")),
+        vehicleGateLeaves: world.children.filter(child => child.name === "vehicle-gate-leaf").length,
+        gateAssembly: {
+          postCount: gatePosts.length,
+          postSize: gatePostSize,
+          postHeight: gatePostHeight,
+          leafHeight: gateLeafHeight,
+          vehicleGateWidth,
+          pedestrianGateWidth,
+          totalWidth: gateAssemblyWidth,
+          infillWidth: gateInfillWidth,
+          chargerOnMiddlePost: charger.position.x === gatePosts[1].position.x,
+          chargerOnGardenSide: charger.position.z > gateZ,
+          chargerPlanCenter: [gatePostCenters[1], 765.05 - (gatePostSize / 2 + 0.08) * planScale]
+        }
+      },
       canonicalWorldScaleX: world.scale.x
     };
+    console.assert(geometryChecks.frontGarden.allParkingGravel && geometryChecks.frontGarden.parkingBayCount === 3, "P1-P3 must use steenslag");
+    console.assert(geometryChecks.frontGarden.concreteEdgingWidth === 0.05 && geometryChecks.frontGarden.concreteEdgingCount === 11, "Parking must have 5 cm concrete edging with one shared divider");
+    console.assert(geometryChecks.frontGarden.lowWindowsClear && geometryChecks.frontGarden.fenceBedCount === 0
+      && geometryChecks.frontGarden.gateBedUnderHighWindow, "NNO beds must clear low windows but continue beneath the high window near the gate");
+    console.assert(geometryChecks.frontGarden.nnoSpotCount === 6 && geometryChecks.frontGarden.nnoSpotsAlongJasmineOnly,
+      "Six in-ground spots must be confined to the jasmine fence between gate and studio");
+    console.assert(geometryChecks.frontGarden.lavaRockStripWidth === 0.15 && geometryChecks.frontGarden.spotsInsideLavaRock,
+      "All six spots must sit inside the 15 cm lava-rock strip beside the jasmine fence");
+    console.assert(geometryChecks.frontGarden.jasmineFromGateToStudio && geometryChecks.frontGarden.vehicleGateLeaves === 2, "Jasmine fence must run from the gate to the studio");
+    console.assert(gatePosts.length === 3 && gatePostSize === 0.15 && gatePostHeight === 2.1
+      && gateLeafHeight === 1.75 && vehicleGateWidth === 3.5 && pedestrianGateWidth === 1
+      && geometryChecks.frontGarden.gateAssembly.chargerOnMiddlePost
+      && geometryChecks.frontGarden.gateAssembly.chargerOnGardenSide,
+      "Line Up gates must use three 15 cm posts and a garden-side charger on the middle post");
+    console.assert(geometryChecks.frontGarden.rearFencesWithoutJasmine, "Fences behind the pool and studio through the rear garden must have no jasmine");
+    console.assert(geometryChecks.frontGarden.frontFenceCount === 0, "Both sides streetward of the garden gate must remain open without fences or jasmine");
+    console.assert(geometryChecks.frontGarden.wildflowerBedCount === 6 && geometryChecks.frontGarden.wildflowerCount > 0 && geometryChecks.frontGarden.mailboxFlowerCount === 0, "Six remaining flower beds need wildflowers; mailbox strip must contain dune grasses only");
+    console.assert(geometryChecks.frontGarden.cableReachDiameter === 12 && geometryChecks.frontGarden.cableReachCentered, "Cable reach circle must have 6 m radius centered on the charger");
+    console.assert(geometryChecks.frontGarden.behindGateIsGrass, "The NNO garden surrounding the flower beds behind the gate must be grass");
+    console.assert(Math.abs(geometryChecks.frontGarden.terraceTimberFence.length - 4) < 0.001
+      && geometryChecks.frontGarden.terraceTimberFence.boardCount === 18
+      && geometryChecks.frontGarden.terraceTimberFence.postsRal9005,
+      "Horizontal timber fence with RAL 9005 posts must cover only the existing 4 m house terrace");
+    console.assert(Math.abs(geometryChecks.houseFloors.groundDepth - 15) < 1e-9
+      && Math.abs(geometryChecks.houseFloors.firstFloorWidth - 7) < 1e-9
+      && Math.abs(geometryChecks.houseFloors.firstFloorDepth - 12) < 1e-9
+      && Math.abs(geometryChecks.houseFloors.rearExtensionDepth - 3) < 1e-9
+      && Math.abs(geometryChecks.houseFloors.entranceDoorWidth - 1) < 1e-9,
+      "House must have a 15 m ground floor, front-aligned 7x12 m first floor, 3 m rear extension and recessed 1 m entrance door");
+    console.assert(geometryChecks.houseFloors.entranceDoorWall === "left-inlet-wall"
+      && Math.abs(geometryChecks.houseFloors.entranceDoorSetback - 14 / 18) < 1e-9
+      && Math.abs(geometryChecks.houseFloors.entranceRecessDepth - 28 / 18) < 1e-9,
+      "Entrance door must be on the left inlet wall beneath the rectangular first floor");
     console.assert(Math.abs(geometryChecks.minimum - 0.358) < 0.002, "Upper platform edge must be about 0.36 m");
     console.assert(Math.abs(geometryChecks.pergolaEnd - 0.703) < 0.002, "Glass-line platform edge must be about 0.70 m");
     console.assert(Math.abs(geometryChecks.poolShift - 0.048546) < 0.00001, "Pool must move 4.85 cm toward the house");
@@ -1519,10 +2139,16 @@
     console.assert(Math.abs(geometryChecks.timberPlatform.skewAtPool - 0.095) < 0.002, "Timber platform must meet the pool diagonally");
     console.assert(geometryChecks.timberPlatform.glassLineDeviation < 1e-9, "Platform edge and pergola glass must be collinear");
     console.assert(geometryChecks.timberPlatform.rearLineDeviation < 1e-9, "Upper platform edge and pergola rear must be collinear");
-    console.assert(Math.abs(geometryChecks.integratedDeck.area - 27.917763) < 0.001, "Merged pool-edge deck must remain 27.92 m² including the pergola");
+    console.assert(geometryChecks.integratedDeck.area > 35 && geometryChecks.integratedDeck.area < 50,
+      "Bamboo deck must include the house-side pool end and the house-terrace connection");
     console.assert(geometryChecks.integratedDeck.sideRun === 10, "Deck must run along the complete studio side");
-    console.assert(geometryChecks.integratedDeck.frontDepth > 1 && geometryChecks.integratedDeck.frontDepth < 1.1, "Front return must fill the studio-to-terrace gap");
-    console.assert(geometryChecks.integratedDeck.pointCount === 11, "Merged deck must include the full-width timber strip to the terrace");
+    console.assert(geometryChecks.integratedDeck.terraceFrontAligned && geometryChecks.integratedDeck.frontDepth > 1,
+      "House-facing deck edge must follow the existing house terrace line");
+    console.assert(geometryChecks.integratedDeck.pointCount === 12 && geometryChecks.integratedDeck.bambooSides === 2
+      && geometryChecks.integratedDeck.topSideBlueStone && geometryChecks.integratedDeck.neighbourSideBlueStone
+      && Math.abs(geometryChecks.integratedDeck.neighbourStoneLength - 7.5) < 1e-9
+      && geometryChecks.integratedDeck.timberNeighbourCorner && geometryChecks.integratedDeck.removableRainwaterHatch,
+      "Top and neighbour pool edges must be blue stone, with a 20 cm bamboo corner replacing the final neighbour-side sliver");
     console.assert(geometryChecks.integratedDeck.straightPoolLine, "Pool-side deck edge must stay on one straight line to the terrace");
     console.assert(geometryChecks.integratedDeck.unifiedWoodSurface, "Timber coping and deck must share one flush, texture-aligned surface");
     console.assert(Math.abs(geometryChecks.integratedDeck.poolTimberWidth - 0.2) < 1e-9 && geometryChecks.integratedDeck.poolTimberExtensionLength > 10.8, "The 20 cm timber strip must continue from the pool to the terrace");
@@ -1533,12 +2159,55 @@
     console.assert(geometryChecks.integratedDeck.poolSideSliderCount === 1 && Math.abs(geometryChecks.integratedDeck.poolSideSliderWidth - 386 / 75) < 1e-9, "Pool-facing façade must use one full-width 5.15 m slider");
     console.assert(geometryChecks.integratedDeck.poolSideSliderPanels === 2, "Pool-facing slider must have two panels");
     console.assert(Math.abs(geometryChecks.integratedDeck.pergolaSliderWidth - 3.52) < 1e-9 && geometryChecks.integratedDeck.pergolaSliderPanels === 2, "Pergola slider must be 3.52 m with two panels");
-    console.assert(geometryChecks.storageDoor.count === 1 && geometryChecks.storageDoor.wallSegments === 2, "Storage end wall must contain one real door opening");
-    console.assert(Math.abs(geometryChecks.storageDoor.width - 0.9) < 1e-9 && Math.abs(geometryChecks.storageDoor.height - 2.44) < 1e-9, "Storage exterior door must be 0.90 x 2.44 m");
-    console.assert(geometryChecks.storageDoor.ral === "RAL 9005" && geometryChecks.storageDoor.material === "aluminium" && geometryChecks.storageDoor.swing === "outward", "Storage exterior door must be outward-opening RAL 9005 aluminium");
+    console.assert(geometryChecks.storageDoor.count === 0 && geometryChecks.storageDoor.wallSegments === 1
+      && geometryChecks.storageDoor.closedWallWidth === 4 && geometryChecks.storageDoor.continuousPlinth,
+      "Studio end wall must be closed, with no exterior door and a continuous blue-stone plinth");
+    console.assert(geometryChecks.internalDoors.count === 2
+      && geometryChecks.internalDoors.width.every(width => Math.abs(width - 0.8) < 1e-9)
+      && geometryChecks.internalDoors.hingesFacingEachOther,
+      "Bathroom and storage Xinix doors must open towards each other with hinges on their adjacent edges");
+    console.assert(Math.abs(geometryChecks.internalDoors.bathroomOpeningPlanY[0] - 146.5) < 1e-9
+      && Math.abs((236.5 - geometryChecks.internalDoors.bathroomOpeningPlanY[1]) / 75 - 0.4) < 1e-9
+      && deskWidth === 0.8,
+      "Bathroom door must retain its revised 40 cm setback with an 80 cm-deep desk");
+    console.assert(Math.abs((geometryChecks.internalDoors.storageOpeningPlanY[0] - 244.5) / 75 - 0.35) < 1e-9
+      && Math.abs((357 - geometryChecks.internalDoors.storageOpeningPlanY[1]) / 75 - 0.35) < 1e-9,
+      "Storage Xinix door must be centered with 35 cm clear at both ends");
+    console.assert(geometryChecks.fireplace.enclosureWidth === 1.25
+      && geometryChecks.fireplace.enclosureDepth === 0.54
+      && Math.abs(geometryChecks.fireplace.sidePassage - 1.135) < 1e-9,
+      "DRU fireplace enclosure must be centered, 125x54 cm, with equal side passages");
+    console.assert(geometryChecks.bathroom.vanityWidth === 1 && geometryChecks.bathroom.vanityDepth === 0.55
+      && geometryChecks.bathroom.showerDimensions.every(size => size === 0.8)
+      && geometryChecks.bathroom.cisternDepth === 0.12 && geometryChecks.bathroom.toiletClearOfDoor,
+      "Moon vanity and square shower must fit with the centered, symmetrical Xinix doors");
+    console.assert(geometryChecks.bathroom.toiletWidth === 0.36 && geometryChecks.bathroom.toiletProjection === 0.51,
+      "Waldo toilet footprint must match the supplier's 36x51 cm dimensions");
+    console.assert(geometryChecks.bathroom.vanitySideClearances.every(gap => gap >= 0.15 - 1e-9)
+      && geometryChecks.bathroom.toiletFrontClearance > 0.73
+      && geometryChecks.bathroom.fullDrawerToShowerGap > 0.013,
+      "Swapped bathroom must retain at least 15 cm vanity side gaps and the tested toilet/drawer clearances");
+    console.assert(geometryChecks.bathroom.showerRightOfToilet && geometryChecks.bathroom.showerScreenOnToiletSide
+      && geometryChecks.bathroom.vanityStandingClearOfShower
+      && Math.abs(geometryChecks.bathroom.vanitySideClearances[0] - 0.2) < 1e-9
+      && Math.abs(geometryChecks.bathroom.vanitySideClearances[1] - 0.6) < 1e-9,
+      "Toilet left, shower right and shifted vanity must preserve the 60 cm vanity standing zone");
+    console.assert(geometryChecks.nnoFacade.windowCount === 0 && geometryChecks.nnoFacade.closedLength === 10,
+      "Studio NNO facade must be a closed 10 m wall without the 30 cm-high windows");
+    console.assert(geometryChecks.bathroom.mirrorOnBathroomWallFace,
+      "Mirror must sit on the bathroom face of the storage wall, not inside the partition");
+    console.assert(geometryChecks.bathroom.roomWidth === 1.8 && geometryChecks.bathroom.straightPartition,
+      "Bathroom room size and straight partition must not change");
     console.assert(Object.values(geometryChecks.furniture).slice(0, 4).every(axis => axis === "studio-long-axis"), "Sofa, tables and desk must follow the studio long axis");
     console.assert(geometryChecks.furniture.sliderEntryClearance > 2.2, "Furniture must preserve a clear route from the pool-side slider");
     console.assert(geometryChecks.furniture.deskToBathroomClearance > 0.5, "Desk must clear the bathroom zone");
+    console.assert(geometryChecks.services.count === 16 && geometryChecks.services.storageClearWidth === 1.5
+      && Math.abs(geometryChecks.services.loungeTableGap - 0.4) < 1e-9
+      && Math.abs(geometryChecks.services.pergolaTableGap - 0.4) < 0.001
+      && geometryChecks.services.deskChairClearOfDoorSwing && geometryChecks.services.hvacOnNnoWall
+      && geometryChecks.services.deskDepth === 0.8 && geometryChecks.services.deskToDoorSwingClearance > 0.13
+      && geometryChecks.services.loungeToFireplacePlanningBuffer >= 1,
+      "Optimized services must preserve 40 cm table gaps, clear door swings and a 1.5 m storage aisle");
     console.assert(geometryChecks.canonicalWorldScaleX === -1, "All views must retain the Plan orientation");
     window.__renderMetrics = geometryChecks;
 
@@ -1559,6 +2228,10 @@
 
     function setView(view) {
       currentView = view;
+      controls.enableRotate = view !== "plan";
+      controls.screenSpacePanning = true;
+      controls.mouseButtons.LEFT = view === "plan" ? THREE.MOUSE.PAN : THREE.MOUSE.ROTATE;
+      controls.touches.ONE = view === "plan" ? THREE.TOUCH.PAN : THREE.TOUCH.ROTATE;
       console.assert(world.scale.x === -1, "Camera changes must not mirror the site");
       window.__renderView = view;
       mainHost.classList.toggle("plan-view", view === "plan");

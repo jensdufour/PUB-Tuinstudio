@@ -766,6 +766,53 @@
         </g>
 
         <!-- Minimal front garden, redrawn for the current house position. -->
+        <g id="nno-garden-design" aria-label="NNO: bloemen langs muren en onder het hoge raam; gras en grondspots langs de jasmijnomheining">
+          <path id="nno-garden-lawn" d="M118.8,536.05 L191.471,536.05 L222.835,765.05 L126,765.05 L126,591.05 L118.8,591.05 Z"
+            fill="url(#grassFill)" stroke="#88aa78" stroke-width="0.6" />
+          <g id="nno-wall-beds" fill="url(#flowerFill)" stroke="#88aa78" stroke-width="0.6" data-depth-m="0.6">
+            <rect x="118.8" y="536.05" width="10.8" height="55" />
+            <rect x="126" y="591.05" width="10.8" height="15.8" />
+            <rect x="126" y="639.25" width="10.8" height="19.1" />
+            <path id="gate-wall-flower-bed" d="M126,690.75 L136.8,690.75 L136.8,731.75 L134.1,731.75 L134.1,765.05 L126,765.05 Z" />
+          </g>
+          <defs>
+            <pattern id="lavaRockFill" width="6" height="6" patternUnits="userSpaceOnUse">
+              <rect width="6" height="6" fill="#50443e" />
+              <path d="M0.4,0.8 L2.1,0.3 L2.6,1.8 L1.3,2.5 Z M3.4,3.2 L5.5,3.5 L5.7,5.3 L4.1,5.8 Z" fill="#786153" />
+              <path d="M3.5,0.4 L5.6,0.7 L5.2,2.4 L3.7,2.1 Z M0.2,3.6 L1.7,3 L2.5,4.9 L0.8,5.7 Z" fill="#64514a" />
+            </pattern>
+          </defs>
+          <path id="nno-lava-rock-strip" aria-label="Lavarotsstrook 15 cm breed met grondspots"
+            d="M177.733,435.752 L222.835,765.05 L220.110,765.05 L175.008,435.752 Z"
+            fill="url(#lavaRockFill)" stroke="#504b47" stroke-width="0.5" />
+          <g id="gate-to-studio-jasmine" aria-label="Toscaanse jasmijn van de poort tot het bijgebouw">
+            <title>Omheining met Toscaanse jasmijn (Trachelospermum jasminoides)</title>
+            <path d="M221.335,765.05 L176.233,435.752" fill="none" stroke="#3a8a4a" stroke-width="3" />
+            <path d="M221.335,765.05 L176.233,435.752" fill="none" stroke="#88aa78" stroke-width="5" stroke-dasharray="3,5" />
+            <text x="217" y="566" font-size="4" fill="#3a7a3a" text-anchor="middle"
+              transform="rotate(82.2,217,566)">TOSCAANSE JASMIJN</text>
+          </g>
+          <g id="nno-ground-spots" aria-label="6 warmwitte grondspots langs de jasmijnomheining, circa 3,1 m tussenafstand">
+            <title>Grondspots S1-S6: diameter 10 cm, midden in een lavarotsstrook van 15 cm</title>
+            <g fill="#f5bd55" stroke="#2E4057" stroke-width="0.6">
+              <circle cx="180.154" cy="463.377" r="0.9" />
+              <circle cx="187.671" cy="518.260" r="0.9" />
+              <circle cx="195.188" cy="573.143" r="0.9" />
+              <circle cx="202.705" cy="628.026" r="0.9" />
+              <circle cx="210.222" cy="682.909" r="0.9" />
+              <circle cx="217.739" cy="737.792" r="0.9" />
+            </g>
+            <g fill="#2E4057" font-size="3.5" text-anchor="end">
+              <text x="176.154" y="464.577">S1</text>
+              <text x="183.671" y="519.460">S2</text>
+              <text x="191.188" y="574.343">S3</text>
+              <text x="198.705" y="629.226">S4</text>
+              <text x="206.222" y="684.109">S5</text>
+              <text x="213.739" y="738.992">S6</text>
+            </g>
+          </g>
+        </g>
+
         <g id="front-garden-design" aria-label="Voortuin met beplanting, parkeren, poort en laadpunt">
           <title>Voortuinontwerp op de huidige woningpositie</title>
 
@@ -818,7 +865,8 @@
             fill="url(#gravelFill)" stroke="none" opacity="0.72" />
 
           <!-- All parking bays share one OZO edge and retain their full 5,40 m length. -->
-          <g fill="url(#grassPaverFill)" fill-opacity="0.72" stroke="#88aa78" stroke-width="0.7" stroke-dasharray="4,3">
+          <g id="parking-bays" fill="url(#gravelFill)" stroke="#919191" stroke-width="0.9" stroke-linejoin="miter" data-edging-width-m="0.05">
+            <title>P1, P2 en P3: steenslag met betonnen boordstenen van 5 cm breed</title>
             <rect x="11" y="824.05" width="54" height="97.2" />
             <rect x="126" y="824.05" width="52.2" height="97.2" />
             <path d="M178.2,824.05 L230.4,824.05 L239.7,921.25 L178.2,921.25 Z" />
@@ -832,24 +880,37 @@
             <text x="204.3" y="876" font-size="2.8">min. 2,90 × 5,40 m</text>
           </g>
 
-          <!-- Castello screen and 1 m pedestrian gate, fitted to the current parcel width. -->
           <g id="front-gate" fill="none" stroke="#2E4057" stroke-linecap="square">
-            <line x1="127.8" y1="765.05" x2="204.5" y2="765.05" stroke-width="4" />
-            <line x1="204.5" y1="765.05" x2="222.5" y2="765.05" stroke-width="1.4" />
-            <line x1="204.5" y1="765.05" x2="204.5" y2="747.05" stroke-width="0.7" stroke-dasharray="2,2" />
-            <path d="M222.5,765.05 A18,18 0 0,0 204.5,747.05" stroke-width="0.7" stroke-dasharray="3,2" />
+            <title>Line Up RAL 9005: paal 15 cm - dubbele poort 350 cm - paal 15 cm - enkele poort 100 cm linksdraaiend - paal 15 cm; hoogte poorten 175 cm, palen 210 cm</title>
+            <line x1="126" y1="765.05" x2="131.935" y2="765.05" stroke-width="1.4" />
+            <g id="line-up-gate-posts" fill="#151719" stroke-width="0.5">
+              <rect x="131.935" y="763.7" width="2.7" height="2.7" />
+              <rect x="198.715" y="763.7" width="2.7" height="2.7" />
+              <rect x="220.135" y="763.7" width="2.7" height="2.7" />
+            </g>
+            <g id="line-up-gate-leaves" stroke-width="1.2">
+              <line x1="135.085" y1="765.05" x2="166.585" y2="765.05" />
+              <line x1="166.765" y1="765.05" x2="198.265" y2="765.05" />
+              <line x1="201.865" y1="765.05" x2="219.865" y2="765.05" />
+            </g>
+            <g stroke-width="0.6" stroke-dasharray="2,2">
+              <path d="M135.085,765.05 L135.085,733.55 M166.585,765.05 A31.5,31.5 0 0,0 135.085,733.55" />
+              <path d="M198.265,765.05 L198.265,733.55 M166.765,765.05 A31.5,31.5 0 0,1 198.265,733.55" />
+              <path d="M201.865,765.05 L201.865,747.05 M219.865,765.05 A18,18 0 0,0 201.865,747.05" />
+            </g>
           </g>
-          <!-- 0,60 m flowerbed below the screen, aligned with the house's outer wall corner. -->
-          <rect id="screen-planting-bed" x="126" y="767.25" width="75.5" height="10.8" rx="0.8"
-            fill="url(#flowerFill)" stroke="#88aa78" stroke-width="0.6" />
-          <text x="166" y="752" font-size="4" fill="#2E4057" text-anchor="middle" font-weight="700">SCHERM</text>
-          <text x="213.5" y="742" font-size="3.5" fill="#2E4057" text-anchor="middle">POORT 1,00 m</text>
+          <text x="166.675" y="726" font-size="4" fill="#2E4057" text-anchor="middle" font-weight="700">LINE UP 3,50 m</text>
+          <text x="211" y="742" font-size="3.5" fill="#2E4057" text-anchor="middle">POORT 1,00 m</text>
 
-          <!-- Charging point on the screen/gate post. -->
-          <rect x="201.5" y="765.05" width="6" height="8" rx="1"
+          <rect id="garden-side-charger" x="197.545" y="760.82" width="5.04" height="2.88" rx="0.5"
             fill="#3a3a3a" stroke="#1a1a2e" stroke-width="0.6" />
-          <line x1="202.5" y1="768" x2="206.5" y2="768" stroke="#f7be00" stroke-width="1" />
-          <text x="204.5" y="779" font-size="3.2" fill="#2E4057" text-anchor="middle" font-weight="700">EV</text>
+          <line x1="198.265" y1="761" x2="201.865" y2="761" stroke="#f7be00" stroke-width="0.6" />
+          <text x="200.065" y="756" font-size="3.2" fill="#2E4057" text-anchor="middle" font-weight="700">EV TUINZIJDE</text>
+          <g id="ev-cable-reach" aria-label="Laadkabel: bereik 6 m, cirkel diameter 12 m">
+            <circle cx="200.065" cy="762.26" r="108" fill="none" stroke="#0078d4" stroke-width="1.4"
+              stroke-dasharray="0.3,2.5" stroke-linecap="round" />
+            <text x="200.065" y="875.26" font-size="3.5" fill="#0078d4" text-anchor="middle">EV bereik 6,00 m &#183; &#216; 12,00 m</text>
+          </g>
 
           <text x="78" y="866" font-size="3.2" fill="#5a7040" text-anchor="middle" transform="rotate(-90,78,866)">BEPLANTING</text>
           <text x="182" y="796" font-size="5" fill="#2E4057" text-anchor="middle" font-weight="700">OPRIT</text>
@@ -1161,11 +1222,20 @@
             <line x1="48" y1="614" x2="48" y2="618" />
             <line x1="78" y1="614" x2="78" y2="618" />
           </g>
+          <g id="house-entrance-recess" aria-label="Inpandige inkom: voordeur 1,00 m op de linkerwand van de nis">
+            <rect x="87" y="861" width="4" height="18" fill="#f0ece4" stroke="none" />
+            <path d="M91,879 L109,879 M91,861 A18,18 0 0,1 109,879" fill="none" stroke="#2E4057" stroke-width="0.7" />
+          </g>
+          <g id="house-first-floor-outline" aria-label="Verdieping: volle breedte 7,00 m, diepte 12,00 m, uitgelijnd met de voorgevel"
+            fill="none" stroke="#7a8a9a" stroke-width="0.7" stroke-dasharray="3,2">
+            <rect x="0" y="668" width="126" height="216" />
+          </g>
         </g>
 
         <!-- House label -->
         <text x="61" y="746" font-size="9" fill="#2E4057" text-anchor="middle" font-weight="700">WONING</text>
         <text x="61" y="757" font-size="3.8" fill="#7a8a9a" text-anchor="middle">7,00 × 15,00 m</text>
+        <text x="61" y="764" font-size="3.8" fill="#7a8a9a" text-anchor="middle">verdieping 7,00 × 12,00 m</text>
         <!-- Dimension: voorgevel breedte 7,00 m (PID 700) -->
         <line x1="0" y1="884" x2="0" y2="897" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="126" y1="884" x2="126" y2="897" stroke="#8a9aaa" stroke-width="0.5" />
@@ -1196,27 +1266,36 @@
 
         </g>
 
-        <!-- One integrated deck: full studio side, complete short-side return and terrace connection. -->
-        <g id="integrated-studio-deck" aria-label="Doorlopend houten dek rond de tuinstudio">
-          <title>Doorlopend houten dek 27,92 m² inclusief pergola en 20 cm poolrand, naadloos doorgetrokken tot het terras</title>
-          <polygon
-            points="72.000000,268.054828 75.600000,268.054828 81.983307,267.181000 106.396308,445.517775 177.731018,435.752575 180.267944,454.284800 75.600000,464.050000 72.000000,464.050000"
+        <g id="house-terrace-timber-fence" aria-label="Houten omheining met horizontale planken en RAL 9005 palen, alleen naast het bestaande huisterras">
+          <title>4,00 m houten omheining, 1,80 m hoog, horizontale planken en zwarte RAL 9005 palen</title>
+          <line x1="-0.043" y1="464.05" x2="0" y2="536.05" stroke="#aa8051" stroke-width="2" />
+          <g fill="#0a0a0d">
+            <rect x="-0.763" y="463.33" width="1.44" height="1.44" />
+            <rect x="-0.742" y="499.33" width="1.44" height="1.44" />
+            <rect x="-0.72" y="535.33" width="1.44" height="1.44" />
+          </g>
+          <text x="-6" y="500.05" font-size="3.5" fill="#6f4729" text-anchor="middle"
+            transform="rotate(-90,-6,500.05)">HOUT + RAL 9005</text>
+        </g>
+
+        <g id="integrated-studio-deck" aria-label="MOSO Bamboo X met rechte aansluiting op het huisterras en de buitenrand van de blauwe steen">
+          <title>MOSO Bamboo X 40,36 m² inclusief pergola; blauwe steen boven en aan de buurzijde, houten hoek 20 cm tot de buitenrand, bereikbaar regenwaterluik</title>
+          <polygon id="moso-pool-deck"
+            points="72.000,268.055 75.600,268.055 81.983,267.181 153.318,257.416 159.438,302.125 88.104,311.890 106.396,445.518 177.731,435.753 181.605,464.050 14.400,464.050 14.400,403.055 72.000,403.055"
             fill="url(#deckFill)" />
           <polyline points="81.983307,267.181000 75.600000,268.054828"
             fill="none" stroke="#6f4729" stroke-width="0.9" stroke-linecap="round" />
-          <polyline points="75.600000,464.050000 180.267944,454.284800 177.731018,435.752575"
+          <polyline id="deck-house-terrace-edge" points="14.400,464.050 181.605,464.050 177.731,435.753"
             fill="none" stroke="#6f4729" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" />
           <polyline points="88.103646,311.890030 106.396308,445.517775 177.731018,435.752575"
             fill="none" stroke="#262d30" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
         </g>
 
-        <!-- LPW City+: 20 cm pool edge, timber beside the studio and blue stone on the other three sides. -->
         <g id="city-plus-pool" aria-label="LPW City+ zwembad" transform="translate(0 0.873828045)">
-          <title>LPW City+ zwembad met 20 cm rand: hout aan de studiozijde en blauwe steen op de overige drie zijden</title>
+          <title>LPW City+ zwembad met blauwe steen boven en aan de buurzijde; MOSO Bamboo X naast de studio en richting huis, inclusief de 20 cm hoek aan de buurzijde</title>
           <g id="city-plus-blue-stone" fill="#788890">
-            <rect id="city-plus-left-blue-stone" x="14.4" y="267.181" width="3.6" height="138.6" />
+            <rect id="city-plus-left-blue-stone" x="14.4" y="267.181" width="3.6" height="135" />
             <rect id="city-plus-top-blue-stone" x="18" y="267.181" width="54" height="3.6" />
-            <rect id="city-plus-bottom-blue-stone" x="18" y="402.181" width="54" height="3.6" />
           </g>
           <rect id="city-plus-shell" x="18" y="270.781" width="54" height="131.4"
             fill="#b8ddec" stroke="#2E4057" stroke-width="0.9" />
@@ -1224,7 +1303,7 @@
             fill="none" stroke="#1a1a2e" stroke-width="0.9" />
           <text x="45" y="329.781" font-size="7" fill="#1a1a2e" text-anchor="middle" font-weight="700">LPW CITY+</text>
           <text x="45" y="340.781" font-size="4" fill="#2E4057" text-anchor="middle">7,30 × 3,00 m</text>
-          <text x="45" y="349.781" font-size="3.2" fill="#2E4057" text-anchor="middle">rand 20 cm · hout studiozijde</text>
+          <text x="45" y="349.781" font-size="3.2" fill="#2E4057" text-anchor="middle">blauwe steen boven + buurzijde · MOSO hoek</text>
 
           <line x1="0" y1="256.781" x2="0" y2="267.181" stroke="#8a9aaa" stroke-width="0.5" />
           <line x1="18" y1="256.781" x2="18" y2="270.781" stroke="#8a9aaa" stroke-width="0.5" />
@@ -1257,6 +1336,24 @@
                the four transformed corners; imagery acquisition date unavailable.
              ══════════════════════════════════════════════════════ -->
              <g id="cadgis-studio-proposal" transform="translate(-0.681983 -86.584135) rotate(-7.794923, 154, 344)">
+          <g id="site-studio-services" transform="matrix(0 .24 -.24 0 172 322.4)" fill="#faf8f4" stroke="#e67e22" stroke-width="1.2">
+            <circle cx="600" cy="88" r="2.5"><title>S01 bureau</title></circle>
+            <circle cx="555" cy="88" r="2.5"><title>S09 bureau</title></circle>
+            <circle cx="615" cy="88" r="2.5"><title>E03 ethernet</title></circle>
+            <circle cx="530" cy="88" r="2.5"><title>F01 DRU-voeding</title></circle>
+            <circle cx="330" cy="88" r="2.5"><title>S04 lounge</title></circle>
+            <circle cx="255" cy="88" r="2.5"><title>S13 pergola</title></circle>
+            <circle cx="104" cy="84" r="2.5"><title>E04 grasrobot</title></circle>
+            <circle cx="225" cy="88" r="2.5"><title>E05 heaterreserve</title></circle>
+            <circle cx="694.5" cy="231.5" r="2.5"><title>S05 badkamer</title></circle>
+            <circle cx="759" cy="249.5" r="2.5"><title>S06 berging</title></circle>
+            <circle cx="674" cy="343" r="2.5"><title>C01 hoofdlicht</title></circle>
+            <circle cx="674" cy="142" r="2.5"><title>C02 badkamer</title></circle>
+            <circle cx="692" cy="342" r="2.5"><title>C03 berging</title></circle>
+            <circle cx="846" cy="315" r="2.5"><title>W01 buitenkraan</title></circle>
+            <circle cx="846" cy="225" r="2.5"><title>E01 camera</title></circle>
+            <circle cx="130" cy="345" r="2.5"><title>E02 camera</title></circle>
+          </g>
           <!-- Concrete foundation slab -->
           <!-- rect right edge (x=154) lands on perceelsgrens at y=344 (NNO face) -->
           <!-- After rotation ZZW-right corner lands at boundary at y≈522 ✓ -->
@@ -1264,13 +1361,10 @@
           <rect x="82" y="344" width="72" height="45.126" fill="url(#deckFill)" stroke="none" />
           <g id="studio-boundary" fill="none" stroke="#c0392b" stroke-width="0.8" stroke-dasharray="4,3">
             <line x1="82" y1="344" x2="154" y2="344" />
-            <line x1="82" y1="524" x2="86.32" y2="524" />
-            <line x1="102.64" y1="524" x2="154" y2="524" />
+            <line x1="82" y1="524" x2="154" y2="524" />
             <line x1="82" y1="344" x2="82" y2="389.12" />
             <line x1="82" y1="485.36" x2="82" y2="524" />
-            <line x1="154" y1="344" x2="154" y2="403.28" />
-            <line x1="154" y1="475.28" x2="154" y2="494.72" />
-            <line x1="154" y1="516.32" x2="154" y2="524" />
+            <line id="site-studio-nno-wall" x1="154" y1="344" x2="154" y2="524" />
           </g>
           <line id="pool-side-blue-stone-plinth" x1="81.6" y1="485.36" x2="81.6" y2="524"
             stroke="#788890" stroke-width="2.2" stroke-linecap="round">
@@ -1284,27 +1378,29 @@
             <title>Kamers, deuren en tweedelige schuiframen uit tuinstudio.html</title>
 
             <g id="studio-room-partitions" fill="none" stroke="#82909d" stroke-width="0.7" stroke-dasharray="3,2">
-              <line x1="86.32" y1="486.32" x2="115.24" y2="486.32" />
-              <line x1="129.64" y1="486.32" x2="149.68" y2="486.32" />
+              <line x1="86.32" y1="486.32" x2="92.62" y2="486.32" />
+              <line x1="107.02" y1="486.32" x2="122.44" y2="486.32" />
+              <line x1="136.84" y1="486.32" x2="149.68" y2="486.32" />
               <line x1="114.28" y1="487.28" x2="114.28" y2="519.68" />
             </g>
 
             <g id="studio-furniture-layout" fill="none" stroke="#6f7f89" stroke-width="0.5" opacity="0.72">
+              <rect id="site-dru-fireplace" x="106.75" y="440.9" width="22.5" height="9.72" fill="#fff0ee" stroke="#c0392b">
+                <title>DRU Maestro Tall Tunnel: Promafour ombouw 1,25 x 0,54 m</title>
+              </rect>
               <title>Meubilair langs de studio-as met vrije route vanaf het schuifraam</title>
-              <rect id="site-pergola-sofa" x="136.63" y="351.02" width="13.14" height="30.96" rx="0.8" />
-              <rect id="site-pergola-table" x="122.95" y="360.2" width="8.1" height="12.6" rx="0.6" />
-              <rect id="site-lounge-sofa" x="134.08" y="396.56" width="12.48" height="42.72" rx="0.8" />
-              <rect id="site-coffee-table" x="123.04" y="405.2" width="9.12" height="28.32" rx="0.6" />
-              <rect id="site-office-desk" x="138.88" y="456.56" width="10.8" height="21.6" rx="0.5" />
-              <circle id="site-office-chair" cx="133.6" cy="467.36" r="4.14" stroke-dasharray="1.5,1" />
+              <rect id="site-pergola-sofa" x="135.10" y="351.02" width="13.14" height="30.96" rx="0.8" />
+              <rect id="site-pergola-table" x="119.8" y="360.2" width="8.1" height="12.6" rx="0.6" />
+              <rect id="site-lounge-sofa" x="134.08" y="395.6" width="12.48" height="27" rx="0.8" />
+              <rect id="site-coffee-table" x="117.88" y="401" width="9" height="16.2" rx="0.6" />
+              <rect id="site-office-desk" x="135.28" y="452.96" width="14.4" height="21.6" rx="0.5" />
+              <circle id="site-office-chair" cx="130" cy="463.76" r="4.14" stroke-dasharray="1.5,1" />
             </g>
 
             <g id="studio-window-openings" fill="none" stroke="#3a7ab0" stroke-width="1.4"
               stroke-dasharray="2.4,1.6" stroke-linecap="round">
               <line x1="86.32" y1="391.28" x2="149.68" y2="391.28" />
               <line x1="82" y1="392.72" x2="82" y2="485.36" />
-              <line x1="154" y1="403.28" x2="154" y2="475.28" />
-              <line x1="154" y1="494.72" x2="154" y2="516.32" />
             </g>
             <g id="studio-slider-dividers" stroke="#3a7ab0" stroke-width="0.7">
               <line x1="118" y1="389.8" x2="118" y2="392.76">
@@ -1317,25 +1413,22 @@
 
             <g id="studio-bathroom-fixtures" fill="none" stroke="#7a8a9a" stroke-width="0.55"
               stroke-dasharray="1.8,1.3" opacity="0.82">
-              <title>Badkamermeubilair uit tuinstudio.html</title>
+              <title>Toilet links, douche rechts, Moon 100x55 met Still waskom; 20/60 cm meubelzijruimte en symmetrische Xinix deuren</title>
 
-              <!-- Douche 0,80 × 1,00 m, -90 graden gedraaid. -->
-              <rect x="131.68" y="487.28" width="18" height="14.4" rx="0.5" />
-              <line x1="131.68" y1="487.28" x2="149.68" y2="501.68" />
-              <line x1="149.68" y1="487.28" x2="131.68" y2="501.68" />
-              <circle cx="140.68" cy="494.48" r="2.64" />
-              <!-- 20cm halfhoge wand met glas erboven; wastafel sluit erop aan. -->
-              <rect x="131.68" y="501.68" width="18" height="3.6" rx="0.3" />
-              <line x1="131.68" y1="503.48" x2="149.68" y2="503.48"
+              <rect id="site-bathroom-shower" x="135.28" y="505.28" width="14.4" height="14.4" rx="0.5" />
+              <line x1="135.28" y1="505.28" x2="149.68" y2="519.68" />
+              <line x1="149.68" y1="505.28" x2="135.28" y2="519.68" />
+              <circle cx="142.48" cy="512.48" r="2.64" />
+              <line x1="135.28" y1="505.376" x2="149.68" y2="505.376"
                 stroke="#4a8ab0" stroke-width="0.8" stroke-dasharray="none" />
 
               <!-- Hangtoilet. -->
-              <rect x="115.24" y="508.88" width="9" height="7.2" rx="1.2" />
-              <ellipse cx="120.16" cy="512.48" rx="3.12" ry="2.64" />
+              <rect x="147.52" y="489.98" width="2.16" height="9" />
+              <rect id="site-bathroom-toilet" x="138.34" y="491.24" width="9.18" height="6.48" rx="1.2" />
+              <ellipse cx="143.02" cy="494.48" rx="3.12" ry="2.64" />
 
-              <!-- Wastafelmeubel 0,80 × 0,45 m tegen NNO-wand. -->
-              <rect x="141.58" y="505.28" width="8.1" height="14.4" rx="0.5" />
-              <ellipse cx="145.63" cy="512.48" rx="2.4" ry="3.36" />
+              <rect id="site-x2o-vanity" x="115.24" y="490.88" width="9.9" height="18" rx="0.5" />
+              <circle cx="120.64" cy="499.88" r="3.42" />
               <path d="M140,484.5 L140,489" />
             </g>
 
@@ -1345,8 +1438,7 @@
                 <text x="118" y="361" font-size="2.1">2,27 × 3,52 m · 7,98 m²</text>
 
                 <text x="118" y="433" font-size="3.8" font-weight="700">LOUNGE / KANTOOR</text>
-                <text x="118" y="440" font-size="2.3">4,70 × 3,52 m netto</text>
-                <text x="118" y="446" font-size="2.5" font-weight="700">16,54 m²</text>
+                <text x="118" y="440" font-size="2.3">rechte wand · breedte 3,52 m</text>
 
                 <text x="140" y="474" font-size="2.8" font-weight="700">BADKAMER</text>
                 <text x="140" y="479" font-size="1.9">1,80 × 1,91 m</text>
@@ -1359,16 +1451,15 @@
             </g>
           </g>
 
-          <g id="storage-exterior-door-ral9005" fill="none" stroke="#0a0a0d" stroke-width="0.9" stroke-linecap="round">
-            <title>Standaard aluminium buitendeur berging 0,90 m, RAL 9005, naar buiten draaiend</title>
-            <line x1="86.32" y1="524" x2="86.32" y2="540.32" />
-            <path d="M102.64,524 A16.32,16.32 0 0 1 86.32,540.32" stroke="#8a9aaa" stroke-dasharray="2,1.5" />
-          </g>
-
           <g id="studio-internal-door" fill="none" stroke="#4A7C59" stroke-width="0.8" stroke-linecap="round">
-            <title>Binnendeur badkamer naar kantoor</title>
-            <line x1="115.24" y1="486.32" x2="115.24" y2="471.92" />
-            <path d="M129.64,486.32 A14.4,14.4 0 0 0 115.24,471.92" stroke-dasharray="2,1.5" />
+            <title>Xinix kamerhoge binnendeur badkamer naar kantoor, 0,80 m</title>
+            <line x1="122.44" y1="486.32" x2="122.44" y2="471.92" />
+            <path d="M136.84,486.32 A14.4,14.4 0 0 0 122.44,471.92" stroke-dasharray="2,1.5" />
+          </g>
+          <g id="storage-internal-xinix-door" fill="none" stroke="#4A7C59" stroke-width="0.8" stroke-linecap="round">
+            <title>Xinix binnendeur berging, 0,80 m, scharnier aan badkamerzijde; deuren openen naar elkaar</title>
+            <line x1="107.02" y1="486.32" x2="107.02" y2="471.92" />
+            <path d="M92.62,486.32 A14.4,14.4 0 0,1 107.02,471.92" stroke-dasharray="2,1.5" />
           </g>
 
           <!-- Extracted from grondplan_v8 (scaled to 1:200) -->
@@ -1455,39 +1546,14 @@
              OZO (RIGHT) WALL
              ══════════════════════════════════════════════════════ -->
         <rect x="822" y="357" width="18" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
-        <!-- Berging door opening 0,90 m: y=289..357 (68px) -->
-        <rect x="822" y="289" width="18" height="68" fill="#faf8f4" stroke="none" />
-        <line x1="840" y1="357" x2="822" y2="357" stroke="#2E4057" stroke-width="1.2" />
-        <line x1="840" y1="289" x2="822" y2="289" stroke="#2E4057" stroke-width="1.2" />
-        <!-- Solid masonry: y=153..289 (1,81 m) -->
-        <rect x="822" y="153" width="18" height="136" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
-        <!-- Badkamer door opening 0,80 m: y=93..153 (60px) -->
-        <rect x="822" y="93" width="18" height="60" fill="#faf8f4" stroke="none" />
-        <line x1="840" y1="153" x2="822" y2="153" stroke="#2E4057" stroke-width="1.2" />
-        <line x1="840" y1="93" x2="822" y2="93" stroke="#2E4057" stroke-width="1.2" />
+        <rect x="822" y="93" width="18" height="264" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
         <!-- SW corner -->
         <rect x="822" y="75" width="18" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
 
         <!-- ══════════════════════════════════════════════════════
              NNO (TOP) WALL
              ══════════════════════════════════════════════════════ -->
-        <!-- Pier W: x=90..122 (0,43 m) -->
-        <rect x="808" y="75" width="32" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
-        <!-- Bath kipraam 1,20 m: x=718..808 (90px) -->
-        <rect x="718" y="75" width="90" height="18" fill="#a8c5d8" stroke="#2E4057" stroke-width="1.5" />
-        <line x1="778" y1="93" x2="778" y2="75" stroke="white" stroke-width="1" />
-        <line x1="748" y1="93" x2="748" y2="75" stroke="white" stroke-width="1" />
-        <!-- Pier: x=637..718 (1,08 m) -->
-        <rect x="637" y="75" width="81" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
-        <!-- Kantoor+lounge raam 4,00 m: x=337..637 (300px) -->
-        <rect x="337" y="75" width="300" height="18" fill="#a8c5d8" stroke="#2E4057" stroke-width="1.5" />
-        <line x1="562" y1="93" x2="562" y2="75" stroke="white" stroke-width="1" />
-        <line x1="487" y1="93" x2="487" y2="75" stroke="white" stroke-width="1" />
-        <line x1="412" y1="93" x2="412" y2="75" stroke="white" stroke-width="1" />
-        <!-- Pier E (WNW side): x=278..337 (0,79 m) -->
-        <rect x="278" y="75" width="59" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
-        <!-- Pergola north solid masonry: x=90..278 -->
-        <rect x="90" y="75" width="188" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+             <rect x="90" y="75" width="750" height="18" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
 
         <!-- ══════════════════════════════════════════════════════
              LOUNGE/PERGOLA WEST WALL (WNW) — schuifraam 3,52 m, two panels
@@ -1510,21 +1576,14 @@
         <rect x="679" y="75" width="8" height="139" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
 
         <!-- ══════════════════════════════════════════════════════
-             HAARD — Element4 Sky L Tunnel (0,40 m schouw)
+             HAARD — DRU Maestro Tall Tunnel (Promafour ombouw)
              ══════════════════════════════════════════════════════ -->
-        <!-- North cap masonry -->
-        <rect x="499" y="263" width="30" height="11" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
-        <!-- Haard unit housing -->
-        <rect x="498" y="187" width="32" height="76" fill="#fff0ee" stroke="#c0392b" stroke-width="2" />
-        <!-- Firebox opening -->
-        <rect x="499" y="198" width="30" height="54" fill="#ffe8e4" stroke="#c0392b" stroke-width="1" />
-        <text x="514" y="237" font-size="7" fill="#c0392b" text-anchor="middle">HAARD</text>
-        <text x="514" y="227" font-size="5.5" fill="#c0392b" text-anchor="middle">Element4</text>
-        <text x="514" y="218" font-size="5.5" fill="#c0392b" text-anchor="middle">Sky L-T</text>
-        <path d="M514,201 Q518,207 514,213 Q512,207 509,213 Q506,207 508,203 Q511,207 514,201Z" fill="#c0392b"
-          opacity="0.55" />
-        <!-- South cap masonry -->
-        <rect x="499" y="176" width="30" height="11" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.5" />
+        <g aria-label="DRU Maestro Tall Tunnel, Promafour ombouw 125 bij 54 cm">
+          <rect x="493.75" y="178.125" width="40.5" height="93.75" fill="#fff0ee" stroke="#c0392b" stroke-width="1.5" />
+          <text x="514" y="215" font-size="6" fill="#c0392b" text-anchor="middle">DRU</text>
+          <text x="514" y="230" font-size="4.5" fill="#c0392b" text-anchor="middle">Maestro Tall</text>
+          <text x="514" y="245" font-size="4.5" fill="#c0392b" text-anchor="middle">Tunnel</text>
+        </g>
 
         <!-- ══════════════════════════════════════════════════════
              BERGING INTERIOR  (1,80 x 1,00 m = 1,80 m²)
@@ -1533,14 +1592,6 @@
         <rect x="687" y="282" width="135" height="75" fill="url(#cupboardFill)" />
         <!-- Berging/badkamer partition (0,10 m) -->
         <rect x="687" y="274" width="135" height="8" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
-        <!-- Standard aluminium RAL 9005 exterior door, opening outward to OZO. -->
-        <g fill="none" stroke="#0a0a0d">
-          <title>Standaard aluminium buitendeur berging, 0,90 m, RAL 9005, naar buiten draaiend</title>
-          <line x1="840" y1="357" x2="840" y2="289" stroke-width="1.2" />
-          <line x1="840" y1="357" x2="908" y2="357" stroke-width="2" />
-          <path d="M840,289 A68 68 0 0 1 908,357" stroke="#8a9aaa" stroke-width="0.9" stroke-dasharray="4,3" />
-        </g>
-        <text x="874" y="350" font-size="4.5" fill="#0a0a0d" text-anchor="middle" font-weight="700">ALU RAL9005</text>
         <!-- Label -->
         <text x="754" y="324" font-size="8" fill="#2E4057" text-anchor="middle" font-weight="700">BERGING</text>
         <text x="754" y="313" font-size="6" fill="#7a8a9a" text-anchor="middle">1,80 x 1,00 m (1,80 m&#178;)</text>
@@ -1891,7 +1942,7 @@
              CARDINAL / ORIENTATION LABELS
              ══════════════════════════════════════════════════════ -->
         <text x="470" y="-60" font-size="9" fill="#7a8a9a" text-anchor="middle" font-style="italic">NNO-zijde &mdash;
-          ramen badkamer, kantoor &amp; lounge</text>
+          gesloten wand, geen ramen</text>
         <text x="470" y="542" font-size="9" fill="#4A7C59" text-anchor="middle" font-style="italic">ZZW-zijde &mdash;
           ingang via schuifraam</text>
         <text x="928" y="225" font-size="9" fill="#7a8a9a" text-anchor="middle" transform="rotate(90,928,225)"
@@ -1982,34 +2033,10 @@
 
         <!-- ─── TOP LVL 3: NNO WALL FACE DIMENSIONS at y≈5 ─── -->
         <line x1="840" y1="15" x2="840" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="808" y1="15" x2="808" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="718" y1="15" x2="718" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="637" y1="15" x2="637" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="337" y1="15" x2="337" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="278" y1="15" x2="278" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="90" y1="15" x2="90" y2="-5" stroke="#8a9aaa" stroke-width="0.5" />
-
-        <!-- Pier W 0,43 -->
-        <line x1="840" y1="5" x2="808" y2="5" stroke="#8a9aaa" stroke-width="0.6" />
-        <text x="824" y="8" font-size="5" fill="#7a8a9a" text-anchor="middle">0,43</text>
-        <!-- Kipraam 1,20 -->
-        <line x1="808" y1="5" x2="718" y2="5" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
-        <rect x="743" y="2" width="46" height="10" fill="#faf8f4" />
-        <text x="766" y="4" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">raam 1,20</text>
-        <!-- Pier midden 1,08 -->
-        <line x1="718" y1="5" x2="637" y2="5" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
-        <text x="678" y="8" font-size="5" fill="#7a8a9a" text-anchor="middle">1,08</text>
-        <!-- Raam 4,00 -->
-        <line x1="637" y1="5" x2="337" y2="5" stroke="#4A7C59" stroke-width="0.7" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
-        <rect x="464" y="2" width="46" height="10" fill="#faf8f4" />
-        <text x="487" y="4" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">raam 4,00</text>
-        <!-- Pier E 0,79 -->
-        <line x1="337" y1="5" x2="278" y2="5" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
-        <text x="308" y="8" font-size="5" fill="#7a8a9a" text-anchor="middle">0,79</text>
-        <!-- Pergola wand 2,51 -->
-        <line x1="278" y1="5" x2="90" y2="5" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
-        <rect x="176" y="2" width="30" height="10" fill="#faf8f4" />
-        <text x="191" y="4" font-size="5.5" fill="#7a8a9a" text-anchor="middle">2,51</text>
+        <line x1="840" y1="5" x2="90" y2="5" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <rect x="385" y="-1" width="160" height="12" fill="#faf8f4" />
+        <text x="465" y="7" font-size="5.5" fill="#7a8a9a" text-anchor="middle">NNO gesloten wand 10,00 m</text>
 
         <!-- ─── LEFT LVL 1: OVERALL 4,00 m at x≈60 ─── -->
         <line x1="85" y1="375" x2="55" y2="375" stroke="#8a9aaa" stroke-width="0.5" />
@@ -2051,20 +2078,9 @@
 
         <!-- ─── RIGHT LVL 2: OZO WALL OPENINGS at x≈888 ─── -->
         <line x1="893" y1="357" x2="883" y2="357" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="893" y1="289" x2="883" y2="289" stroke="#8a9aaa" stroke-width="0.5" />
-        <line x1="893" y1="153" x2="883" y2="153" stroke="#8a9aaa" stroke-width="0.5" />
         <line x1="893" y1="93" x2="883" y2="93" stroke="#8a9aaa" stroke-width="0.5" />
-        <!-- Berging deur 0,90 -->
-        <line x1="888" y1="357" x2="888" y2="289" stroke="#4A7C59" stroke-width="0.6" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
-        <text x="900" y="328" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">0,90</text>
-        <text x="900" y="320" font-size="4.5" fill="#4A7C59" text-anchor="middle">deur</text>
-        <!-- Wand dicht 1,81 -->
-        <line x1="888" y1="289" x2="888" y2="153" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
-        <text x="900" y="218" font-size="6" fill="#7a8a9a" text-anchor="middle">1,81</text>
-        <!-- Badkamer deur 0,80 -->
-        <line x1="888" y1="153" x2="888" y2="93" stroke="#4A7C59" stroke-width="0.6" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
-        <text x="900" y="126" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">0,80</text>
-        <text x="900" y="118" font-size="4.5" fill="#4A7C59" text-anchor="middle">deur</text>
+        <line x1="888" y1="357" x2="888" y2="93" stroke="#8a9aaa" stroke-width="0.6" marker-start="url(#arrR)" marker-end="url(#arr)" />
+        <text x="900" y="225" font-size="6" fill="#7a8a9a" text-anchor="middle">3,52</text>
 
         <!-- ─── INTERNAL: Badkamer/kantoor deur dim ─── -->
         <line x1="700" y1="274" x2="693" y2="274" stroke="#4A7C59" stroke-width="0.5" />
