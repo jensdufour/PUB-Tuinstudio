@@ -951,7 +951,7 @@
     const internalDoorSpans = [
       { room: "storage", start: (357 - 330.75) / 75 + 0.24, end: (357 - 270.75) / 75 + 0.24,
         wallStart: 0.24, wallEnd: (357 - 244.5) / 75 + 0.24, wallZ: internalPartitionZ },
-      { room: "bathroom", start: (357 - 206.5) / 75 + 0.24, end: (357 - 146.5) / 75 + 0.24,
+      { room: "bathroom", start: (357 - 220.5) / 75 + 0.24, end: (357 - 160.5) / 75 + 0.24,
         wallStart: (357 - 236.5) / 75 + 0.24, wallEnd: 3.76, wallZ: bathroomPartitionZ }
     ];
     const studioInternalDoors = internalDoorSpans.map(({ room, start, end, wallStart, wallEnd, wallZ }) => {
@@ -982,35 +982,28 @@
       mesh.name = name;
       return mesh;
     }
-    const bathroomVanity = addBathroomBox(702, 195.25, 75, 41.25, 0.4, 0.6, bathroomWalnut, "balmani-moon-202924-100x55");
-    addBathroomBox(702, 195.25, 75, 41.25, 0.035, 0.8175, materials.white, "balmani-moon-201658-white-tablet");
-    for (let rib = 0; rib < 32; rib += 1) {
-      addBox(bathroomFixtures, 0.015, 0.5, 0.012, bathroomWalnut,
-        bathroomVanity.position.x + 0.278, 0.6, bathroomVanity.position.z - 0.485 + rib * 0.031);
+    const bathroomVanity = addBathroomBox(696.375, 93, 56.25, 41.25, 0.46, 0.59, bathroomWalnut, "balmani-forma-65700-75x55");
+    addBathroomBox(696.375, 93, 56.25, 41.25, 0.018, 0.829, materials.white, "balmani-tablo-arcato-202394-white-height-provisional");
+    for (let rib = 0; rib < 25; rib += 1) {
+      addBox(bathroomFixtures, 0.012, 0.44, 0.012, bathroomWalnut,
+        bathroomVanity.position.x - 0.28, 0.59, bathroomVanity.position.z - 0.36 + rib * 0.03);
     }
-    const basin = new THREE.Mesh(new THREE.CylinderGeometry(0.19, 0.14, 0.13, 32, 1, true),
-      new THREE.MeshStandardMaterial({ color: 0x59483d, roughness: 0.55, side: THREE.DoubleSide }));
-    basin.position.set((357 - 214) / 75 + 0.24, 0.9, bathroomVanity.position.z);
-    basin.name = "balmani-still-84841-dark-emperador-38cm";
-    bathroomFixtures.add(basin);
-    addBox(bathroomFixtures, 0.025, 0.32, 0.025, bathroomRosegold,
-      (357 - 231.5) / 75 + 0.24, 0.995, bathroomVanity.position.z);
-    addBox(bathroomFixtures, 0.13, 0.025, 0.025, bathroomRosegold,
-      (357 - 227.5) / 75 + 0.24, 1.15, bathroomVanity.position.z);
-    const mirror = new THREE.Mesh(new THREE.CircleGeometry(0.4, 40),
+    const basin = addBathroomBox(707.5, 103, 34, 18, 0.006, 0.837, materials.ceiling, "tablo-arcato-basin-schematic");
+    const vanityTap = addBox(bathroomFixtures, 0.025, 0.15, 0.025, bathroomRosegold,
+      (357 - 98) / 75 + 0.24, 0.91, bathroomVanity.position.z);
+    vanityTap.name = "blaufoss-pavilion-curve-86068-standard-schematic";
+    const mirror = new THREE.Mesh(new THREE.CircleGeometry(0.375, 40),
       new THREE.MeshStandardMaterial({ color: 0xc5c9c7, metalness: 0.9, roughness: 0.15, side: THREE.DoubleSide }));
     mirror.rotation.y = Math.PI / 2;
-    mirror.position.set((357 - 236.5) / 75 + 0.26, 1.5, bathroomVanity.position.z);
-    mirror.name = "balmani-secret-80cm-mirror";
+    mirror.position.set((357 - 93) / 75 + 0.22, 1.5, bathroomVanity.position.z);
+    mirror.name = "balmani-giro-round-64886-75cm-frameless";
     bathroomFixtures.add(mirror);
-    const mirrorFrame = new THREE.Mesh(new THREE.TorusGeometry(0.4, 0.012, 8, 40), bathroomRosegold);
-    mirrorFrame.rotation.y = Math.PI / 2;
-    mirrorFrame.position.copy(mirror.position);
-    bathroomFixtures.add(mirrorFrame);
-    const bathroomShower = addBathroomBox(762, 93, 60, 60, 0.027, 0.0665, materials.white, "luca-varess-classy-208333-80x80");
-    const showerScreen = addBox(bathroomFixtures, 0.8, 1.95, 0.01, glassMaterial,
-      bathroomShower.position.x, 1.055, (762.4 - 90) / 75);
-    showerScreen.name = "slim-shower-glass-screen";
+    const bathroomShower = addBathroomBox(762, 93, 60, 60, 0.027, 0.0665, materials.white, "linie-rumba-200652-80x80-tray-height-provisional");
+    const showerScreen = addBox(bathroomFixtures, 0.8, 2, 0.01, glassMaterial,
+      bathroomShower.position.x, 1.08, (762.4 - 90) / 75);
+    showerScreen.name = "balmani-modular-18811-203949-80x200";
+    addBox(bathroomFixtures, 0.02, 2, 0.02, bathroomRosegold,
+      bathroomShower.position.x + 0.39, 1.08, showerScreen.position.z).name = "modular-rosegold-wall-profile";
     const showerHead = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.02, 24), bathroomRosegold);
     showerHead.position.set(bathroomShower.position.x, 2.2, bathroomShower.position.z);
     bathroomFixtures.add(showerHead);
@@ -1020,67 +1013,108 @@
       bathroomShower.position.x, 1.25, (819 - 90) / 75);
     addBox(bathroomFixtures, 0.08, 0.12, 0.025, bathroomRosegold,
       bathroomShower.position.x, 1.02, (819 - 90) / 75);
-    const bathroomCistern = addBathroomBox(698.25, 93, 37.5, 9, 1.12, 0.64,
+    const bathroomCistern = addBathroomBox(813, 189.25, 9, 37.5, 1.12, 0.64,
       materials.white, "geberit-systemfix-sigma-up320");
-    const bathroomToilet = addBathroomBox(703.5, 102, 27, 38.25, 0.25, 0.4,
+    const bathroomToilet = addBathroomBox(774.75, 194.5, 38.25, 27, 0.25, 0.4,
       materials.white, "linie-waldo-202913-36x51cm");
-    addBathroomBox(708, 101.7, 18, 0.8, 0.15, 1.05, bathroomRosegold, "perola-rosegold-flush-plate");
-    const loungeSofaWidth = 52 / 75;
-    const loungeSofaLength = 112.5 / 75;
-    const loungeSofaX = (357 - 132) / 75 + 0.24;
-    const loungeSofaZ = (361.25 - 90) / 75;
-    const loungeSofa = addBox(interior, loungeSofaWidth, 0.34, loungeSofaLength, materials.darkFabric, loungeSofaX, 0.31, loungeSofaZ);
-    loungeSofa.name = "lounge-sofa-plan-aligned";
-    addBox(interior, 0.2, 0.38, loungeSofaLength - 0.1, materials.cushion, loungeSofaX + loungeSofaWidth / 2 - 0.1, 0.68, loungeSofaZ);
-
-    const coffeeTableWidth = 37.5 / 75;
-    const coffeeTableLength = 67.5 / 75;
-    const coffeeTableX = (357 - 206.75) / 75 + 0.24;
-    const coffeeTableZ = (361.25 - 90) / 75;
-    const coffeeTable = addBox(interior, coffeeTableWidth, 0.08, coffeeTableLength, woodEdgeMaterial, coffeeTableX, 0.32, coffeeTableZ);
-    coffeeTable.name = "coffee-table-plan-aligned";
-
-    const deskWidth = 60 / 75;
-    const deskLength = 90 / 75;
-    const deskX = (357 - 123) / 75 + 0.24;
-    const deskZ = (589 - 90) / 75;
-    const desk = addBox(interior, deskWidth, 0.06, deskLength, woodEdgeMaterial, deskX, 0.76, deskZ);
-    desk.name = "office-desk-plan-aligned";
-    for (const x of [deskX - deskWidth / 2 + 0.05, deskX + deskWidth / 2 - 0.05]) {
-      for (const z of [deskZ - deskLength / 2 + 0.05, deskZ + deskLength / 2 - 0.05]) {
-        addBox(interior, 0.05, 0.72, 0.05, materials.charcoal, x, 0.38, z);
+    addBathroomBox(812.7, 199, 0.8, 18, 0.15, 1.05, bathroomRosegold, "perola-rosegold-flush-plate");
+    const diningSet = new THREE.Group();
+    diningSet.name = "bahia-411016-with-eight-paco-71097-space-study";
+    interior.add(diningSet);
+    const diningTableX = (357 - 225) / 75 + 0.24;
+    const diningTableZ = (384 - 90) / 75;
+    const diningTable = addBox(diningSet, 2.7, 0.013, 1, woodEdgeMaterial,
+      diningTableX, 0.08 + 0.75 - 0.013 / 2, diningTableZ);
+    diningTable.name = "bahia-270x100-polywood-top";
+    for (const offset of [-0.88, 0.88]) {
+      for (const direction of [-1, 1]) {
+        const leg = addBox(diningSet, 0.07, 0.76, 0.07, materials.white,
+          diningTableX + offset, 0.44, diningTableZ);
+        leg.rotation.x = direction * 0.55;
       }
     }
+    const diningChairPlans = [
+      { x: 321.375, y: 149.0625, facing: "right" }, { x: 321.375, y: 199.6875, facing: "right" },
+      { x: 321.375, y: 250.3125, facing: "right" }, { x: 321.375, y: 300.9375, facing: "right" },
+      { x: 446.625, y: 149.0625, facing: "left" }, { x: 446.625, y: 199.6875, facing: "left" },
+      { x: 446.625, y: 250.3125, facing: "left" }, { x: 446.625, y: 300.9375, facing: "left" }
+    ];
+    diningChairPlans.forEach((point, index) => {
+      const chair = new THREE.Group();
+      chair.name = `paco-dining-chair-${index + 1}`;
+      chair.position.set((357 - point.y) / 75 + 0.24, 0.08, (point.x - 90) / 75);
+      chair.rotation.y = { up: 0, down: Math.PI, right: -Math.PI / 2, left: Math.PI / 2 }[point.facing];
+      addBox(chair, 0.57, 0.045, 0.56, materials.white, 0, 0.45 - 0.0225, 0);
+      addBox(chair, 0.045, 0.34, 0.56, materials.white, -0.2625, 0.62, 0);
+      for (const side of [-1, 1]) {
+        addBox(chair, 0.5, 0.035, 0.035, materials.white, 0, 0.6475, side * 0.2625);
+        for (const fore of [-1, 1]) addBox(chair, 0.035, 0.43, 0.035, materials.white, fore * 0.23, 0.215, side * 0.24);
+      }
+      diningSet.add(chair);
+    });
+
+    const deskWidth = 60 / 75;
+    const deskLength = 105 / 75;
+    const deskX = (357 - 123) / 75 + 0.24;
+    const deskZ = (600.25 - 90) / 75;
+    const deskThickness = 0.03;
+    const desk = addBox(interior, deskWidth, deskThickness, deskLength, woodEdgeMaterial, deskX, 0.08 + 0.719 + deskThickness / 2, deskZ);
+    desk.name = "office-desk-plan-aligned";
+    const fixedDeskCabinet = addBox(interior, 0.7, 0.719, 0.35, bathroomWalnut,
+      (357 - 119.25) / 75 + 0.24, 0.08 + 0.719 / 2, (560.875 - 90) / 75);
+    fixedDeskCabinet.name = "eket-low-cabinet-reference-side-opening";
+    addBox(interior, 0.7, 0.65, 0.015, bathroomWalnut,
+      fixedDeskCabinet.position.x, fixedDeskCabinet.position.y, fixedDeskCabinet.position.z - 0.18);
+    const tallDeskCabinet = addBox(interior, 0.7, 2.469, 0.35, bathroomWalnut,
+      fixedDeskCabinet.position.x, 0.08 + 2.469 / 2, (665.875 - 90) / 75);
+    tallDeskCabinet.name = "eket-tall-cabinet-reference-anchoring-pending";
+    for (const height of [0.95, 1.35, 1.75, 2.15]) {
+      addBox(interior, 0.66, 0.025, 0.02, materials.charcoalSoft,
+        tallDeskCabinet.position.x, height, tallDeskCabinet.position.z - 0.18);
+    }
+    const deskSupport = addBox(interior, 0.7, 0.719, 0.035, bathroomWalnut,
+      fixedDeskCabinet.position.x, fixedDeskCabinet.position.y, (650 - 90) / 75);
+    deskSupport.name = "desk-fixed-support-panel-provisional";
     const monitor = addBox(interior, 0.05, 0.42, 0.65, materials.charcoal, deskX + deskWidth / 2 - 0.08, 1.06, deskZ, { castShadow: false });
     monitor.name = "office-monitor";
     const deskChairX = (357 - 175) / 75 + 0.24;
-    const deskChair = addBox(interior, 0.46, 0.12, 0.46, materials.darkFabric, deskChairX, 0.48, deskZ);
+    const deskChairZ = (610 - 90) / 75;
+    const deskChair = addBox(interior, 0.46, 0.12, 0.46, materials.darkFabric, deskChairX, 0.48, deskChairZ);
     deskChair.name = "office-chair";
-    addBox(interior, 0.12, 0.55, 0.42, materials.darkFabric, deskChairX + 0.2, 0.74, deskZ);
+    const deskChairBackrest = addBox(interior, 0.12, 0.55, 0.42, materials.darkFabric, deskChairX - 0.2, 0.74, deskChairZ);
+    console.assert((deskChairBackrest.position.x - deskChairX) * (deskX - deskChairX) < 0,
+      "Office chair backrest must be opposite the desktop");
 
-    const pergolaSofa = addBox(studio, 0.73, 0.36, 1.72, materials.darkFabric, 3.315, 0.31, 1.25);
-    pergolaSofa.name = "pergola-sofa-optimized";
-    addBox(studio, 0.18, 0.36, 1.62, materials.cushion, 3.595, 0.66, 1.25);
-    const pergolaTableX = (357 - 200.625) / 75 + 0.24;
-    const pergolaTable = addBox(studio, 0.45, 0.06, 0.7, woodEdgeMaterial, pergolaTableX, 0.34, 1.25);
-    pergolaTable.name = "pergola-table-optimized";
-    for (const z of [1.25 - 0.28, 1.25 + 0.28]) {
-      addBox(studio, 0.05, 0.31, 0.05, materials.charcoal, pergolaTableX, 0.17, z);
+    const pergolaSofa = new THREE.Group();
+    pergolaSofa.name = "exterioo-avila-403897-corner-lounge";
+    studio.add(pergolaSofa);
+    const avilaFrame = standard(0xc9c1b0, 0.65, 0.25);
+    const avilaCushion = standard(0xaaa79e, 0.95);
+    const avilaPlanBox = (x, y, width, depth, height, centerY, material) => addBox(pergolaSofa,
+      depth / 75, height, width / 75, material,
+      (357 - y - depth / 2) / 75 + 0.24, centerY, (x + width / 2 - 90) / 75);
+    for (const [x, y, width, depth] of [[90, 93, 163.5, 63.75], [90, 156.75, 63.75, 149.25]]) {
+      avilaPlanBox(x, y, width, depth, 0.22, 0.29, avilaFrame);
+      avilaPlanBox(x + 1.5, y + 1.5, width - 3, depth - 3, 0.11, 0.455, avilaCushion);
     }
+    avilaPlanBox(90, 93, 163.5, 10, 0.35, 0.685, avilaCushion);
+    avilaPlanBox(90, 103, 10, 203, 0.35, 0.685, avilaCushion);
+    console.assert(Math.min(...pergolaSofa.children.map(mesh => mesh.position.z - mesh.geometry.parameters.depth / 2)) === 0,
+      "Avila must reach the open rear pergola edge without a fictitious wall setback");
 
     const studioServices = [
-      { id: "S01", x: 600, y: 88, height: 0.3 },
-      { id: "S09", x: 555, y: 88, height: 0.3 },
+      { id: "S01", x: 630, y: 88, height: 0.3 },
+      { id: "S09", x: 600, y: 88, height: 0.3 },
       { id: "E03", x: 615, y: 88, height: 0.3 },
       { id: "F01", x: 530, y: 88, height: 0.3 },
       { id: "S04", x: 330, y: 88, height: 0.3 },
       { id: "S13", x: 255, y: 88, height: 0.4 },
       { id: "E04", x: 104, y: 84, height: 0.4 },
       { id: "E05", x: 225, y: 88, height: 2.2 },
-      { id: "S05", x: 694.5, y: 231.5, height: 1.1 },
-      { id: "S06", x: 759, y: 249.5, height: 1.1 },
+      { id: "S05", x: 692, y: 149, height: 1.1 },
+      { id: "S06", x: 720, y: 352, height: 1.1 },
       { id: "C01", x: 674, y: 343, height: 1.1 },
-      { id: "C02", x: 674, y: 142, height: 1.1 },
+      { id: "C02", x: 674, y: 232, height: 1.1 },
       { id: "C03", x: 692, y: 342, height: 1.1 },
       { id: "W01", x: 846, y: 315, height: 0.6 },
       { id: "E01", x: 846, y: 225, height: 2.5 },
@@ -1088,7 +1122,7 @@
     ];
     const serviceMaterial = standard(0xf5f3ed, 0.8);
     studioServices.forEach(point => {
-      const northFace = point.y < 100 || point.id === "S05" || point.id === "S06";
+      const northFace = point.y < 100 || point.id === "S06";
       const marker = addBox(studio, northFace ? 0.025 : 0.08, 0.08, northFace ? 0.08 : 0.025,
         point.id === "W01" ? bathroomRosegold : serviceMaterial,
         (357 - point.y) / 75 + 0.24, point.height + 0.08, (point.x - 90) / 75);
@@ -1097,17 +1131,15 @@
     const aircoAllowance = addBox(studio, 0.16, 0.28, 0.9, materials.white,
       (357 - 100) / 75 + 0.24, 2.45, (577.75 - 90) / 75);
     aircoAllowance.name = "A01-provisional-hvac-indoor-unit";
-    const storageShelfGroup = new THREE.Group();
-    storageShelfGroup.name = "storage-open-shelves-110x30";
-    studio.add(storageShelfGroup);
-    for (const height of [0.25, 0.75, 1.25, 1.75]) {
-      addBox(storageShelfGroup, 1.1, 0.035, 0.3, woodEdgeMaterial,
-        (357 - 306.25) / 75 + 0.24, height, (810.75 - 90) / 75);
-    }
-    for (const planY of [266, 346.5]) {
-      addBox(storageShelfGroup, 0.025, 1.8, 0.3, woodEdgeMaterial,
-        (357 - planY) / 75 + 0.24, 0.9, (810.75 - 90) / 75);
-    }
+    const poolEquipmentZone = addBox(studio, 1.5, 0.015, 1,
+      new THREE.MeshStandardMaterial({ color: 0x65a9bd, transparent: true, opacity: 0.4, roughness: 1 }),
+      (357 - 300.75) / 75 + 0.24, 0.085, (784.5 - 90) / 75, { castShadow: false });
+    poolEquipmentZone.name = "reserved-pool-equipment-zone-100x150";
+    const storageBoiler = addBox(studio, 0.32, 1.24, 0.49, materials.white,
+      (357 - 256.5) / 75 + 0.24, 0.08 + 0.6 + 1.24 / 2, (718.375 - 90) / 75);
+    storageBoiler.name = "atlantic-lineo-connected-multiposition-100l-vertical";
+    addBox(studio, 0.015, 0.12, 0.1, materials.charcoalSoft,
+      storageBoiler.position.x - 0.165, storageBoiler.position.y - 0.2, storageBoiler.position.z);
     for (const [name, planX, planY] of [["L01", 754, 315], ["L02", 739.5, 166], ["L03", 792, 123],
       ["L04", 604, 269], ["L05", 604, 181], ["L06", 397, 269], ["L07", 397, 181],
       ["L08", 193, 269], ["L09", 193, 181], ["V01", 750, 110], ["V02", 350, 130]]) {
@@ -1611,7 +1643,43 @@
       addPlanFence(140.665, 161.659, studioBoundaryNno.x, studioBoundaryNno.y, 2405, false)
     ];
     const terraceFenceStartX = -0.16 * (536.05 - 464.05) / (536.05 - 268.055);
-    addPlanFence(-0.16, 268.055, terraceFenceStartX, 464.05, 2412);
+    const neighbourPoolFence = addPlanFence(-0.16, 268.055, terraceFenceStartX, 464.05, 2412, false);
+    neighbourPoolFence.name = "neighbour-pool-fence-without-jasmine";
+    const neighbourPoolBorder = addPlanSurface(world, planRect(0, 268.055, 13.5, 464.05), standard(0xc5c1b5, 1), 0.035);
+    neighbourPoolBorder.name = "neighbour-pool-mineral-mulch-border";
+    const borderRandom = seededRandom(4401);
+    const borderGrassPoints = [];
+    for (let clump = 0; clump < 12; clump += 1) {
+      const centreX = siteX(4.5);
+      const centreZ = siteZ(276 + clump * 16);
+      for (let blade = 0; blade < 65; blade += 1) {
+        const angle = borderRandom() * Math.PI * 2;
+        const reach = 0.08 + borderRandom() * 0.13;
+        const height = 0.65 + borderRandom() * 0.65;
+        borderGrassPoints.push(new THREE.Vector3(centreX, 0.04, centreZ),
+          new THREE.Vector3(centreX + Math.cos(angle) * reach * 0.45, height * 0.55, centreZ + Math.sin(angle) * reach * 0.45),
+          new THREE.Vector3(centreX + Math.cos(angle) * reach * 0.45, height * 0.55, centreZ + Math.sin(angle) * reach * 0.45),
+          new THREE.Vector3(centreX + Math.cos(angle) * reach, height, centreZ + Math.sin(angle) * reach));
+      }
+    }
+    const borderGrasses = new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(borderGrassPoints),
+      new THREE.LineBasicMaterial({ color: 0x7c8d52 }));
+    borderGrasses.name = "neighbour-pool-upright-ornamental-grasses";
+    world.add(borderGrasses);
+    const borderPurpleFlowers = new THREE.InstancedMesh(new THREE.ConeGeometry(0.035, 0.19, 6), standard(0x78659a, 0.95), 240);
+    borderPurpleFlowers.name = "neighbour-pool-purple-salvia-nepeta-concept";
+    const borderFlowerTransform = new THREE.Object3D();
+    for (let flower = 0; flower < 240; flower += 1) {
+      const clump = Math.floor(flower / 12);
+      const angle = borderRandom() * Math.PI * 2;
+      const radius = borderRandom() * 0.15;
+      borderFlowerTransform.position.set(siteX(9.5) + Math.cos(angle) * radius,
+        0.2 + borderRandom() * 0.24, siteZ(273 + clump * 9.6) + Math.sin(angle) * radius);
+      borderFlowerTransform.rotation.set(0, angle, (borderRandom() - 0.5) * 0.35);
+      borderFlowerTransform.updateMatrix();
+      borderPurpleFlowers.setMatrixAt(flower, borderFlowerTransform.matrix);
+    }
+    world.add(borderPurpleFlowers);
     const terraceTimberFence = new THREE.Group();
     terraceTimberFence.name = "house-terrace-horizontal-timber-fence";
     world.add(terraceTimberFence);
@@ -1921,31 +1989,62 @@
         continuousPlinth: storageEndPlinth.geometry.parameters.width === 4
       },
       furniture: {
-        loungeSofaAxis: loungeSofaLength > loungeSofaWidth ? "studio-long-axis" : "cross-axis",
-        coffeeTableAxis: coffeeTableLength > coffeeTableWidth ? "studio-long-axis" : "cross-axis",
+        diningTableAxis: "studio-cross-axis",
         deskAxis: deskLength > deskWidth ? "studio-long-axis" : "cross-axis",
-        pergolaSofaAxis: 1.72 > 0.73 ? "studio-long-axis" : "cross-axis",
-        sliderEntryClearance: coffeeTableX - coffeeTableWidth / 2,
+        pergolaSofaAxis: "studio-long-axis",
+        sliderEntryClearance: (357 - 326.25) / 75,
         deskToBathroomClearance: (687 - 90) / 75 - (deskZ + deskLength / 2)
       },
       services: {
         points: studioServices,
         count: studio.children.filter(child => child.name.startsWith("service-")).length,
-        storageClearWidth: 1.8 - 0.3,
-        loungeTableGap: loungeSofa.position.x - loungeSofaWidth / 2
-          - coffeeTable.position.x - coffeeTableWidth / 2,
-        pergolaTableGap: pergolaSofa.position.x - 0.73 / 2 - pergolaTable.position.x - 0.45 / 2,
-        deskChairClearOfDoorSwing: deskZ + 0.23 < (619 - 90) / 75,
+        storageClearWidth: 1.8 - poolEquipmentZone.geometry.parameters.depth,
+        poolEquipmentDimensions: [poolEquipmentZone.geometry.parameters.depth, poolEquipmentZone.geometry.parameters.width],
+        storageBoiler: {
+          dimensions: [storageBoiler.geometry.parameters.height, storageBoiler.geometry.parameters.depth, storageBoiler.geometry.parameters.width],
+          bottomHeight: storageBoiler.position.y - storageBoiler.geometry.parameters.height / 2 - 0.08,
+          clearOfPoolZone: storageBoiler.position.z + storageBoiler.geometry.parameters.depth / 2
+            < poolEquipmentZone.position.z - poolEquipmentZone.geometry.parameters.depth / 2,
+          doorAssessed: false
+        },
+        dining: { tableDimensions: [2.7, 1, 0.75], chairDimensions: [0.56, 0.57, 0.79],
+          chairCount: diningSet.children.filter(child => child.name.startsWith("paco-dining-chair-")).length,
+          chairsPerSide: [4, 4], endChairCount: 0, endClearance: 0.41,
+          chairSpacing: (50.625 - 42) / 75, fireplaceChairGap: (493.75 - 468) / 75,
+          approvedFireClearance: false },
+        pergolaLounge: {
+          model: "Exterioo Avila 403897",
+          dimensions: [2.18, 2.84, 0.85, 0.78],
+          southClearance: (357 - 306) / 75,
+          centreWidth: (278 - 153.75) / 75,
+          shortArmToSlider: (278 - 253.5) / 75,
+          columnGap: (337 - 306) / 75,
+          tableIncluded: false
+        },
+        deskChairClearOfDoorSwing: Math.hypot(deskChairX - internalDoorSpans[1].start,
+          (679 - 90) / 75 - deskChairZ) - 17 / 75 > 0.8,
+        cabinetFixed: fixedDeskCabinet.parent === interior,
+        deskHeightAdjustable: false,
+        deskTopDimensions: [deskLength, deskWidth],
+        kneeWidth: deskLength - fixedDeskCabinet.geometry.parameters.depth,
+        cabinetToDesktopGap: desk.position.y - deskThickness / 2
+          - fixedDeskCabinet.position.y - fixedDeskCabinet.geometry.parameters.height / 2,
         deskDepth: deskWidth,
         deskToDoorSwingClearance: Math.hypot(
           Math.max(0, desk.position.x - deskWidth / 2 - internalDoorSpans[1].start),
           Math.max(0, (679 - 90) / 75 - desk.position.z - deskLength / 2)
         ) - 0.8,
         hvacOnNnoWall: aircoAllowance.position.x > 3.5,
-        loungeToFireplacePlanningBuffer: fireplaceCenterZ - fireplaceDepth / 2
-          - loungeSofa.position.z - loungeSofaLength / 2
+        loungeToFireplacePlanningBuffer: (493.75 - 468) / 75
       },
       sourcePlan: "grondplan.html",
+      neighbourPoolPlanting: {
+        grassClumps: 12, purpleClumps: 20,
+        width: 13.5 / planScale, length: (464.05 - 268.055) / planScale,
+        jasmine: neighbourPoolFence.userData.jasmine,
+        mulchSurface: neighbourPoolBorder.name,
+        clearOfPoolCoping: 13.5 < 14.4
+      },
       nnoFacade: {
         closedLength: studioNnoWall.geometry.parameters.depth + pergolaNnoWall.geometry.parameters.depth,
         windowCount: studio.children.filter(child => child.material === glassMaterial && child.position.x > 3.76).length
@@ -1957,35 +2056,41 @@
         vanitySideClearances: [
           bathroomVanity.position.z - bathroomVanity.geometry.parameters.depth / 2
             - (687 - 90) / 75,
-          (822 - 90) / 75 - bathroomVanity.position.z - bathroomVanity.geometry.parameters.depth / 2
+          bathroomShower.position.z - bathroomShower.geometry.parameters.depth / 2
+            - bathroomVanity.position.z - bathroomVanity.geometry.parameters.depth / 2
         ],
         vanityWidth: bathroomVanity.geometry.parameters.depth,
         vanityDepth: bathroomVanity.geometry.parameters.width,
-        basinType: "Balmani Still Dark Emperador 38 cm",
-        mirrorDiameter: 0.8,
-        mirrorOnBathroomWallFace: mirror.position.x > (357 - 236.5) / 75 + 0.24,
+        basinType: "Tablo Arcato 202394 white integrated basin; bowl geometry schematic",
+        vanitySet: "65700_202394",
+        vanityTapProduct: "Blaufoss Pavilion Curve 86068 standard Brushed Rosegold",
+        mirrorDiameter: mirror.geometry.parameters.radius * 2,
+        mirrorProduct: "Balmani Giro Round 64886 frameless",
+        showerScreenDimensions: [showerScreen.geometry.parameters.width, showerScreen.geometry.parameters.height],
+        showerScreenProduct: "Balmani Modular 18811_203949",
+        showerDrainProduct: "Santeg Unishower 27298 90 mm",
+        mirrorOnBathroomWallFace: mirror.position.x < (357 - 93) / 75 + 0.24
+          && mirror.position.x > (357 - 93) / 75,
         showerDimensions: [bathroomShower.geometry.parameters.depth, bathroomShower.geometry.parameters.width],
-        cisternDepth: bathroomCistern.geometry.parameters.width,
-        toiletProjection: bathroomToilet.geometry.parameters.width,
-        toiletWidth: bathroomToilet.geometry.parameters.depth,
+        cisternDepth: bathroomCistern.geometry.parameters.depth,
+        toiletProjection: bathroomToilet.geometry.parameters.depth,
+        toiletWidth: bathroomToilet.geometry.parameters.width,
         toiletProjectionProvisional: false,
-        toiletClearOfDoor: bathroomToilet.position.x - bathroomToilet.geometry.parameters.width / 2
-          > internalDoorSpans[1].end,
-        toiletToDoorGap: bathroomToilet.position.x - bathroomToilet.geometry.parameters.width / 2
-          - internalDoorSpans[1].end,
-        showerRightOfToilet: bathroomShower.position.z > bathroomToilet.position.z,
+        toiletClearOfDoor: bathroomToilet.position.z - bathroomToilet.geometry.parameters.depth / 2
+          > (687 - 90) / 75 + 0.6,
+        toiletFacesRoom: bathroomCistern.position.z > bathroomToilet.position.z,
         showerScreenOnToiletSide: showerScreen.position.z < bathroomShower.position.z,
         vanityStandingClearOfShower: bathroomVanity.position.z + 0.3
           <= bathroomShower.position.z - bathroomShower.geometry.parameters.depth / 2 + 1e-9,
-        toiletFrontClearance: bathroomToilet.position.x - bathroomToilet.geometry.parameters.width / 2
-          - bathroomVanity.position.x - bathroomVanity.geometry.parameters.width / 2,
-        vanityToShowerDryGap: bathroomShower.position.x - bathroomShower.geometry.parameters.width / 2
-          - bathroomVanity.position.x - bathroomVanity.geometry.parameters.width / 2,
-        fullDrawerToShowerGap: bathroomShower.position.x - bathroomShower.geometry.parameters.width / 2
-          - bathroomVanity.position.x - bathroomVanity.geometry.parameters.width * 1.5,
+        toiletFrontClearance: bathroomToilet.position.z - bathroomToilet.geometry.parameters.depth / 2
+          - (687 - 90) / 75,
+        vanityFrontClearance: bathroomVanity.position.x - bathroomVanity.geometry.parameters.width / 2
+          - ((357 - 236.5) / 75 + 0.24),
+        fullDrawerToToiletGap: bathroomVanity.position.x - bathroomVanity.geometry.parameters.width * 1.5
+          - bathroomToilet.position.x - bathroomToilet.geometry.parameters.width / 2,
         showerEntryWidth: 0.8,
         vanityTapPending: false,
-        squareShowerProduct: "Luca Varess Classy 208333"
+        squareShowerProduct: "Linie Rumba 200652 80x80 matt-white acrylic slate texture"
       },
       fireplace: {
         model: "DRU Maestro Tall Tunnel",
@@ -2166,10 +2271,10 @@
       && geometryChecks.internalDoors.width.every(width => Math.abs(width - 0.8) < 1e-9)
       && geometryChecks.internalDoors.hingesFacingEachOther,
       "Bathroom and storage Xinix doors must open towards each other with hinges on their adjacent edges");
-    console.assert(Math.abs(geometryChecks.internalDoors.bathroomOpeningPlanY[0] - 146.5) < 1e-9
-      && Math.abs((236.5 - geometryChecks.internalDoors.bathroomOpeningPlanY[1]) / 75 - 0.4) < 1e-9
+    console.assert(Math.abs(geometryChecks.internalDoors.bathroomOpeningPlanY[0] - 160.5) < 1e-9
+      && Math.abs((geometryChecks.internalDoors.bathroomOpeningPlanY[0] - 153) / 75 - 0.1) < 1e-9
       && deskWidth === 0.8,
-      "Bathroom door must retain its revised 40 cm setback with an 80 cm-deep desk");
+      "Bathroom door must start 10 cm beyond the wall-connected 80 cm-deep desk");
     console.assert(Math.abs((geometryChecks.internalDoors.storageOpeningPlanY[0] - 244.5) / 75 - 0.35) < 1e-9
       && Math.abs((357 - geometryChecks.internalDoors.storageOpeningPlanY[1]) / 75 - 0.35) < 1e-9,
       "Storage Xinix door must be centered with 35 cm clear at both ends");
@@ -2177,39 +2282,60 @@
       && geometryChecks.fireplace.enclosureDepth === 0.54
       && Math.abs(geometryChecks.fireplace.sidePassage - 1.135) < 1e-9,
       "DRU fireplace enclosure must be centered, 125x54 cm, with equal side passages");
-    console.assert(geometryChecks.bathroom.vanityWidth === 1 && geometryChecks.bathroom.vanityDepth === 0.55
+    console.assert(geometryChecks.bathroom.vanityWidth === 0.75 && geometryChecks.bathroom.vanityDepth === 0.55
       && geometryChecks.bathroom.showerDimensions.every(size => size === 0.8)
       && geometryChecks.bathroom.cisternDepth === 0.12 && geometryChecks.bathroom.toiletClearOfDoor,
-      "Moon vanity and square shower must fit with the centered, symmetrical Xinix doors");
+      "Proposed compact vanity and unchanged square shower must fit with the current Xinix doors");
     console.assert(geometryChecks.bathroom.toiletWidth === 0.36 && geometryChecks.bathroom.toiletProjection === 0.51,
       "Waldo toilet footprint must match the supplier's 36x51 cm dimensions");
-    console.assert(geometryChecks.bathroom.vanitySideClearances.every(gap => gap >= 0.15 - 1e-9)
-      && geometryChecks.bathroom.toiletFrontClearance > 0.73
-      && geometryChecks.bathroom.fullDrawerToShowerGap > 0.013,
-      "Swapped bathroom must retain at least 15 cm vanity side gaps and the tested toilet/drawer clearances");
-    console.assert(geometryChecks.bathroom.showerRightOfToilet && geometryChecks.bathroom.showerScreenOnToiletSide
+    console.assert(geometryChecks.bathroom.vanitySideClearances.every(gap => gap >= 0.125 - 1e-9)
+      && geometryChecks.bathroom.toiletFrontClearance > 1.16
+      && geometryChecks.bathroom.fullDrawerToToiletGap > 0.25,
+      "Forma layout must retain agreed 12.5 cm side gaps and the tested toilet/drawer clearances");
+    console.assert(geometryChecks.bathroom.toiletFacesRoom && geometryChecks.bathroom.showerScreenOnToiletSide
       && geometryChecks.bathroom.vanityStandingClearOfShower
-      && Math.abs(geometryChecks.bathroom.vanitySideClearances[0] - 0.2) < 1e-9
-      && Math.abs(geometryChecks.bathroom.vanitySideClearances[1] - 0.6) < 1e-9,
-      "Toilet left, shower right and shifted vanity must preserve the 60 cm vanity standing zone");
+      && Math.abs(geometryChecks.bathroom.vanitySideClearances[0] - 0.125) < 1e-9
+      && Math.abs(geometryChecks.bathroom.vanitySideClearances[1] - 0.125) < 1e-9,
+      "Vanity beside shower and sideways toilet must preserve the vanity standing zone");
     console.assert(geometryChecks.nnoFacade.windowCount === 0 && geometryChecks.nnoFacade.closedLength === 10,
       "Studio NNO facade must be a closed 10 m wall without the 30 cm-high windows");
     console.assert(geometryChecks.bathroom.mirrorOnBathroomWallFace,
       "Mirror must sit on the bathroom face of the storage wall, not inside the partition");
+    console.assert(geometryChecks.bathroom.vanitySet === "65700_202394"
+      && geometryChecks.bathroom.mirrorDiameter === 0.75
+      && geometryChecks.bathroom.showerScreenDimensions.join(",") === "0.8,2"
+      && !geometryChecks.bathroom.vanityTapPending,
+      "Bathroom must match the revised Arcato, Pavilion, Giro and Modular offer");
     console.assert(geometryChecks.bathroom.roomWidth === 1.8 && geometryChecks.bathroom.straightPartition,
       "Bathroom room size and straight partition must not change");
-    console.assert(Object.values(geometryChecks.furniture).slice(0, 4).every(axis => axis === "studio-long-axis"), "Sofa, tables and desk must follow the studio long axis");
-    console.assert(geometryChecks.furniture.sliderEntryClearance > 2.2, "Furniture must preserve a clear route from the pool-side slider");
-    console.assert(geometryChecks.furniture.deskToBathroomClearance > 0.5, "Desk must clear the bathroom zone");
-    console.assert(geometryChecks.services.count === 16 && geometryChecks.services.storageClearWidth === 1.5
-      && Math.abs(geometryChecks.services.loungeTableGap - 0.4) < 1e-9
-      && Math.abs(geometryChecks.services.pergolaTableGap - 0.4) < 0.001
+    console.assert(geometryChecks.services.dining.chairCount === 8
+      && diningChairPlans.filter(point => point.facing === "right").length === 4
+      && diningChairPlans.filter(point => point.facing === "left").length === 4
+      && geometryChecks.services.dining.tableDimensions[0] === 2.7
+      && geometryChecks.services.dining.chairDimensions[0] === 0.56,
+      "Bahia/Paco space study must retain supplier dimensions and all eight chairs");
+    console.assert(Math.abs(geometryChecks.furniture.deskToBathroomClearance - (0.35 + 8 / 75)) < 1e-9,
+      "Tall EKET must sit between the fixed desktop and the bathroom partition");
+    console.assert(geometryChecks.services.count === 16 && geometryChecks.services.storageClearWidth === 0.8
+      && geometryChecks.services.poolEquipmentDimensions[0] === 1
+      && geometryChecks.services.poolEquipmentDimensions[1] === 1.5
+      && geometryChecks.services.pergolaLounge.southClearance >= 0.63
+      && geometryChecks.services.pergolaLounge.columnGap > 0
       && geometryChecks.services.deskChairClearOfDoorSwing && geometryChecks.services.hvacOnNnoWall
-      && geometryChecks.services.deskDepth === 0.8 && geometryChecks.services.deskToDoorSwingClearance > 0.13
-      && geometryChecks.services.loungeToFireplacePlanningBuffer >= 1,
-      "Optimized services must preserve 40 cm table gaps, clear door swings and a 1.5 m storage aisle");
+      && geometryChecks.services.deskDepth === 0.8 && geometryChecks.services.deskToDoorSwingClearance >= 0.1 - 1e-9
+      && geometryChecks.services.cabinetFixed && !geometryChecks.services.deskHeightAdjustable
+      && Math.abs(geometryChecks.services.kneeWidth - 1.05) < 1e-9
+      && Math.abs(geometryChecks.services.cabinetToDesktopGap) < 1e-9
+      && geometryChecks.services.dining.fireplaceChairGap > 0,
+      "Space study must retain furniture dimensions, clear office door swings and an 80 cm aisle beside pool equipment");
     console.assert(geometryChecks.canonicalWorldScaleX === -1, "All views must retain the Plan orientation");
     window.__renderMetrics = geometryChecks;
+    console.assert(geometryChecks.services.storageBoiler.dimensions.join(",") === "1.24,0.49,0.32"
+      && geometryChecks.services.storageBoiler.clearOfPoolZone,
+      "Lineo 100L casing must match retailer dimensions and stay outside the pool equipment reservation");
+    console.assert(!geometryChecks.neighbourPoolPlanting.jasmine && geometryChecks.neighbourPoolPlanting.width === 0.75
+      && geometryChecks.neighbourPoolPlanting.clearOfPoolCoping,
+      "Neighbour pool border must use planting and mineral mulch, without jasmine or overlap onto coping");
 
     dimensionsButton.addEventListener("click", () => {
       dimensions.visible = !dimensions.visible;

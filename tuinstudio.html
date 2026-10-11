@@ -355,11 +355,11 @@
 
         <!-- ══════════════════════════════════════════════════════
                BATH / KANTOOR PARTITION  (0,10 m)
-               Door gap y=146.5..206.5 (0,80 m); bathroom setback 40 cm, storage setback 35 cm.
+               Door gap y=160.5..220.5 (0,80 m); 10 cm beyond the 80 cm-deep wall-connected desk.
              ══════════════════════════════════════════════════════ -->
-             <rect x="679" y="206.5" width="8" height="64.25" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
+             <rect x="679" y="220.5" width="8" height="50.25" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
              <rect x="679" y="330.75" width="8" height="44.25" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
-             <rect x="679" y="75" width="8" height="71.5" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
+             <rect x="679" y="75" width="8" height="85.5" fill="url(#wallFill)" stroke="#2E4057" stroke-width="1.2" />
 
         <!-- ══════════════════════════════════════════════════════
              HAARD — DRU Maestro Tall Tunnel (Promafour ombouw)
@@ -385,10 +385,18 @@
         <!-- Label -->
            <text x="750" y="285" font-size="7" fill="#2E4057" text-anchor="middle" font-weight="700">BERGING</text>
            <text x="750" y="276" font-size="4.5" fill="#7a8a9a" text-anchor="middle">1,80 x 1,50 m (2,70 m&#178;)</text>
-        <rect id="storage-shelves" x="799.5" y="265" width="22.5" height="82.5" fill="url(#cupboardFill)" stroke="#8a9aaa" stroke-width="0.8">
-          <title>Open rek 110 x 30 cm langs de kopgevel; vrije bergingbreedte 150 cm. Bevestiging volgens wandopbouw.</title>
+        <rect id="pool-equipment-zone" x="747" y="244.5" width="75" height="112.5" fill="#d5e8f0" fill-opacity="0.55" stroke="#2980b9" stroke-width="1" stroke-dasharray="4,2">
+          <title>Gereserveerde vloerzone zwembadtechniek 100 x 150 cm; geen gekozen toestellen of bevestigde onderhoudsruimte.</title>
         </rect>
-        <text x="811" y="304" font-size="4" fill="#7a8a9a" text-anchor="middle" transform="rotate(90,811,304)">REK 110 x 30</text>
+        <text x="784.5" y="303" font-size="5" fill="#2980b9" text-anchor="middle">POOLTECHNIEK</text>
+        <text x="784.5" y="313" font-size="4" fill="#2980b9" text-anchor="middle">100 x 150 cm</text>
+        <text x="717" y="325" font-size="4" fill="#7a8a9a" text-anchor="middle">toegang 80 cm</text>
+        <g id="atlantic-lineo-boiler">
+          <rect id="storage-boiler" x="700" y="244.5" width="36.75" height="24" rx="3" fill="#faf8f4" stroke="#2980b9" stroke-width="1.2" />
+          <title>Atlantic Lineo Connected Multipositie 100L, retailer art.157216; verticaal 124 x 49 x 32 cm, 230 V / 2250 W. Onderkant voorlopig 60 cm boven vloer. Geen bevestigde montage-/serviceafstand; deurpositie niet beoordeeld.</title>
+          <text x="718.375" y="254" font-size="3.5" fill="#2980b9" text-anchor="middle">LINEO 100 L</text>
+          <text x="718.375" y="262" font-size="3" fill="#2980b9" text-anchor="middle">49 x 32 / H124</text>
+        </g>
 
         <!-- ══════════════════════════════════════════════════════
              BADKAMER INTERIOR  (1,80 x 1,91 m = 3,44 m²)
@@ -396,39 +404,40 @@
         <!-- Floor fill -->
            <rect id="bathroom-floor" x="687" y="93" width="135" height="143.5" fill="#f8f6f2" />
 
-        <g id="x2o-vanity" aria-label="Balmani Moon 202924 en tablet 201658, 100 x 55 cm, massieve notelaar; Still Dark Emperador waskom 84841">
-          <rect id="bathroom-vanity" x="702" y="195.25" width="75" height="41.25" rx="1" fill="#faf8f4" stroke="#755843" stroke-width="1.2" />
-          <line x1="702" y1="196.5" x2="777" y2="196.5" stroke="#755843" stroke-width="2" />
-          <circle id="bathroom-basin" cx="739.5" cy="214" r="14.25" fill="#59483d" stroke="#382d26" stroke-width="0.8" />
-          <circle cx="739.5" cy="214" r="2" fill="#59483d" stroke="#b68d79" stroke-width="0.7" />
-          <circle cx="739.5" cy="231.5" r="2" fill="#b68d79"><title>Blaufoss Pavilion Curve 86073, verhoogd, Brushed Rosegold</title></circle>
-          <line id="bathroom-mirror" x1="709.5" y1="239" x2="769.5" y2="239" stroke="#b68d79" stroke-width="2">
-            <title>Balmani Secret 203902: diameter 80 cm, rosegold, verlichting en anti-damp, op de bergingwand</title>
+        <g id="x2o-vanity" aria-label="Balmani Forma 65700 met Tablo Arcato 202394 wit, 75 x 55 cm, massief Amerikaanse notelaar; Pavilion Curve 86068 standaard Brushed Rosegold">
+          <rect id="bathroom-vanity" x="696.375" y="93" width="56.25" height="41.25" rx="1" fill="#faf8f4" stroke="#755843" stroke-width="1.2" />
+          <line x1="696.375" y1="133" x2="752.625" y2="133" stroke="#755843" stroke-width="2" />
+          <ellipse id="bathroom-basin" cx="724.5" cy="112" rx="17" ry="9" fill="#faf8f4" stroke="#755843" stroke-width="0.8" />
+          <circle cx="724.5" cy="98" r="2" fill="#b68d79"><title>Blaufoss Pavilion Curve 86068 standaard Brushed Rosegold, inclusief clickwaste; kraanpositie volgens Arcato-tekening.</title></circle>
+          <line id="bathroom-mirror" x1="696.375" y1="90.5" x2="752.625" y2="90.5" stroke="#8a9aaa" stroke-width="2">
+            <title>Balmani Giro Round 64886, diameter 75 cm, kaderloos, verlichting en anti-damp; montagehoogte te bevestigen</title>
           </line>
-          <text x="739.5" y="190" font-size="4.2" fill="#755843" text-anchor="middle">MOON 100 x 55</text>
-          <title>Douche rechts en toilet links: douche-meubel 56,3 cm; volledige lade-uittrek tot 55 cm heeft circa 1,3 cm marge. Douchetoegang, lade-uittrek en afgewerkte maten te controleren.</title>
+          <text x="724.5" y="142" font-size="4.2" fill="#755843" text-anchor="middle">FORMA 75 x 55</text>
+          <title>Set 65700_202394 met Arcato; 12,5 cm zijruimte aanvaard. Komvorm, kraangat, overloop, hoogte en afvoertype volgens exacte producttekening te bevestigen; UniSpace Plus 62379 in offerte.</title>
         </g>
         <g id="vanity-side-clearances" fill="none" stroke="#88aa78" stroke-width="0.7" stroke-dasharray="2,2">
-          <rect x="687" y="195.25" width="15" height="41.25" />
-          <rect x="777" y="195.25" width="45" height="41.25" />
+          <rect x="687" y="93" width="9.375" height="41.25" />
+          <rect x="752.625" y="93" width="9.375" height="41.25" />
           <g fill="#4A7C59" stroke="none" font-size="4" text-anchor="middle">
-            <text x="694.5" y="218" font-size="3.5">20 cm</text>
-            <text x="799.5" y="218">60 cm</text>
+            <text x="691.6875" y="145" font-size="3">12,5 cm</text>
+            <text x="757.3125" y="145" font-size="3">12,5 cm</text>
           </g>
         </g>
         <g id="x2o-toilet" aria-label="Linie Waldo 202913, 36 x 51 cm, Geberit UP320 en Perola rosegold">
-          <rect id="bathroom-cistern" x="698.25" y="93" width="37.5" height="9" fill="#e8e2d8" stroke="#8a9aaa" stroke-width="0.8" />
-          <rect id="bathroom-toilet" x="703.5" y="102" width="27" height="38.25" rx="5" fill="#faf8f4" stroke="#8a9aaa" stroke-width="1" />
-          <ellipse cx="717" cy="122" rx="10" ry="13" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
-          <rect x="708" y="94" width="18" height="3" fill="#b68d79" />
-          <text x="717" y="147" font-size="4" fill="#7a8a9a" text-anchor="middle">WALDO</text>
+          <rect id="bathroom-cistern" x="813" y="189.25" width="9" height="37.5" fill="#e8e2d8" stroke="#8a9aaa" stroke-width="0.8" />
+          <rect id="bathroom-toilet" x="774.75" y="194.5" width="38.25" height="27" rx="5" fill="#faf8f4" stroke="#8a9aaa" stroke-width="1" />
+          <ellipse cx="793" cy="208" rx="13" ry="10" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
+          <rect x="818" y="199" width="3" height="18" fill="#b68d79" />
+          <text x="792" y="232" font-size="4" fill="#7a8a9a" text-anchor="middle">WALDO / naar links</text>
         </g>
 
         <g id="bathroom-shower-zone" transform="translate(75 0)">
         <rect id="bathroom-shower" x="687" y="93" width="60" height="60" fill="#faf8f4" stroke="#2E4057" stroke-width="1.2">
-          <title>Luca Varess Classy 208333, 80 x 80 cm, composietmarmer mat wit rock structuur, 2,7 cm hoog; afvoer en scherm apart</title>
+          <title>Linie Rumba 200652, 80 x 80 cm, mat wit acryl met leisteenstructuur; Unishower 27298 diameter 90 mm. Trayhoogte en uitsparing nog te bevestigen.</title>
         </rect>
-        <line id="bathroom-shower-glass" x1="687.4" y1="93" x2="687.4" y2="153" stroke="#4a8ab0" stroke-width="1.2" />
+        <line id="bathroom-shower-glass" x1="687.4" y1="93" x2="687.4" y2="153" stroke="#4a8ab0" stroke-width="1.2">
+          <title>Balmani Modular 18811_203949, 80 x 200 cm helder glas met Brushed Rosegold profielen; links/rechts bruikbaar volgens offerte, montage te bevestigen.</title>
+        </line>
         <!-- Hoofddouche Ø30cm -->
         <circle cx="717" cy="123" r="11.25" fill="none" stroke="#b68d79" stroke-width="1" stroke-dasharray="2,2" />
         <circle cx="717" cy="123" r="2" fill="#c8b89a" />
@@ -448,7 +457,7 @@
 
         <!-- Room label -->
         <text x="739.5" y="178" font-size="5" fill="#2E4057" text-anchor="middle">BADKAMER</text>
-        <text x="792" y="169" font-size="3.5" fill="#7a8a9a" text-anchor="middle">douche-meubel 56 cm</text>
+        <text x="737" y="199" font-size="3.5" fill="#7a8a9a" text-anchor="middle">WC voorruimte 117 cm</text>
 
         <!-- ══════════════════════════════════════════════════════
              LIGHT FIXTURES
@@ -461,7 +470,7 @@
         <text x="754" y="305" font-size="4" fill="#d4a017" text-anchor="middle">L01</text>
 
         <g id="bathroom-general-light" transform="translate(739.5,166)">
-          <title>L02 algemeen licht; apart van de verlichte Secret spiegel, armatuur volgens badkamerzonering.</title>
+          <title>L02 algemeen licht; apart van verlichte Giro spiegel, armatuur volgens badkamerzonering.</title>
           <circle r="4" fill="none" stroke="#d4a017" stroke-width="0.8" />
           <path d="M-4,0 H4 M0,-4 V4" stroke="#d4a017" stroke-width="0.6" />
         </g>
@@ -479,11 +488,11 @@
         <rect x="529" y="93" width="150" height="264" fill="#f8f7f3" />
 
         <!-- Badkamer/kantoor door (0,80 m, swings east into kantoor) -->
-        <rect id="bathroom-internal-door-opening" x="679" y="146.5" width="8" height="60" fill="#faf8f4" stroke="none" />
-        <line x1="687" y1="206.5" x2="679" y2="206.5" stroke="#2E4057" stroke-width="1.2" />
-        <line x1="687" y1="146.5" x2="679" y2="146.5" stroke="#2E4057" stroke-width="1.2" />
-        <line x1="679" y1="206.5" x2="619" y2="206.5" stroke="#2E4057" stroke-width="1.2" />
-        <path d="M679,146.5 A60 60 0 0 0 619,206.5" fill="none" stroke="#8a9aaa" stroke-width="0.9"
+        <rect id="bathroom-internal-door-opening" x="679" y="160.5" width="8" height="60" fill="#faf8f4" stroke="none" />
+        <line x1="687" y1="220.5" x2="679" y2="220.5" stroke="#2E4057" stroke-width="1.2" />
+        <line x1="687" y1="160.5" x2="679" y2="160.5" stroke="#2E4057" stroke-width="1.2" />
+        <line x1="679" y1="220.5" x2="619" y2="220.5" stroke="#2E4057" stroke-width="1.2" />
+        <path d="M679,160.5 A60 60 0 0 0 619,220.5" fill="none" stroke="#8a9aaa" stroke-width="0.9"
           stroke-dasharray="4,3" />
         <g id="storage-internal-xinix-door" aria-label="Xinix binnendeur berging, 0,80 m, scharnier aan badkamerzijde; deuren openen naar elkaar">
           <rect x="679" y="270.75" width="8" height="60" fill="#faf8f4" stroke="none" />
@@ -492,19 +501,28 @@
           <text x="645" y="284.75" font-size="5" fill="#2E4057" text-anchor="middle">XINIX 0,80</text>
         </g>
         <g id="xinix-door-setbacks" fill="#4A7C59" font-size="4" text-anchor="middle">
-          <text x="649" y="226">40 cm</text>
+          <text x="649" y="232">21,3 cm</text>
           <text x="649" y="260">35 cm</text>
           <text x="649" y="346">35 cm</text>
         </g>
 
-        <!-- Bureau 120x80cm, long axis aligned with the studio. -->
-        <g id="office-desk-zone" transform="translate(-15 0)">
-        <rect id="office-desk" x="559" y="93" width="90" height="60" rx="1" fill="#e4ddd4" stroke="#8a9aaa" stroke-width="1.2" />
+        <g id="office-desk-zone">
+        <title>Vast bureau: SKALSTA 60611663, 140 x 80 cm; hoge EKET tegen badkamerwand, lage EKET links met deuren naar lounge. Geen hoogteverstelling. Kastmaten volgens referentiebeeld, bladsteun nog te bevestigen.</title>
+        <rect id="office-desk" x="547.75" y="93" width="105" height="60" rx="1" fill="#e4ddd4" stroke="#8a9aaa" stroke-width="1.2" />
         <rect x="577" y="109" width="52" height="24" rx="2" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
         <line x1="603" y1="109" x2="603" y2="103" stroke="#8a9aaa" stroke-width="0.8" />
         <line x1="613" y1="103" x2="593" y2="103" stroke="#8a9aaa" stroke-width="0.8" />
         <!-- Bureaustoel -->
-        <circle id="office-chair" cx="604" cy="175" r="17" fill="none" stroke="#8a9aaa" stroke-width="1" stroke-dasharray="3,2" />
+        <rect id="office-fixed-cabinet" x="547.75" y="93" width="26.25" height="52.5" fill="url(#cupboardFill)" stroke="#755843" stroke-width="0.8" stroke-dasharray="2,2">
+          <title>Lage EKET, referentie 70 breed x 35 diep x 71,9 hoog cm, kwartslag gedraaid; front aan loungezijde. Circa 105 cm vrije kniebreedte onder blad.</title>
+        </rect>
+        <line x1="547.75" y1="93" x2="547.75" y2="145.5" stroke="#755843" stroke-width="2" />
+        <path d="M547.75,119.25 H539" fill="none" stroke="#755843" stroke-width="1" marker-end="url(#arr)" />
+        <rect id="office-tall-cabinet" x="652.75" y="93" width="26.25" height="52.5" fill="url(#cupboardFill)" stroke="#755843" stroke-width="1">
+          <title>Hoge EKET tegen badkamerwand; referentie 70 breed x 35 diep x 246,9 hoog cm. Front naar bureau; wandverankering en toegelaten stapeling door IKEA te bevestigen.</title>
+        </rect>
+        <text x="665.5" y="127" font-size="3.5" fill="#755843" text-anchor="middle" transform="rotate(90,665.5,127)">EKET hoog</text>
+        <circle id="office-chair" cx="610" cy="175" r="17" fill="none" stroke="#8a9aaa" stroke-width="1" stroke-dasharray="3,2" />
         </g>
 
 
@@ -518,16 +536,22 @@
              ══════════════════════════════════════════════════════ -->
         <rect x="296" y="93" width="203" height="264" fill="#f7f5f0" />
 
-        <!-- Sofa aligned with the studio long axis, keeping the slider route open. -->
-        <rect id="lounge-sofa" x="305" y="106" width="112.5" height="52" rx="5" fill="none" stroke="#8a9aaa" stroke-width="1.2">
-          <title>Compacte zitbank 150 x 69 cm als reservering; circa 102 cm horizontale ruimte tot haardvlak. Exacte brandafstand en meubelkeuze door Ooghe te bevestigen.</title>
-        </rect>
-        <rect x="305" y="142" width="112.5" height="16" rx="3" fill="none" stroke="#bbb" stroke-width="0.7" />
-        <rect x="407.5" y="106" width="10" height="52" rx="3" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
-        <rect x="305" y="106" width="10" height="52" rx="3" fill="none" stroke="#8a9aaa" stroke-width="0.8" />
-        <!-- Coffee table -->
-        <rect id="lounge-coffee-table" x="327.5" y="188" width="67.5" height="37.5" rx="3" fill="none" stroke="#8a9aaa" stroke-width="0.8"
-          stroke-dasharray="3,2" />
+        <g id="bahia-dining-set" stroke="#8a9aaa" stroke-width="1" fill="#faf8f4">
+          <title>Ruimteproef Bahia 411016 270 x 100 x 75 cm met 8 Paco 71097 56 x 57 x 79 cm; vier per lange zijde, geen kopstoelen. Geen vrije rondloop of bevestigde brandafstand.</title>
+          <rect id="bahia-dining-table" x="346.5" y="123.75" width="75" height="202.5" fill="#d5ba94" />
+          <g id="paco-dining-chairs">
+            <rect x="300" y="128.0625" width="42.75" height="42" rx="3" /><path d="M302,130.0625 V168.0625" />
+            <rect x="300" y="178.6875" width="42.75" height="42" rx="3" /><path d="M302,180.6875 V218.6875" />
+            <rect x="300" y="229.3125" width="42.75" height="42" rx="3" /><path d="M302,231.3125 V269.3125" />
+            <rect x="300" y="279.9375" width="42.75" height="42" rx="3" /><path d="M302,281.9375 V319.9375" />
+            <rect x="425.25" y="128.0625" width="42.75" height="42" rx="3" /><path d="M466,130.0625 V168.0625" />
+            <rect x="425.25" y="178.6875" width="42.75" height="42" rx="3" /><path d="M466,180.6875 V218.6875" />
+            <rect x="425.25" y="229.3125" width="42.75" height="42" rx="3" /><path d="M466,231.3125 V269.3125" />
+            <rect x="425.25" y="279.9375" width="42.75" height="42" rx="3" /><path d="M466,281.9375 V319.9375" />
+          </g>
+          <text x="384" y="220" fill="#755843" stroke="none" font-size="5" text-anchor="middle">BAHIA 270 x 100</text>
+          <text x="384" y="231" fill="#755843" stroke="none" font-size="4" text-anchor="middle">8 PACO / ruimteproef</text>
+        </g>
 
         <!-- Combined open room label. -->
         <text x="487.5" y="295" font-size="9" fill="#2E4057" text-anchor="middle" font-weight="700">LOUNGE / KANTOOR</text>
@@ -537,12 +561,16 @@
              PERGOLA INTERIOR  (2,27 x 3,50 m = 7,95 m²)
              ══════════════════════════════════════════════════════ -->
         <g id="pergola-furniture" fill="none" stroke="#8a9aaa">
-          <title>Pergolameubilair langs de gesloten zijde voor vrije doorgang aan de schuiframen</title>
-          <rect id="pergola-sofa" x="119.25" y="99" width="129" height="54.75" rx="4" stroke-width="1.1" />
-          <rect x="125" y="105" width="117.5" height="42.75" rx="3" stroke="#bbb5a8" stroke-width="0.7" />
-          <rect id="pergola-table" x="157.5" y="183.75" width="52.5" height="33.75" rx="3" stroke-width="0.8" stroke-dasharray="3,2" />
+          <title>Exterioo Avila 403897: 218 x 284 cm, diepte 85 cm, hoogte 78 cm. Lange arm WNW, korte arm NNO; hoekhand en module-opbouw nog te bevestigen. Geen tafel inbegrepen.</title>
+          <path id="pergola-sofa" d="M90,93 H253.5 V156.75 H153.75 V306 H90 Z" fill="#e1ddd3" stroke-width="1.1" />
+          <rect id="pergola-avila-short-arm" x="90" y="93" width="163.5" height="63.75" stroke="none" />
+          <rect id="pergola-avila-long-arm" x="90" y="156.75" width="63.75" height="149.25" stroke="none" />
+          <path d="M94,152.75 V97.25 H249.5 M94,152.75 V302 M153.75,156.75 H90 M90,206.25 H153.75 M90,255.75 H153.75" stroke="#938e83" stroke-width="1" />
         </g>
-        <text x="183.75" y="164" font-size="4.5" fill="#7a8a9a" text-anchor="middle">lounge 1,72 × 0,73 m</text>
+        <text x="213" y="181" font-size="4.5" fill="#7a8a9a" text-anchor="middle">AVILA 218 x 284</text>
+        <text x="213" y="190" font-size="3.5" fill="#7a8a9a" text-anchor="middle">85 cm diep / geen tafel</text>
+        <text x="214" y="318" font-size="3.5" fill="#7a8a9a" text-anchor="middle">zuidruimte ca. 68 cm</text>
+        <text x="224" y="248" font-size="3.5" fill="#7a8a9a" text-anchor="middle">middenruimte ca. 166 cm</text>
         <!-- Pergola column — INWARD-DIAGONAL from NE corner
              Positioned ~0,53m from east outer edge, ~0,31m from north outer edge
              Carries roof load diagonally toward main foundation
@@ -633,20 +661,20 @@
         <!-- ─── STOPCONTACTEN ─── -->
 
         <!-- === S01: Stopcontact kantoor bij bureau (NNO pier, next to E03) === -->
-        <g id="office-socket-right" transform="translate(600,88)">
+        <g id="office-socket-right" transform="translate(630,88)">
           <rect x="-5" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
           <circle cx="1.5" cy="0" r="1.5" fill="#e67e22" />
           <circle cx="-2.5" cy="0" r="1.5" fill="#e67e22" />
         </g>
-        <text x="600" y="82" font-size="4" fill="#e67e22" text-anchor="middle">S01</text>
+        <text x="630" y="82" font-size="4" fill="#e67e22" text-anchor="middle">S01</text>
 
         <!-- === S09: Dubbelstopcontact kantoor andere zijde bureau (NNO pier) === -->
-        <g id="office-socket-left" transform="translate(555,88)">
+        <g id="office-socket-left" transform="translate(600,88)">
           <rect x="-5" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
           <circle cx="1.5" cy="0" r="1.5" fill="#e67e22" />
           <circle cx="-2.5" cy="0" r="1.5" fill="#e67e22" />
         </g>
-        <text x="555" y="82" font-size="4" fill="#e67e22" text-anchor="middle">S09</text>
+        <text x="600" y="82" font-size="4" fill="#e67e22" text-anchor="middle">S09</text>
 
         <g id="fireplace-power" transform="translate(530,88)">
           <title>F01 een bereikbare voeding voor DRU; aansluiting en onderhoudstoegang volgens Ooghe/DRU, geen algemeen stopcontact in de hete ombouw.</title>
@@ -671,20 +699,20 @@
         </g>
         <text x="255" y="82" font-size="4.5" fill="#e67e22" text-anchor="middle">S13 buiten</text>
 
-        <g id="bathroom-vanity-socket" transform="translate(694.5,231.5)">
-          <title>S05 voorstel naast het meubel op de bergingwand; definitieve hoogte, AREI-zonering en spatbescherming door elektricien te controleren.</title>
+        <g id="bathroom-vanity-socket" transform="translate(692,149)">
+          <title>S05 voorstel op linker binnenwand naast compact meubel, voor deur; definitieve hoogte, AREI-zonering en spatbescherming door elektricien te controleren.</title>
           <rect x="-5" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
           <circle cx="1.5" cy="0" r="1.5" fill="#e67e22" />
           <circle cx="-2.5" cy="0" r="1.5" fill="#e67e22" />
         </g>
-        <text x="694.5" y="225" font-size="3.5" fill="#e67e22" text-anchor="middle">S05</text>
+        <text x="704" y="153" font-size="3.5" fill="#e67e22" text-anchor="middle">S05</text>
 
-        <g id="storage-utility-socket" transform="translate(754,249.5)">
+        <g id="storage-utility-socket" transform="translate(715,352)">
           <rect x="0" y="-4" width="10" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2" />
           <circle cx="6.5" cy="0" r="1.5" fill="#e67e22" />
           <circle cx="2.5" cy="0" r="1.5" fill="#e67e22" />
         </g>
-        <text x="760" y="262" font-size="4.5" fill="#e67e22" text-anchor="middle">S06</text>
+        <text x="720" y="343" font-size="4.5" fill="#e67e22" text-anchor="middle">S06</text>
 
         <!-- ─── PERGOLA ELECTRICAL ─── -->
 
@@ -720,7 +748,7 @@
             <title>C01 hoofdlicht lounge/kantoor en pergola, circa 110 cm boven afgewerkte vloer; vast wandstuk naast schuifraam.</title>
             <rect x="-2.5" y="-4" width="5" height="8" />
           </g>
-          <g id="bathroom-light-control" transform="translate(674,142)">
+          <g id="bathroom-light-control" transform="translate(674,232)">
             <title>C02 badkamerlicht/spiegel en ventilatieboost, circa 110 cm hoog aan droge kantoorzijde, buiten deurzwaai.</title>
             <rect x="-2.5" y="-4" width="5" height="8" />
           </g>
@@ -739,7 +767,7 @@
         </g>
         <g fill="#4A7C59" font-size="3.5">
           <text x="661" y="345" text-anchor="end">C01</text>
-          <text x="661" y="144" text-anchor="end">C02</text>
+          <text x="661" y="234" text-anchor="end">C02</text>
           <text x="702" y="344">C03</text>
           <text x="750" y="103" text-anchor="middle">V01 afzuiging</text>
           <text x="350" y="124" text-anchor="middle">V02 toevoer</text>
@@ -890,9 +918,9 @@
         <text x="900" y="225" font-size="6" fill="#7a8a9a" text-anchor="middle">3,52</text>
 
         <!-- ─── INTERNAL: Badkamer/kantoor deur dim ─── -->
-        <line x1="700" y1="206.5" x2="693" y2="206.5" stroke="#4A7C59" stroke-width="0.5" />
-        <line x1="700" y1="146.5" x2="693" y2="146.5" stroke="#4A7C59" stroke-width="0.5" />
-        <line x1="697" y1="206.5" x2="697" y2="146.5" stroke="#4A7C59" stroke-width="0.6" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
+        <line x1="700" y1="220.5" x2="693" y2="220.5" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="700" y1="160.5" x2="693" y2="160.5" stroke="#4A7C59" stroke-width="0.5" />
+        <line x1="697" y1="220.5" x2="697" y2="160.5" stroke="#4A7C59" stroke-width="0.6" marker-start="url(#arrGR)" marker-end="url(#arrG)" />
         <text x="709" y="183.75" font-size="5.5" fill="#4A7C59" text-anchor="middle" font-weight="700">0,80</text>
         <text x="709" y="174.75" font-size="4.5" fill="#4A7C59" text-anchor="middle">deur</text>
 
@@ -1042,7 +1070,20 @@
     <section class="review-section" id="service-plan" aria-labelledby="service-title">
       <h2 id="service-title">Aansluitingen en inrichting</h2>
       <p>Ontwerpvoorstel, geen uitvoerings- of keuringsplan. Kamermaten, rechte scheidingswand en deurposities zijn behouden; NNO blijft gesloten. Maten hieronder zijn ontwerpwaarden vanaf de afgewerkte vloer. Elektricien en installateurs bepalen de definitieve aansluitingen, bescherming, leidingroutes en hoogtes.</p>
-      <p>Behoud: DRU Maestro Tall Tunnel met Promafour 125 x 54 cm; Moon 100 x 55 cm, Still marmeren waskom, Pavilion Curve en Secret spiegel; Waldo met UP320. De Classy 80 x 80 cm douchebak is een voorstel ter vervanging van de geoffreerde Rumba 100 x 80 cm, geen reeds bevestigde bestelling.</p>
+      <p>Badkamer afgestemd op het aangeleverde herziene X2O-besteloverzicht 2025.175811: Forma 65700 met Tablo Arcato 202394 wit, 75 x 55 cm; Pavilion Curve 86068 standaard Brushed Rosegold; Giro Round 64886 kaderloos diameter 75 cm met verlichting en anti-damp; Rumba 200652 mat wit acryl 80 x 80 cm met Unishower 27298; Modular 18811_203949 helder glas 80 x 200 cm met rosegold profielen. Een Smartbox 92941, handdoucheset 95414 en hoofddouche 79635 diameter 30 cm. Waldo 202913, UP320 8456 en Perola 86079 behouden. Geen extra Forma badkamerkast. Room- en deurmaten, douchelocatie en aanvaarde 12,5 cm meubelzijruimte blijven gelijk. Komvorm, montagehoogtes en leidingdetails zijn schematisch; geen aankoop of installatie uitgevoerd.</p>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Controle herzien X2O-besteloverzicht">
+        <table class="review-table" id="x2o-offer-check">
+          <caption>Herzien X2O-besteloverzicht - rekencontrole</caption>
+          <thead><tr><th scope="col">Controle</th><th scope="col">Uitkomst en vervolg</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Bedragen</th><td>Som van 18 regelbedragen: EUR 4.828,69. Subtotaal EUR 5.866,00 minus korting EUR 1.037,31 = EUR 4.828,69 inclusief btw. Ook de adviesprijssom EUR 10.880,30 klopt. Levering nog niet inbegrepen.</td></tr>
+            <tr><th scope="row">Aantal</th><td>22 opgegeven verkoopartikelen: 18 regels, met twee 35 mm boren en vier hoekstopkranen. Een wastafelset en een doucheglas/profielset tellen hierbij elk als een verkoopartikel. Slechts een douche-uitrusting; badkamerkast 85750 en ondersteuningsprofiel 65742 verwijderd.</td></tr>
+            <tr><th scope="row">Afvoer</th><td>UniSpace Plus 62379 (40 mm) en clickwaste inbegrepen bij Pavilion 86068. Laat passend clickwaste-type, Arcato-overloop/kraangat, sifonruimte en aansluiting bevestigen. Geen eerdere Strada-specificaties overnemen. Controleer Unishower 27298 tegen Rumba 200652 en de volledige vloeropbouw.</td></tr>
+            <tr><th scope="row">Gereedschap</th><td>Twee 35 mm, een 72 mm en een 28 mm diamantboor: totaal EUR 109,90. Dit zijn gereedschappen, geen bad of extra sanitair. Laat installateur benodigde diameters/aantallen en eigen gereedschap bevestigen; niet automatisch schrappen.</td></tr>
+            <tr><th scope="row">Bevestigen bij X2O</th><td>Vier hoekstopkranen 84338: bestemming per aansluiting laten aanwijzen. Het overzicht draagt aanmaakdatum 03/11/2025: actuele prijs, voorraad, geldigheid, btw, transport en montagekosten schriftelijk bevestigen. Dit document is een besteloverzicht, geen bewijs van betaling of definitieve installatiecompatibiliteit.</td></tr>
+          </tbody>
+        </table>
+      </div>
       <div class="table-scroll" tabindex="0" role="region" aria-label="Aansluitschema">
         <table class="review-table" id="service-schedule">
           <caption>Voorgestelde servicepunten</caption>
@@ -1050,9 +1091,9 @@
           <tbody>
             <tr><th scope="row">S01 + S09</th><td>Twee dubbele stopcontactpunten achter bureau, NNO-wand; laptop, schermen en bureaugebruik.</td><td>Circa 30 cm; vier contactdozen totaal, kabels achter bureau.</td><td>Eigen toestellen tellen; geen verlengkabel door deurroute.</td></tr>
             <tr><th scope="row">E03</th><td>Twee ethernetpoorten naast bureauvoeding, zelfde wand.</td><td>Circa 30 cm; data en netspanning correct gescheiden.</td><td>Cat6-traject, PoE-budget en aansluiting naar woning.</td></tr>
-            <tr><th scope="row">S04</th><td>Dubbel loungepunt op NNO-wand achter sofa voor lamp/lader.</td><td>Circa 30 cm; bereikbaar zonder vaste betimmering.</td><td>Bediening en toegang met echte sofa testen.</td></tr>
-            <tr><th scope="row">S05</th><td>Dubbel badkamerpunt links naast Moon op bergingwand, niet in douche.</td><td>Circa 110 cm, voorlopig; niet boven kraan of waskom.</td><td>AREI-badkamerzones, beschermingsgraad, bescherming en afgewerkte afstand.</td></tr>
-            <tr><th scope="row">S06</th><td>Dubbel bergingpunt op badkamer/bergingwand, vrij van deur en rek.</td><td>Circa 110 cm; algemeen laden/onderhoud.</td><td>Niet automatisch geschikt als boiler- of zwaarverbruikerkring.</td></tr>
+            <tr><th scope="row">S04</th><td>Dubbel algemeen punt op NNO-wand bij eetruimte, voor lamp/lader.</td><td>Circa 30 cm; bereikbaar zonder vaste betimmering.</td><td>Bediening en toegang met eetstoelen testen; geen kabel over looproute.</td></tr>
+            <tr><th scope="row">S05</th><td>Dubbel badkamerpunt op linker binnenwand naast compact meubel, voor deuropening, niet in douche.</td><td>Circa 110 cm, voorlopig; niet boven kraan of wastafel.</td><td>AREI-badkamerzones, beschermingsgraad, bescherming en afgewerkte afstand.</td></tr>
+            <tr><th scope="row">S06</th><td>Dubbel algemeen bergingpunt op ZZW-wand aan toegangszijde, buiten pooltechniekzone en niet achter boiler.</td><td>Circa 110 cm; algemeen laden/onderhoud.</td><td>Geen ontworpen zwembad- of boilervoeding: afzonderlijke aansluitingen en beveiligingen volgens toestellen en elektricien.</td></tr>
             <tr><th scope="row">S13</th><td>Dubbel buitenpunt op gesloten pergola-NNO-wand.</td><td>Circa 40 cm; weerbestendige afdekking ook bij gebruik.</td><td>Buitenkring, vochtbelasting en gewenste gebruiker.</td></tr>
             <tr><th scope="row">E04</th><td>Eenvoudig buitenpunt voor grasrobot, bij pergola-NNO-hoek.</td><td>Circa 40 cm; kabel bij rand, niet over looproute.</td><td>Dockpositie en toegelaten laadkabellengte; geen extra robotkast.</td></tr>
             <tr><th scope="row">F01</th><td>Eén bereikbare DRU-voeding op NNO-wand bij haardzone; geen contactdoos in hete ombouw getekend.</td><td>Voorlopig 30 cm; kabelroute en eindpunt door Ooghe.</td><td>DRU-aansluitvoorschrift, onderhoudsluik en warmtevrije routing.</td></tr>
@@ -1060,20 +1101,25 @@
             <tr><th scope="row">A01</th><td>Voorlopige hoge airco-binnenunit op solide NNO-wand; S14 vervalt als algemeen stopcontact.</td><td>Schematisch 90 cm breed; vaste toestelvoeding volgens fabrikant.</td><td>Warmte-/koellast, buitenunit, condensafvoer en luchtworp weg van zitplek.</td></tr>
             <tr><th scope="row">C01</th><td>Hoofdbediening lounge/kantoor en aparte pergolalichtgroep op vast jambstuk naast schuifraam.</td><td>Circa 110 cm; geen bediening op glas of hoekpost.</td><td>Echte schuifrichting, bereikbaarheid en dimbare armaturen.</td></tr>
             <tr><th scope="row">C02 + C03</th><td>Badkamerbediening aan droge kantoorzijde; bergingbediening binnen naast deur.</td><td>Circa 110 cm; naast, niet achter open deurblad.</td><td>Badkamerlicht, spiegel en ventilatieboost afstemmen.</td></tr>
-            <tr><th scope="row">L01-L09 + spiegel</th><td>Berginglicht; algemeen badkamerlicht; douchelicht nu boven rechter douche; bestaande twee lichtpunten per kantoor, lounge en pergola behouden.</td><td>Plafond volgens werkelijke hoogte; Secret heeft eigen voeding achter spiegel.</td><td>Lichtberekening, glare op scherm, natte-zone-armaturen, buiten-IP en onderhoud.</td></tr>
+            <tr><th scope="row">L01-L09 + spiegel</th><td>Berginglicht; algemeen badkamerlicht; douchelicht boven rechter douche; bestaande twee lichtpunten per kantoor, lounge en pergola behouden.</td><td>Plafond volgens werkelijke hoogte; Giro 64886 heeft eigen voeding achter spiegel.</td><td>Lichtberekening, glare op scherm, natte-zone-armaturen, buiten-IP en onderhoud.</td></tr>
             <tr><th scope="row">V01 + V02</th><td>Afzuiging badkamer/WC en toevoerroute in lounge/kantoor; transfer via binnendeur.</td><td>Plafondposities zijn reserveringen, geen vastgesteld systeem.</td><td>Debieten, kanaaldoorsnede, geluidsniveau, transferopening en buitenuitmonding.</td></tr>
             <tr><th scope="row">W01</th><td>Vorstbestendige buitenkraan op berging-kopgevel, niet meer in deuropening.</td><td>Voorlopig circa 60 cm; binnen bereikbare afsluiter/aftap.</td><td>Terugstroombeveiliging, vorstbescherming en afwatering onder kraan.</td></tr>
             <tr><th scope="row">E01 + E02</th><td>Twee PoE-camera's bij gesloten kopgevel en pergola; geen extra 230 V-punten.</td><td>Onder dakrand / circa 250 cm, door zichtveld te bevestigen.</td><td>Montageondergrond, privacy, verblinding en PoE-bekabeling.</td></tr>
-            <tr><th scope="row">Sanitair</th><td>Koud/warm en afvoer bij Moon en rechter douche; WC-aansluiting bij linker UP320; spiegelvoeding achter Secret.</td><td>Alle ruwbouwmaten uit producttekeningen, niet uit SVG afleiden.</td><td>Warmwaterbron, sifons, leidingisolatie, afsluiters, vloeropbouw en afvoerverhang.</td></tr>
+            <tr><th scope="row">Sanitair</th><td>Koud/warm en UniSpace Plus-afvoer bij Forma/Arcato; Unishower bij rechter Rumba douche; WC-aansluiting op rechter kopgevel onderaan; spiegelvoeding achter Giro op NNO-wand.</td><td>Alle ruwbouwmaten uit producttekeningen, niet uit SVG afleiden.</td><td>Verplaatste WC-afvoer, wandversterking, warmwaterbron, sifons, afsluiters en afvoerverhang.</td></tr>
           </tbody>
         </table>
       </div>
       <p>Vervallen: S08 op schuifraam, twee algemene contactdozen op haardkap (S10/S11, vervangen door F01), dubbele verwarmeraansluiting S07, algemeen aircostopcontact S14. Geen extra TV-aansluiting, boiler, buitenunit of automatisering zonder concrete behoefte.</p>
-      <p>Meubilair: compacte zitbank 150 x 69 cm als reservering met circa 102 cm horizontaal tot het haardvlak; salontafel 90 x 50 cm met 40 cm tot sofa; pergolatafel 70 x 45 cm met 40 cm tot sofa; bureau 120 x 80 cm met circa 13 cm tot badkamerdeurzwaai; open bergingrek 110 x 30 cm met 150 cm vrije breedte. Dit zijn gebruiksdoelen, geen toegankelijkheids- of brandveiligheidscertificering; Ooghe bepaalt de vereiste afstanden.</p>
+      <p>Pergola ruimteproef: <a href="https://www.exterioo.be/nl/avila-loungehoek-403897">Avila loungehoek 403897</a>, beige aluminium / Twilight Granite Weather+ Softtouch. Leverancier: armen 218 en 284 cm, diepte 85 cm, hoogte 78 cm; zitvlak 32 cm en zitkussen 11 cm. Lange arm precies aan open WNW-buitenrand richting achtertuin: geen fictieve wand of 24 cm setback. Korte arm tot NNO-binnenrand. Circa 68 cm vrije zuidruimte, 41 cm tot kolom en 33 cm tussen korte arm en slider. Middenruimte circa 166 cm, geen aparte doorgang achter lange arm. Geen tafel inbegrepen of toegevoegd. Veilige randondersteuning, werkelijke rug/kussenafstand aan NNO-wand, hoekhand en sliderbediening nog bevestigen.</p>
+      <p>Binnen ruimteproef: <a href="https://www.exterioo.be/nl/bahia-tuintafel-411016">Bahia 411016, 270 x 100 x 75 cm</a> met acht <a href="https://www.exterioo.be/nl/paco-tuinstoel-71097">Paco 71097, 56 x 57 x 79 cm</a>, wit aluminium/kunststof. Vier stoelen per lange zijde, geen kopstoelen, overeenkomstig het referentiebeeld. Circa 11,5 cm tussen stoelen, 5 cm nominale tafelafstand en 41 cm van elk tafeluiteinde tot NNO-wand/ZZW-slider. De haardzijdige stoelen komen circa 34 cm van Promafour; geen veilige brandafstand bevestigd. De zijde bij pergolaschuifraam laat slechts circa 5 cm achter stoelruggen: geen bruikbare rondloop met acht bezette stoelen. Dit is geen goedgekeurde gebruiksindeling. Polywood is volgens leverancier niet hittebestendig. Bevestig haardgebruik/afstand met Ooghe voordat tafel of stoelen daar worden gebruikt.</p>
+      <p>Meubilair: vaste bureautafel met <a href="https://www.ikea.com/be/nl/p/skalsta-tafelblad-walnootpatroon-60611663/">SKALSTA 60611663, walnootpatroon, 140 x 80 cm</a>. Hoge EKET staat naast het blad tegen de badkamerwand; lage EKET onder het lounge-einde is gedraaid zodat de deuren vanaf de buitenzijde bereikbaar zijn. Geen zit-stafunctie of liftframe meer. Referentiebeeld: beide kasten 70 x 35 cm, laag 71,9 cm hoog en hoog 246,9 cm hoog. Exacte IKEA-combinatie en voeten niet bevestigd; circa 105 cm kniebreedte en circa 75 cm tafelbladhoogte zijn voorlopige modelwaarden, met aangenomen 3 cm bladdikte. Een vaste steunplaat bij het rechter bladuiteinde is alleen een constructiereserve. Badkamerdeur en kamermaten blijven ongewijzigd. Binnenbank en salontafel zijn vervangen door de Bahia/Paco ruimteproef; geen pergolatafel.</p>
     </section>
 
     <section class="review-section" id="owner-checks" aria-labelledby="checks-title">
       <h2 id="checks-title">Zelf controleren voor bestelling en uitvoering</h2>
+      <p>Boiler ruimteproef: <a href="https://www.boiler-shop.be/a-88677336/100-liter/elektrische-boiler-100l-atlantic-lineo-connected-multipositie/">Atlantic Lineo Connected Multipositie 100L</a>, retailer art.157216, verticale casing 124 x 49 x 32 cm. Getekend op badkamer/bergingwand buiten poolzone, onderkant voorlopig 60 cm en bovenkant 184 cm boven vloer. Horizontale montage wordt door retailer toegestaan, maar niet getekend; aansluitrichting en modelhandleiding bevestigen. Poolzone blijft 100 x 150 cm; deurcompatibiliteit bewust nog niet beoordeeld. Casing past, maar dit is geen bewezen totale installatie-/serviceruimte. Vraag gevulde massa (100 liter water alleen circa 100 kg), wandversterking, montagebeugels, leiding- en weerstandwisselruimte, veiligheidsgroep en zichtbare veilige reliefafvoer met sifon. Laat 230 V / 2250 W voeding en bescherming afzonderlijk ontwerpen; S06 is geen boileraansluiting. Bevestig vorstbescherming, warmwatercapaciteit bij douchekop, lekafvoer en onderhoud. Geen automatische Cozytouch Bridge toegevoegd; volgens retailer afzonderlijk nodig voor appbediening.</p>
+      <p>Berging: 100 x 150 cm gereserveerd voor zwembadtechniek langs gesloten kopgevel; totale kamer blijft 180 x 150 cm. Er blijft een 80 cm brede toegangsstrook vanaf de bestaande deur. Het eerdere rek is verwijderd. Dit is alleen vloerreservering: vraag een toestellenplan met pomp/filter, kleppen, leidingen, onderhouds- en filterwisselruimte, trillingsisolatie, ventilatie, lekafvoer en vorstbescherming. Laat zwembadvoeding, aarding/vereffening, vochtbescherming en eventuele chemische opslag afzonderlijk ontwerpen. Geen apparatuur gekozen of onderhoudsruimte gegarandeerd.</p>
+      <p>Buurzijde zwembad: doorlopende conceptborder circa 75 cm breed en 10,9 m lang, van achterzijde zwembad tot terrasrand. Geen gazon of Toscaanse sterjasmijn in deze strook; bestaande omheining blijft kaal. Foto-inspiratie: smalle opgaande siergrassen (bijvoorbeeld geschikte Calamagrostis-cultivar) met lage paarse Salvia/Nepeta en licht mineraalmulch op doorlatende grond. Voorlopig 12 grasgroepen en 20 bloeigroepen, geen definitieve bestellijst. Laat zon, grond, volwassen breedte, wortelruimte en drainage beoordelen; vermijd uitwaaierende planten, stekelige soorten en los grind op de coping. Bevestig randprofiel en volwassen plantafstand tot pool/deck; geen vaste mulchlaag op waterdichte folie. Geen maaien, wel jaarlijkse late-winterknip, onkruidcontrole en water bij inworteling. Houd poolonderhoud en omheining bereikbaar; andere jasmijnsegmenten blijven ongewijzigd.</p>
       <p>Alle onderstaande punten zijn open tot opmeting of schriftelijke bevestiging. Eerste prioriteit: afgewerkte wandopbouw, schuiframen en badkamer 1:1 uitzetten. De oorspronkelijke offertebestanden ontbreken hier; vergelijking gebruikt de eerder besproken Lovilen 2026/1073, Ooghe en X2O-productgegevens.</p>
       <div class="table-scroll" tabindex="0" role="region" aria-label="Zelf te controleren ontwerpkeuzes">
         <table class="review-table" id="owner-check-table">
@@ -1081,20 +1127,20 @@
           <thead><tr><th scope="col">Prioriteit / onderdeel</th><th scope="col">Wat je zelf controleert of opvraagt</th><th scope="col">Wie bevestigt</th></tr></thead>
           <tbody>
             <tr><th scope="row">1. Afgewerkte maat</th><td>Meet badkamer 180 x 191,3 cm, berging 180 x 150 cm en vrije hoofdbreedte 352 cm na tegels/afwerking. Offerte noemt houtskelet 140 mm; tekening toont buitenwand 240 mm. Vraag een doorsnede die deze vaste netto maten behoudt; niet blind wanddikte wijzigen.</td><td>Jij + Lovilen / architect</td></tr>
-            <tr><th scope="row">1. Deuren en ramen</th><td>Beide Xinix-openingen 80 cm; badkamer 5 cm omhoog verplaatst, nu 40 cm tot gedeelde wand, berging behoudt 35 cm. Toilet eindigt circa 8 cm voor badkameropening. Bevestig echte vrije doorgang, volledige hoogte, scharnierhand en afwerking. Sliders in offerte 350 x 230 en 500 x 230 cm versus plan 352/515 cm en hogere 3D-beglazing; vraag productie-/dagmaten. NNO-ramen schriftelijk schrappen.</td><td>Lovilen</td></tr>
-            <tr><th scope="row">1. Badkamer 1:1</th><td>Plak toilet links, douche rechts, Moon en geopende deur/lades op de vloer af. Moon zijruimte 20/60 cm, WC-front circa 73 cm. Douche-meubel slechts 56,3 cm; nominale lade-uittrek 55 cm laat slechts 1,3 cm. Ga niet bestellen op die tolerantie zonder echte lade- en tegelmaten.</td><td>Jij + X2O / sanitairinstallateur</td></tr>
-            <tr><th scope="row">1. Douchebak</th><td>Bevestig bewuste vervanging Rumba 100 x 80 acryl door Classy 208333 80 x 80 composietmarmer, 27 mm rand. Vraag passend 90 mm afvoerproduct, sifonhoogte, debiet en vloeruitsparing. Bestaande Unishower is niet automatisch compatibel.</td><td>X2O + installateur</td></tr>
-            <tr><th scope="row">1. Scherm en waterdichting</th><td>Linker vast scherm en open zuidelijke douche-ingang zijn een ontwerpvoorstel, geen geoffreerde complete cabine. Test de instap vanuit de 56 cm ruimte; vraag spatproef, juiste glasmaat, afdichting, afschot, kimbanden en deur/vanitybescherming. Indien onvoldoende: eerst compromis kiezen, niet kamer vergroten.</td><td>Sanitairinstallateur</td></tr>
+            <tr><th scope="row">1. Deuren en ramen</th><td>Beide Xinix-openingen 80 cm; badkameropening begint 90 cm vanaf NNO-binnenwand, dus 10 cm voorbij het 80 cm-deep bureaublad. Badkamer heeft 21,3 cm tot gedeelde wand; berging behoudt 35 cm. Kamer en deurposities niet gewijzigd door compacte badkamerindeling. Bevestig echte vrije doorgang, klinkprojectie en instap. Sliders in offerte 350 x 230 en 500 x 230 cm versus plan 352/515 cm en hogere 3D-beglazing; vraag productie-/dagmaten. NNO-ramen schriftelijk schrappen.</td><td>Lovilen</td></tr>
+            <tr><th scope="row">1. Badkamer 1:1</th><td>Zet Forma/Arcato 75 x 55 cm naast Rumba 80 x 80 cm uit, met aanvaarde 12,5 cm aan beide zijden. Toilet op rechterwand onderaan kijkt naar links; circa 117 cm tot tegenoverliggende wand. Test 60 x 60 cm gebruiksruimtes, open lades, toiletzitting en douche-instap 1:1. Een aangenomen volledige lade-uittrek van 55 cm laat circa 25 cm longitudinale marge tot toiletvoetafdruk, geen standruimte met lade open gegarandeerd. Exacte lade-uittrek, afgewerkte UP320-boxing en leidingen controleren.</td><td>Jij + X2O / sanitairinstallateur</td></tr>
+            <tr><th scope="row">1. Douchebak</th><td>Rumba 200652 80 x 80 cm mat wit acryl/leisteenstructuur met Unishower 27298 diameter 90 mm volgens herziene offerte. Vraag technische trayhoogte, sifonhoogte, debiet en vloeruitsparing; modelhoogte 27 mm is een illustratieve oude aanname, geen Rumba-productspecificatie.</td><td>X2O + installateur</td></tr>
+            <tr><th scope="row">1. Scherm en waterdichting</th><td>Modular 18811_203949 80 x 200 cm helder glas/Brushed Rosegold, zowel linkse als rechtse hoek volgens overzicht. Douche en linker scherm blijven op dezelfde plaats, ingang richting middenruimte. Bevestig werkelijke glasmaat, montagehoogte, profielbevestiging, tolerantie op 80 cm tray en spatbereik naar meubel/toilet. Een vast scherm is geen volledige gesloten cabine; vraag afdichting, afschot en kimbanden.</td><td>Sanitairinstallateur</td></tr>
             <tr><th scope="row">1. Elektrische veiligheid</th><td>Laat S05, spiegel, douchelicht en alle buitenpunten zoneren volgens geldend AREI. Vraag eendraads-/situatieschema, aarding/vereffening, differentieelbeveiliging, kringen, kabelsecties en keuring voor ingebruikname. Hoogtes in deze tabel zijn voorstellen, geen wettelijke minima.</td><td>Elektricien + erkend keuringsorganisme</td></tr>
             <tr><th scope="row">1. DRU-haard</th><td>Controleer Maestro Tall Tunnel, Promafour 125 x 54 cm, vier roosters, matte zijbeglazing en LED-keuze tegen Ooghe. Vraag fabrikantafstanden tot tafel/sofa/hout, gasleiding, één voeding, onderhoudsopening en goedgekeurd 130/200 mm rookgastraject door plat dak.</td><td>Ooghe / DRU-installateur</td></tr>
             <tr><th scope="row">1. Dak en draagstructuur</th><td>Vraag constructieberekening van lange sliderliggers, hoekpost, pergolakolom, dakbelasting en flue-doorvoer. Bevestig val naar hemelwaterafvoer, noodoverloop, EPDM-aansluitingen en doorvoerafstanden. Geen dak-/balkdoorboring op basis van deze schets.</td><td>Lovilen + stabiliteitsingenieur</td></tr>
             <tr><th scope="row">1. EPB en vergunning</th><td>Bevestig toegelaten gebruik als kantoor/lounge met sanitair, perceelgrens, hoogte, afstanden en EPB-plicht. Vraag prestatieberekening voor geoffreerde 80 mm PUR, vloerisolatie, glas en koudebruggen; geen isolatiepakket op dikte alleen goedkeuren.</td><td>Architect / gemeente / EPB-verslaggever</td></tr>
             <tr><th scope="row">2. Ventilatie</th><td>Nu NNO-ramen wegvallen: vraag compleet toevoer-transfer-afvoerconcept voor kantoor/lounge en badkamer/WC, meetbare debieten, vochtsturing en onderhoud. Afzuiging naar buiten, niet dakholte. Airco recirculeert en vervangt geen frisse lucht; sliders openen is geen vastgesteld basisventilatiesysteem.</td><td>Ventilatieontwerper + EPB-verslaggever</td></tr>
             <tr><th scope="row">2. Warm water en afvoer</th><td>Vraag warmwaterbron, wachttijd, druk/debiet bij 30 cm douchekop, afsluiters en bereikbare sifons. UP320 50 x 12 x 112 cm is framemaat, niet volledige tegelboxing. Laat leidingdieptes, afvoerverhang en aansluiting op riolering vóór chape vastleggen.</td><td>Sanitairinstallateur</td></tr>
-            <tr><th scope="row">2. Waskom en ergonomie</th><td>Controleer echte bovenrandhoogte van kast + tablet + Still kom (illustratie circa 89 cm boven vloer) met jouw lengte, kraanspatten en spiegelzicht. Vraag boorposities voor verhoogde Pavilion en ophangversterking in houtskelet. Geen extra opbouwhoogte gokken.</td><td>Jij + X2O / installateur</td></tr>
-            <tr><th scope="row">2. Bureau en verlichting</th><td>Bureau nu 120 x 80 cm; meet ook de echte breedte. Zet echte stoel en monitoren neer en test stoeluitschuif, beide open Xinix-deuren en passage langs haard. Circa 13 cm nominale marge tussen bureauhoek en badkamerdeurzwaai, nog zonder uitstekende deurklink. Vraag werkvlakverlichting en dimbare lounge/pergola apart; geen plafondsport direct boven monitorscherm.</td><td>Jij + elektricien</td></tr>
+            <tr><th scope="row">2. Wastafel en ergonomie</th><td>Forma 65700 / Tablo Arcato 202394 75 x 55 cm met standaard Pavilion Curve 86068 Brushed Rosegold en UniSpace Plus 62379. Bevestig exacte Arcato-komvorm, hoogte, kraangat/boorpositie, eventuele overloop en compatibele clickwaste. De modelhoogte van de wastafelrand is illustratief, niet uit deze offerte bewezen. Controleer montagehoogte, echte lade-uittrek, 12,5 cm zijruimte en ophangversterking. Giro Round 64886 diameter75, kaderloos met licht/anti-damp: hoogte, spiegelvoeding en badkamerelektrische zonering bevestigen.</td><td>Jij + X2O / installateur</td></tr>
+            <tr><th scope="row">2. Bureau en verlichting</th><td>SKALSTA 140 x 80 cm wordt een vaste tafel, geen hoogteverstelling. Controleer exact EKET-artikel, voeten en stapelopbouw tegen referentiematen 70 x 35 x 71,9 / 246,9 cm. IKEA-productpagina kon niet worden opgehaald; bladdikte 3 cm en tafelhoogte circa 75 cm zijn aannames. Vraag of SKALSTA buiten het eigen onderstel ondersteund mag worden en hoe EKET, steunplaat en blad veilig worden verbonden; geen draagvermogen afleiden uit kastmaat. Bevestig toegelaten hoge EKET-stapeling en verankering in houtskelet. Test de lage kast met front naar lounge op volledig geopende deuren, bereik onder overhang, kniebreedte circa 105 cm en stoel/haardroute. Hoge kast staat naast het blad, niet eronder; houd stopcontacten bereikbaar.</td><td>Jij + IKEA / meubelmaker / elektricien</td></tr>
             <tr><th scope="row">2. Airco en heater</th><td>Bevestig of beide echt nodig zijn naast gasvuur. Vraag warmte-/koellast, geluid, buitenunitlocatie buiten passages, condensafvoer en onderhoud. Eventuele pergolaheater alleen na controle van hout-, dak- en meubilairafstanden; voeding is nog geen toestelbestelling.</td><td>Jij + HVAC-installateur</td></tr>
-            <tr><th scope="row">2. Gebruik en onderhoud</th><td>Test rekkoffers, stekkerbereik achter sofa en bureau, raamreiniging, gordijnen/zonwering, opslag en uitweg naar sliders. Houd gemeenschappelijke looproute vrij, geen kabels over vloer. Rook-/CO-detectie en glasveiligheid laten bepalen voor het echte gebruik en de gasinstallatie.</td><td>Jij + architect / installateurs</td></tr>
+            <tr><th scope="row">2. Gebruik en onderhoud</th><td>Avila aan open achtertuinrand: test volledige pootondersteuning op deck, 68 cm zuidruimte, 41 cm tot kolom en 33 cm bij slider; hoekhand, glasreiniging en S13-toegang bevestigen. Kussens niet waterbestendig: binnen opslaan bij langdurige regen/winter. Bahia/Paco: vier stoelen per lange zijde, geen aan kop; test alle acht zitplekken 1:1, stoeluitschuif, uitweg en toegang naar kantoor. Circa 11,5 cm tussen stoelen, 41 cm aan tafeluiteinden maar slechts circa 5 cm achter sliderzijdige ruggen. Vier stoelbreedtes samen 224 cm zijn meer dan de 176 cm vrije ruimte tussen tafelpoten: buitenste plaatsen vallen buiten die zone, test kruispoot en beenruimte. Armhoogte 66,5 cm versus bladonderzijde 73,7 cm bewijst geen passing onder frame. Paco is niet stapelbaar. Haardstoelen circa 34 cm van ombouw: niet gebruiken zonder Ooghe-goedkeuring.</td><td>Jij + Exterioo / Ooghe / architect</td></tr>
             <tr><th scope="row">2. Glas en afwerking</th><td>Vraag veiligheidsglas, zonwering/zomeroververhitting, bedieningskracht van tweedelige sliders en drempelprofielen. Canopysoffit wordt als hout getoond, offerte noemt crepi: schriftelijk kiezen. Afwerking mag netto ruimten niet verkleinen zonder hercontrole.</td><td>Lovilen</td></tr>
             <tr><th scope="row">1. Deck en regenwaterput</th><td>MOSO-model 40,36 m2 inclusief pergola tegenover offerte-extra 28 m2: laat totale oppervlakte en aparte coping schriftelijk begroten. Vraag onderconstructie, ventilatie, stroefheid, afwatering en demontabel 60 x 60 cm putluik. Geen puntlasten op put zonder berekening; toegang voor pomp/ruiming behouden.</td><td>Deckbouwer + ingenieur</td></tr>
             <tr><th scope="row">2. Zwembad en niveaus</th><td>Bevestig LPW City+ 730 x 300 cm, buitenrand 770 x 340 cm, blauwe steen boven/buurzijde en MOSO studio-/huiszijde. Meet werkelijke passage en drempels; smalste modelruimte circa 36 cm is geen looproute. Vraag kindveiligheidsconcept/afdekking en drainage weg van gebouw.</td><td>Jij + zwembadbouwer</td></tr>
