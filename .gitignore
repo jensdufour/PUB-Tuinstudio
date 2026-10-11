@@ -4,3 +4,11 @@ node_modules/
 *.docx
 *.pdf
 *.png
+.venv/
+drafts/
+project/
+references/
+archive/
+__pycache__/
+*.xlsx
+*.msg

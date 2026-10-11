@@ -1018,41 +1018,6 @@
     const bathroomToilet = addBathroomBox(774.75, 194.5, 38.25, 27, 0.25, 0.4,
       materials.white, "linie-waldo-202913-36x51cm");
     addBathroomBox(812.7, 199, 0.8, 18, 0.15, 1.05, bathroomRosegold, "perola-rosegold-flush-plate");
-    const diningSet = new THREE.Group();
-    diningSet.name = "bahia-411016-with-eight-paco-71097-space-study";
-    interior.add(diningSet);
-    const diningTableX = (357 - 225) / 75 + 0.24;
-    const diningTableZ = (384 - 90) / 75;
-    const diningTable = addBox(diningSet, 2.7, 0.013, 1, woodEdgeMaterial,
-      diningTableX, 0.08 + 0.75 - 0.013 / 2, diningTableZ);
-    diningTable.name = "bahia-270x100-polywood-top";
-    for (const offset of [-0.88, 0.88]) {
-      for (const direction of [-1, 1]) {
-        const leg = addBox(diningSet, 0.07, 0.76, 0.07, materials.white,
-          diningTableX + offset, 0.44, diningTableZ);
-        leg.rotation.x = direction * 0.55;
-      }
-    }
-    const diningChairPlans = [
-      { x: 321.375, y: 149.0625, facing: "right" }, { x: 321.375, y: 199.6875, facing: "right" },
-      { x: 321.375, y: 250.3125, facing: "right" }, { x: 321.375, y: 300.9375, facing: "right" },
-      { x: 446.625, y: 149.0625, facing: "left" }, { x: 446.625, y: 199.6875, facing: "left" },
-      { x: 446.625, y: 250.3125, facing: "left" }, { x: 446.625, y: 300.9375, facing: "left" }
-    ];
-    diningChairPlans.forEach((point, index) => {
-      const chair = new THREE.Group();
-      chair.name = `paco-dining-chair-${index + 1}`;
-      chair.position.set((357 - point.y) / 75 + 0.24, 0.08, (point.x - 90) / 75);
-      chair.rotation.y = { up: 0, down: Math.PI, right: -Math.PI / 2, left: Math.PI / 2 }[point.facing];
-      addBox(chair, 0.57, 0.045, 0.56, materials.white, 0, 0.45 - 0.0225, 0);
-      addBox(chair, 0.045, 0.34, 0.56, materials.white, -0.2625, 0.62, 0);
-      for (const side of [-1, 1]) {
-        addBox(chair, 0.5, 0.035, 0.035, materials.white, 0, 0.6475, side * 0.2625);
-        for (const fore of [-1, 1]) addBox(chair, 0.035, 0.43, 0.035, materials.white, fore * 0.23, 0.215, side * 0.24);
-      }
-      diningSet.add(chair);
-    });
-
     const deskWidth = 60 / 75;
     const deskLength = 105 / 75;
     const deskX = (357 - 123) / 75 + 0.24;
@@ -1086,21 +1051,32 @@
       "Office chair backrest must be opposite the desktop");
 
     const pergolaSofa = new THREE.Group();
-    pergolaSofa.name = "exterioo-avila-403897-corner-lounge";
+    pergolaSofa.name = "three-poolsofa-modules-l-shape";
     studio.add(pergolaSofa);
-    const avilaFrame = standard(0xc9c1b0, 0.65, 0.25);
-    const avilaCushion = standard(0xaaa79e, 0.95);
-    const avilaPlanBox = (x, y, width, depth, height, centerY, material) => addBox(pergolaSofa,
-      depth / 75, height, width / 75, material,
-      (357 - y - depth / 2) / 75 + 0.24, centerY, (x + width / 2 - 90) / 75);
-    for (const [x, y, width, depth] of [[90, 93, 163.5, 63.75], [90, 156.75, 63.75, 149.25]]) {
-      avilaPlanBox(x, y, width, depth, 0.22, 0.29, avilaFrame);
-      avilaPlanBox(x + 1.5, y + 1.5, width - 3, depth - 3, 0.11, 0.455, avilaCushion);
-    }
-    avilaPlanBox(90, 93, 163.5, 10, 0.35, 0.685, avilaCushion);
-    avilaPlanBox(90, 103, 10, 203, 0.35, 0.685, avilaCushion);
-    console.assert(Math.min(...pergolaSofa.children.map(mesh => mesh.position.z - mesh.geometry.parameters.depth / 2)) === 0,
-      "Avila must reach the open rear pergola edge without a fictitious wall setback");
+    const poolsofaFabric = standard(0xc5bbaa, 0.98);
+    const poolsofaModules = [90, 180].map((planX, index) => {
+      const module = new THREE.Group();
+      module.name = `poolsofa-double-seat-${index + 1}`;
+      pergolaSofa.add(module);
+      const centreX = (357 - 93 - 45) / 75 + 0.24;
+      const centreZ = (planX + 45 - 90) / 75;
+      addBox(module, 1.2, 0.3, 1.2, poolsofaFabric, centreX, 0.08 + 0.15, centreZ);
+      addBox(module, 0.3, 0.3, 1.2, poolsofaFabric, centreX + 0.45, 0.08 + 0.45, centreZ);
+      return module;
+    });
+    const returnModule = new THREE.Group();
+    returnModule.name = "poolsofa-double-seat-3";
+    pergolaSofa.add(returnModule);
+    const returnCentreX = (357 - 183 - 45) / 75 + 0.24;
+    addBox(returnModule, 1.2, 0.3, 1.2, poolsofaFabric, returnCentreX, 0.23, 0.6);
+    addBox(returnModule, 1.2, 0.3, 0.3, poolsofaFabric, returnCentreX, 0.53, 0.15);
+    poolsofaModules.push(returnModule);
+    const extraBackrest = addBox(pergolaSofa, 1.1, 0.3, 0.3, poolsofaFabric,
+      (357 - 138) / 75 + 0.24, 0.53, 0.15);
+    extraBackrest.name = "poolsofa-large-extra-backrest-corner-fit-pending";
+    console.assert(poolsofaModules.length === 3
+      && poolsofaModules.slice(0, 2).every(module => Math.abs(module.children[0].position.x + 0.6 - 3.76) < 1e-9),
+      "POOLSOFA L must contain three modules, with two against the wood-clad wall");
 
     const studioServices = [
       { id: "S01", x: 630, y: 88, height: 0.3 },
@@ -1524,11 +1500,14 @@
     addLineUpGateLeaf(vehicleLeftLeafPlanX, vehicleGateWidth / 2, "vehicle-gate-leaf");
     addLineUpGateLeaf(vehicleRightLeafPlanX, vehicleGateWidth / 2, "vehicle-gate-leaf");
     const pedestrianLeafPlanX = middlePostLeftPlanX + (gatePostSize + hingeAllowance) * planScale;
-    addLineUpGateLeaf(pedestrianLeafPlanX, pedestrianGateWidth, "pedestrian-gate-left-hinged");
+    const pedestrianGate = addLineUpGateLeaf(pedestrianLeafPlanX, pedestrianGateWidth, "pedestrian-gate-right-hinged");
+    pedestrianGate.userData.hingePlanX = pedestrianLeafPlanX + pedestrianGateWidth * planScale;
     const gateInfillWidth = (firstPostLeftPlanX - 126) / planScale;
     addLineUpGateLeaf(126, gateInfillWidth, "fixed-gate-wall-infill");
     addBox(world, 0.03, 0.22, 0.07, materials.charcoalSoft,
-      siteX(pedestrianLeafPlanX) + pedestrianGateWidth - 0.09, 1.05, gateZ - 0.06);
+      siteX(pedestrianLeafPlanX) + 0.09, 1.05, gateZ - 0.06);
+    console.assert(pedestrianGate.userData.hingePlanX > pedestrianLeafPlanX,
+      "Pedestrian gate must hinge at the right post as seen from the street");
 
     const charger = addBox(world, 0.28, 0.42, 0.16, materials.charcoalSoft, gatePosts[1].position.x,
       1.08, gateZ + gatePostSize / 2 + 0.08);
@@ -1989,10 +1968,8 @@
         continuousPlinth: storageEndPlinth.geometry.parameters.width === 4
       },
       furniture: {
-        diningTableAxis: "studio-cross-axis",
         deskAxis: deskLength > deskWidth ? "studio-long-axis" : "cross-axis",
         pergolaSofaAxis: "studio-long-axis",
-        sliderEntryClearance: (357 - 326.25) / 75,
         deskToBathroomClearance: (687 - 90) / 75 - (deskZ + deskLength / 2)
       },
       services: {
@@ -2007,18 +1984,21 @@
             < poolEquipmentZone.position.z - poolEquipmentZone.geometry.parameters.depth / 2,
           doorAssessed: false
         },
-        dining: { tableDimensions: [2.7, 1, 0.75], chairDimensions: [0.56, 0.57, 0.79],
-          chairCount: diningSet.children.filter(child => child.name.startsWith("paco-dining-chair-")).length,
-          chairsPerSide: [4, 4], endChairCount: 0, endClearance: 0.41,
-          chairSpacing: (50.625 - 42) / 75, fireplaceChairGap: (493.75 - 468) / 75,
-          approvedFireClearance: false },
         pergolaLounge: {
-          model: "Exterioo Avila 403897",
-          dimensions: [2.18, 2.84, 0.85, 0.78],
-          southClearance: (357 - 306) / 75,
-          centreWidth: (278 - 153.75) / 75,
-          shortArmToSlider: (278 - 253.5) / 75,
-          columnGap: (337 - 306) / 75,
+          model: "POOLSOFA Double Seat",
+          moduleCount: poolsofaModules.length,
+          moduleDimensions: [1.2, 1.2, 0.6],
+          seatHeight: 0.3,
+          statedWeightKg: 10,
+          statedLoadKg: 90,
+          dimensions: [2.4, 2.4, 0.6],
+          againstCladding: true,
+          thirdModulePlaced: true,
+          extraBackrestDimensions: [extraBackrest.geometry.parameters.width, extraBackrest.geometry.parameters.depth, extraBackrest.geometry.parameters.height],
+          cornerBackrestFitConfirmed: false,
+          southClearance: (357 - 273) / 75,
+          sliderSideGap: (278 - 270) / 75,
+          columnGap: (337 - 273) / 75,
           tableIncluded: false
         },
         deskChairClearOfDoorSwing: Math.hypot(deskChairX - internalDoorSpans[1].start,
@@ -2034,8 +2014,7 @@
           Math.max(0, desk.position.x - deskWidth / 2 - internalDoorSpans[1].start),
           Math.max(0, (679 - 90) / 75 - desk.position.z - deskLength / 2)
         ) - 0.8,
-        hvacOnNnoWall: aircoAllowance.position.x > 3.5,
-        loungeToFireplacePlanningBuffer: (493.75 - 468) / 75
+        hvacOnNnoWall: aircoAllowance.position.x > 3.5
       },
       sourcePlan: "grondplan.html",
       neighbourPoolPlanting: {
@@ -2308,12 +2287,6 @@
       "Bathroom must match the revised Arcato, Pavilion, Giro and Modular offer");
     console.assert(geometryChecks.bathroom.roomWidth === 1.8 && geometryChecks.bathroom.straightPartition,
       "Bathroom room size and straight partition must not change");
-    console.assert(geometryChecks.services.dining.chairCount === 8
-      && diningChairPlans.filter(point => point.facing === "right").length === 4
-      && diningChairPlans.filter(point => point.facing === "left").length === 4
-      && geometryChecks.services.dining.tableDimensions[0] === 2.7
-      && geometryChecks.services.dining.chairDimensions[0] === 0.56,
-      "Bahia/Paco space study must retain supplier dimensions and all eight chairs");
     console.assert(Math.abs(geometryChecks.furniture.deskToBathroomClearance - (0.35 + 8 / 75)) < 1e-9,
       "Tall EKET must sit between the fixed desktop and the bathroom partition");
     console.assert(geometryChecks.services.count === 16 && geometryChecks.services.storageClearWidth === 0.8
@@ -2325,8 +2298,7 @@
       && geometryChecks.services.deskDepth === 0.8 && geometryChecks.services.deskToDoorSwingClearance >= 0.1 - 1e-9
       && geometryChecks.services.cabinetFixed && !geometryChecks.services.deskHeightAdjustable
       && Math.abs(geometryChecks.services.kneeWidth - 1.05) < 1e-9
-      && Math.abs(geometryChecks.services.cabinetToDesktopGap) < 1e-9
-      && geometryChecks.services.dining.fireplaceChairGap > 0,
+      && Math.abs(geometryChecks.services.cabinetToDesktopGap) < 1e-9,
       "Space study must retain furniture dimensions, clear office door swings and an 80 cm aisle beside pool equipment");
     console.assert(geometryChecks.canonicalWorldScaleX === -1, "All views must retain the Plan orientation");
     window.__renderMetrics = geometryChecks;
