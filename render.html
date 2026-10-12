@@ -945,6 +945,26 @@
     const flameMaterial = new THREE.MeshStandardMaterial({ color: 0xffa13b,
       emissive: 0xff6b19, emissiveIntensity: 0.6 });
     addBox(fireplace, 0.65, 0.15, 0.16, flameMaterial, 0, 0.62, 0);
+    const pelletVariant = window.__studioVariant === "B";
+    fireplace.visible = !pelletVariant;
+    const pelletStove = new THREE.Group();
+    pelletStove.name = "jacobus-6-pellet-stove";
+    pelletStove.visible = pelletVariant;
+    const pelletPlan = window.__pelletPlan;
+    pelletStove.position.set((357 - pelletPlan.y - pelletPlan.depth / 2) / 75 + 0.24,
+      0.08, (pelletPlan.x + pelletPlan.width / 2 - 90) / 75);
+    interior.add(pelletStove);
+    addBox(pelletStove, 0.472, 0.779, 0.512, materials.charcoal,
+      0, 0.779 / 2, 0);
+    addBox(pelletStove, 0.012, 0.36, 0.36, glassMaterial, -0.24, 0.43, 0);
+    addBox(pelletStove, 0.008, 0.16, 0.26, flameMaterial, -0.249, 0.33, 0);
+    addBox(pelletStove, 0.008, 0.025, 0.14, materials.charcoalSoft, -0.255, 0.64, 0);
+    const pelletFlue = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.35, 20), materials.charcoal);
+    pelletFlue.position.set(0.12, 0.954, 0);
+    pelletStove.add(pelletFlue);
+    const pelletGlow = new THREE.PointLight(0xffa13b, 0.7, 2);
+    pelletGlow.position.set(-0.35, 0.45, 0);
+    pelletStove.add(pelletGlow);
     const internalDoorHeight = 2.8;
     const internalPartitionZ = (683 - 90) / 75;
     const bathroomPartitionZ = internalPartitionZ;
@@ -1082,7 +1102,7 @@
       { id: "S01", x: 630, y: 88, height: 0.3 },
       { id: "S09", x: 600, y: 88, height: 0.3 },
       { id: "E03", x: 615, y: 88, height: 0.3 },
-      { id: "F01", x: 530, y: 88, height: 0.3 },
+      { id: pelletVariant ? "P01" : "F01", x: pelletVariant ? 420 : 530, y: 88, height: 0.3 },
       { id: "S04", x: 330, y: 88, height: 0.3 },
       { id: "S13", x: 255, y: 88, height: 0.4 },
       { id: "E04", x: 104, y: 84, height: 0.4 },
@@ -2072,12 +2092,21 @@
         squareShowerProduct: "Linie Rumba 200652 80x80 matt-white acrylic slate texture"
       },
       fireplace: {
-        model: "DRU Maestro Tall Tunnel",
-        enclosureWidth: fireplaceWidth,
-        enclosureDepth: fireplaceDepth,
-        sidePassage: (3.52 - fireplaceWidth) / 2,
+        variant: window.__studioVariant,
+        model: pelletVariant ? "JAcobus 6 Pelletkachel" : "DRU Maestro Tall Tunnel",
+        gasRequired: !pelletVariant,
+        centralEnclosureVisible: fireplace.visible,
+        pelletVisible: pelletStove.visible,
+        pelletDimensions: [0.512, 0.472, 0.779],
+        pelletPlan: window.__pelletPlan,
+        pelletWallSetback: (pelletPlan.y - 93) / 75,
+        pelletDeskGap: (547.75 - pelletPlan.x - pelletPlan.width) / 75,
+        installationApproved: false,
+        enclosureWidth: pelletVariant ? 0 : fireplaceWidth,
+        enclosureDepth: pelletVariant ? 0 : fireplaceDepth,
+        sidePassage: pelletVariant ? null : (3.52 - fireplaceWidth) / 2,
         centerLocalZ: fireplaceCenterZ,
-        height: fireplaceHeight
+        height: pelletVariant ? pelletPlan.height : fireplaceHeight
       },
       internalDoors: {
         count: studioInternalDoors.length,
@@ -2257,10 +2286,16 @@
     console.assert(Math.abs((geometryChecks.internalDoors.storageOpeningPlanY[0] - 244.5) / 75 - 0.35) < 1e-9
       && Math.abs((357 - geometryChecks.internalDoors.storageOpeningPlanY[1]) / 75 - 0.35) < 1e-9,
       "Storage Xinix door must be centered with 35 cm clear at both ends");
-    console.assert(geometryChecks.fireplace.enclosureWidth === 1.25
+    console.assert(pelletVariant || (geometryChecks.fireplace.enclosureWidth === 1.25
       && geometryChecks.fireplace.enclosureDepth === 0.54
-      && Math.abs(geometryChecks.fireplace.sidePassage - 1.135) < 1e-9,
+      && Math.abs(geometryChecks.fireplace.sidePassage - 1.135) < 1e-9),
       "DRU fireplace enclosure must be centered, 125x54 cm, with equal side passages");
+    console.assert(!pelletVariant || (!geometryChecks.fireplace.centralEnclosureVisible
+      && geometryChecks.fireplace.pelletVisible && !geometryChecks.fireplace.gasRequired
+      && geometryChecks.fireplace.pelletDimensions.join(",") === "0.512,0.472,0.779"
+      && geometryChecks.fireplace.pelletDeskGap > 0.79
+      && Math.abs(geometryChecks.fireplace.pelletWallSetback - 0.3) < 1e-9),
+      "Variant B must remove the DRU enclosure and place the pellet stove left of the unchanged desk");
     console.assert(geometryChecks.bathroom.vanityWidth === 0.75 && geometryChecks.bathroom.vanityDepth === 0.55
       && geometryChecks.bathroom.showerDimensions.every(size => size === 0.8)
       && geometryChecks.bathroom.cisternDepth === 0.12 && geometryChecks.bathroom.toiletClearOfDoor,
@@ -2411,6 +2446,7 @@
       document.documentElement.dataset.geometry = "verified";
     });
   </script>
+  <script src="variant.js"></script>
 </body>
 
 </html>
