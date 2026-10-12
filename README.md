@@ -11,6 +11,8 @@ Keep these four pages at the root so existing links and GitHub Pages continue to
 
 The two 2D pages load their studio drawing from [studio-plan.js](studio-plan.js). Edit that shared SVG source instead of keeping independent copies in the HTML pages. The garden inset uses the identical drawing with a site-scale transform and footprint clip; the detailed page also shows its surrounding dimensions and deck. The 3D view remains a separate model.
 
+The Piazzetta IP7 pillar is a provisional 90 x 60 x 280 cm enclosure at the existing centre, with 131 cm passages on either side. The stove faces the lounge; the closed office-facing back carries a schematic painting. Clearances, ventilation, pellet filling, slide-out servicing and rear-wall temperatures require installer confirmation; neither the enclosure nor the illustrative stove/painting heights are construction specifications.
+
 ## Local Project Files
 
 Only Git-tracked files remain in this workspace. Local drafts, spreadsheet exports, source documents, render archives, secrets and dependency folders were removed after explicit confirmation. Private project documents must not be published in this public repository.

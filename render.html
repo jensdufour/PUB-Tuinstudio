@@ -921,30 +921,65 @@
 
     const interior = new THREE.Group();
     studio.add(interior);
-    const fireplaceWidth = 1.25;
-    const fireplaceDepth = 0.54;
+    const fireplaceWidth = 0.9;
+    const fireplaceDepth = 0.6;
     const fireplaceHeight = 2.8;
     const fireplaceCenterZ = (514 - 90) / 75;
     const fireplace = new THREE.Group();
-    fireplace.name = "dru-maestro-tall-tunnel-promafour";
+    fireplace.name = "piazzetta-ip7-provisional-enclosure";
     fireplace.position.set(2, 0.08, fireplaceCenterZ);
     interior.add(fireplace);
     const fireplaceFinish = standard(0xf4f1ea, 0.95);
-    addBox(fireplace, fireplaceWidth, 0.45, fireplaceDepth, fireplaceFinish, 0, 0.225, 0);
-    addBox(fireplace, fireplaceWidth, fireplaceHeight - 1.85, fireplaceDepth, fireplaceFinish,
-      0, (fireplaceHeight + 1.85) / 2, 0);
+    addBox(fireplace, fireplaceWidth, 0.65, fireplaceDepth, fireplaceFinish, 0, 0.325, 0);
+    addBox(fireplace, fireplaceWidth, fireplaceHeight - 1.15, fireplaceDepth, fireplaceFinish,
+      0, (fireplaceHeight + 1.15) / 2, 0);
     for (const side of [-1, 1]) {
-      addBox(fireplace, 0.15, 1.4, fireplaceDepth, fireplaceFinish,
-        side * (fireplaceWidth / 2 - 0.075), 1.15, 0);
-      addBox(fireplace, 0.95, 1.4, 0.025, glassMaterial, 0, 1.15, side * fireplaceDepth / 2);
-      for (const height of [0.25, 2.55]) {
-        addBox(fireplace, 0.38, 0.05, 0.01, materials.charcoalSoft,
-          0, height, side * (fireplaceDepth / 2 + 0.01));
+      addBox(fireplace, 0.1, 0.5, fireplaceDepth, fireplaceFinish,
+        side * (fireplaceWidth / 2 - 0.05), 0.9, 0);
+    }
+    addBox(fireplace, 0.7, 0.5, 0.05, fireplaceFinish, 0, 0.9, 0.275);
+    const stoveFront = addBox(fireplace, 0.68, 0.49, 0.025, materials.charcoal,
+      0, 0.9, -0.29);
+    stoveFront.name = "piazzetta-ip7-lounge-front";
+    addBox(fireplace, 0.56, 0.34, 0.012, glassMaterial, 0, 0.9, -0.308);
+    for (const height of [0.3, 2.55]) {
+      addBox(fireplace, 0.38, 0.05, 0.01, materials.charcoalSoft, 0, height, -0.31);
+    }
+    const painting = addBox(fireplace, 0.7, 0.7, 0.025, standard(0x76172e, 0.96),
+      0, 1.65, 0.315);
+    painting.name = "office-painting-provisional";
+    const paintingCanvas = document.createElement("canvas");
+    paintingCanvas.width = paintingCanvas.height = 768;
+    const paintingContext = paintingCanvas.getContext("2d");
+    const paintingPixels = paintingContext.createImageData(768, 768);
+    const paintingRandom = seededRandom(12102026);
+    for (let pixelY = 0; pixelY < 768; pixelY++) {
+      for (let pixelX = 0; pixelX < 768; pixelX++) {
+        const offsetX = pixelX - 407;
+        const offsetY = pixelY - 353;
+        const radius = Math.hypot(offsetX, offsetY);
+        const angle = Math.atan2(offsetY, offsetX);
+        const glow = Math.exp(-radius * radius / 47000);
+        const brush = Math.sin(radius * 0.043 - angle * 1.8 + Math.sin(angle * 3) * 0.8);
+        const grain = (paintingRandom() - 0.5) * 18;
+        const pigment = brush * Math.min(radius / 100, 1) * Math.exp(-radius / 450);
+        const pixelIndex = (pixelY * 768 + pixelX) * 4;
+        paintingPixels.data[pixelIndex] = 94 + 143 * glow + 35 * pigment + grain;
+        paintingPixels.data[pixelIndex + 1] = 9 + 65 * glow + 8 * pigment + grain * 0.3;
+        paintingPixels.data[pixelIndex + 2] = 35 + 58 * glow + 14 * pigment + grain * 0.6;
+        paintingPixels.data[pixelIndex + 3] = 255;
       }
     }
+    paintingContext.putImageData(paintingPixels, 0, 0);
+    const paintingTexture = new THREE.CanvasTexture(paintingCanvas);
+    paintingTexture.colorSpace = THREE.SRGBColorSpace;
+    const paintingFace = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 0.7),
+      new THREE.MeshStandardMaterial({ map: paintingTexture, roughness: 0.96, side: THREE.DoubleSide }));
+    paintingFace.position.set(0, 1.65, 0.33);
+    fireplace.add(paintingFace);
     const flameMaterial = new THREE.MeshStandardMaterial({ color: 0xffa13b,
       emissive: 0xff6b19, emissiveIntensity: 0.6 });
-    addBox(fireplace, 0.65, 0.15, 0.16, flameMaterial, 0, 0.62, 0);
+    addBox(fireplace, 0.46, 0.1, 0.015, flameMaterial, 0, 0.79, -0.32);
     const internalDoorHeight = 2.8;
     const internalPartitionZ = (683 - 90) / 75;
     const bathroomPartitionZ = internalPartitionZ;
@@ -2072,12 +2107,18 @@
         squareShowerProduct: "Linie Rumba 200652 80x80 matt-white acrylic slate texture"
       },
       fireplace: {
-        model: "DRU Maestro Tall Tunnel",
+        model: "Piazzetta IP7 cast iron door",
         enclosureWidth: fireplaceWidth,
         enclosureDepth: fireplaceDepth,
         sidePassage: (3.52 - fireplaceWidth) / 2,
         centerLocalZ: fireplaceCenterZ,
-        height: fireplaceHeight
+        height: fireplaceHeight,
+        installationApproved: false,
+        stoveFrontLocalZ: stoveFront.position.z,
+        paintingLocalZ: painting.position.z,
+        paintingDimensions: [painting.geometry.parameters.width, painting.geometry.parameters.height],
+        paintingArtwork: "Crimson spiral study inspired by supplied reference; size provisional",
+        frontOpening: [0.7, 0.5]
       },
       internalDoors: {
         count: studioInternalDoors.length,
@@ -2257,10 +2298,14 @@
     console.assert(Math.abs((geometryChecks.internalDoors.storageOpeningPlanY[0] - 244.5) / 75 - 0.35) < 1e-9
       && Math.abs((357 - geometryChecks.internalDoors.storageOpeningPlanY[1]) / 75 - 0.35) < 1e-9,
       "Storage Xinix door must be centered with 35 cm clear at both ends");
-    console.assert(geometryChecks.fireplace.enclosureWidth === 1.25
-      && geometryChecks.fireplace.enclosureDepth === 0.54
-      && Math.abs(geometryChecks.fireplace.sidePassage - 1.135) < 1e-9,
-      "DRU fireplace enclosure must be centered, 125x54 cm, with equal side passages");
+    console.assert(geometryChecks.fireplace.enclosureWidth === 0.9
+      && geometryChecks.fireplace.enclosureDepth === 0.6
+      && Math.abs(geometryChecks.fireplace.sidePassage - 1.31) < 1e-9
+      && geometryChecks.fireplace.stoveFrontLocalZ < 0
+      && geometryChecks.fireplace.paintingLocalZ > 0
+      && geometryChecks.fireplace.paintingDimensions.every(size => size === 0.7)
+      && !geometryChecks.fireplace.installationApproved,
+      "Provisional IP7 pillar must be centered, 90x60 cm, with 131 cm passages, lounge front and closed painting back");
     console.assert(geometryChecks.bathroom.vanityWidth === 0.75 && geometryChecks.bathroom.vanityDepth === 0.55
       && geometryChecks.bathroom.showerDimensions.every(size => size === 0.8)
       && geometryChecks.bathroom.cisternDepth === 0.12 && geometryChecks.bathroom.toiletClearOfDoor,
