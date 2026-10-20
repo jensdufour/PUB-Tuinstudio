@@ -1017,33 +1017,33 @@
       mesh.name = name;
       return mesh;
     }
-    const bathroomVanity = addBathroomBox(756.375, 195.25, 56.25, 41.25, 0.46, 0.59, bathroomWalnut, "balmani-forma-65700-75x55");
-    addBathroomBox(756.375, 195.25, 56.25, 41.25, 0.018, 0.829, materials.white, "balmani-tablo-arcato-202394-white-height-provisional");
+    const bathroomVanity = addBathroomBox(780.75, 93, 41.25, 56.25, 0.46, 0.59, bathroomWalnut, "balmani-forma-65700-75x55");
+    addBathroomBox(780.75, 93, 41.25, 56.25, 0.018, 0.829, materials.white, "balmani-tablo-arcato-202394-white-height-provisional");
     for (let rib = 0; rib < 25; rib += 1) {
       addBox(bathroomFixtures, 0.012, 0.44, 0.012, bathroomWalnut,
-        bathroomVanity.position.x + 0.28, 0.59, bathroomVanity.position.z - 0.36 + rib * 0.03);
+        bathroomVanity.position.x - 0.36 + rib * 0.03, 0.59, bathroomVanity.position.z - 0.28);
     }
-    const basin = addBathroomBox(767.5, 208.5, 34, 18, 0.006, 0.837, materials.ceiling, "tablo-arcato-basin-schematic");
+    const basin = addBathroomBox(794, 104.125, 18, 34, 0.006, 0.837, materials.ceiling, "tablo-arcato-basin-schematic");
     const vanityTap = addBox(bathroomFixtures, 0.025, 0.15, 0.025, bathroomRosegold,
-      (357 - 231.5) / 75 + 0.24, 0.91, bathroomVanity.position.z);
+      bathroomVanity.position.x, 0.91, (817 - 90) / 75);
     vanityTap.name = "blaufoss-pavilion-curve-86068-standard-schematic";
     const mirror = new THREE.Mesh(new THREE.CircleGeometry(0.375, 40),
       new THREE.MeshStandardMaterial({ color: 0xc5c9c7, metalness: 0.9, roughness: 0.15, side: THREE.DoubleSide }));
-    mirror.rotation.y = Math.PI / 2;
-    mirror.position.set((357 - 236.5) / 75 + 0.26, 1.5, bathroomVanity.position.z);
+    mirror.rotation.y = 0;
+    mirror.position.set(bathroomVanity.position.x, 1.5, (822 - 90) / 75 - 0.02);
     mirror.name = "balmani-giro-round-64886-75cm-frameless";
     bathroomFixtures.add(mirror);
-    const bathroomShower = addBathroomBox(762, 93, 60, 60, 0.027, 0.0665, materials.white, "linie-rumba-200652-80x80-tray-height-provisional");
-    const showerScreen = addBox(bathroomFixtures, 0.8, 2, 0.01, glassMaterial,
-      bathroomShower.position.x, 1.08, (762.4 - 90) / 75);
+    const bathroomShower = addBathroomBox(762, 176.5, 60, 60, 0.027, 0.0665, materials.white, "linie-rumba-200652-80x80-tray-height-provisional");
+    const showerScreen = addBox(bathroomFixtures, 0.01, 2, 0.8, glassMaterial,
+      (357 - 176.9) / 75 + 0.24, 1.08, bathroomShower.position.z);
     showerScreen.name = "balmani-modular-18811-203949-80x200";
     addBox(bathroomFixtures, 0.02, 2, 0.02, bathroomRosegold,
-      bathroomShower.position.x + 0.39, 1.08, showerScreen.position.z).name = "modular-rosegold-wall-profile";
+      showerScreen.position.x, 1.08, bathroomShower.position.z + 0.39).name = "modular-rosegold-wall-profile";
     const showerHead = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.02, 24), bathroomRosegold);
     showerHead.position.set(bathroomShower.position.x, 2.2, bathroomShower.position.z);
     bathroomFixtures.add(showerHead);
-    addBox(bathroomFixtures, 0.4, 0.025, 0.025, bathroomRosegold,
-      bathroomShower.position.x + 0.2, 2.22, bathroomShower.position.z);
+    addBox(bathroomFixtures, 0.025, 0.025, 0.4, bathroomRosegold,
+      bathroomShower.position.x, 2.22, bathroomShower.position.z + 0.2);
     addBox(bathroomFixtures, 0.02, 0.55, 0.02, bathroomRosegold,
       bathroomShower.position.x, 1.25, (819 - 90) / 75);
     addBox(bathroomFixtures, 0.08, 0.12, 0.025, bathroomRosegold,
@@ -1151,7 +1151,7 @@
     storageBoiler.name = "atlantic-lineo-connected-multiposition-100l-vertical";
     addBox(studio, 0.015, 0.12, 0.1, materials.charcoalSoft,
       storageBoiler.position.x - 0.165, storageBoiler.position.y - 0.2, storageBoiler.position.z);
-    for (const [name, planX, planY] of [["L01", 754, 315], ["L02", 739.5, 166], ["L03", 792, 123],
+    for (const [name, planX, planY] of [["L01", 754, 315], ["L02", 739.5, 166], ["L03", 792, 206.5],
       ["L04", 604, 269], ["L05", 604, 181], ["L06", 397, 269], ["L07", 397, 181],
       ["L08", 193, 269], ["L09", 193, 181], ["V01", 750, 110], ["V02", 350, 130]]) {
       addBox(studio, 0.12, 0.015, 0.12, serviceMaterial,
@@ -2067,24 +2067,23 @@
         roomWidth: 1.8,
         roomDepth: 143.5 / 75,
         straightPartition: bathroomPartitionZ === internalPartitionZ,
-        vanitySideClearances: [
-          bathroomVanity.position.z - bathroomVanity.geometry.parameters.depth / 2
-            - (687 - 90) / 75,
+        vanityCornerGaps: [
+          3.76 - bathroomVanity.position.x - bathroomVanity.geometry.parameters.width / 2,
           (822 - 90) / 75
             - bathroomVanity.position.z - bathroomVanity.geometry.parameters.depth / 2
         ],
-        vanityWidth: bathroomVanity.geometry.parameters.depth,
-        vanityDepth: bathroomVanity.geometry.parameters.width,
+        vanityWidth: bathroomVanity.geometry.parameters.width,
+        vanityDepth: bathroomVanity.geometry.parameters.depth,
         basinType: "Tablo Arcato 202394 white integrated basin; bowl geometry schematic",
         vanitySet: "65700_202394",
         vanityTapProduct: "Blaufoss Pavilion Curve 86068 standard Brushed Rosegold",
         mirrorDiameter: mirror.geometry.parameters.radius * 2,
         mirrorProduct: "Balmani Giro Round 64886 frameless",
-        showerScreenDimensions: [showerScreen.geometry.parameters.width, showerScreen.geometry.parameters.height],
+        showerScreenDimensions: [showerScreen.geometry.parameters.depth, showerScreen.geometry.parameters.height],
         showerScreenProduct: "Balmani Modular 18811_203949",
         showerDrainProduct: "Santeg Unishower 27298 90 mm",
-        mirrorOnBathroomWallFace: mirror.position.x > (357 - 236.5) / 75 + 0.24
-          && mirror.position.x < (357 - 236.5) / 75 + 0.28,
+        mirrorOnBathroomWallFace: mirror.rotation.y === 0
+          && mirror.position.z > (822 - 90) / 75 - 0.04 && mirror.position.z < (822 - 90) / 75,
         showerDimensions: [bathroomShower.geometry.parameters.depth, bathroomShower.geometry.parameters.width],
         cisternDepth: bathroomCistern.geometry.parameters.width,
         toiletProjection: bathroomToilet.geometry.parameters.width,
@@ -2093,15 +2092,26 @@
         toiletClearOfDoor: bathroomToilet.position.x - bathroomToilet.geometry.parameters.width / 2
           > (357 - 160.5) / 75 + 0.24,
         toiletFacesRoom: bathroomCistern.position.x > bathroomToilet.position.x,
-        showerScreenOnToiletSide: showerScreen.position.z < bathroomShower.position.z,
-        vanityOnSharedStorageWall: Math.abs(bathroomVanity.position.x - bathroomVanity.geometry.parameters.width / 2
+        showerScreenOnVanitySide: showerScreen.position.x > bathroomShower.position.x,
+        showerOpeningFacesDoor: showerScreen.geometry.parameters.width === 0.01
+          && showerScreen.position.x > bathroomShower.position.x
+          && bathroomPartitionZ < bathroomShower.position.z - bathroomShower.geometry.parameters.depth / 2,
+        showerOnSharedStorageWall: Math.abs(bathroomShower.position.x - bathroomShower.geometry.parameters.width / 2
           - ((357 - 236.5) / 75 + 0.24)) < 1e-9,
+        vanityOnRightWall: Math.abs(bathroomVanity.position.z + bathroomVanity.geometry.parameters.depth / 2
+          - (822 - 90) / 75) < 1e-9,
         toiletFrontClearance: bathroomToilet.position.x - bathroomToilet.geometry.parameters.width / 2
           - ((357 - 236.5) / 75 + 0.24),
-        vanityFrontClearance: bathroomShower.position.x - bathroomShower.geometry.parameters.width / 2
-          - bathroomVanity.position.x - bathroomVanity.geometry.parameters.width / 2,
-        fullDrawerToShowerGap: bathroomShower.position.x - bathroomShower.geometry.parameters.width / 2
-          - bathroomVanity.position.x - bathroomVanity.geometry.parameters.width * 1.5,
+        vanityToShowerGap: bathroomVanity.position.x - bathroomVanity.geometry.parameters.width / 2
+          - bathroomShower.position.x - bathroomShower.geometry.parameters.width / 2,
+        vanityFrontClearance: bathroomVanity.position.z - bathroomVanity.geometry.parameters.depth / 2
+          - bathroomToilet.position.z - bathroomToilet.geometry.parameters.depth / 2,
+        fullDrawerToToiletGap: bathroomVanity.position.z - bathroomVanity.geometry.parameters.depth * 1.5
+          - bathroomToilet.position.z - bathroomToilet.geometry.parameters.depth / 2,
+        fullDrawerToCisternGap: bathroomVanity.position.z - bathroomVanity.geometry.parameters.depth * 1.5
+          - bathroomCistern.position.z - bathroomCistern.geometry.parameters.depth / 2,
+        showerDoorApproachWidth: bathroomShower.position.z - bathroomShower.geometry.parameters.depth / 2
+          - (687 - 90) / 75,
         showerEntryWidth: 0.8,
         vanityTapPending: false,
         squareShowerProduct: "Linie Rumba 200652 80x80 matt-white acrylic slate texture"
@@ -2309,23 +2319,25 @@
     console.assert(geometryChecks.bathroom.vanityWidth === 0.75 && geometryChecks.bathroom.vanityDepth === 0.55
       && geometryChecks.bathroom.showerDimensions.every(size => size === 0.8)
       && geometryChecks.bathroom.cisternDepth === 0.12 && geometryChecks.bathroom.toiletClearOfDoor,
-      "Proposed compact vanity and unchanged square shower must fit with the current Xinix doors");
+      "Forma and the relocated square shower must retain their sizes and the current Xinix doors");
     console.assert(geometryChecks.bathroom.toiletWidth === 0.36 && geometryChecks.bathroom.toiletProjection === 0.51,
       "Waldo toilet footprint must match the supplier's 36x51 cm dimensions");
-    console.assert(geometryChecks.bathroom.vanitySideClearances.every(gap => gap >= 0.125 - 1e-9)
+    console.assert(geometryChecks.bathroom.vanityCornerGaps.every(gap => Math.abs(gap) < 1e-9)
       && geometryChecks.bathroom.toiletFrontClearance > 1.28
-      && Math.abs(geometryChecks.bathroom.vanityFrontClearance - 0.5633333333333334) < 1e-9
-      && Math.abs(geometryChecks.bathroom.fullDrawerToShowerGap - 0.0133333333333333) < 1e-9,
-      "Shared-wall Forma must retain side gaps and the limited shower/drawer clearances");
-    console.assert(geometryChecks.bathroom.toiletFacesRoom && geometryChecks.bathroom.showerScreenOnToiletSide
-      && geometryChecks.bathroom.vanityOnSharedStorageWall
-      && Math.abs(geometryChecks.bathroom.vanitySideClearances[0] - 0.925) < 1e-9
-      && Math.abs(geometryChecks.bathroom.vanitySideClearances[1] - 0.125) < 1e-9,
-      "Forma must sit on the storage partition with toilet above the entrance sightline");
+      && Math.abs(geometryChecks.bathroom.vanityFrontClearance - 0.57) < 1e-9
+      && Math.abs(geometryChecks.bathroom.vanityToShowerGap - 0.3633333333333333) < 1e-9
+      && Math.abs(geometryChecks.bathroom.fullDrawerToToiletGap - 0.02) < 1e-9
+      && Math.abs(geometryChecks.bathroom.fullDrawerToCisternGap + 0.05) < 1e-9,
+      "Corner Forma must retain the rotated footprint and expose the provisional drawer/cistern conflict");
+    console.assert(geometryChecks.bathroom.toiletFacesRoom && geometryChecks.bathroom.showerScreenOnVanitySide
+      && geometryChecks.bathroom.vanityOnRightWall && geometryChecks.bathroom.showerOnSharedStorageWall
+      && geometryChecks.bathroom.showerOpeningFacesDoor
+      && Math.abs(geometryChecks.bathroom.showerDoorApproachWidth - 1) < 1e-9,
+      "Shower must open towards the door, Forma must turn onto the right wall flush in the corner and toilet must stay put");
     console.assert(geometryChecks.nnoFacade.windowCount === 0 && geometryChecks.nnoFacade.closedLength === 10,
       "Studio NNO facade must be a closed 10 m wall without the 30 cm-high windows");
     console.assert(geometryChecks.bathroom.mirrorOnBathroomWallFace,
-      "Mirror must sit on the bathroom face of the storage wall, not inside the partition");
+      "Mirror must turn with Forma onto the bathroom face of the right wall");
     console.assert(geometryChecks.bathroom.vanitySet === "65700_202394"
       && geometryChecks.bathroom.mirrorDiameter === 0.75
       && geometryChecks.bathroom.showerScreenDimensions.join(",") === "0.8,2"
