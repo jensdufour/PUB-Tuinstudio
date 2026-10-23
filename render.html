@@ -1150,12 +1150,12 @@
     storageBoiler.name = "atlantic-lineo-connected-multiposition-100l-vertical";
     addBox(studio, 0.015, 0.12, 0.1, materials.charcoalSoft,
       storageBoiler.position.x - 0.165, storageBoiler.position.y - 0.2, storageBoiler.position.z);
-    for (const [name, planX, planY] of [["L01", 754, 315], ["L02", 739.5, 166], ["L03", 792, 206.5],
-      ["L04", 604, 269], ["L05", 604, 181], ["L06", 397, 269], ["L07", 397, 181],
-      ["L08", 193, 269], ["L09", 193, 181], ["V01", 750, 110], ["V02", 350, 130]]) {
+    for (const [name, planX, planY] of [["L01", 754.5, 300.75], ["L02", 754.5, 164.75], ["L03", 792, 206.5],
+      ["L04", 604, 181], ["L04b", 604, 269], ["L05", 397, 181], ["L05b", 397, 269],
+      ["L06", 193, 181], ["L06b", 193, 269], ["V01", 750, 110], ["V02", 350, 130]]) {
       const tl = name === "L01";
-      addBox(studio, tl ? 0.06 : 0.12, tl ? 0.04 : 0.015, tl ? 0.6 : 0.12, serviceMaterial,
-        (357 - planY) / 75 + 0.24, tl ? 2.83 : 2.845, (planX - 90) / 75).name = tl ? "ceiling-L01-tl" : `ceiling-${name}`;
+      addBox(studio, tl ? 0.06 : 0.12, tl ? 0.04 : 0.015, tl ? 1.2 : 0.12, serviceMaterial,
+        (357 - planY) / 75 + 0.24, tl ? 2.83 : 2.845, (planX - 90) / 75).name = tl ? "ceiling-L01-tl-120" : `ceiling-${name}`;
     }
 
     const warmLight = new THREE.PointLight(0xffd7a0, 18, 7, 2);
