@@ -23,7 +23,8 @@
       "office-airco", "office-data", "office-socket-right", "office-socket-left", "fireplace-power",
       "lounge-socket", "pergola-socket", "bathroom-vanity-socket", "storage-utility-socket",
       "robot-socket", "pergola-heater-feed", "outdoor-hose-tap", "design-service-controls",
-      "plan-dimensions", "xinix-door-setbacks", "plan-compass", "entrance-arrow"].forEach(id => {
+      "plan-dimensions", "xinix-door-setbacks", "plan-compass", "entrance-arrow",
+      "atlantic-lineo-boiler"].forEach(id => {
       const el = document.getElementById(id);
       if (!el) throw new Error("missing " + id);
       el.remove();
@@ -36,7 +37,8 @@
       if (/MOSO|40,36|POOLSOFA|EKET|hoekrug|zuidruimte|240 x 240|ETH|POE|grasrobot|afzuiging|toevoer|voeding|buitenkraan|zijde|breedte|m²/.test(label)
         || /^(E\d|S\d|F01|C\d|A01|V\d|W01|schuifraam|open \(|toegang |voorlopig$|\d)/.test(label)) node.remove();
     });
-    console.assert(!document.getElementById("room-fresh-air") && !document.getElementById("office-data")
+    console.assert(!document.getElementById("atlantic-lineo-boiler")
+      && !document.getElementById("room-fresh-air") && !document.getElementById("office-data")
       && !document.querySelector('g[transform="translate(846,225)"]')
       && document.getElementById("bathroom-general-light") && document.getElementById("bathroom-shower"));
   </script>
