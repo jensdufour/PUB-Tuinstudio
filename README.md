@@ -5,7 +5,7 @@
 - [index.html](index.html): start page.
 - [grondplan.html](grondplan.html): site and garden plan.
 - [tuinstudio.html](tuinstudio.html): detailed studio plan and service schedule.
-- [elektra.html](elektra.html): building-only technical plan for the electrician and plumber. Same studio drawing, furniture and garden deck removed. The page is the drawing only. L01 is a 120 cm TL-lamp. The same number is one circuit: L02 and L03 are separate, and L04, L05 and L06 are each two spots.
+- [elektra.html](elektra.html): building-only technical plan for the electrician and plumber. Same studio drawing, furniture and garden deck removed. The page is the drawing only. L01 is a 120 cm TL-lamp. Outlets now shown: S02 and S13 on the pergola wall, S04 and S01 plus E03 on the lounge/office top wall, S09 on the shared bathroom wall, and F01 for the IP7. The same number is one circuit: L02 and L03 are separate, and L04, L05 and L06 are each two spots.
 - [render.html](render.html): interactive 3D view.
 
 Keep these four pages at the root so existing links and GitHub Pages continue to work. Open the HTML directly in a browser; the 3D view downloads Three.js from its existing CDN.
