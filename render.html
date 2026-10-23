@@ -1018,7 +1018,7 @@
       return mesh;
     }
     const bathroomVanity = addBathroomBox(765.75, 93, 56.25, 41.25, 0.46, 0.59, bathroomWalnut, "balmani-forma-65700-75x55");
-    const bathroomTop = addBathroomBox(754.5, 93, 67.5, 41.25, 0.018, 0.829, bathroomMarble, "balmani-stretto-84821-90x55-dark-emperador-height-provisional");
+    const bathroomTop = addBathroomBox(765.75, 93, 56.25, 41.25, 0.018, 0.829, bathroomMarble, "balmani-stretto-84821-cut-to-75x55-from-90x55-height-provisional");
     for (let rib = 0; rib < 25; rib += 1) {
       addBox(bathroomFixtures, 0.012, 0.44, 0.012, bathroomWalnut,
         bathroomVanity.position.x - 0.26, 0.59, bathroomVanity.position.z - 0.36 + rib * 0.03);
@@ -2331,7 +2331,9 @@
       "Waldo toilet footprint must match the supplier's 36x51 cm dimensions");
     console.assert(geometryChecks.bathroom.vanityCornerGaps.every(gap => Math.abs(gap) < 1e-9)
       && geometryChecks.bathroom.toiletFrontClearance > 1.28
-      && Math.abs(geometryChecks.bathroom.topToCisternGap - 0.15) < 1e-9
+      && Math.abs(geometryChecks.bathroom.topToCisternGap - 0.30) < 1e-9
+      && bathroomTop.geometry.parameters.width === bathroomVanity.geometry.parameters.width
+      && bathroomTop.geometry.parameters.depth === bathroomVanity.geometry.parameters.depth
       && Math.abs(geometryChecks.bathroom.cabinetToToiletGap - 0.37) < 1e-9
       && Math.abs(geometryChecks.bathroom.vanityToShowerGap - 0.4633333333333333) < 1e-6
       && geometryChecks.bathroom.drawerIntoShower > 0.08,
