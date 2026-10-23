@@ -34,7 +34,7 @@
     document.querySelectorAll("text").forEach(node => {
       const label = node.textContent.trim();
       if (/MOSO|40,36|POOLSOFA|EKET|hoekrug|zuidruimte|240 x 240|ETH|POE|grasrobot|afzuiging|toevoer|voeding|buitenkraan|zijde|breedte|m²|XINIX 0,80|POOLTECHNIEK|instap naar deur|WALDO \/ NNO-wand|FORMA 75 x 55/.test(label)
-        || /^(E01|E04|S05|S06|C\d|A01|V\d|W01|schuifraam|open \(|toegang |voorlopig$|zwevend$|\d)/.test(label)) node.remove();
+        || /^(E01|E04|S05|S06|A01|V\d|W01|schuifraam|open \(|toegang |voorlopig$|zwevend$|\d)/.test(label)) node.remove();
     });
     console.assert(!document.getElementById("atlantic-lineo-boiler")
       && !document.getElementById("room-fresh-air") && document.getElementById("office-data")
@@ -43,6 +43,7 @@
       && !document.querySelector('g[transform="translate(846,225)"]')
       && document.getElementById("bathroom-general-light") && document.getElementById("bathroom-shower")
       && document.getElementById("storage-internal-xinix-door") && document.getElementById("pool-equipment-zone")
+      && document.getElementById("light-switches") && document.getElementById("storage-tl-switch")
       && !document.getElementById("bathroom-shower-entry"));
   </script>
 </body>
