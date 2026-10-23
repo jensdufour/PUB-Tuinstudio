@@ -3,154 +3,120 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prijsplan elektriciteit en sanitair — tuinstudio Ninove</title>
+  <title>Technisch plan elektriciteit en sanitair — tuinstudio Ninove</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root { --ink: #1a1a2e; --line: #d5dbe3; --accent: #4A7C59; --bg: #f4f1eb; --paper: #fff; --dim: #5c6b7a; --open: #fff6df; }
-    * { box-sizing: border-box; }
-    body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 "Segoe UI", Aptos, Calibri, sans-serif; }
-    main { max-width: 980px; margin: 0 auto; padding: 28px 18px 64px; }
-    header, section { background: var(--paper); border: 1px solid var(--line); padding: 18px 20px; margin-bottom: 14px; }
-    h1 { font-size: 22px; margin: 0 0 6px; }
-    h2 { font-size: 16px; margin: 0 0 8px; }
-    p, ul { margin: 0 0 8px; }
-    .meta, .note { color: var(--dim); font-size: 13px; }
-    a { color: #0b5cab; }
-    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-    th, td { border: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
-    th { background: #f3f6f4; }
-    td.num, th.num { text-align: right; white-space: nowrap; }
-    .open td:first-child { background: var(--open); font-weight: 650; }
-    .tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--accent); }
+    :root { --ink: #1a1a2e; --line: #2E4057; --accent: #4A7C59; --light-line: #c8d0dc; --bg: #f4f1eb; --paper: #faf8f4; --dim: #7a8a9a; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); font-family: "DM Sans", sans-serif; color: var(--ink); padding: 40px 20px; }
+    .page { max-width: 1200px; margin: 0 auto; }
+    .drawing-block { background: var(--paper); border: 1px solid var(--light-line); padding: 30px 30px 20px; }
+    .drawing-label { font-family: "Space Mono", monospace; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+    .drawing-label::after { content: ""; flex: 1; height: 1px; background: var(--light-line); }
+    .lead { font-size: 14px; line-height: 1.55; margin-bottom: 16px; max-width: 78ch; }
+    .lead a { color: var(--accent); }
+    .legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--light-line); }
+    .legend-item { display: flex; align-items: center; gap: 8px; font-family: "Space Mono", monospace; font-size: 8px; color: var(--dim); }
+    .legend-swatch { width: 20px; height: 12px; border: 1px solid var(--light-line); flex-shrink: 0; }
+    .scale-note, .doc-footer { font-family: "Space Mono", monospace; font-size: 9px; color: var(--dim); }
+    .scale-note { margin-top: 14px; text-align: right; }
+    .doc-footer { border-top: 1px solid var(--light-line); padding-top: 14px; display: flex; justify-content: space-between; gap: 12px; margin-top: 20px; }
+    svg text { font-family: "Space Mono", monospace; }
+    .review-section { padding-top: 28px; margin-top: 28px; border-top: 1px solid var(--light-line); }
+    .review-section h2 { font-size: 20px; margin-bottom: 12px; }
+    .review-section p { font-size: 14px; line-height: 1.6; margin-bottom: 12px; }
+    .table-scroll { overflow-x: auto; }
+    .review-table { border-collapse: collapse; width: 100%; min-width: 720px; font-size: 13px; line-height: 1.5; }
+    .review-table th, .review-table td { padding: 10px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--light-line); }
+    .review-table th { font-weight: 700; }
+    .review-table caption { text-align: left; font-weight: 700; padding-bottom: 12px; }
+    @media (max-width: 600px) {
+      body { padding: 16px 10px; }
+      .drawing-block { padding: 16px 10px; }
+      .review-table, .review-table tbody { display: block; min-width: 0; }
+      .review-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+      .review-table tr { display: block; padding: 12px 0; border-bottom: 1px solid var(--light-line); }
+      .review-table th, .review-table td { display: block; padding: 4px 0; border: 0; }
+      #service-schedule td:nth-child(3)::before { content: "Hoogte / uitvoering: "; font-weight: 700; }
+      #service-schedule td:last-child::before { content: "Nog vast te leggen: "; font-weight: 700; }
+    }
     @media print {
-      body { background: #fff; }
-      main { max-width: none; padding: 0; }
-      header, section { border: 0; padding: 0 0 12px; }
-      a { color: inherit; text-decoration: none; }
-      h2 { break-after: avoid; }
-      tr, section { break-inside: avoid; }
+      body { padding: 0; background: #fff; }
+      .review-table { min-width: 0; font-size: 10px; }
+      .review-table tr { break-inside: avoid; }
+      .review-table thead { display: table-header-group; }
     }
   </style>
 </head>
 <body>
-<main>
-  <header>
-    <p class="tag">Ontwerp voor prijs · 23 oktober 2026 · geen keuringsplan</p>
-    <h1>Elektriciteit en sanitair, tuinstudio en tuin</h1>
-    <p>Geraardsbergsesteenweg 371, 9404 Ninove · SA/2025/41 · voor Shane (elektriciteit en sanitair).</p>
-    <p class="meta">Symbolen staan al op <a href="tuinstudio.html">tuinstudio.html</a>. Tuin, poort en laadpaal staan op <a href="grondplan.html">grondplan.html</a>. Hoogtes zijn voorstellen vanaf de afgewerkte vloer. Kabelsectie, differentieel, IP-graad en badkamerzones bepaalt de elektricien volgens het geldende AREI. Dit blad is de meetstaat om in te vullen, geen uitvoeringstekening.</p>
-  </header>
+  <div class="page">
+    <div class="drawing-block">
+      <div class="drawing-label">Technisch plan &mdash; gebouw, elektriciteit en sanitair &mdash; schaal 1:50</div>
+      <p class="lead">Zelfde studioplan, zonder meubels, schilderij en tuinverharding. Wanden, deuren, sanitairtoestellen en aansluitpunten blijven. V02 is geen stopcontact: het plafondkruis in lounge/kantoor is de reservering voor toevoer van verse lucht. V01 is de afzuiging van badkamer en WC. Overdracht van lucht loopt via de binnendeur. Het ventilatiesysteem zelf is nog niet gekozen. Tuinspots en de laadpaal staan op <a href="grondplan.html">het tuinplan</a>.</p>
+      <div id="studio-detail-plan"></div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-swatch" style="background:repeating-linear-gradient(45deg,#dce3ea,#dce3ea 2px,#faf8f4 2px,#faf8f4 5px); border-color:#2E4057;"></div>Dragend metselwerk (0,24 m)</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:#a8c5d8; border-color:#2E4057; border-width:2px;"></div>Schuifraam</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:#ffe8e4; border-color:#c0392b;"></div>Pelletkachel, voorlopige ombouw</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:#eeece8; border-color:#d4d0c8;"></div>Douchebak 80 x 80</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:#faf7f0; border-color:#c8b89a; border-style:dashed;"></div>Pergola, zwevend dak</div>
+        <div class="legend-item"><svg viewBox="0 0 20 12" width="20" height="12"><circle cx="10" cy="6" r="5" fill="none" stroke="#e67e22" stroke-width="1.2"/><circle cx="10" cy="6" r="1.5" fill="#e67e22"/></svg>Camera E01</div>
+        <div class="legend-item"><svg viewBox="0 0 20 12" width="20" height="12"><rect x="4" y="2" width="12" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2"/></svg>Stopcontact</div>
+        <div class="legend-item"><svg viewBox="0 0 20 12" width="20" height="12"><rect x="4" y="2" width="12" height="8" rx="1" fill="none" stroke="#2980b9" stroke-width="1.2"/></svg>Data</div>
+        <div class="legend-item"><svg viewBox="0 0 20 12" width="20" height="12"><circle cx="10" cy="6" r="5" fill="none" stroke="#2980b9" stroke-width="1.2"/></svg>Water</div>
+        <div class="legend-item"><svg viewBox="0 0 20 12" width="20" height="12"><circle cx="10" cy="6" r="5" fill="none" stroke="#d4a017" stroke-width="0.8"/></svg>Lichtpunt</div>
+        <div class="legend-item"><svg viewBox="0 0 20 12" width="20" height="12"><circle cx="10" cy="6" r="4" fill="none" stroke="#2E4057" stroke-width="1"/><path d="M7,6 H13 M10,3 V9" stroke="#2E4057" stroke-width="1"/></svg>V02 toevoer</div>
+        <div class="legend-item"><svg viewBox="0 0 20 12" width="20" height="12"><circle cx="10" cy="6" r="4" fill="none" stroke="#2E4057" stroke-width="1"/><path d="M7,3 L13,9 M13,3 L7,9" stroke="#2E4057" stroke-width="1"/></svg>V01 afzuiging</div>
+      </div>
+      <p class="scale-note">Schaal 1:50 &nbsp;|&nbsp; 1 cm = 0,50 m &nbsp;|&nbsp; Schematisch, geen keuringsplan &nbsp;|&nbsp; Hoogtes zijn voorstellen vanaf de afgewerkte vloer</p>
+    </div>
 
-  <section>
-    <h2>Basis die nu gevraagd wordt</h2>
-    <ul>
-      <li>Voeding vanuit het woningbord naar een nieuw bord in de berging, plus alle studio- en pergolapunten die hieronder “basis” heten.</li>
-      <li>Zes grondspots langs de jasmijnhaag, van poort tot studio.</li>
-      <li>Sanitair ruwbouw en plaatsing van de meegeleverde X2O-set, plus voeding voor een elektrische boiler.</li>
-      <li>Drie werfbezoeken: voor de dichting, na de platen/chape, bij afwerking en keuring.</li>
-      <li>Prijzen excl. btw, met eenheidsprijs. Rekenlengtes zijn een toeslagbasis: meer of minder aan dezelfde meterprijs, na opmeting.</li>
-    </ul>
-    <p class="note">Niet in de basis: airco, pergolaverwarmer, zwembadtoestellen, laadpaal, camera’s, armaturen, pelletkachel zelf, tegels, chape, schrijnwerk. Die staan als optie of uitsluiting.</p>
-  </section>
-
-  <section id="open-punten">
-    <h2>Nog te bevestigen door Jens</h2>
-    <p class="note">Voorstel staat er al in. Antwoord met het nummer als iets anders moet.</p>
-    <table class="open">
-      <thead><tr><th>Nr</th><th>Punt</th><th>Voorstel tot je anders zegt</th></tr></thead>
-      <tbody>
-        <tr><td>1</td><td>Woningbord</td><td>Elektricien kijkt ter plaatse naar vrije modules, aarding en of de aansluiting 1-fase of 3-fase is. Studio-voeding voorlopig 1×230 V. 3-fase alleen als de meterkast dat vraagt.</td></tr>
-        <tr><td>2</td><td>Sleuf</td><td>Reken 35 m buitensleuf + 15 m in de woning. Niet onder het zwembad en niet door de regenwaterput. Zelfde sleuf voor water, aparte buis.</td></tr>
-        <tr><td>3</td><td>Laadpaal aan de poort</td><td>Optie, niet in de basis. Voorlopig 7,4 kW 1-fase, toestel nog te kiezen, kring vanaf het woningbord, reken 15 m.</td></tr>
-        <tr><td>4</td><td>Airco en pergolaverwarmer</td><td>Alleen een lege buis naar A01 en E05. Geen kabel, geen toestel, tot je ze echt wil.</td></tr>
-        <tr><td>5</td><td>Zwembadtechniek</td><td>In de basis: lege buis tot de 100×150 cm zone langs de kopgevel, plus een aardingspunt. Voeding pas wanneer pomp en filter gekozen zijn.</td></tr>
-        <tr><td>6</td><td>Boiler</td><td>Atlantic Lineo Connected 100 L, verticaal in de berging, is de ruimteproef, nog niet besteld. Basis = voeding 2,25 kW + leidingen + montage van een door jou geleverd toestel. Levering is een optie.</td></tr>
-        <tr><td>7</td><td>Armaturen en camera</td><td>Alleen aansluitpunten. Jij kiest spots, buitenarmaturen en één PoE-camera op de kopgevel. Geen camera op de pergola.</td></tr>
-        <tr><td>8</td><td>Data</td><td>Eén Cat6 van de woningrouter naar een klein patchpaneel bij het studiobord. Van daar twee poorten aan het bureau en één buitenlijn naar de camera op de kopgevel.</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <section>
-    <h2>Meetstaat elektriciteit — basis</h2>
-    <table>
-      <thead><tr><th>Post</th><th class="num">Aantal</th><th>Eenheid</th><th>Inhoud</th></tr></thead>
-      <tbody>
-        <tr><td>E-01</td><td class="num">1</td><td>st</td><td>Plaatsbezoek, eendraadschema, situatieschema, as-built.</td></tr>
-        <tr><td>E-02</td><td class="num">1</td><td>st</td><td>Onderverdeelbord in de berging, bij de deur, circa 160 cm, niet achter de boiler en niet in de poolzone. Differentieel 30 mA, automaten, minstens 30% vrije modules, twee rijen.</td></tr>
-        <tr><td>E-03</td><td class="num">50</td><td>m</td><td>Voedingskabel woningbord naar studiobord. Sectie door elektricien. Reken 35 m buiten + 15 m binnen.</td></tr>
-        <tr><td>E-04</td><td class="num">35</td><td>m</td><td>Buitensleuf en herstel van gazon of steenslag. Diepte volgens voorschrift. Meerwerkrots of verharding apart.</td></tr>
-        <tr><td>E-05</td><td class="num">1</td><td>post</td><td>Leidingen in houtskelet en wachtbuizen in de vloer, vóór dichting en chape.</td></tr>
-        <tr><td>E-06</td><td class="num">9</td><td>st</td><td>Plafondpunten L01–L09, exclusief armatuur. L01 berging. L02 badkamer algemeen. L03 boven de douche, natte zone. L04+L05 kantoor. L06+L07 lounge. L08+L09 pergola, buiten.</td></tr>
-        <tr><td>E-07</td><td class="num">3</td><td>st</td><td>Schakelaars circa 110 cm. C01 op het vaste jambstuk naast het schuifraam: lounge/kantoor en pergola apart. C02 aan de droge kantoorzijde van de badkamerdeur: algemeen licht en spiegel. C03 in de berging naast de deur, niet achter het deurblad. L03 schakelt mee met L02.</td></tr>
-        <tr><td>E-08</td><td class="num">5</td><td>st</td><td>Dubbele stopcontacten circa 30 cm: S01 en S09 achter het bureau, S04 op de NNO-wand in de lounge. Circa 110 cm: S05 op de linkse badkamerwand, S06 in de berging op de tuinzijde, buiten poolzone.</td></tr>
-        <tr><td>E-09</td><td class="num">1</td><td>st</td><td>Dubbel buitenstopcontact S13, IP-doos, circa 40 cm, op de gesloten pergolawand.</td></tr>
-        <tr><td>E-10</td><td class="num">1</td><td>st</td><td>Enkel buitenstopcontact E04 voor de grasmaaier-robot, circa 40 cm, bij de pergola-NNO-hoek. Kabel langs de rand, niet over de looproute.</td></tr>
-        <tr><td>E-11</td><td class="num">1</td><td>st</td><td>Vaste voeding F01 voor Piazzetta IP7, bereikbaar buiten de hete ombouw. Geen contactdoos in de ombouw. Vermogen volgens het toestelvoorschrift.</td></tr>
-        <tr><td>E-12</td><td class="num">1</td><td>st</td><td>Eigen kring boiler, 230 V / 2250 W. S06 is geen boileraansluiting.</td></tr>
-        <tr><td>E-13</td><td class="num">1</td><td>st</td><td>Geschakelde voeding achter de Giro-spiegel, rechter badkamerwand.</td></tr>
-        <tr><td>E-14</td><td class="num">6</td><td>st</td><td>Grondspots in de 15 cm lavastrook langs de jasmijn, poort tot studiohoek. Warm wit, IP67, voorlopig 24 V met driver en schemerschakelaar op een droge plek. Hartafstand circa 3,1 m, circa 18,5 m haag. Reken 25 m kabel tot de driver.</td></tr>
-        <tr><td>E-15</td><td class="num">4</td><td>st</td><td>Cat6-aansluitingen: 1 uplink, E03 twee poorten aan het bureau op circa 30 cm, E01 camera op de kopgevel. Geen E02. Buitenmantel waar de kabel buiten loopt. Camera zelf niet inbegrepen.</td></tr>
-        <tr><td>E-16</td><td class="num">1</td><td>st</td><td>Klein patchpaneel en PoE-voeding bij het studiobord, voldoende voor één camera.</td></tr>
-        <tr><td>E-17</td><td class="num">1</td><td>st</td><td>Aarding en bijkomende vereffening badkamer. Aardingspunt in de pooltechniekzone, zonder toestelaansluiting.</td></tr>
-        <tr><td>E-18</td><td class="num">2</td><td>st</td><td>Lege buis naar A01 (hoge aircoreserve, NNO-wand kantoor) en naar E05 (hoge pergolareserve, circa 220 cm).</td></tr>
-        <tr><td>E-19</td><td class="num">1</td><td>st</td><td>Lege buis van bord naar poolzone 100×150 cm langs de kopgevel.</td></tr>
-        <tr><td>E-20</td><td class="num">1</td><td>st</td><td>Keuring vóór ingebruikname, inclusief verslag.</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <section>
-    <h2>Opties, apart prijzen</h2>
-    <table>
-      <thead><tr><th>Post</th><th>Inhoud</th></tr></thead>
-      <tbody>
-        <tr><td>O-1</td><td>Vaste airco-voeding A01, exclusief binnen- en buitenunit, condens en koeltechniek.</td></tr>
-        <tr><td>O-2</td><td>Vaste voeding pergolaverwarmer E05, exclusief toestel. Alleen na controle afstand tot hout, dak en sofa.</td></tr>
-        <tr><td>O-3</td><td>Voorlopige poolkring 20 A tot in de techniekzone, exclusief pomp, filter, dosering en sturing. Vervalt als het toestel een andere stroom vraagt.</td></tr>
-        <tr><td>O-4</td><td>Voeding badkamerventilator V01. Het ventilatiesysteem zelf is nog niet gekozen; V02 in de lounge is alleen een reservering voor toevoer, geen toestel.</td></tr>
-        <tr><td>O-5</td><td>Laadpaalkring vanaf het woningbord tot de gedeelde poortpaal. Reken 15 m, 7,4 kW 1-fase, exclusief laadpaal. Meerprijs 11 kW 3-fase apart zetten.</td></tr>
-        <tr><td>O-6</td><td>Leveren en plaatsen Atlantic Lineo Connected 100 L, verticaal. Inclusief beugels en veiligheidsgroep als die niet bij het toestel zitten.</td></tr>
-        <tr><td>O-7</td><td>Basisarmaturen: zeven binnenspots, twee pergola-armaturen IP, één bergingarmatuur. Designarmaturen blijven buiten deze optie.</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <section>
-    <h2>Meetstaat sanitair — basis</h2>
-    <p>Materiaal X2O is een besteloverzicht van 3 november 2025, geen betaalbewijs. Reken plaatsing van meegeleverde toestellen. Levering sanitair zit niet in deze prijs.</p>
-    <table>
-      <thead><tr><th>Post</th><th class="num">Aantal</th><th>Eenheid</th><th>Inhoud</th></tr></thead>
-      <tbody>
-        <tr><td>S-01</td><td class="num">35</td><td>m</td><td>Koud water in de elektrische sleuf, vorstvrij, met hoofdafsluiter in de studio. Zelfde rekenlengte als de buitensleuf.</td></tr>
-        <tr><td>S-02</td><td class="num">1</td><td>st</td><td>Boileraansluiting: koud in, warm uit, veiligheidsgroep, zichtbare ontlasting met sifon, isolatie. Toestel door opdrachtgever, tenzij optie O-6. Onderkant voorlopig 60 cm, bovenkant 184 cm, op de badkamerwand in de berging, buiten de poolzone.</td></tr>
-        <tr><td>S-03</td><td class="num">1</td><td>set</td><td>Warm en koud naar douche en wastafel, met afsluiters. WC alleen koud. Vier hoekstopkranen zitten in het X2O-overzicht; bestemming per kraan nog aan te wijzen.</td></tr>
-        <tr><td>S-04</td><td class="num">1</td><td>post</td><td>Plaatsing meegeleverde set: Forma 75×55 gedraaid in de rechterhoek, Arcato, Pavilion, Giro, Rumba 80×80, Unishower Ø90, glas 80×200, Waldo, kader UP320, Perola. Wandversterking door de schrijnwerker op aangeduide plaatsen, tenzij je die zelf voorziet — apart zetten.</td></tr>
-        <tr><td>S-05</td><td class="num">1</td><td>post</td><td>Binnenafvoer: wastafel 40 mm, douche 90 mm, WC 110 mm, boilerontlasting, tot één verzamelpunt.</td></tr>
-        <tr><td>S-06</td><td class="num">20</td><td>m</td><td>Afvoer studio naar de bestaande vuilwateraansluiting van de woning. Niet naar de regenwaterput. Rekenlengte, na opmeting verrekenen.</td></tr>
-        <tr><td>S-07</td><td class="num">1</td><td>st</td><td>Vorstvrije buitenkraan W01 op de gesloten kopgevel, circa 60 cm, met binnenafsluiter, aftap en terugstroombeveiliging. Geen buitendeur op die gevel.</td></tr>
-        <tr><td>S-08</td><td class="num">1</td><td>post</td><td>Douche-afdichting en kimband alleen als dit niet bij de tegelzetter zit. Zo wel: schrappen.</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <section>
-    <h2>Waar de toestellen staan</h2>
-    <p>Studio buiten 4,00×10,00 m. Badkamer 1,80×1,91 m. Berging 1,80×1,50 m. Vrije breedte lounge/kantoor 3,52 m. NNO-gevel is dicht. Geen buitendeur. Twee binnendeuren van 80 cm: badkamer begint 90 cm vanaf de NNO-binnenwand, berging blijft 35 cm van de gedeelde wand.</p>
-    <ul>
-      <li>WC blijft op de gesloten NNO-wand van de badkamer. Douche staat rechtsonder op de wand naar de berging, open naar de deur. Vast glas tussen douche en wastafel.</li>
-      <li>Forma staat 90° gedraaid, volledig in de rechterhoek tegen de NNO-wand, front naar de kamer. Geen zijspeling in die hoek. Kraan en afvoer volgen het product, niet de tekening.</li>
-      <li>S05 zit op de linkse badkamerwand, circa 1 m van de douchebak. Als dat toch in zone 2 valt: verplaatsen of schrappen, niet forceren.</li>
-      <li>Bureau tegen de NNO-wand: twee dubbele stopcontacten en twee netwerkpoorten blijven bereikbaar achter het blad. Hoge kast staat naast het blad, niet ervoor.</li>
-      <li>Pelletombouw staat centraal, 90×60 cm, doorgangen circa 131 cm. Voeding niet in de hete kast.</li>
-      <li>Poolzone in de berging: 100×150 cm langs de kopgevel. Daar geen algemeen stopcontact achter zetten en de boiler niet in die zone hangen.</li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>Buiten deze prijs</h2>
-    <p>Tegels, chape, crepi, schrijnwerk, schuiframen, pelletkachel en rookgas, zwembadkuip en techniektoestellen, airco-toestel, laadpaal, camera’s, meubels, deck, grondwerk van zwembad of parking, en herstel boven de rekenlengtes.</p>
-    <p class="note">Regelgeving: <a href="https://economie.fgov.be/nl/publicaties/algemeen-reglement-op-de">AREI</a>, editie die op de uitvoeringsdatum geldt. Dit blad is geen AREI-studie.</p>
-  </section>
-</main>
+    <section class="review-section">
+      <h2>Aansluitpunten op dit plan</h2>
+      <p>Kabelsectie, differentieel, IP-graad en badkamerzones bepaalt de elektricien. Leidingroutes en afvoerverhang bepaalt de installateur.</p>
+      <div class="table-scroll">
+        <table class="review-table" id="service-schedule">
+          <caption>Punten die op de tekening staan</caption>
+          <thead><tr><th>Punt</th><th>Plaats</th><th>Hoogte</th><th>Nog vast te leggen</th></tr></thead>
+          <tbody>
+            <tr><th>S01 + S09</th><td>Twee dubbele stopcontacten op de gesloten NNO-wand, kantoor.</td><td>Circa 30 cm</td><td>Eigen toestellen; geen kabel door de deurroute.</td></tr>
+            <tr><th>E03</th><td>Twee ethernetpoorten naast die stopcontacten.</td><td>Circa 30 cm</td><td>Cat6 naar de woning. Geen tweede camera.</td></tr>
+            <tr><th>S04</th><td>Dubbel punt op de NNO-wand in de lounge.</td><td>Circa 30 cm</td><td>Gebruik nog open.</td></tr>
+            <tr><th>S05</th><td>Dubbel badkamerpunt op de linker binnenwand, voor de deuropening.</td><td>Circa 110 cm</td><td>AREI-zone en IP.</td></tr>
+            <tr><th>S06</th><td>Dubbel bergingpunt aan de toegangszijde. Geen boiler- of poolvoeding.</td><td>Circa 110 cm</td><td>Niet achter boiler of poolzone plaatsen.</td></tr>
+            <tr><th>S13</th><td>Dubbel buitenpunt op de gesloten pergola-NNO-wand.</td><td>Circa 40 cm</td><td>Buitenkring.</td></tr>
+            <tr><th>E04</th><td>Enkel punt voor de grasrobot, pergolahoek.</td><td>Circa 40 cm</td><td>Dockpositie.</td></tr>
+            <tr><th>F01</th><td>Voeding pelletkachel op de NNO-wand bij de haard. Geen contactdoos in de ombouw.</td><td>Circa 30 cm</td><td>Piazzetta-voorschrift en rookgasdoorvoer.</td></tr>
+            <tr><th>E05</th><td>Hoge reserve voor een eventuele pergolaverwarmer. Geen toestel.</td><td>Circa 220 cm</td><td>Alleen lege buis tot er een toestel is.</td></tr>
+            <tr><th>A01</th><td>Hoge reserve voor een airco-binnenunit op de NNO-wand. Geen toestel.</td><td>Schematisch</td><td>Alleen lege buis tot er een toestel is.</td></tr>
+            <tr><th>C01–C03</th><td>Lichtbediening naast het schuifraam, aan de droge badkamerzijde, en in de berging.</td><td>Circa 110 cm</td><td>Niet op glas of op de hoekpost.</td></tr>
+            <tr><th>L01–L09</th><td>Plafondpunten berging, badkamer, douche, kantoor, lounge en pergola. Spiegelvoeding achter de Giro.</td><td>Plafond</td><td>Armaturen nog te kiezen.</td></tr>
+            <tr><th>V01</th><td>Plafondafzuiging badkamer/WC, naar buiten, niet in de dakholte.</td><td>Plafond</td><td>Debiet en kanaal. Geen gekozen toestel.</td></tr>
+            <tr><th>V02</th><td>Toevoer van verse lucht in lounge/kantoor. Geen ventilator en geen stopcontact.</td><td>Plafond</td><td>Rooster of mechanische toevoer, nog te kiezen.</td></tr>
+            <tr><th>W01</th><td>Vorstvrije buitenkraan op de berging-kopgevel.</td><td>Circa 60 cm</td><td>Afsluiter, aftap en terugstroombeveiliging.</td></tr>
+            <tr><th>E01</th><td>Eén PoE-camera op de gesloten kopgevel. Geen camera en geen kolom op de pergola.</td><td>Circa 250 cm</td><td>Zichtveld en privacy.</td></tr>
+            <tr><th>Sanitair</th><td>Forma/Arcato op de rechter badkamerwand. Douche rechtsonder op de bergingwand. WC op de NNO-wand. Boilerreserve en poolzone 100 x 150 cm in de berging.</td><td>Producttekening</td><td>Koud, warm, afvoer, sifons en boiler 2,25 kW. S06 is die voeding niet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <div class="doc-footer">
+      <span>Tuinstudio — Geraardsbergsesteenweg 371, 9404 Ninove | SA/2025/41</span>
+      <span>Technisch plan elektriciteit en sanitair</span>
+    </div>
+  </div>
+  <script src="studio-plan.js"></script>
+  <script>
+    ["integrated-studio-deck", "fireplace-painting", "office-desk-zone", "pergola-furniture"].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) throw new Error("missing " + id);
+      el.remove();
+    });
+    document.querySelectorAll("text").forEach(node => {
+      if (/MOSO|40,36|POOLSOFA|EKET|hoekrug|zuidruimte|240 x 240/.test(node.textContent)) node.remove();
+    });
+    console.assert(!document.getElementById("office-desk") && !document.getElementById("pergola-sofa")
+      && document.getElementById("room-fresh-air") && document.getElementById("bathroom-shower"));
+  </script>
 </body>
 </html>
