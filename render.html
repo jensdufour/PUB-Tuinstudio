@@ -1128,6 +1128,7 @@
       { id: "E05", x: 193, y: 88, height: 2.2 },
       { id: "S05", x: 692, y: 128, height: 1.1 },
       { id: "S15", x: 760, y: 97, height: 1.1 },
+      { id: "E06", x: 778, y: 91, height: 1.5 },
       { id: "S06", x: 720, y: 352, height: 1.1 },
       { id: "C01", x: 250, y: 88, height: 1.1 },
       { id: "C02", x: 332, y: 88, height: 1.1 },
@@ -2362,6 +2363,7 @@
       && geometryChecks.services.pergolaLounge.southClearance >= 0.63
       && geometryChecks.services.pergolaLounge.floating
       && !studioServices.some(point => point.id === "E02")
+      && studioServices.some(point => point.id === "E06" && point.x === 778 && point.y === 91)
       && geometryChecks.services.deskChairClearOfDoorSwing && geometryChecks.services.hvacOnNnoWall
       && geometryChecks.services.deskDepth === 0.8 && geometryChecks.services.deskToDoorSwingClearance >= 0.1 - 1e-9
       && geometryChecks.services.cabinetFixed && !geometryChecks.services.deskHeightAdjustable
