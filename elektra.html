@@ -10,12 +10,26 @@
     body { background: #f4f1eb; padding: 16px; }
     .page { max-width: 1200px; margin: 0 auto; background: #faf8f4; }
     svg text { font-family: "Space Mono", monospace; }
-    @media print { body { padding: 0; background: #fff; } }
+    #elektra-legend { font-family: "Space Mono", monospace; font-size: 12px; color: #3d3832; padding: 8px 16px 14px; border-top: 1px solid #d9d3c8; }
+    #elektra-legend ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 18px; }
+    #elektra-legend li { display: flex; align-items: center; gap: 6px; }
+    #elektra-legend .note { margin-top: 6px; color: #6b645c; }
+    @media print { body { padding: 0; background: #fff; } #elektra-legend { font-size: 9px; } }
   </style>
 </head>
 <body>
   <div class="page">
     <div id="studio-detail-plan"></div>
+    <aside id="elektra-legend" aria-label="Legende elektricien">
+      <ul>
+        <li><svg viewBox="0 0 20 12" width="20" height="12" aria-hidden="true"><rect x="3" y="2" width="14" height="8" rx="1" fill="none" stroke="#e67e22" stroke-width="1.2"/><circle cx="8" cy="6" r="1.4" fill="#e67e22"/><circle cx="12" cy="6" r="1.4" fill="#e67e22"/></svg>Stopcontact. Badkamer en buiten: 30 mA.</li>
+        <li><svg viewBox="0 0 20 12" width="20" height="12" aria-hidden="true"><rect x="3" y="2" width="14" height="8" rx="1" fill="none" stroke="#2980b9" stroke-width="1.2"/><rect x="5" y="3.5" width="4" height="5" fill="#2980b9"/><rect x="11" y="3.5" width="4" height="5" fill="#2980b9"/></svg>Data. Gescheiden van netspanning.</li>
+        <li><svg viewBox="0 0 20 12" width="20" height="12" aria-hidden="true"><rect x="4" y="3.5" width="12" height="5" rx="0.8" fill="none" stroke="#4A7C59" stroke-width="1.2"/><rect x="8.5" y="4.5" width="3" height="3" fill="#4A7C59"/></svg>Schakelaar, circa 110 cm. C03/C04 is één plaat.</li>
+        <li><svg viewBox="0 0 20 12" width="20" height="12" aria-hidden="true"><circle cx="6" cy="6" r="4" fill="none" stroke="#d4a017" stroke-width="1"/><path d="M3,6 H9 M6,3 V9" stroke="#d4a017" stroke-width="0.8"/><rect x="12" y="4" width="7" height="4" fill="none" stroke="#d4a017" stroke-width="1"/></svg>Spot of TL. Kring staat bij het punt.</li>
+        <li><svg viewBox="0 0 20 12" width="20" height="12" aria-hidden="true"><rect x="1" y="3" width="6" height="6" fill="none" stroke="#c0392b" stroke-width="1"/><line x1="4" y1="6" x2="4" y2="11" stroke="#c0392b" stroke-width="1.2"/><polygon points="14,2 11,9 17,9" fill="none" stroke="#c0392b" stroke-width="1"/></svg>Vaste voeding. E06 niet dimmen. F01 is het oranje kruis.</li>
+      </ul>
+      <p class="note">K, W en afvoerpijl zijn sanitair. Hoogtes zijn voorstellen. Geen keuring.</p>
+    </aside>
   </div>
   <script src="studio-plan.js"></script>
   <script>
@@ -41,7 +55,8 @@
       && document.getElementById("pergola-socket-left") && document.getElementById("pergola-heater-feed")
       && document.getElementById("fireplace-power")
       && !document.querySelector('g[transform="translate(846,225)"]')
-      && document.getElementById("bathroom-general-light") && document.getElementById("bathroom-shower")
+      && document.getElementById("bathroom-general-light")
+      && document.querySelectorAll("#elektra-legend li").length === 5 && document.getElementById("bathroom-shower")
       && document.getElementById("bathroom-shower").getAttribute("width") === "67.5"
       && document.getElementById("bathroom-vanity").getAttribute("width") === "56.25"
       && document.getElementById("bathroom-vanity-top").getAttribute("width") === "56.25"
