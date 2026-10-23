@@ -1128,8 +1128,7 @@
       { id: "C02", x: 674, y: 232, height: 1.1 },
       { id: "C03", x: 692, y: 342, height: 1.1 },
       { id: "W01", x: 846, y: 315, height: 0.6 },
-      { id: "E01", x: 846, y: 225, height: 2.5 },
-      { id: "E02", x: 130, y: 345, height: 2.5 }
+      { id: "E01", x: 846, y: 225, height: 2.5 }
     ];
     const serviceMaterial = standard(0xf5f3ed, 0.8);
     studioServices.forEach(point => {
@@ -2033,7 +2032,7 @@
           cornerBackrestFitConfirmed: false,
           southClearance: (357 - 273) / 75,
           sliderSideGap: (278 - 270) / 75,
-          columnGap: (337 - 273) / 75,
+          floating: true,
           tableIncluded: false
         },
         deskChairClearOfDoorSwing: Math.hypot(deskChairX - internalDoorSpans[1].start,
@@ -2347,11 +2346,12 @@
       "Bathroom room size and straight partition must not change");
     console.assert(Math.abs(geometryChecks.furniture.deskToBathroomClearance - (0.35 + 8 / 75)) < 1e-9,
       "Tall EKET must sit between the fixed desktop and the bathroom partition");
-    console.assert(geometryChecks.services.count === 16 && geometryChecks.services.storageClearWidth === 0.8
+    console.assert(geometryChecks.services.count === 15 && geometryChecks.services.storageClearWidth === 0.8
       && geometryChecks.services.poolEquipmentDimensions[0] === 1
       && geometryChecks.services.poolEquipmentDimensions[1] === 1.5
       && geometryChecks.services.pergolaLounge.southClearance >= 0.63
-      && geometryChecks.services.pergolaLounge.columnGap > 0
+      && geometryChecks.services.pergolaLounge.floating
+      && !studioServices.some(point => point.id === "E02")
       && geometryChecks.services.deskChairClearOfDoorSwing && geometryChecks.services.hvacOnNnoWall
       && geometryChecks.services.deskDepth === 0.8 && geometryChecks.services.deskToDoorSwingClearance >= 0.1 - 1e-9
       && geometryChecks.services.cabinetFixed && !geometryChecks.services.deskHeightAdjustable
