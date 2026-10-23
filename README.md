@@ -5,6 +5,7 @@
 - [index.html](index.html): start page.
 - [grondplan.html](grondplan.html): site and garden plan.
 - [tuinstudio.html](tuinstudio.html): detailed studio plan and service schedule.
+- [elektra.html](elektra.html): pricing schedule for electricity and sanitary, based on the current service points.
 - [render.html](render.html): interactive 3D view.
 
 Keep these four pages at the root so existing links and GitHub Pages continue to work. Open the HTML directly in a browser; the 3D view downloads Three.js from its existing CDN.
